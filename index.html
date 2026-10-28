@@ -24,10 +24,12 @@
       if (a.radius != null) d.style.setProperty("--radius", a.radius + "px");
       if (a.motion === false) d.dataset.motion = "off";
       if (a.hidden?.length) d.dataset.hidden = a.hidden.join(" ");
+      d.dataset.layout = a.layout || "auto";
     } catch { document.documentElement.dataset.theme = "auto"; }
   </script>
 </head>
 <body>
+  <div class="wall" id="wall" aria-hidden="true"></div>
   <div class="bg" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
 
   <header class="topbar glass">
@@ -43,6 +45,14 @@
   </header>
 
   <main class="grid">
+    <!-- 橫式版面中央留白：風景 + 時鐘 -->
+    <section class="scene" id="scene">
+      <div class="scene-inner">
+        <div class="clock" id="clock"></div>
+        <div class="scene-date" id="sceneDate"></div>
+      </div>
+      <a class="credit" id="credit" target="_blank" rel="noopener"></a>
+    </section>
     <!-- 每日鼓勵 -->
     <section class="card glass span-2 quote-card" id="quoteCard">
       <div class="card-title">✨ 每日一句</div>
@@ -168,6 +178,13 @@
       <div class="range-row">玻璃模糊 <input type="range" id="blurRange" min="0" max="40" step="2"> <span id="blurVal"></span></div>
       <div class="range-row">卡片圓角 <input type="range" id="radiusRange" min="6" max="32" step="2"> <span id="radiusVal"></span></div>
       <div class="toggle-row">背景流動動畫 <input type="checkbox" id="motionToggle"></div>
+      <h3 style="margin:16px 0 4px;font-size:1rem">背景風景</h3>
+      <div class="theme-grid wall-grid" id="wallGrid"></div>
+      <h3 style="margin:16px 0 4px;font-size:1rem">版面</h3>
+      <div class="chips" id="layoutChips">
+        <button type="button" data-l="auto">自動（橫式中央留白）</button>
+        <button type="button" data-l="grid">一般格狀</button>
+      </div>
       <h3 style="margin:16px 0 4px;font-size:1rem">顯示區塊</h3>
       <div id="sectionToggles"></div>
       <div class="row">

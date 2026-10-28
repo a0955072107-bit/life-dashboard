@@ -17,12 +17,27 @@ export const THEMES = [
   { id: "cyber", name: "賽博霓虹", colors: ["#7b2ff7", "#00f0ff", "#ff2079"], bg: "#07010f" },
 ];
 
+// 冰山風景（Unsplash，需標示攝影師）
+const U = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=2400&q=80`;
+export const WALLPAPERS = [
+  { id: "berg-reflect", name: "冰山倒影", url: U("photo-1778513811576-7a865312e59e"), by: "Dave Meckler", link: "https://unsplash.com/photos/VkGStDAsxKc" },
+  { id: "berg-antarctica", name: "南極冰山", url: U("photo-1646282014691-620f9af448a8"), by: "Rod Long", link: "https://unsplash.com/photos/ZP2JLBqRY0k" },
+  { id: "berg-greenland", name: "格陵蘭冰山", url: U("photo-1564148204877-9bf116988675"), by: "Xavier Balderas Cejudo", link: "https://unsplash.com/photos/kxIE049IZ1g" },
+  { id: "berg-blue", name: "藍色浮冰", url: U("photo-1768386709566-cb8388a92845"), by: "Adi Albulescu", link: "https://unsplash.com/photos/CnofAJKt0Xc" },
+  { id: "berg-birds", name: "北極海鳥", url: U("photo-1791017384197-b04e4e0bdc7b"), by: "Jo Sorgenfri", link: "https://unsplash.com/photos/LgosQ5i-BXM" },
+];
+const WALL_CHOICES = [
+  { id: "daily", name: "每日輪替冰山" },
+  ...WALLPAPERS,
+  { id: "none", name: "流動光暈（無照片）" },
+];
+
 const SECTIONS = [
   ["quote", "每日一句"], ["weather", "天氣"], ["markets", "市場卡片"], ["todo", "代辦事項"],
   ["hustle", "副業發想"], ["idea", "今日想法"], ["news", "國際新聞"],
 ];
 
-const DEFAULTS = { theme: "auto", blur: 22, radius: 22, motion: true, hidden: [] };
+const DEFAULTS = { theme: "auto", blur: 22, radius: 22, motion: true, hidden: [], wall: "daily", layout: "auto" };
 let a = { ...DEFAULTS, ...lsGet(KEY, {}) };
 
 function apply() {
@@ -31,9 +46,30 @@ function apply() {
   root.style.setProperty("--radius", `${a.radius}px`);
   if (a.motion) delete root.dataset.motion; else root.dataset.motion = "off";
   root.dataset.hidden = a.hidden.join(" ");
+  root.dataset.layout = a.layout;
+  applyWall();
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = getComputedStyle(root).getPropertyValue("--bg").trim() || "#0b1026";
   lsSet(KEY, a);
+}
+
+function currentWall() {
+  if (a.wall === "none") return null;
+  if (a.wall === "daily") {
+    const day = Math.floor((Date.now() + 8 * 3600e3) / 86400e3); // 台北日期
+    return WALLPAPERS[day % WALLPAPERS.length];
+  }
+  return WALLPAPERS.find((w) => w.id === a.wall) || WALLPAPERS[0];
+}
+
+function applyWall() {
+  const w = currentWall(), wall = document.getElementById("wall"), credit = document.getElementById("credit");
+  root.dataset.wall = w ? "on" : "off";
+  if (wall) wall.style.backgroundImage = w ? `url("${w.url}")` : "none";
+  if (credit) {
+    credit.textContent = w ? `📷 ${w.name}・${w.by} / Unsplash` : "";
+    credit.href = w ? `${w.link}?utm_source=life_dashboard&utm_medium=referral` : "#";
+  }
 }
 
 function swatch(t) {
@@ -48,6 +84,12 @@ function render() {
   $("blurRange").value = a.blur; $("blurVal").textContent = `${a.blur}px`;
   $("radiusRange").value = a.radius; $("radiusVal").textContent = `${a.radius}px`;
   $("motionToggle").checked = a.motion;
+  $("wallGrid").innerHTML = WALL_CHOICES.map((w) => {
+    const bg = w.url ? `background:url('${w.url.replace("w=2400", "w=400")}')` : w.id === "daily" ? `background:url('${WALLPAPERS[0].url.replace("w=2400", "w=400")}')` : swatch(THEMES[1]);
+    return `<button type="button" class="theme-opt ${w.id === a.wall ? "active" : ""}" data-w="${w.id}">
+      <div class="sw" style="${bg}"></div><span>${w.name}</span></button>`;
+  }).join("");
+  $("layoutChips").querySelectorAll("button").forEach((b) => b.classList.toggle("active", b.dataset.l === a.layout));
   $("sectionToggles").innerHTML = SECTIONS.map(([id, name]) =>
     `<div class="toggle-row">${name}<input type="checkbox" data-sec="${id}" ${a.hidden.includes(id) ? "" : "checked"}></div>`).join("");
 }
@@ -59,6 +101,14 @@ export function initAppearance() {
   $("themeGrid").addEventListener("click", (e) => {
     const b = e.target.closest("[data-t]"); if (!b) return;
     a.theme = b.dataset.t; apply(); render();
+  });
+  $("wallGrid").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-w]"); if (!b) return;
+    a.wall = b.dataset.w; apply(); render();
+  });
+  $("layoutChips").addEventListener("click", (e) => {
+    const l = e.target.dataset?.l; if (!l) return;
+    a.layout = l; apply(); render();
   });
   $("blurRange").oninput = (e) => { a.blur = +e.target.value; $("blurVal").textContent = `${a.blur}px`; apply(); };
   $("radiusRange").oninput = (e) => { a.radius = +e.target.value; $("radiusVal").textContent = `${a.radius}px`; apply(); };

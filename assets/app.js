@@ -30,6 +30,12 @@ function renderHeader() {
   $("today").textContent = now.toLocaleDateString("zh-TW", { year: "numeric", month: "long", day: "numeric", weekday: "long" });
 }
 
+function tickClock() {
+  const now = new Date();
+  $("clock").textContent = now.toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit", hour12: false });
+  $("sceneDate").textContent = now.toLocaleDateString("zh-TW", { month: "long", day: "numeric", weekday: "long" });
+}
+
 /* ---------- 天氣（Open-Meteo，免金鑰） ---------- */
 const WMO = {
   0: ["☀️", "晴朗"], 1: ["🌤", "大致晴朗"], 2: ["⛅", "多雲"], 3: ["☁️", "陰天"],
@@ -274,6 +280,7 @@ async function main() {
   initAppearance(); initDeck(); initTodos(); initSettings();
   $("newsTabs").addEventListener("click", (e) => { const s = e.target.dataset?.s; if (s) { newsSource = s; renderNews(); } });
   initChat({ state, refreshTodos, openSettings: () => $("settingsBtn").click() });
+  tickClock(); setInterval(tickClock, 15 * 1000);
   await loadAll();
   setInterval(loadAll, 15 * 60 * 1000);
 }
