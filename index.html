@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1630">
+  <title>生活儀表板</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="生活儀表板">
+  <link rel="apple-touch-icon" href="assets/icon.svg">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <script>
+    // 先套用外觀，避免載入時閃爍
+    try {
+      const a = JSON.parse(localStorage.getItem("lifedash.appearance") || "{}");
+      const d = document.documentElement;
+      d.dataset.theme = a.theme || "auto";
+      if (a.blur != null) d.style.setProperty("--blur", a.blur + "px");
+      if (a.radius != null) d.style.setProperty("--radius", a.radius + "px");
+      if (a.motion === false) d.dataset.motion = "off";
+      if (a.hidden?.length) d.dataset.hidden = a.hidden.join(" ");
+    } catch { document.documentElement.dataset.theme = "auto"; }
+  </script>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+  <header class="topbar glass">
+    <div>
+      <div class="greet" id="greet">早安</div>
+      <div class="date" id="today"></div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="refreshBtn" title="重新整理">⟳</button>
+      <button class="icon-btn" id="themeBtn" title="外觀">🎨</button>
+      <button class="icon-btn" id="settingsBtn" title="設定">⚙</button>
+    </div>
+  </header>
+
+  <main class="grid">
+    <!-- 每日鼓勵 -->
+    <section class="card glass span-2 quote-card" id="quoteCard">
+      <div class="card-title">✨ 每日一句</div>
+      <blockquote id="quoteText">載入中…</blockquote>
+      <div class="quote-author" id="quoteAuthor"></div>
+    </section>
+
+    <!-- 天氣 -->
+    <section class="card glass" id="weatherCard">
+      <div class="card-title">🌤 天氣 <span class="muted" id="weatherLoc"></span>
+        <button class="chip-btn" id="locBtn" title="使用目前位置">📍</button></div>
+      <div class="weather-now">
+        <div class="w-icon" id="wIcon">–</div>
+        <div>
+          <div class="w-temp" id="wTemp">–</div>
+          <div class="muted" id="wDesc"></div>
+        </div>
+      </div>
+      <div class="w-meta" id="wMeta"></div>
+      <div class="w-days" id="wDays"></div>
+    </section>
+
+    <!-- 投資：重疊滑動卡片 -->
+    <section class="card glass span-2 market-card">
+      <div class="card-title">📈 市場 <span class="muted" id="marketTime"></span></div>
+      <div class="chips" id="marketTabs"></div>
+      <div class="deck" id="deck" tabindex="0" aria-label="市場卡片，左右滑動切換"></div>
+      <div class="deck-nav">
+        <button class="chip-btn" id="deckPrev">‹</button>
+        <div class="dots" id="deckDots"></div>
+        <button class="chip-btn" id="deckNext">›</button>
+      </div>
+    </section>
+
+    <!-- 代辦事項 -->
+    <section class="card glass todo-card">
+      <div class="card-title">✅ 代辦事項 <span class="muted" id="todoMeta"></span></div>
+      <form id="todoForm" class="todo-form">
+        <input id="todoInput" placeholder="新增代辦…" autocomplete="off">
+        <button type="submit">＋</button>
+      </form>
+      <ul class="todo-list" id="todoList"></ul>
+      <div class="muted small" id="todoHint"></div>
+    </section>
+
+    <!-- 副業 -->
+    <section class="card glass" id="hustleCard">
+      <div class="card-title">💼 今日副業發想</div>
+      <h3 id="hustleTitle">–</h3>
+      <p id="hustleSummary"></p>
+      <ol class="steps" id="hustleSteps"></ol>
+      <div class="tags" id="hustleTags"></div>
+    </section>
+
+    <!-- 每日想法 -->
+    <section class="card glass" id="ideaCard">
+      <div class="card-title">💡 今日想法</div>
+      <div class="badge" id="ideaType"></div>
+      <h3 id="ideaTitle">–</h3>
+      <p id="ideaDetail"></p>
+    </section>
+
+    <!-- 新聞 -->
+    <section class="card glass span-2 news-card">
+      <div class="card-title">🌍 每日國際新聞 <span class="muted" id="newsTime"></span></div>
+      <ul class="brief" id="newsBrief"></ul>
+      <div class="chips" id="newsTabs"></div>
+      <ul class="news-list" id="newsList"></ul>
+    </section>
+  </main>
+
+  <!-- AI 助手 -->
+  <button class="fab glass" id="chatFab" title="AI 助手">🤖</button>
+  <aside class="chat glass" id="chatPanel" aria-hidden="true">
+    <div class="chat-head">
+      <div><b>AI 助手</b> <span class="muted small" id="chatModel"></span></div>
+      <div>
+        <button class="chip-btn" id="chatClear" title="清除對話">清除</button>
+        <button class="chip-btn" id="chatClose">✕</button>
+      </div>
+    </div>
+    <div class="chat-log" id="chatLog"></div>
+    <div class="chat-suggest" id="chatSuggest">
+      <button>今天有什麼重要新聞？</button>
+      <button>幫我新增代辦：週五前繳電費</button>
+      <button>建立一個任務給其他 AI：整理本月支出</button>
+      <button>黃金最近走勢如何？</button>
+    </div>
+    <form class="chat-form" id="chatForm">
+      <textarea id="chatInput" rows="1" placeholder="問我任何事…（Enter 送出，Shift+Enter 換行）"></textarea>
+      <button type="submit" id="chatSend">➤</button>
+    </form>
+  </aside>
+
+  <!-- 設定 -->
+  <dialog class="glass settings" id="settings">
+    <form method="dialog" id="settingsForm">
+      <h2>設定</h2>
+      <p class="muted small">金鑰只存在這台裝置的瀏覽器（localStorage），不會上傳到 GitHub。請只在自己的裝置上使用。</p>
+      <label>Anthropic API Key（AI 助手用）
+        <input type="password" name="anthropicKey" placeholder="sk-ant-…" autocomplete="off"></label>
+      <label>GitHub Token（Fine-grained，需 life-tasks 的 Contents + Issues 讀寫權限）
+        <input type="password" name="githubToken" placeholder="github_pat_…" autocomplete="off"></label>
+      <label>GitHub 帳號
+        <input name="owner"></label>
+      <label>代辦 / 任務 Repo
+        <input name="tasksRepo"></label>
+      <label>天氣城市（例：台北、Tokyo）
+        <input name="city"></label>
+      <div class="row">
+        <button value="cancel" class="ghost">取消</button>
+        <button value="save" id="saveSettings">儲存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 外觀 -->
+  <dialog class="glass settings" id="appearance">
+    <form method="dialog">
+      <h2>🎨 外觀</h2>
+      <p class="muted small">點選主題立即預覽，設定會記在這台裝置。</p>
+      <div class="theme-grid" id="themeGrid"></div>
+      <div class="range-row">玻璃模糊 <input type="range" id="blurRange" min="0" max="40" step="2"> <span id="blurVal"></span></div>
+      <div class="range-row">卡片圓角 <input type="range" id="radiusRange" min="6" max="32" step="2"> <span id="radiusVal"></span></div>
+      <div class="toggle-row">背景流動動畫 <input type="checkbox" id="motionToggle"></div>
+      <h3 style="margin:16px 0 4px;font-size:1rem">顯示區塊</h3>
+      <div id="sectionToggles"></div>
+      <div class="row">
+        <button type="button" class="ghost" id="appearanceReset">恢復預設</button>
+        <button value="close">完成</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="assets/app.js"></script>
+</body>
+</html>

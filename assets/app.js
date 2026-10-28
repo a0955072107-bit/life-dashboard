@@ -1,0 +1,281 @@
+import { settings, loadSettings, saveSettings } from "./store.js";
+import { loadTodos, addTodo, setTodoDone } from "./github.js";
+import { initChat } from "./chat.js";
+import { initAppearance } from "./theme.js";
+
+const $ = (id) => document.getElementById(id);
+const esc = (s = "") => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const state = { config: null, markets: null, news: null, daily: null, todos: null, weather: null };
+
+// 資料先讀 raw.githubusercontent（Actions 更新後不必等 Pages 重新部署），失敗再讀本站
+async function getData(name) {
+  const raw = `https://raw.githubusercontent.com/${settings.owner}/${settings.dashboardRepo}/main/data/${name}?t=${Math.floor(Date.now() / 60000)}`;
+  for (const url of [raw, `data/${name}?t=${Date.now()}`]) {
+    try {
+      const r = await fetch(url, { cache: "no-store" });
+      if (r.ok) return await r.json();
+    } catch { /* try next */ }
+  }
+  return null;
+}
+
+const fmtTime = (iso) => iso ? new Date(iso).toLocaleString("zh-TW", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
+
+/* ---------- 問候 ---------- */
+function renderHeader() {
+  const now = new Date();
+  const h = now.getHours();
+  $("greet").textContent = h < 5 ? "夜深了，早點休息" : h < 11 ? "早安 ☀️" : h < 14 ? "午安 🍱" : h < 18 ? "午後好 ☕" : "晚安 🌙";
+  $("today").textContent = now.toLocaleDateString("zh-TW", { year: "numeric", month: "long", day: "numeric", weekday: "long" });
+}
+
+/* ---------- 天氣（Open-Meteo，免金鑰） ---------- */
+const WMO = {
+  0: ["☀️", "晴朗"], 1: ["🌤", "大致晴朗"], 2: ["⛅", "多雲"], 3: ["☁️", "陰天"],
+  45: ["🌫", "霧"], 48: ["🌫", "霧淞"], 51: ["🌦", "毛毛雨"], 53: ["🌦", "毛毛雨"], 55: ["🌧", "濃毛毛雨"],
+  61: ["🌦", "小雨"], 63: ["🌧", "中雨"], 65: ["🌧", "大雨"], 66: ["🌧", "凍雨"], 67: ["🌧", "凍雨"],
+  71: ["🌨", "小雪"], 73: ["🌨", "中雪"], 75: ["❄️", "大雪"], 77: ["🌨", "雪粒"],
+  80: ["🌦", "陣雨"], 81: ["🌧", "強陣雨"], 82: ["⛈", "豪雨"], 85: ["🌨", "陣雪"], 86: ["🌨", "強陣雪"],
+  95: ["⛈", "雷雨"], 96: ["⛈", "雷雨冰雹"], 99: ["⛈", "強雷雨冰雹"],
+};
+
+async function geocode(city) {
+  const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=zh`);
+  const j = await r.json();
+  if (!j.results?.length) throw new Error("找不到城市");
+  return { lat: j.results[0].latitude, lon: j.results[0].longitude, name: j.results[0].name };
+}
+
+async function loadWeather() {
+  try {
+    const { lat, lon } = settings;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+      `&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,precipitation` +
+      `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max&timezone=auto&forecast_days=5`;
+    const w = await (await fetch(url)).json();
+    state.weather = { city: settings.city, current: w.current, daily: w.daily };
+    const [icon, desc] = WMO[w.current.weather_code] || ["🌡", ""];
+    $("weatherLoc").textContent = settings.city;
+    $("wIcon").textContent = icon;
+    $("wTemp").textContent = `${Math.round(w.current.temperature_2m)}°`;
+    $("wDesc").textContent = `${desc}・體感 ${Math.round(w.current.apparent_temperature)}°`;
+    $("wMeta").innerHTML = `<span>💧 濕度 ${w.current.relative_humidity_2m}%</span><span>💨 ${w.current.wind_speed_10m} km/h</span>` +
+      `<span>☂️ 降雨 ${w.daily.precipitation_probability_max[0] ?? "–"}%</span><span>🔆 UV ${w.daily.uv_index_max[0] ?? "–"}</span>`;
+    $("wDays").innerHTML = w.daily.time.map((d, i) => {
+      const day = i === 0 ? "今天" : new Date(d).toLocaleDateString("zh-TW", { weekday: "short" });
+      return `<div class="w-day">${day}<b>${(WMO[w.daily.weather_code[i]] || ["🌡"])[0]}</b>${Math.round(w.daily.temperature_2m_max[i])}° / ${Math.round(w.daily.temperature_2m_min[i])}°</div>`;
+    }).join("");
+  } catch (e) {
+    $("wDesc").textContent = "天氣載入失敗";
+  }
+}
+
+/* ---------- 市場：重疊滑動卡片 ---------- */
+let deckItems = [], deckIndex = 0, deckGroup = "全部";
+
+function spark(points, up) {
+  if (!points?.length) return "";
+  const w = 300, h = 70, min = Math.min(...points), max = Math.max(...points), rng = max - min || 1;
+  const xy = points.map((p, i) => `${(i / (points.length - 1)) * w},${h - 6 - ((p - min) / rng) * (h - 12)}`);
+  const color = up ? "var(--up)" : "var(--down)";
+  return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">
+    <polyline points="${xy.join(" ")}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+}
+
+function fmtNum(n) {
+  if (n == null) return "–";
+  return n >= 1000 ? n.toLocaleString("en-US", { maximumFractionDigits: 2 }) : n.toLocaleString("en-US", { maximumFractionDigits: n < 10 ? 3 : 2 });
+}
+
+function renderMarkets() {
+  const m = state.markets;
+  if (!m?.quotes?.length) { $("deck").innerHTML = `<p class="muted">尚無市場資料（GitHub Actions 第一次執行後就會出現）</p>`; return; }
+  $("marketTime").textContent = `更新 ${fmtTime(m.updated)}`;
+  const groups = ["全部", ...new Set(m.quotes.map((q) => q.group))];
+  $("marketTabs").innerHTML = groups.map((g) => `<button class="${g === deckGroup ? "active" : ""}" data-g="${esc(g)}">${esc(g)}</button>`).join("");
+  deckItems = m.quotes.filter((q) => deckGroup === "全部" || q.group === deckGroup);
+  deckIndex = Math.min(deckIndex, deckItems.length - 1);
+  $("deck").innerHTML = deckItems.map((q) => {
+    const up = (q.change ?? 0) >= 0;
+    return `<div class="mcard">
+      <div class="m-head"><div><div class="m-name">${esc(q.name)}</div><div class="m-sym">${esc(q.symbol)}</div></div><span class="m-group">${esc(q.group)}</span></div>
+      <div class="m-price">${fmtNum(q.price)} <small class="muted">${esc(q.currency || "")}</small></div>
+      <div class="m-chg ${up ? "up" : "down"}">${up ? "▲" : "▼"} ${fmtNum(Math.abs(q.change ?? 0))} (${(q.changePct ?? 0).toFixed(2)}%)
+        <span class="muted">・1 個月 ${q.monthPct != null ? q.monthPct.toFixed(1) + "%" : "–"}</span></div>
+      ${spark(q.history, (q.monthPct ?? 0) >= 0)}
+    </div>`;
+  }).join("");
+  layoutDeck();
+}
+
+function layoutDeck(dragX = 0) {
+  const cards = [...$("deck").children];
+  const n = cards.length;
+  cards.forEach((c, i) => {
+    const rel = (i - deckIndex + n) % n; // 0 = 最上層
+    if (rel === 0) {
+      c.style.transform = `translateX(${dragX}px) rotate(${dragX / 25}deg)`;
+      c.style.opacity = 1; c.style.zIndex = 100;
+    } else if (rel < 4) {
+      c.style.transform = `translateY(${-rel * 14}px) scale(${1 - rel * 0.06})`;
+      c.style.opacity = 1 - rel * 0.25; c.style.zIndex = 100 - rel;
+    } else {
+      c.style.transform = `translateY(-56px) scale(.76)`;
+      c.style.opacity = 0; c.style.zIndex = 0;
+    }
+    c.style.pointerEvents = rel === 0 ? "auto" : "none";
+    c.classList.toggle("top", rel === 0);
+  });
+  $("deckDots").innerHTML = n <= 20 ? cards.map((_, i) => `<i class="${i === deckIndex ? "on" : ""}"></i>`).join("") : `${deckIndex + 1} / ${n}`;
+}
+
+function deckMove(step) {
+  if (!deckItems.length) return;
+  deckIndex = (deckIndex + step + deckItems.length) % deckItems.length;
+  layoutDeck();
+}
+
+function initDeck() {
+  const deck = $("deck");
+  let startX = null, dx = 0, top = null;
+  deck.addEventListener("pointerdown", (e) => {
+    top = deck.children[deckIndex]; if (!top) return;
+    startX = e.clientX; dx = 0; top.classList.add("dragging"); deck.setPointerCapture(e.pointerId);
+  });
+  deck.addEventListener("pointermove", (e) => {
+    if (startX == null) return;
+    dx = e.clientX - startX; layoutDeck(dx);
+  });
+  const end = () => {
+    if (startX == null) return;
+    top?.classList.remove("dragging"); startX = null;
+    if (Math.abs(dx) > 60) deckMove(dx < 0 ? 1 : -1); else layoutDeck();
+  };
+  deck.addEventListener("pointerup", end);
+  deck.addEventListener("pointercancel", end);
+  deck.addEventListener("keydown", (e) => { if (e.key === "ArrowRight") deckMove(1); if (e.key === "ArrowLeft") deckMove(-1); });
+  $("deckPrev").onclick = () => deckMove(-1);
+  $("deckNext").onclick = () => deckMove(1);
+  $("marketTabs").addEventListener("click", (e) => {
+    const g = e.target.dataset?.g; if (!g) return;
+    deckGroup = g; deckIndex = 0; renderMarkets();
+  });
+}
+
+/* ---------- 新聞 ---------- */
+let newsSource = "全部";
+function renderNews() {
+  const n = state.news;
+  if (!n) { $("newsList").innerHTML = `<li class="muted">尚無新聞資料</li>`; return; }
+  $("newsTime").textContent = `更新 ${fmtTime(n.updated)}`;
+  $("newsBrief").innerHTML = (n.brief || []).map((b) => `<li>${esc(b)}</li>`).join("");
+  const sources = ["全部", ...new Set(n.items.map((i) => i.source))];
+  $("newsTabs").innerHTML = sources.map((s) => `<button class="${s === newsSource ? "active" : ""}" data-s="${esc(s)}">${esc(s)}</button>`).join("");
+  $("newsList").innerHTML = n.items.filter((i) => newsSource === "全部" || i.source === newsSource).slice(0, 40).map((i) =>
+    `<li><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}<div class="n-meta">${esc(i.source)}・${fmtTime(i.published)}</div></a></li>`).join("");
+}
+
+/* ---------- 每日內容 ---------- */
+function renderDaily() {
+  const d = state.daily;
+  if (!d) return;
+  $("quoteText").textContent = d.encouragement?.text || "";
+  $("quoteAuthor").textContent = d.encouragement?.author ? `— ${d.encouragement.author}` : "";
+  const h = d.side_hustle || {};
+  $("hustleTitle").textContent = h.title || "–";
+  $("hustleSummary").textContent = h.summary || "";
+  $("hustleSteps").innerHTML = (h.steps || []).map((s) => `<li>${esc(s)}</li>`).join("");
+  $("hustleTags").innerHTML = [h.startup_cost && `💰 ${h.startup_cost}`, h.time_needed && `⏱ ${h.time_needed}`, h.potential && `📊 ${h.potential}`]
+    .filter(Boolean).map((t) => `<span>${esc(t)}</span>`).join("");
+  const idea = d.idea || {};
+  $("ideaType").textContent = idea.type || "";
+  $("ideaTitle").textContent = idea.title || "–";
+  $("ideaDetail").textContent = idea.detail || "";
+}
+
+/* ---------- 代辦 ---------- */
+async function refreshTodos() {
+  try {
+    const { data } = await loadTodos();
+    state.todos = data;
+    renderTodos();
+  } catch (e) {
+    $("todoList").innerHTML = "";
+    $("todoHint").textContent = e.message;
+  }
+}
+
+function renderTodos() {
+  const items = state.todos?.items || [];
+  const open = items.filter((t) => !t.done);
+  $("todoMeta").textContent = `${open.length} 項未完成`;
+  const sorted = [...open, ...items.filter((t) => t.done).slice(0, 5)];
+  const pr = { high: "🔴", medium: "🟠", low: "⚪" };
+  $("todoList").innerHTML = sorted.map((t) => `<li class="${t.done ? "done" : ""}">
+    <input type="checkbox" data-id="${esc(t.id)}" ${t.done ? "checked" : ""} ${settings.githubToken ? "" : "disabled"}>
+    <div><div class="t-title">${pr[t.priority] || ""} ${esc(t.title)}</div>
+    <div class="t-meta">${t.due ? `📅 ${esc(t.due)}・` : ""}${esc(t.source || "")}${t.tags?.length ? "・#" + t.tags.map(esc).join(" #") : ""}</div></div></li>`).join("") ||
+    `<li class="muted">沒有代辦，享受今天吧 🎉</li>`;
+  $("todoHint").textContent = settings.githubToken ? `同步自 ${settings.owner}/${settings.tasksRepo}・${fmtTime(state.todos?.updated)}` : "唯讀模式：在設定填入 GitHub Token 即可新增 / 勾選";
+}
+
+function initTodos() {
+  $("todoForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const title = $("todoInput").value.trim(); if (!title) return;
+    $("todoInput").value = "";
+    $("todoHint").textContent = "同步中…";
+    try { await addTodo({ title }, "dashboard"); await refreshTodos(); } catch (err) { $("todoHint").textContent = err.message; }
+  });
+  $("todoList").addEventListener("change", async (e) => {
+    const id = e.target.dataset?.id; if (!id) return;
+    $("todoHint").textContent = "同步中…";
+    try { await setTodoDone(id, e.target.checked); await refreshTodos(); } catch (err) { $("todoHint").textContent = err.message; }
+  });
+}
+
+/* ---------- 設定 ---------- */
+function initSettings() {
+  const dlg = $("settings"), form = $("settingsForm");
+  $("settingsBtn").onclick = () => {
+    for (const k of ["anthropicKey", "githubToken", "owner", "tasksRepo", "city"]) form.elements[k].value = settings[k] || "";
+    dlg.showModal();
+  };
+  dlg.addEventListener("close", async () => {
+    if (dlg.returnValue !== "save") return;
+    const f = form.elements;
+    const patch = { anthropicKey: f.anthropicKey.value.trim(), githubToken: f.githubToken.value.trim(), owner: f.owner.value.trim(), tasksRepo: f.tasksRepo.value.trim() };
+    const city = f.city.value.trim();
+    if (city && city !== settings.city) {
+      try { const g = await geocode(city); Object.assign(patch, { city, lat: g.lat, lon: g.lon }); } catch { alert("找不到這個城市，天氣維持原設定"); }
+    }
+    saveSettings(patch);
+    loadWeather(); refreshTodos();
+  });
+  $("locBtn").onclick = () => navigator.geolocation?.getCurrentPosition((p) => {
+    saveSettings({ lat: p.coords.latitude, lon: p.coords.longitude, city: "目前位置" });
+    loadWeather();
+  }, () => alert("無法取得位置"));
+  $("refreshBtn").onclick = () => loadAll();
+}
+
+async function loadAll() {
+  renderHeader();
+  const [markets, news, daily] = await Promise.all([getData("markets.json"), getData("news.json"), getData("daily.json")]);
+  Object.assign(state, { markets, news, daily });
+  renderMarkets(); renderNews(); renderDaily();
+  loadWeather(); refreshTodos();
+}
+
+async function main() {
+  state.config = await (await fetch("config.json")).json();
+  loadSettings(state.config);
+  initAppearance(); initDeck(); initTodos(); initSettings();
+  $("newsTabs").addEventListener("click", (e) => { const s = e.target.dataset?.s; if (s) { newsSource = s; renderNews(); } });
+  initChat({ state, refreshTodos, openSettings: () => $("settingsBtn").click() });
+  await loadAll();
+  setInterval(loadAll, 15 * 60 * 1000);
+}
+
+main();

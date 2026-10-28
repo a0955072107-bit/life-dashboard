@@ -1,0 +1,9 @@
+{
+  "name": "生活儀表板",
+  "short_name": "儀表板",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b1026",
+  "theme_color": "#0b1026",
+  "icons": [{ "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

@@ -1,0 +1,58 @@
+name: 更新儀表板資料
+
+on:
+  schedule:
+    - cron: "7,37 13-21 * * 1-5"   # 美股交易時段每 30 分鐘更新報價
+    - cron: "13 22 * * *"          # 台北 06:13：新聞 + 每日內容 + 報價
+    - cron: "17 10 * * *"          # 台北 18:17：晚間新聞 + 報價
+  workflow_dispatch:
+    inputs:
+      daily:
+        description: "重新產生每日內容（副業/想法/鼓勵）"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: 市場報價
+        run: python scripts/fetch_markets.py
+        continue-on-error: true
+
+      - name: 國際新聞
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule != '7,37 13-21 * * 1-5'
+        run: python scripts/fetch_news.py
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: 每日內容
+        if: github.event.schedule == '13 22 * * *' || inputs.daily
+        run: python scripts/gen_daily.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: 提交資料
+        run: |
+          git config user.name "dashboard-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then echo "沒有變更"; exit 0; fi
+          git commit -m "data: 自動更新 $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+          git pull --rebase origin main
+          git push
