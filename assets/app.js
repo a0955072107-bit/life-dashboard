@@ -1,12 +1,12 @@
 import { settings, loadSettings, saveSettings } from "./store.js";
-import { loadTodos, addTodo, setTodoDone } from "./github.js";
+import { loadTodos, addTodo, setTodoDone, loadProjects, listAiTasks } from "./github.js";
 import { initChat } from "./chat.js";
 import { initAppearance } from "./theme.js";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s = "") => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
-const state = { config: null, markets: null, news: null, daily: null, todos: null, weather: null };
+const state = { config: null, markets: null, news: null, daily: null, todos: null, weather: null, projects: null, aiTasks: null };
 
 // 資料先讀 raw.githubusercontent（Actions 更新後不必等 Pages 重新部署），失敗再讀本站
 async function getData(name) {
@@ -53,7 +53,20 @@ async function geocode(city) {
   return { lat: j.results[0].latitude, lon: j.results[0].longitude, name: j.results[0].name };
 }
 
+function renderCityTabs() {
+  const cities = [...state.config.locations];
+  if (!cities.some((c) => c.name === settings.city)) cities.push({ name: settings.city, lat: settings.lat, lon: settings.lon });
+  $("cityTabs").innerHTML = cities.map((c, i) =>
+    `<button class="${c.name === settings.city ? "active" : ""}" data-i="${i}">${esc(c.name)}</button>`).join("");
+  $("cityTabs").onclick = (e) => {
+    const c = cities[e.target.dataset?.i]; if (!c || c.name === settings.city) return;
+    saveSettings({ city: c.name, lat: c.lat, lon: c.lon });
+    loadWeather();
+  };
+}
+
 async function loadWeather() {
+  renderCityTabs();
   try {
     const { lat, lon } = settings;
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
@@ -62,7 +75,6 @@ async function loadWeather() {
     const w = await (await fetch(url)).json();
     state.weather = { city: settings.city, current: w.current, daily: w.daily };
     const [icon, desc] = WMO[w.current.weather_code] || ["🌡", ""];
-    $("weatherLoc").textContent = settings.city;
     $("wIcon").textContent = icon;
     $("wTemp").textContent = `${Math.round(w.current.temperature_2m)}°`;
     $("wDesc").textContent = `${desc}・體感 ${Math.round(w.current.apparent_temperature)}°`;
@@ -91,7 +103,8 @@ function spark(points, up) {
 
 function fmtNum(n) {
   if (n == null) return "–";
-  return n >= 1000 ? n.toLocaleString("en-US", { maximumFractionDigits: 2 }) : n.toLocaleString("en-US", { maximumFractionDigits: n < 10 ? 3 : 2 });
+  const a = Math.abs(n);
+  return n.toLocaleString("en-US", { maximumFractionDigits: a >= 1000 ? 2 : a >= 10 ? 2 : a >= 1 ? 3 : 4 });
 }
 
 function renderMarkets() {
@@ -194,6 +207,17 @@ function renderDaily() {
   $("hustleSteps").innerHTML = (h.steps || []).map((s) => `<li>${esc(s)}</li>`).join("");
   $("hustleTags").innerHTML = [h.startup_cost && `💰 ${h.startup_cost}`, h.time_needed && `⏱ ${h.time_needed}`, h.potential && `📊 ${h.potential}`]
     .filter(Boolean).map((t) => `<span>${esc(t)}</span>`).join("");
+  const L = d.learning;
+  if (L) {
+    $("learnCat").textContent = L.category || "";
+    $("learnTitle").textContent = L.title || "";
+    $("learnContent").textContent = L.content || "";
+    $("learnExamples").innerHTML = (L.examples || []).map((x) => `<li>${esc(x)}</li>`).join("");
+    $("learnQ").textContent = L.practice || "";
+    $("learnA").textContent = L.answer || "";
+    $("learnPractice").hidden = !L.practice;
+    $("learnPractice").open = false;
+  }
   const idea = d.idea || {};
   $("ideaType").textContent = idea.type || "";
   $("ideaTitle").textContent = idea.title || "–";
@@ -213,7 +237,8 @@ async function refreshTodos() {
 }
 
 function renderTodos() {
-  const items = state.todos?.items || [];
+  renderProjects();
+  const items = (state.todos?.items || []).filter((t) => !t.project);
   const open = items.filter((t) => !t.done);
   $("todoMeta").textContent = `${open.length} 項未完成`;
   const sorted = [...open, ...items.filter((t) => t.done).slice(0, 5)];
@@ -234,11 +259,103 @@ function initTodos() {
     $("todoHint").textContent = "同步中…";
     try { await addTodo({ title }, "dashboard"); await refreshTodos(); } catch (err) { $("todoHint").textContent = err.message; }
   });
+  $("projBody").addEventListener("change", async (e) => {
+    const id = e.target.dataset?.id; if (!id) return;
+    $("projMeta").textContent = "同步中…";
+    try { await setTodoDone(id, e.target.checked); await refreshTodos(); } catch (err) { $("projMeta").textContent = err.message; }
+  });
   $("todoList").addEventListener("change", async (e) => {
     const id = e.target.dataset?.id; if (!id) return;
     $("todoHint").textContent = "同步中…";
     try { await setTodoDone(id, e.target.checked); await refreshTodos(); } catch (err) { $("todoHint").textContent = err.message; }
   });
+}
+
+/* ---------- 店語副業（life-tasks 的 projects.json） ---------- */
+const DAY = 86400e3;
+const tpeToday = () => new Date(new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Taipei" }));
+const daysUntil = (d) => Math.ceil((new Date(d) - tpeToday()) / DAY);
+
+async function refreshProjects() {
+  try {
+    state.projects = await loadProjects();
+  } catch (e) {
+    state.projects = null;
+    $("projBody").innerHTML = `<p class="muted small">${esc(e.message)}</p>`;
+    return;
+  }
+  try {
+    state.aiTasks = settings.githubToken ? await listAiTasks("open") : null;
+  } catch { state.aiTasks = null; }
+  renderProjects();
+}
+
+function todoRow(t) {
+  const pr = { high: "🔴", medium: "🟠", low: "⚪" };
+  const left = t.due && !t.done ? daysUntil(t.due) : null;
+  const dueTxt = left == null ? "" : left < 0 ? `<span class="down">逾期 ${-left} 天</span>` : left === 0 ? `<span class="down">今天</span>` : `📅 ${esc(t.due.slice(5))}`;
+  return `<li class="${t.done ? "done" : ""}"><input type="checkbox" data-id="${esc(t.id)}" ${t.done ? "checked" : ""} ${settings.githubToken ? "" : "disabled"}>
+    <div><div class="t-title">${pr[t.priority] || ""} ${esc(t.title)}</div>${dueTxt ? `<div class="t-meta">${dueTxt}</div>` : ""}</div></li>`;
+}
+
+function bar(pct) {
+  return `<div class="pbar"><i style="width:${Math.max(0, Math.min(100, pct)).toFixed(0)}%"></i></div>`;
+}
+
+function renderProjects() {
+  const P = state.projects;
+  if (!P) return;
+  const todos = state.todos?.items || [];
+  const byDue = (a, b) => (a.due || "9999").localeCompare(b.due || "9999");
+  const html = P.projects.map((p) => {
+    const mine = todos.filter((t) => t.project === p.id);
+    const open = mine.filter((t) => !t.done).sort(byDue);
+    const badge = p.status === "paused" ? `<span class="badge">⏸ 暫停中</span>` : `<span class="badge on">● 進行中</span>`;
+    const links = (p.links || []).map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join("");
+    let body = "";
+
+    if (p.metrics) {
+      body += `<div class="p-metrics">${p.metrics.map((m) => {
+        const tgt = m.target ? `<small>/ ${m.target}</small>` : "";
+        const due = m.due ? `<div class="muted small">${daysUntil(m.due) >= 0 ? `剩 ${daysUntil(m.due)} 天` : "已到期"}</div>` : "";
+        return `<div class="p-metric"><div class="muted small">${esc(m.label)}</div><b>${m.value}</b>${tgt}${m.target ? bar((m.value / m.target) * 100) : ""}${due}</div>`;
+      }).join("")}</div>`;
+    }
+
+    if (p.phases) {
+      const start = new Date(p.start), end = new Date(p.end), now = tpeToday();
+      const total = Math.round((end - start) / (7 * DAY));
+      const week = Math.min(total, Math.max(1, Math.floor((now - start) / (7 * DAY)) + 1));
+      const pct = ((now - start) / (end - start + DAY)) * 100;
+      const phase = p.phases.find((ph) => now >= new Date(ph.start) && now <= new Date(ph.end)) || p.phases.at(now < start ? 0 : -1);
+      const doneN = mine.filter((t) => t.done).length;
+      body += `<div class="p-plan"><div class="p-row"><b>第 ${week} / ${total} 週</b><span class="muted small">${esc(p.start.slice(5))} – ${esc(p.end.slice(5))}・完成 ${doneN}/${mine.length} 項</span></div>
+        ${bar(pct)}
+        <div class="muted small">目前階段：${esc(phase.label)}「${esc(phase.title)}」${p.report ? `・成果回報 ${esc(p.report.slice(5))}（剩 ${daysUntil(p.report)} 天）` : ""}</div></div>`;
+      const cur = open.filter((t) => t.tags?.includes(phase.label));
+      const overdue = open.filter((t) => !t.tags?.includes(phase.label) && t.due && daysUntil(t.due) < 0);
+      if (cur.length) body += `<div class="muted small p-sub">本階段待辦</div><ul class="todo-list">${cur.map(todoRow).join("")}</ul>`;
+      if (overdue.length) body += `<details><summary class="muted small">之前階段未完成 ${overdue.length} 項</summary><ul class="todo-list">${overdue.map(todoRow).join("")}</ul></details>`;
+    } else if (open.length) {
+      body += `<div class="muted small p-sub">我的待辦</div><ul class="todo-list">${open.map(todoRow).join("")}</ul>`;
+    }
+
+    const ai = state.aiTasks?.filter((i) => i.labels.includes(p.id));
+    const issuesUrl = `https://github.com/${settings.owner}/${settings.tasksRepo}/issues?q=is%3Aopen+label%3A${p.id}`;
+    if (ai?.length) {
+      body += `<details><summary class="muted small">🤖 AI 任務 ${ai.length} 項</summary><ul class="ai-list">${ai.map((i) =>
+        `<li><a href="${esc(i.url)}" target="_blank" rel="noopener">#${i.number} ${esc(i.title.replace(/^\[[^\]]+\]\s*/, ""))}</a>${i.labels.includes("in-progress") ? ` <span class="badge on">處理中</span>` : ""}${i.labels.includes("on-hold") ? ` <span class="badge">暫緩</span>` : ""}${i.labels.includes("needs-user") ? ` <span class="badge warn">等你回覆</span>` : ""}</li>`).join("")}</ul></details>`;
+    } else if (!settings.githubToken) {
+      body += `<a class="muted small" href="${issuesUrl}" target="_blank" rel="noopener">查看 AI 任務 ↗</a>`;
+    }
+
+    return `<div class="proj ${p.status === "paused" ? "paused" : ""}">
+      <div class="p-head"><b>${esc(p.emoji || "")} ${esc(p.name)}</b> ${badge}<span class="p-links">${links}</span></div>
+      ${p.note && p.status === "paused" ? `<div class="muted small">${esc(p.note)}</div>` : ""}
+      ${body}</div>`;
+  }).join("");
+  $("projBody").innerHTML = html;
+  $("projMeta").textContent = `更新 ${fmtTime(P.updated)}`;
 }
 
 /* ---------- 設定 ---------- */
@@ -257,7 +374,7 @@ function initSettings() {
       try { const g = await geocode(city); Object.assign(patch, { city, lat: g.lat, lon: g.lon }); } catch { alert("找不到這個城市，天氣維持原設定"); }
     }
     saveSettings(patch);
-    loadWeather(); refreshTodos();
+    loadWeather(); refreshTodos().then(refreshProjects);
   });
   $("locBtn").onclick = () => navigator.geolocation?.getCurrentPosition((p) => {
     saveSettings({ lat: p.coords.latitude, lon: p.coords.longitude, city: "目前位置" });
@@ -271,7 +388,7 @@ async function loadAll() {
   const [markets, news, daily] = await Promise.all([getData("markets.json"), getData("news.json"), getData("daily.json")]);
   Object.assign(state, { markets, news, daily });
   renderMarkets(); renderNews(); renderDaily();
-  loadWeather(); refreshTodos();
+  loadWeather(); await refreshTodos(); refreshProjects();
 }
 
 async function main() {

@@ -4,10 +4,12 @@
 
 | 區塊 | 資料來源 | 更新方式 |
 |---|---|---|
-| 🌤 天氣 | Open-Meteo（免金鑰） | 瀏覽器即時抓 |
-| 📈 美股 / 指數 / 黃金 / 匯率（重疊滑動卡片） | Yahoo Finance | GitHub Actions：交易時段每 30 分鐘 |
+| 🌤 天氣（台北／桃園可切換） | Open-Meteo（免金鑰） | 瀏覽器即時抓 |
+| 📈 美股 / 指數 / 黃金 / 匯率（美元、日圓、韓元兌台幣；重疊滑動卡片） | Yahoo Finance | GitHub Actions：交易時段每 30 分鐘 |
 | 🌍 國際新聞 + 重點摘要 | Google 新聞、BBC、Al Jazeera、NPR RSS（摘要由 Claude 產生） | Actions：每天 06:13、18:17（台北） |
 | 💼 副業發想 / 💡 每日想法 / ✨ 每日一句 | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
+| 📚 每日學習（英文、日文、技能、邏輯、理財、冷知識依星期輪替，附小練習） | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
+| 🏪 店語副業（ShopVoice 數字與待辦、店語文案 8 週進度、AI 任務） | `life-tasks` 的 `projects.json`、`todos.json`、Issues | 即時讀取 |
 | ✅ 代辦事項 | [`life-tasks`](https://github.com/a0955072107-bit/life-tasks) repo 的 `todos.json` | 即時讀寫 |
 | 🤖 AI 助手 | Claude API（聊天、上網搜尋、管代辦、開 AI 任務 issue） | 瀏覽器直接呼叫 |
 | 🎨 外觀 | 9 套主題、5 張冰山風景（每日輪替）、橫式中央留白 / 格狀版面、模糊度、圓角、區塊開關 | 存在本機 |

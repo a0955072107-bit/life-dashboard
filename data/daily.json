@@ -1,6 +1,6 @@
 {
   "date": "2026-10-28",
-  "updated": "2026-10-28T08:18:39+00:00",
+  "updated": "2026-10-28T08:51:17+00:00",
   "generator": "pool",
   "side_hustle": {
     "title": "咖啡豆 / 茶葉小量選品",
@@ -19,6 +19,17 @@
     "type": "增加資產的想法",
     "title": "了解市值型 ETF 定期定額",
     "detail": "市值型 ETF（例如追蹤台灣 50 或 S&P 500）分散又低成本。今天花 20 分鐘比較 2 檔的內扣費用和追蹤誤差，作為長期投資的起點。"
+  },
+  "learning": {
+    "category": "實用技能",
+    "title": "Excel／Google 試算表：XLOOKUP",
+    "content": "XLOOKUP 可以用一個值去另一個表格查對應資料，比 VLOOKUP 更直覺：不用數第幾欄，也能往左查。Google 試算表與 Excel 365 都支援。",
+    "examples": [
+      "語法：=XLOOKUP(要找的值, 查找範圍, 回傳範圍, \"找不到時顯示\")",
+      "例：=XLOOKUP(A2, 商品表!A:A, 商品表!C:C, \"無資料\") —— 用 A2 的商品編號找出價格"
+    ],
+    "practice": "如果要在 B 欄找姓名 E2，回傳 D 欄的電話，公式怎麼寫？",
+    "answer": "=XLOOKUP(E2, B:B, D:D, \"找不到\")"
   },
   "encouragement": {
     "text": "成功不是終點，失敗也不是末日，重要的是繼續前進的勇氣。",

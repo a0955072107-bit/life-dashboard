@@ -24,9 +24,9 @@ export function loadSettings(config) {
     owner: config.owner,
     tasksRepo: config.tasksRepo,
     dashboardRepo: config.dashboardRepo,
-    city: config.location.name,
-    lat: config.location.lat,
-    lon: config.location.lon,
+    city: config.locations[0].name,
+    lat: config.locations[0].lat,
+    lon: config.locations[0].lon,
   }, lsGet(KEY, {}));
 }
 

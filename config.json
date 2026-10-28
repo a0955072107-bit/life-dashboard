@@ -3,32 +3,145 @@
   "dashboardRepo": "life-dashboard",
   "tasksRepo": "life-tasks",
   "branch": "main",
-  "location": { "name": "台北", "lat": 25.033, "lon": 121.5654 },
+  "locations": [
+    {
+      "name": "台北",
+      "lat": 25.033,
+      "lon": 121.5654
+    },
+    {
+      "name": "桃園",
+      "lat": 24.9937,
+      "lon": 121.301
+    }
+  ],
   "markets": [
-    { "symbol": "^GSPC", "name": "S&P 500", "group": "指數" },
-    { "symbol": "^IXIC", "name": "那斯達克", "group": "指數" },
-    { "symbol": "^DJI", "name": "道瓊工業", "group": "指數" },
-    { "symbol": "^SOX", "name": "費城半導體", "group": "指數" },
-    { "symbol": "^TWII", "name": "台灣加權", "group": "指數" },
-    { "symbol": "^VIX", "name": "VIX 恐慌指數", "group": "指數" },
-    { "symbol": "GC=F", "name": "黃金期貨", "group": "黃金" },
-    { "symbol": "SI=F", "name": "白銀期貨", "group": "黃金" },
-    { "symbol": "GLD", "name": "SPDR 黃金 ETF", "group": "黃金" },
-    { "symbol": "AAPL", "name": "Apple", "group": "美股" },
-    { "symbol": "MSFT", "name": "Microsoft", "group": "美股" },
-    { "symbol": "NVDA", "name": "NVIDIA", "group": "美股" },
-    { "symbol": "GOOGL", "name": "Alphabet", "group": "美股" },
-    { "symbol": "AMZN", "name": "Amazon", "group": "美股" },
-    { "symbol": "META", "name": "Meta", "group": "美股" },
-    { "symbol": "TSLA", "name": "Tesla", "group": "美股" },
-    { "symbol": "TSM", "name": "台積電 ADR", "group": "美股" },
-    { "symbol": "TWD=X", "name": "美元/台幣", "group": "匯率" }
+    {
+      "symbol": "^GSPC",
+      "name": "S&P 500",
+      "group": "指數"
+    },
+    {
+      "symbol": "^IXIC",
+      "name": "那斯達克",
+      "group": "指數"
+    },
+    {
+      "symbol": "^DJI",
+      "name": "道瓊工業",
+      "group": "指數"
+    },
+    {
+      "symbol": "^SOX",
+      "name": "費城半導體",
+      "group": "指數"
+    },
+    {
+      "symbol": "^TWII",
+      "name": "台灣加權",
+      "group": "指數"
+    },
+    {
+      "symbol": "^VIX",
+      "name": "VIX 恐慌指數",
+      "group": "指數"
+    },
+    {
+      "symbol": "GC=F",
+      "name": "黃金期貨",
+      "group": "黃金"
+    },
+    {
+      "symbol": "SI=F",
+      "name": "白銀期貨",
+      "group": "黃金"
+    },
+    {
+      "symbol": "GLD",
+      "name": "SPDR 黃金 ETF",
+      "group": "黃金"
+    },
+    {
+      "symbol": "AAPL",
+      "name": "Apple",
+      "group": "美股"
+    },
+    {
+      "symbol": "MSFT",
+      "name": "Microsoft",
+      "group": "美股"
+    },
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA",
+      "group": "美股"
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet",
+      "group": "美股"
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon",
+      "group": "美股"
+    },
+    {
+      "symbol": "META",
+      "name": "Meta",
+      "group": "美股"
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla",
+      "group": "美股"
+    },
+    {
+      "symbol": "TSM",
+      "name": "台積電 ADR",
+      "group": "美股"
+    },
+    {
+      "symbol": "TWD=X",
+      "name": "美元/台幣",
+      "group": "匯率"
+    },
+    {
+      "symbol": "JPYTWD=X",
+      "name": "日圓/台幣",
+      "group": "匯率"
+    },
+    {
+      "symbol": "KRWTWD=X",
+      "name": "韓元/台幣",
+      "group": "匯率"
+    }
   ],
   "newsFeeds": [
-    { "name": "Google 新聞・國際", "url": "https://news.google.com/rss/headlines/section/topic/WORLD?hl=zh-TW&gl=TW&ceid=TW:zh-Hant", "lang": "zh" },
-    { "name": "BBC World", "url": "https://feeds.bbci.co.uk/news/world/rss.xml", "lang": "en" },
-    { "name": "Al Jazeera", "url": "https://www.aljazeera.com/xml/rss/all.xml", "lang": "en" },
-    { "name": "NPR World", "url": "https://feeds.npr.org/1004/rss.xml", "lang": "en" },
-    { "name": "BBC 中文", "url": "https://feeds.bbci.co.uk/zhongwen/trad/rss.xml", "lang": "zh" }
+    {
+      "name": "Google 新聞・國際",
+      "url": "https://news.google.com/rss/headlines/section/topic/WORLD?hl=zh-TW&gl=TW&ceid=TW:zh-Hant",
+      "lang": "zh"
+    },
+    {
+      "name": "BBC World",
+      "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+      "lang": "en"
+    },
+    {
+      "name": "Al Jazeera",
+      "url": "https://www.aljazeera.com/xml/rss/all.xml",
+      "lang": "en"
+    },
+    {
+      "name": "NPR World",
+      "url": "https://feeds.npr.org/1004/rss.xml",
+      "lang": "en"
+    },
+    {
+      "name": "BBC 中文",
+      "url": "https://feeds.bbci.co.uk/zhongwen/trad/rss.xml",
+      "lang": "zh"
+    }
   ]
 }

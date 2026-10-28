@@ -15,18 +15,21 @@ const repoPath = () => `${API}/repos/${settings.owner}/${settings.tasksRepo}`;
 const b64encode = (s) => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
 const b64decode = (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g, "")), (c) => c.charCodeAt(0)));
 
-export async function loadTodos() {
+async function loadJson(path) {
   if (settings.githubToken) {
-    const r = await fetch(`${repoPath()}/contents/todos.json?ref=main`, { headers: headers(), cache: "no-store" });
+    const r = await fetch(`${repoPath()}/contents/${path}?ref=main`, { headers: headers(), cache: "no-store" });
     if (!r.ok) throw new Error(`GitHub ${r.status}`);
     const j = await r.json();
     return { data: JSON.parse(b64decode(j.content)), sha: j.sha };
   }
   // 沒有 token：只能讀公開 repo
-  const r = await fetch(`https://raw.githubusercontent.com/${settings.owner}/${settings.tasksRepo}/main/todos.json?t=${Date.now()}`);
+  const r = await fetch(`https://raw.githubusercontent.com/${settings.owner}/${settings.tasksRepo}/main/${path}?t=${Date.now()}`);
   if (!r.ok) throw new Error(`讀取失敗 ${r.status}（私人 repo 需要在設定填入 GitHub Token）`);
   return { data: await r.json(), sha: null };
 }
+
+export const loadTodos = () => loadJson("todos.json");
+export const loadProjects = async () => (await loadJson("projects.json")).data;
 
 // Read-modify-write with one retry on sha conflict (another AI may have pushed meanwhile).
 export async function mutateTodos(mutator, message) {
@@ -51,10 +54,11 @@ export async function mutateTodos(mutator, message) {
   throw new Error("代辦檔案同時被修改，請重試");
 }
 
-export function newTodo({ title, due = null, priority = "medium", tags = [], notes = "" }, source = "dashboard") {
+export function newTodo({ title, due = null, priority = "medium", tags = [], notes = "", project }, source = "dashboard") {
   return {
     id: `t_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
     title, done: false, due, priority, tags, notes, source,
+    ...(project ? { project } : {}),
     created: new Date().toISOString(),
   };
 }
@@ -88,8 +92,9 @@ export async function createAiTask({ title, body, labels = [] }) {
   return { number: j.number, url: j.html_url };
 }
 
-export async function listAiTasks(state = "open") {
-  const r = await fetch(`${repoPath()}/issues?labels=ai-task&state=${state}&per_page=30`, { headers: headers() });
+export async function listAiTasks(state = "open", label = "") {
+  const labels = ["ai-task", label].filter(Boolean).join(",");
+  const r = await fetch(`${repoPath()}/issues?labels=${encodeURIComponent(labels)}&state=${state}&per_page=30`, { headers: headers() });
   if (!r.ok) throw new Error(`GitHub ${r.status}`);
-  return (await r.json()).map((i) => ({ number: i.number, title: i.title, state: i.state, url: i.html_url, updated: i.updated_at }));
+  return (await r.json()).map((i) => ({ number: i.number, title: i.title, state: i.state, url: i.html_url, updated: i.updated_at, labels: i.labels.map((l) => l.name) }));
 }

@@ -36,6 +36,19 @@ SCHEMA = {
             "required": ["type", "title", "detail"],
             "additionalProperties": False,
         },
+        "learning": {
+            "type": "object",
+            "properties": {
+                "category": {"type": "string"},
+                "title": {"type": "string"},
+                "content": {"type": "string"},
+                "examples": {"type": "array", "items": {"type": "string"}},
+                "practice": {"type": "string"},
+                "answer": {"type": "string"},
+            },
+            "required": ["category", "title", "content", "examples", "practice", "answer"],
+            "additionalProperties": False,
+        },
         "encouragement": {
             "type": "object",
             "properties": {"text": {"type": "string"}, "author": {"type": "string"}},
@@ -43,9 +56,13 @@ SCHEMA = {
             "additionalProperties": False,
         },
     },
-    "required": ["side_hustle", "idea", "encouragement"],
+    "required": ["side_hustle", "idea", "learning", "encouragement"],
     "additionalProperties": False,
 }
+
+
+# 每日學習依星期輪替主題（週一=0）
+LEARN_TOPICS = ["英文", "日文", "實用技能", "英文", "邏輯思考", "理財知識", "冷知識・科學"]
 
 
 def from_pool(day: datetime) -> dict:
@@ -54,23 +71,37 @@ def from_pool(day: datetime) -> dict:
     return {
         "side_hustle": pick(POOL["side_hustles"]),
         "idea": pick(POOL["ideas"], 7),
+        "learning": next((x for x in POOL["learnings"][n % len(POOL["learnings"]):] + POOL["learnings"]
+                          if x["category"] == LEARN_TOPICS[day.weekday()]), pick(POOL["learnings"])),
         "encouragement": pick(POOL["encouragements"], 3),
     }
 
 
 def main() -> int:
     today = datetime.now(TPE)
-    history = read_json("history.json", {"side_hustles": [], "ideas": []})
+    history = read_json("history.json", {})
+    for k in ("side_hustles", "ideas", "learnings"):
+        history.setdefault(k, [])
+    topic = LEARN_TOPICS[today.weekday()]
     content, generator = None, "pool"
 
     client = claude_client()
     if client:
         avoid = "、".join(history["side_hustles"][-60:] + history["ideas"][-60:]) or "（無）"
+        avoid_learn = "、".join(history["learnings"][-60:]) or "（無）"
         prompt = f"""今天是 {today:%Y-%m-%d}（{"一二三四五六日"[today.weekday()]}）。請為一位住在台灣、上班族、想增加收入與資產的人產生今天的內容，全部使用繁體中文（台灣用語）：
 
 1. side_hustle：一個具體可執行的副業發想。summary 2–3 句說明是什麼、為什麼現在適合；steps 3–5 個「這週就能開始」的具體步驟；startup_cost、time_needed（每週時數）、potential（合理的月收入範圍，不誇大）。
 2. idea：一個想法，type 二選一：「今天可以做的事」（具體小行動，例如整理某項支出、學一個技能）或「增加資產的想法」（理財、投資、提升能力或被動收入的方向）。detail 3–4 句、具體可行。
-3. encouragement：一句溫暖、不老套的每日鼓勵。可以是名人名言（author 填真實出處）或原創（author 填「今日寄語」）。不要捏造名人說過的話。
+3. learning：今天的「每日學習」，主題是「{topic}」，category 填「{topic}」。挑一個 5 分鐘內學得會、生活或工作用得到的小東西：
+   - 英文／日文：一個實用句型、片語或易混淆用法（例如 affect vs effect），content 說明意思與用法，examples 2–3 個例句（附中文翻譯）
+   - 實用技能：一個具體技巧（Excel 函數、手機設定、溝通技巧、AI 工具用法等），examples 寫操作步驟
+   - 邏輯思考：一個思考框架、常見謬誤或一道小推理題，examples 寫應用情境
+   - 理財知識：一個觀念（例如複利、ETF 內扣費用、緊急預備金），examples 用台灣情境舉例、附數字
+   - 冷知識・科學：一個有趣且正確的知識，examples 補充細節
+   content 3–4 句；practice 是一題能自我檢查的小練習；answer 是解答與簡短說明。內容必須正確，不確定的不要寫。
+   避免與最近學過的重複：{avoid_learn}
+4. encouragement：一句溫暖、不老套的每日鼓勵。可以是名人名言（author 填真實出處）或原創（author 填「今日寄語」）。不要捏造名人說過的話。
 
 避免與最近用過的題目重複：{avoid}"""
         try:
@@ -82,6 +113,7 @@ def main() -> int:
 
     history["side_hustles"] = (history["side_hustles"] + [content["side_hustle"]["title"]])[-90:]
     history["ideas"] = (history["ideas"] + [content["idea"]["title"]])[-90:]
+    history["learnings"] = (history["learnings"] + [content["learning"]["title"]])[-90:]
     write_json("history.json", history)
     write_json("daily.json", {"date": f"{today:%Y-%m-%d}", "updated": now_iso(), "generator": generator, **content})
     print(f"daily: {generator} – {content['side_hustle']['title']}")

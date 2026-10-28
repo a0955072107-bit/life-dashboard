@@ -62,7 +62,8 @@
 
     <!-- 天氣 -->
     <section class="card glass" id="weatherCard">
-      <div class="card-title">🌤 天氣 <span class="muted" id="weatherLoc"></span>
+      <div class="card-title">🌤 天氣
+        <span class="chips w-cities" id="cityTabs"></span>
         <button class="chip-btn" id="locBtn" title="使用目前位置">📍</button></div>
       <div class="weather-now">
         <div class="w-icon" id="wIcon">–</div>
@@ -98,6 +99,12 @@
       <div class="muted small" id="todoHint"></div>
     </section>
 
+    <!-- 店語副業 -->
+    <section class="card glass project-card" id="projectCard">
+      <div class="card-title">🏪 店語副業 <span class="muted" id="projMeta"></span></div>
+      <div id="projBody"><p class="muted">載入中…</p></div>
+    </section>
+
     <!-- 副業 -->
     <section class="card glass" id="hustleCard">
       <div class="card-title">💼 今日副業發想</div>
@@ -105,6 +112,18 @@
       <p id="hustleSummary"></p>
       <ol class="steps" id="hustleSteps"></ol>
       <div class="tags" id="hustleTags"></div>
+    </section>
+
+    <!-- 每日學習 -->
+    <section class="card glass learn-card" id="learnCard">
+      <div class="card-title">📚 每日學習 <span class="badge" id="learnCat"></span></div>
+      <h3 id="learnTitle">–</h3>
+      <p id="learnContent"></p>
+      <ul class="learn-ex" id="learnExamples"></ul>
+      <details class="learn-practice" id="learnPractice" hidden>
+        <summary><b>✍️ 小練習：</b><span id="learnQ"></span><span class="muted small">（點我看答案）</span></summary>
+        <p id="learnA"></p>
+      </details>
     </section>
 
     <!-- 每日想法 -->

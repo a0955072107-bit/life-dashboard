@@ -343,8 +343,9 @@ button, input, textarea { font: inherit; color: inherit; }
     grid-template-columns: minmax(300px, 1fr) minmax(220px, 1.15fr) minmax(300px, 1fr);
     grid-template-areas:
       "weather scene todo"
-      "market  scene todo"
-      "quote   scene hustle"
+      "market  scene project"
+      "learn   scene hustle"
+      "quote   scene idea"
       "news    scene idea";
     align-items: start;
   }
@@ -355,6 +356,8 @@ button, input, textarea { font: inherit; color: inherit; }
   :root:not([data-layout="grid"]) .grid > .news-card { grid-area: news; }
   :root:not([data-layout="grid"]) .grid > .todo-card { grid-area: todo; }
   :root:not([data-layout="grid"]) .grid > #hustleCard { grid-area: hustle; }
+  :root:not([data-layout="grid"]) .grid > .project-card { grid-area: project; }
+  :root:not([data-layout="grid"]) .grid > .learn-card { grid-area: learn; }
   :root:not([data-layout="grid"]) .grid > #ideaCard { grid-area: idea; }
   :root:not([data-layout="grid"]) .quote-card blockquote { font-size: 1.1rem; }
   :root:not([data-layout="grid"]) .mcard { inset: 0 4%; }
@@ -366,3 +369,36 @@ button, input, textarea { font: inherit; color: inherit; }
   :root:not([data-layout="grid"]) .grid { grid-template-columns: minmax(340px, 1fr) minmax(320px, 1.4fr) minmax(340px, 1fr); }
 }
 .wall-grid .sw { background-size: cover !important; background-position: center !important; }
+
+/* ===== 店語副業 ===== */
+.w-cities { margin: 0; gap: 6px; }
+.w-cities button { padding: 3px 12px; }
+.proj { padding: 12px 0; border-top: 1px solid rgba(255,255,255,.12); }
+.proj:first-child { border-top: none; padding-top: 0; }
+.proj.paused > :not(.p-head) { opacity: .75; }
+.p-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.p-links { margin-left: auto; display: flex; gap: 10px; font-size: .8rem; }
+.p-links a, .ai-list a { color: var(--accent); text-decoration: none; }
+.badge.on { color: var(--up); }
+.badge.warn { color: var(--down); }
+.p-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 8px; margin-bottom: 8px; }
+.p-metric { background: var(--glass); border-radius: 14px; padding: 8px 10px; }
+.p-metric b { font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+.p-metric small { color: var(--muted); margin-left: 3px; }
+.pbar { height: 6px; border-radius: 3px; background: var(--glass-strong); overflow: hidden; margin: 6px 0; }
+.pbar i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--blob1), var(--blob2)); }
+.p-plan { margin-bottom: 6px; }
+.p-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.p-sub { margin-top: 8px; }
+.proj .todo-list { max-height: none; }
+.proj details { margin-top: 6px; }
+.proj summary { cursor: pointer; }
+.ai-list { margin: 6px 0 0; padding-left: 18px; line-height: 1.8; font-size: .88rem; }
+[data-hidden~="project"] .project-card { display: none; }
+
+/* ===== 每日學習 ===== */
+.learn-ex { margin: 0 0 10px; padding-left: 20px; line-height: 1.7; }
+.learn-practice { background: var(--glass); border-radius: 14px; padding: 10px 12px; }
+.learn-practice summary { cursor: pointer; line-height: 1.6; }
+.learn-practice p { margin: 8px 0 0; }
+[data-hidden~="learn"] .learn-card { display: none; }
