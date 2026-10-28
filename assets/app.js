@@ -405,6 +405,7 @@ async function main() {
   state.config = await (await fetch("config.json")).json();
   loadSettings(state.config);
   initAppearance(); initDeck(); initTodos(); initSettings();
+  window.__appReady = true;
   $("newsTabs").addEventListener("click", (e) => { const s = e.target.dataset?.s; if (s) { newsSource = s; renderNews(); } });
   $("newsCats").addEventListener("click", (e) => { const c = e.target.closest("[data-c]")?.dataset.c; if (c) { newsCat = c; newsSource = "全部"; renderNews(); } });
   initChat({ state, refreshTodos, openSettings: () => $("settingsBtn").click() });

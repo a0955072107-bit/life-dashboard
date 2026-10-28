@@ -216,6 +216,13 @@
     </form>
   </dialog>
 
+  <div class="reload-banner glass" id="reloadBanner" hidden>
+    網站剛更新，部分檔案還是舊的。<button onclick="location.reload()">重新載入</button>
+  </div>
+  <script>
+    // 主程式沒有在 6 秒內啟動（多半是瀏覽器快取了舊檔案），就顯示重新載入提示
+    setTimeout(() => { if (!window.__appReady) document.getElementById("reloadBanner").hidden = false; }, 6000);
+  </script>
   <script type="module" src="assets/app.js"></script>
 </body>
 </html>

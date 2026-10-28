@@ -403,3 +403,9 @@ button, input, textarea { font: inherit; color: inherit; }
 .learn-practice p { margin: 8px 0 0; }
 [data-hidden~="learn"] .learn-card { display: none; }
 .news-cats button { font-size: .95rem; padding: 6px 16px; }
+
+.reload-banner { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); z-index: 50; padding: 10px 16px;
+  display: flex; align-items: center; gap: 10px; font-size: .9rem; background: var(--panel); }
+.reload-banner[hidden] { display: none; }
+.reload-banner button { border: none; border-radius: 10px; padding: 6px 12px; cursor: pointer; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--blob1), var(--blob2)); }
