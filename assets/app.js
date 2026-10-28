@@ -2,6 +2,7 @@ import { settings, loadSettings, saveSettings } from "./store.js";
 import { loadTodos, addTodo, setTodoDone, loadProjects, listAiTasks } from "./github.js";
 import { initChat, MODELS, DEFAULT_MODEL } from "./chat.js";
 import { initAppearance } from "./theme.js";
+import { initDiary, refreshDiary } from "./diary.js";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s = "") => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -371,20 +372,20 @@ function initSettings() {
   $("settingsBtn").onclick = () => {
     form.elements.model.innerHTML = Object.entries(MODELS).map(([id, m]) => `<option value="${id}">${esc(m.label)}</option>`).join("");
     form.elements.model.value = MODELS[settings.model] ? settings.model : DEFAULT_MODEL;
-    for (const k of ["anthropicKey", "githubToken", "owner", "tasksRepo", "city"]) form.elements[k].value = settings[k] || "";
+    for (const k of ["anthropicKey", "githubToken", "owner", "tasksRepo", "diaryRepo", "city"]) form.elements[k].value = settings[k] || "";
     dlg.showModal();
   };
   dlg.addEventListener("close", async () => {
     if (dlg.returnValue !== "save") return;
     const f = form.elements;
-    const patch = { model: f.model.value, anthropicKey: f.anthropicKey.value.trim(), githubToken: f.githubToken.value.trim(), owner: f.owner.value.trim(), tasksRepo: f.tasksRepo.value.trim() };
+    const patch = { model: f.model.value, anthropicKey: f.anthropicKey.value.trim(), githubToken: f.githubToken.value.trim(), owner: f.owner.value.trim(), tasksRepo: f.tasksRepo.value.trim(), diaryRepo: f.diaryRepo.value.trim() || "life-diary" };
     const city = f.city.value.trim();
     if (city && city !== settings.city) {
       try { const g = await geocode(city); Object.assign(patch, { city, lat: g.lat, lon: g.lon }); } catch { alert("找不到這個城市，天氣維持原設定"); }
     }
     saveSettings(patch);
     $("chatModel").textContent = patch.model;
-    loadWeather(); refreshTodos().then(refreshProjects);
+    loadWeather(); refreshTodos().then(refreshProjects); refreshDiary();
   });
   $("locBtn").onclick = () => navigator.geolocation?.getCurrentPosition((p) => {
     saveSettings({ lat: p.coords.latitude, lon: p.coords.longitude, city: "目前位置" });
@@ -405,6 +406,7 @@ async function main() {
   state.config = await (await fetch("config.json")).json();
   loadSettings(state.config);
   initAppearance(); initDeck(); initTodos(); initSettings();
+  initDiary();
   window.__appReady = true;
   $("newsTabs").addEventListener("click", (e) => { const s = e.target.dataset?.s; if (s) { newsSource = s; renderNews(); } });
   $("newsCats").addEventListener("click", (e) => { const c = e.target.closest("[data-c]")?.dataset.c; if (c) { newsCat = c; newsSource = "全部"; renderNews(); } });

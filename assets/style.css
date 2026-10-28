@@ -344,8 +344,8 @@ button, input, textarea { font: inherit; color: inherit; }
     grid-template-areas:
       "weather scene todo"
       "market  scene project"
-      "learn   scene hustle"
-      "quote   scene idea"
+      "learn   scene diary"
+      "quote   scene hustle"
       "news    scene idea";
     align-items: start;
   }
@@ -358,6 +358,7 @@ button, input, textarea { font: inherit; color: inherit; }
   :root:not([data-layout="grid"]) .grid > #hustleCard { grid-area: hustle; }
   :root:not([data-layout="grid"]) .grid > .project-card { grid-area: project; }
   :root:not([data-layout="grid"]) .grid > .learn-card { grid-area: learn; }
+  :root:not([data-layout="grid"]) .grid > .diary-card { grid-area: diary; }
   :root:not([data-layout="grid"]) .grid > #ideaCard { grid-area: idea; }
   :root:not([data-layout="grid"]) .quote-card blockquote { font-size: 1.1rem; }
   :root:not([data-layout="grid"]) .mcard { inset: 0 4%; }
@@ -409,3 +410,50 @@ button, input, textarea { font: inherit; color: inherit; }
 .reload-banner[hidden] { display: none; }
 .reload-banner button { border: none; border-radius: 10px; padding: 6px 12px; cursor: pointer; font-weight: 700; color: #fff;
   background: linear-gradient(135deg, var(--blob1), var(--blob2)); }
+
+/* ===== 日記 ===== */
+.diary-form { display: grid; gap: 8px; }
+.diary-form input, .diary-form textarea, .book-head input {
+  width: 100%; min-width: 0; padding: 9px 12px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--glass); outline: none; color: var(--text);
+}
+.diary-form textarea { resize: vertical; line-height: 1.7; min-height: 110px; }
+.d-row { display: grid; grid-template-columns: auto 1fr; gap: 8px; }
+.d-row input[type=date] { width: auto; }
+.d-moods { display: flex; flex-wrap: wrap; gap: 4px; }
+.d-moods button { border: 1px solid transparent; background: transparent; border-radius: 10px; font-size: 1.25rem; padding: 2px 5px; cursor: pointer; opacity: .55; }
+.d-moods button.active { opacity: 1; background: var(--glass-strong); border-color: var(--border); }
+.d-actions { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.d-actions #dStatus { margin-right: auto; }
+.d-actions button { border: none; border-radius: 12px; padding: 8px 16px; cursor: pointer; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--blob1), var(--blob2)); }
+.d-actions .ghost { background: var(--glass-strong); color: var(--text); font-weight: 500; }
+.d-entry { padding: 10px 12px; border-radius: 14px; background: var(--glass); margin-bottom: 8px; cursor: pointer; }
+.d-entry:hover { background: var(--glass-strong); }
+.d-entry-head { display: flex; gap: 10px; align-items: center; }
+.d-mood { font-size: 1.5rem; }
+.d-text { margin-top: 6px; line-height: 1.7; font-size: .92rem; word-break: break-word; }
+[data-hidden~="diary"] .diary-card { display: none; }
+
+.diary-book { width: min(1000px, calc(100vw - 32px)); height: min(760px, calc(100vh - 40px)); padding: 18px; color: var(--text);
+  background: var(--panel); display: none; flex-direction: column; }
+.diary-book[open] { display: flex; }
+.diary-book::backdrop { background: rgba(0,0,0,.35); backdrop-filter: blur(4px); }
+.book-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.book-head h2 { margin: 0; font-size: 1.3rem; }
+.book-head input { flex: 1; min-width: 180px; width: auto; }
+.book-body { display: grid; grid-template-columns: 300px 1fr; gap: 18px; flex: 1; min-height: 0; }
+.book-list-wrap { overflow: auto; min-height: 0; }
+.book-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.book-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.cal-h { font-size: .75rem; color: var(--muted); }
+.cal-d { aspect-ratio: 1; border-radius: 10px; border: 1px solid transparent; background: transparent; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: .8rem; color: var(--text); padding: 0; }
+.cal-d i { font-style: normal; font-size: .95rem; line-height: 1; }
+.cal-d.has { background: var(--glass); }
+.cal-d.today { border-color: var(--accent); }
+.cal-d.sel { background: var(--glass-strong); border-color: var(--text); }
+@media (max-width: 720px) {
+  .book-body { grid-template-columns: 1fr; overflow: auto; }
+  .book-list-wrap { overflow: visible; }
+}

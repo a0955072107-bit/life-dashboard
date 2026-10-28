@@ -105,6 +105,30 @@
       <div id="projBody"><p class="muted">載入中…</p></div>
     </section>
 
+    <!-- 日記 -->
+    <section class="card glass diary-card" id="diaryCard">
+      <div class="card-title">📔 日記 <span class="muted" id="diaryMeta"></span>
+        <button class="chip-btn" id="diaryOpen" style="margin-left:auto">📖 查閱日記本</button></div>
+      <form id="diaryForm" class="diary-form">
+        <div class="muted small" id="dFormTitle">寫日記</div>
+        <div class="d-row">
+          <input type="date" id="dDate">
+          <input id="dTitle" placeholder="標題（可不填）" autocomplete="off">
+        </div>
+        <div class="d-moods" id="dMood"></div>
+        <textarea id="dText" rows="5" placeholder="今天發生了什麼？有什麼感受、想法或感謝的事…"></textarea>
+        <input id="dTags" placeholder="標籤（空格分隔，例如：工作 家人 旅行）" autocomplete="off">
+        <div class="d-actions">
+          <span class="muted small" id="dStatus"></span>
+          <button type="button" class="ghost" id="dDelete" hidden>刪除</button>
+          <button type="button" class="ghost" id="dCancel">清空</button>
+          <button type="submit">儲存</button>
+        </div>
+      </form>
+      <div class="muted small" style="margin:12px 0 4px">最近的日記（點一下可編輯）</div>
+      <div id="diaryRecent"></div>
+    </section>
+
     <!-- 副業 -->
     <section class="card glass" id="hustleCard">
       <div class="card-title">💼 今日副業發想</div>
@@ -182,6 +206,8 @@
         <input name="owner"></label>
       <label>代辦 / 任務 Repo
         <input name="tasksRepo"></label>
+      <label>日記 Repo（私人）
+        <input name="diaryRepo" placeholder="life-diary"></label>
       <label>天氣城市（例：台北、Tokyo）
         <input name="city"></label>
       <div class="row">
@@ -189,6 +215,27 @@
         <button value="save" id="saveSettings">儲存</button>
       </div>
     </form>
+  </dialog>
+
+  <!-- 日記本 -->
+  <dialog class="glass diary-book" id="diaryBook">
+    <div class="book-head">
+      <h2>📖 日記本</h2>
+      <input type="search" id="bookSearch" placeholder="🔍 搜尋全部日記（關鍵字、標籤、心情）">
+      <button class="chip-btn" id="bookNew">＋ 寫一篇</button>
+      <button class="chip-btn" id="bookClose">✕</button>
+    </div>
+    <div class="book-body">
+      <div class="book-cal-wrap">
+        <div class="book-nav"><button class="chip-btn" id="bookPrev">‹</button><b id="bookMonth"></b><button class="chip-btn" id="bookNext">›</button></div>
+        <div class="book-cal" id="bookCal"></div>
+        <p class="muted small">點日期只看那天，再點一次取消。</p>
+      </div>
+      <div class="book-list-wrap">
+        <div class="muted small" id="bookListTitle"></div>
+        <div id="bookList"></div>
+      </div>
+    </div>
   </dialog>
 
   <!-- 外觀 -->

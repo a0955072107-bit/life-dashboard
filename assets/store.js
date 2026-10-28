@@ -6,6 +6,7 @@ export const settings = {
   githubToken: "",
   owner: "",
   tasksRepo: "",
+  diaryRepo: "life-diary",
   dashboardRepo: "",
   city: "",
   lat: null,

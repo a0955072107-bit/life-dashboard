@@ -3,7 +3,7 @@ import { settings } from "./store.js";
 
 const API = "https://api.github.com";
 
-function headers() {
+export function headers() {
   const h = { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" };
   if (settings.githubToken) h.Authorization = `Bearer ${settings.githubToken}`;
   return h;
@@ -12,8 +12,8 @@ function headers() {
 const repoPath = () => `${API}/repos/${settings.owner}/${settings.tasksRepo}`;
 
 // UTF-8 safe base64
-const b64encode = (s) => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
-const b64decode = (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g, "")), (c) => c.charCodeAt(0)));
+export const b64encode = (s) => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+export const b64decode = (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g, "")), (c) => c.charCodeAt(0)));
 
 async function loadJson(path) {
   if (settings.githubToken) {

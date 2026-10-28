@@ -10,6 +10,7 @@
 | 💼 副業發想 / 💡 每日想法 / ✨ 每日一句 | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
 | 📚 每日學習（英文、日文、技能、邏輯、理財、冷知識依星期輪替，附小練習） | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
 | 🏪 店語副業（ShopVoice 數字與待辦、店語文案 8 週進度、AI 任務） | `life-tasks` 的 `projects.json`、`todos.json`、Issues | 即時讀取 |
+| 📔 日記（心情、標籤、月曆查閱、全文搜尋、可編輯刪除） | 私人 repo `life-diary` 的 `entries/YYYY-MM.json` | 即時讀寫（需要 GitHub Token 有該 repo 權限） |
 | ✅ 代辦事項 | [`life-tasks`](https://github.com/a0955072107-bit/life-tasks) repo 的 `todos.json` | 即時讀寫 |
 | 🤖 AI 助手 | Claude API（聊天、上網搜尋、管代辦、開 AI 任務 issue） | 瀏覽器直接呼叫 |
 | 🎨 外觀 | 9 套主題、5 張冰山風景（每日輪替）、橫式中央留白 / 格狀版面、模糊度、圓角、區塊開關 | 存在本機 |
@@ -22,7 +23,7 @@
 2. **（建議）設定 Claude 金鑰給自動排程**：Settings → Secrets and variables → Actions → New repository secret，名稱 `ANTHROPIC_API_KEY`。有它才會產生繁中新聞摘要和每天不同的副業/想法；沒有也能運作。
 3. **第一次手動跑資料**：Actions → 「更新儀表板資料」→ Run workflow（勾選「重新產生每日內容」）。
 4. **在網頁右上角 ⚙ 設定**：
-   - **GitHub Token**：到 https://github.com/settings/personal-access-tokens/new 建立 Fine-grained token，Repository access 只選 `life-tasks`，Permissions 給 **Contents: Read and write**、**Issues: Read and write**。
+   - **GitHub Token**：到 https://github.com/settings/personal-access-tokens/new 建立 Fine-grained token，Repository access 選 `life-tasks` 和 `life-diary`，Permissions 給 **Contents: Read and write**、**Issues: Read and write**。
    - **Anthropic API Key**：AI 助手用，到 https://console.anthropic.com 建立。
    - 金鑰只存在該裝置的瀏覽器，不會進 repo。每台裝置（電腦、平板）各自設定一次。
 
