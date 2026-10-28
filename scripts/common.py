@@ -33,14 +33,17 @@ def claude_client():
 
 
 def claude_json(client, prompt: str, schema: dict, max_tokens: int = 16000) -> dict:
+    # 模型可用 repo 的 Actions 變數 CLAUDE_MODEL 切換（claude-opus-5-5 / claude-sonnet-5-5 / claude-haiku-5-5）
+    model = os.environ.get("CLAUDE_MODEL") or "claude-opus-5-5"
+    # 被拒絕時由伺服器改用備援模型；Haiku 不支援
+    fallback = {} if "haiku" in model else {"betas": ["server-side-fallback-2026-07-01"], "fallbacks": "default"}
     response = client.beta.messages.create(
-        model="claude-opus-5-5",
+        model=model,
         max_tokens=max_tokens,
         thinking={"type": "adaptive"},
         output_config={"effort": "medium", "format": {"type": "json_schema", "schema": schema}},
-        betas=["server-side-fallback-2026-07-01"],
-        fallbacks="default",
         messages=[{"role": "user", "content": prompt}],
+        **fallback,
     )
     if response.stop_reason == "refusal":
         raise RuntimeError("Claude declined the request")

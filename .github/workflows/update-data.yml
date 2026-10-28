@@ -40,12 +40,14 @@ jobs:
         continue-on-error: true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
 
       - name: 每日內容
         if: github.event.schedule == '13 22 * * *' || inputs.daily
         run: python scripts/gen_daily.py
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
 
       - name: 提交資料
         run: |

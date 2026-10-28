@@ -2,7 +2,14 @@
 import { settings, lsGet, lsSet } from "./store.js";
 import { addTodo, setTodoDone, loadTodos, createAiTask, listAiTasks } from "./github.js";
 
-const MODEL = "claude-opus-5-5";
+// 可在 ⚙ 設定切換。價格為每百萬 tokens 的輸入／輸出美元。
+export const MODELS = {
+  "claude-opus-5-5": { label: "Opus 5.5：最聰明（$4／$20）", search: "web_search_20260209", fallback: true },
+  "claude-sonnet-5-5": { label: "Sonnet 5.5：均衡，約便宜一半（$2／$10）", search: "web_search_20260209", fallback: true },
+  "claude-haiku-5-5": { label: "Haiku 5.5：最快最便宜（$0.1／$0.5）", search: "web_search_20250305", fallback: false },
+};
+export const DEFAULT_MODEL = "claude-opus-5-5";
+const currentModel = () => (MODELS[settings.model] ? settings.model : DEFAULT_MODEL);
 const HISTORY_KEY = "lifedash.chat";
 const $ = (id) => document.getElementById(id);
 
@@ -18,8 +25,12 @@ const SYSTEM = `你是使用者的私人生活助手，住在他的「生活儀�
 投資相關問題提供資訊與觀點即可，提醒這不是投資建議，不要過度重複免責聲明。
 做了會改變資料的動作（新增代辦、建立任務）後，簡短告訴使用者結果與連結。`;
 
+const toolsFor = (model) => [
+  { type: MODELS[model].search, name: "web_search", max_uses: 5, user_location: { type: "approximate", country: "TW", timezone: "Asia/Taipei" } },
+  ...TOOLS,
+];
+
 const TOOLS = [
-  { type: "web_search_20260209", name: "web_search", max_uses: 5, user_location: { type: "approximate", country: "TW", timezone: "Asia/Taipei" } },
   {
     name: "get_dashboard_snapshot",
     description: "取得儀表板目前顯示的所有資料：天氣、市場報價（美股/指數/黃金/匯率）、今日國際與財經新聞摘要與標題、今日副業發想、今日想法、每日學習、每日鼓勵、未完成代辦。回答與這些主題相關的問題前先呼叫。",
@@ -206,15 +217,18 @@ async function send(text) {
     for (let turn = 0; turn < 12; turn++) {
       const el = bubble("ai", "…");
       let acc = "";
+      const model = currentModel();
+      $("chatModel").textContent = model;
+      // 被安全機制拒絕時，Opus／Sonnet 可由伺服器自動改用備援模型；Haiku 不支援
+      const fallback = MODELS[model].fallback ? { betas: ["server-side-fallback-2026-07-01"], fallbacks: "default" } : {};
       const stream = api.beta.messages.stream({
-        model: MODEL,
+        model,
         max_tokens: 16000,
         system: SYSTEM,
-        tools: TOOLS,
+        tools: toolsFor(model),
         thinking: { type: "adaptive" },
         output_config: { effort: "medium" },
-        betas: ["server-side-fallback-2026-07-01"],
-        fallbacks: "default",
+        ...fallback,
         messages,
       });
       stream.on("text", (d) => { acc += d; el.innerHTML = md(acc); $("chatLog").scrollTop = $("chatLog").scrollHeight; });
@@ -253,7 +267,7 @@ async function send(text) {
 
 export function initChat(c) {
   ctx = c;
-  $("chatModel").textContent = MODEL;
+  $("chatModel").textContent = currentModel();
   const panel = $("chatPanel");
   const toggle = (open) => { panel.classList.toggle("open", open); panel.setAttribute("aria-hidden", String(!open)); if (open) $("chatInput").focus(); };
   $("chatFab").onclick = () => toggle(!panel.classList.contains("open"));

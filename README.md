@@ -26,6 +26,11 @@
    - **Anthropic API Key**：AI 助手用，到 https://console.anthropic.com 建立。
    - 金鑰只存在該裝置的瀏覽器，不會進 repo。每台裝置（電腦、平板）各自設定一次。
 
+## 換 AI 模型
+
+- **AI 助手**：網頁右上角 ⚙ →「AI 助手模型」選 Opus 5.5（最聰明）／Sonnet 5.5（均衡，約便宜一半）／Haiku 5.5（最便宜），每台裝置各自設定。
+- **每天自動產生的內容**：repo 的 Settings → Secrets and variables → Actions → **Variables** 分頁 → New repository variable，名稱 `CLAUDE_MODEL`，值填 `claude-sonnet-5-5` 或 `claude-haiku-5-5`。沒設就用 Opus 5.5。
+
 ## 自訂
 
 - 想追蹤的股票、指數、新聞來源：改 `config.json`。
