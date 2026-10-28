@@ -6,7 +6,7 @@
 |---|---|---|
 | 🌤 天氣（台北／桃園可切換） | Open-Meteo（免金鑰） | 瀏覽器即時抓 |
 | 📈 美股 / 指數 / 黃金 / 匯率（美元、日圓、韓元兌台幣；重疊滑動卡片） | Yahoo Finance | GitHub Actions：交易時段每 30 分鐘 |
-| 🌍 國際新聞 + 重點摘要 | Google 新聞、BBC、Al Jazeera、NPR RSS（摘要由 Claude 產生） | Actions：每天 06:13、18:17（台北） |
+| 🌍 國際＋💹 財經新聞（可切換）＋重點摘要 | 國際：Google 新聞、BBC、Al Jazeera、NPR；財經：Google 新聞財經、BBC Business、CNBC、MarketWatch（摘要由 Claude 產生） | Actions：每天 06:13、18:17（台北） |
 | 💼 副業發想 / 💡 每日想法 / ✨ 每日一句 | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
 | 📚 每日學習（英文、日文、技能、邏輯、理財、冷知識依星期輪替，附小練習） | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
 | 🏪 店語副業（ShopVoice 數字與待辦、店語文案 8 週進度、AI 任務） | `life-tasks` 的 `projects.json`、`todos.json`、Issues | 即時讀取 |

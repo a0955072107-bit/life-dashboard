@@ -402,3 +402,4 @@ button, input, textarea { font: inherit; color: inherit; }
 .learn-practice summary { cursor: pointer; line-height: 1.6; }
 .learn-practice p { margin: 8px 0 0; }
 [data-hidden~="learn"] .learn-card { display: none; }
+.news-cats button { font-size: .95rem; padding: 6px 16px; }

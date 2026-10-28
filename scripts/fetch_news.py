@@ -1,4 +1,4 @@
-"""抓取國際新聞 RSS → data/news.json；有 ANTHROPIC_API_KEY 時另外產生繁中重點摘要"""
+"""抓取國際與財經新聞 RSS → data/news.json；有 ANTHROPIC_API_KEY 時另外產生兩類的繁中重點摘要"""
 import calendar
 import sys
 from datetime import datetime, timedelta, timezone
@@ -32,6 +32,7 @@ def main() -> int:
                 "title": e.get("title", "").strip(),
                 "link": e.get("link"),
                 "source": feed["name"],
+                "category": feed.get("category", "國際"),
                 "lang": feed["lang"],
                 "published": pub,
                 "summary": (e.get("summary") or "")[:300],
@@ -41,28 +42,38 @@ def main() -> int:
         return 1
     items.sort(key=lambda i: i["published"] or "", reverse=True)
 
-    brief = []
+    briefs = {"國際": [], "財經": []}
     client = claude_client()
     if client:
-        headlines = "\n".join(f"- [{i['source']}] {i['title']}" for i in items[:80])
+        def headlines(cat):
+            return "\n".join(f"- [{i['source']}] {i['title']}" for i in [x for x in items if x["category"] == cat][:80])
+
         try:
-            brief = claude_json(
+            res = claude_json(
                 client,
-                "以下是過去一天的國際新聞標題。請挑出最重要的 6 則國際大事，"
-                "各用一句繁體中文（台灣用語，40 字內）說明發生什麼事與為何重要；"
-                "重複報導合併，不要逐條翻譯標題。\n\n" + headlines,
+                "以下是過去一天的新聞標題，分成國際與財經兩類。請各挑出最重要的 6 則，"
+                "各用一句繁體中文（台灣用語，45 字內）說明發生什麼事與為何重要；重複報導合併，不要逐條翻譯標題。"
+                "財經類著重市場走勢、央行與利率、重要企業與產業、對台灣投資人的影響。\n\n"
+                f"【國際】\n{headlines('國際')}\n\n【財經】\n{headlines('財經')}",
                 {
                     "type": "object",
-                    "properties": {"brief": {"type": "array", "items": {"type": "string"}}},
-                    "required": ["brief"],
+                    "properties": {
+                        "world": {"type": "array", "items": {"type": "string"}},
+                        "finance": {"type": "array", "items": {"type": "string"}},
+                    },
+                    "required": ["world", "finance"],
                     "additionalProperties": False,
                 },
-            )["brief"]
+            )
+            briefs = {"國際": res["world"], "財經": res["finance"]}
         except Exception as e:  # noqa: BLE001 - summary is optional
             print("WARN brief:", e, file=sys.stderr)
 
-    write_json("news.json", {"updated": now_iso(), "brief": brief, "items": items[:120]})
-    print(f"news: {len(items)} items, brief {len(brief)}")
+    # 每類各保留最新 80 則
+    kept = [i for cat in ("國際", "財經") for i in [x for x in items if x["category"] == cat][:80]]
+    kept.sort(key=lambda i: i["published"] or "", reverse=True)
+    write_json("news.json", {"updated": now_iso(), "brief": briefs["國際"], "briefs": briefs, "items": kept})
+    print(f"news: {len(kept)} items, briefs {[len(v) for v in briefs.values()]}")
     return 0
 
 

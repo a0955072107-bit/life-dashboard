@@ -121,27 +121,56 @@
     {
       "name": "Google 新聞・國際",
       "url": "https://news.google.com/rss/headlines/section/topic/WORLD?hl=zh-TW&gl=TW&ceid=TW:zh-Hant",
-      "lang": "zh"
+      "lang": "zh",
+      "category": "國際"
     },
     {
       "name": "BBC World",
       "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
-      "lang": "en"
+      "lang": "en",
+      "category": "國際"
     },
     {
       "name": "Al Jazeera",
       "url": "https://www.aljazeera.com/xml/rss/all.xml",
-      "lang": "en"
+      "lang": "en",
+      "category": "國際"
     },
     {
       "name": "NPR World",
       "url": "https://feeds.npr.org/1004/rss.xml",
-      "lang": "en"
+      "lang": "en",
+      "category": "國際"
     },
     {
       "name": "BBC 中文",
       "url": "https://feeds.bbci.co.uk/zhongwen/trad/rss.xml",
-      "lang": "zh"
+      "lang": "zh",
+      "category": "國際"
+    },
+    {
+      "name": "Google 新聞・財經",
+      "url": "https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=zh-TW&gl=TW&ceid=TW:zh-Hant",
+      "lang": "zh",
+      "category": "財經"
+    },
+    {
+      "name": "BBC Business",
+      "url": "https://feeds.bbci.co.uk/news/business/rss.xml",
+      "lang": "en",
+      "category": "財經"
+    },
+    {
+      "name": "CNBC",
+      "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114",
+      "lang": "en",
+      "category": "財經"
+    },
+    {
+      "name": "MarketWatch",
+      "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories",
+      "lang": "en",
+      "category": "財經"
     }
   ]
 }

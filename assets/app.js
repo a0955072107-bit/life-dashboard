@@ -183,15 +183,22 @@ function initDeck() {
 }
 
 /* ---------- 新聞 ---------- */
-let newsSource = "全部";
+let newsCat = "國際", newsSource = "全部";
 function renderNews() {
   const n = state.news;
   if (!n) { $("newsList").innerHTML = `<li class="muted">尚無新聞資料</li>`; return; }
   $("newsTime").textContent = `更新 ${fmtTime(n.updated)}`;
-  $("newsBrief").innerHTML = (n.brief || []).map((b) => `<li>${esc(b)}</li>`).join("");
-  const sources = ["全部", ...new Set(n.items.map((i) => i.source))];
+  const catOf = (i) => i.category || "國際";
+  const cats = [...new Set(["國際", "財經", ...n.items.map(catOf)])].filter((c) => n.items.some((i) => catOf(i) === c));
+  if (!cats.includes(newsCat)) newsCat = cats[0] || "國際";
+  $("newsCats").innerHTML = cats.map((c) => `<button class="${c === newsCat ? "active" : ""}" data-c="${esc(c)}">${c === "財經" ? "💹" : "🌍"} ${esc(c)}</button>`).join("");
+  const brief = n.briefs?.[newsCat] ?? (newsCat === "國際" ? n.brief : []);
+  $("newsBrief").innerHTML = (brief || []).map((b) => `<li>${esc(b)}</li>`).join("");
+  const inCat = n.items.filter((i) => catOf(i) === newsCat);
+  const sources = ["全部", ...new Set(inCat.map((i) => i.source))];
+  if (!sources.includes(newsSource)) newsSource = "全部";
   $("newsTabs").innerHTML = sources.map((s) => `<button class="${s === newsSource ? "active" : ""}" data-s="${esc(s)}">${esc(s)}</button>`).join("");
-  $("newsList").innerHTML = n.items.filter((i) => newsSource === "全部" || i.source === newsSource).slice(0, 40).map((i) =>
+  $("newsList").innerHTML = inCat.filter((i) => newsSource === "全部" || i.source === newsSource).slice(0, 40).map((i) =>
     `<li><a href="${esc(i.link)}" target="_blank" rel="noopener">${esc(i.title)}<div class="n-meta">${esc(i.source)}・${fmtTime(i.published)}</div></a></li>`).join("");
 }
 
@@ -396,6 +403,7 @@ async function main() {
   loadSettings(state.config);
   initAppearance(); initDeck(); initTodos(); initSettings();
   $("newsTabs").addEventListener("click", (e) => { const s = e.target.dataset?.s; if (s) { newsSource = s; renderNews(); } });
+  $("newsCats").addEventListener("click", (e) => { const c = e.target.closest("[data-c]")?.dataset.c; if (c) { newsCat = c; newsSource = "全部"; renderNews(); } });
   initChat({ state, refreshTodos, openSettings: () => $("settingsBtn").click() });
   tickClock(); setInterval(tickClock, 15 * 1000);
   await loadAll();
