@@ -43,6 +43,7 @@ def main() -> int:
     items.sort(key=lambda i: i["published"] or "", reverse=True)
 
     briefs = {"國際": [], "財經": []}
+    ai_status = "no_key"
     client = claude_client()
     if client:
         def headlines(cat):
@@ -66,13 +67,15 @@ def main() -> int:
                 },
             )
             briefs = {"國際": res["world"], "財經": res["finance"]}
+            ai_status = "ok"
         except Exception as e:  # noqa: BLE001 - summary is optional
             print("WARN brief:", e, file=sys.stderr)
+            ai_status = f"error: {type(e).__name__}: {str(e)[:300]}"
 
     # 每類各保留最新 80 則
     kept = [i for cat in ("國際", "財經") for i in [x for x in items if x["category"] == cat][:80]]
     kept.sort(key=lambda i: i["published"] or "", reverse=True)
-    write_json("news.json", {"updated": now_iso(), "brief": briefs["國際"], "briefs": briefs, "items": kept})
+    write_json("news.json", {"updated": now_iso(), "brief": briefs["國際"], "briefs": briefs, "ai_status": ai_status, "items": kept})
     print(f"news: {len(kept)} items, briefs {[len(v) for v in briefs.values()]}")
     return 0
 

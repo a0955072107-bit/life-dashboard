@@ -84,6 +84,7 @@ def main() -> int:
         history.setdefault(k, [])
     topic = LEARN_TOPICS[today.weekday()]
     content, generator = None, "pool"
+    ai_status = "no_key（沒有讀到 ANTHROPIC_API_KEY）"
 
     client = claude_client()
     if client:
@@ -106,8 +107,10 @@ def main() -> int:
 避免與最近用過的題目重複：{avoid}"""
         try:
             content, generator = claude_json(client, prompt, SCHEMA), "claude"
+            ai_status = "ok"
         except Exception as e:  # noqa: BLE001
             print("WARN claude:", e, file=sys.stderr)
+            ai_status = f"error: {type(e).__name__}: {str(e)[:300]}"
     if content is None:
         content = from_pool(today)
 
@@ -115,7 +118,7 @@ def main() -> int:
     history["ideas"] = (history["ideas"] + [content["idea"]["title"]])[-90:]
     history["learnings"] = (history["learnings"] + [content["learning"]["title"]])[-90:]
     write_json("history.json", history)
-    write_json("daily.json", {"date": f"{today:%Y-%m-%d}", "updated": now_iso(), "generator": generator, **content})
+    write_json("daily.json", {"date": f"{today:%Y-%m-%d}", "updated": now_iso(), "generator": generator, "ai_status": ai_status, **content})
     print(f"daily: {generator} – {content['side_hustle']['title']}")
     return 0
 
