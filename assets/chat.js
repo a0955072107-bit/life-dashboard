@@ -265,6 +265,14 @@ async function send(text) {
   }
 }
 
+// 其他裝置同步過來時重新載入對話（正在回覆時先略過）
+export function reloadChat() {
+  if (busy) return;
+  messages = lsGet(HISTORY_KEY, []);
+  renderHistory();
+  $("chatModel").textContent = currentModel();
+}
+
 export function initChat(c) {
   ctx = c;
   $("chatModel").textContent = currentModel();

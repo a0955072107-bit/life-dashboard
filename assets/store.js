@@ -16,8 +16,14 @@ export const settings = {
 export function lsGet(key, fallback = null) {
   try { const v = localStorage.getItem(key); return v == null ? fallback : JSON.parse(v); } catch { return fallback; }
 }
+// 內容有變才寫入，並通知同步模組（sync.js）
 export function lsSet(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* ignore */ }
+  try {
+    const s = JSON.stringify(value);
+    if (localStorage.getItem(key) === s) return;
+    localStorage.setItem(key, s);
+  } catch { return; }
+  window.dispatchEvent(new CustomEvent("lifedash:local", { detail: key }));
 }
 
 export function loadSettings(config) {

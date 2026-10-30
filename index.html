@@ -195,7 +195,20 @@
   <dialog class="glass settings" id="settings">
     <form method="dialog" id="settingsForm">
       <h2>設定</h2>
-      <p class="muted small">金鑰只存在這台裝置的瀏覽器（localStorage），不會上傳到 GitHub。請只在自己的裝置上使用。</p>
+      <p class="muted small">金鑰只存在這台裝置的瀏覽器，不會上傳到 GitHub。外觀、AI 對話和城市／模型偏好會自動同步到私人日記 repo 的 <code>sync/</code> 資料夾。</p>
+      <div class="sync-box">
+        <div class="p-row"><span class="small" id="syncStatus"></span><button type="button" class="chip-btn" id="syncNowBtn">立即同步</button></div>
+        <details>
+          <summary class="small">📲 把設定複製到另一台裝置（設定碼）</summary>
+          <p class="muted small">在已設定好的裝置按「複製設定碼」，傳到新裝置後貼到下面再按「套用」，金鑰和 repo 設定就會一起帶過去。</p>
+          <textarea id="codeBox" rows="2" placeholder="在這裡貼上設定碼（LD1.…）" autocomplete="off" spellcheck="false"></textarea>
+          <div class="row code-row">
+            <button type="button" class="ghost" id="copyCodeBtn">複製設定碼</button>
+            <button type="button" id="applyCodeBtn">套用</button>
+          </div>
+          <p class="small" id="codeMsg"></p>
+        </details>
+      </div>
       <label>Anthropic API Key（AI 助手用）
         <input type="password" name="anthropicKey" placeholder="sk-ant-…" autocomplete="off"></label>
       <label>AI 助手模型

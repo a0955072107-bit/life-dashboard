@@ -1,7 +1,8 @@
 import { settings, loadSettings, saveSettings } from "./store.js";
 import { loadTodos, addTodo, setTodoDone, loadProjects, listAiTasks } from "./github.js";
-import { initChat, MODELS, DEFAULT_MODEL } from "./chat.js";
-import { initAppearance } from "./theme.js";
+import { initChat, reloadChat, MODELS, DEFAULT_MODEL } from "./chat.js";
+import { initAppearance, reloadAppearance } from "./theme.js";
+import { initSync, syncNow, onSyncStatus, exportCode, parseCode } from "./sync.js";
 import { initDiary, refreshDiary } from "./diary.js";
 
 const $ = (id) => document.getElementById(id);
@@ -388,7 +389,40 @@ function initSettings() {
     saveSettings(patch);
     $("chatModel").textContent = patch.model;
     loadWeather(); refreshTodos().then(refreshProjects); refreshDiary();
+    syncNow();
   });
+
+  // 同步狀態
+  onSyncStatus((s) => {
+    const el = $("syncStatus"); if (!el) return;
+    el.textContent = s.state === "busy" ? "☁️ 同步中…"
+      : s.state === "ok" ? `☁️ 已同步（${s.at.toLocaleTimeString("zh-TW", { hour: "2-digit", minute: "2-digit", hour12: false })}）`
+      : s.state === "error" ? `⚠️ ${s.msg}`
+      : s.state === "off" ? `☁️ ${s.msg}` : "";
+    el.classList.toggle("warn", s.state === "error");
+  });
+  $("syncNowBtn").onclick = () => syncNow();
+
+  // 設定碼：電腦複製 → 平板貼上
+  $("copyCodeBtn").onclick = async () => {
+    const code = exportCode();
+    try { await navigator.clipboard.writeText(code); $("codeMsg").textContent = "✅ 已複製。用 LINE Keep／AirDrop 傳到另一台，在那邊貼上套用（設定碼含金鑰，別傳給別人）"; }
+    catch { $("codeBox").value = code; $("codeBox").select(); $("codeMsg").textContent = "請手動複製上面的設定碼"; }
+  };
+  $("applyCodeBtn").onclick = async () => {
+    try {
+      const patch = parseCode($("codeBox").value);
+      saveSettings(patch);
+      $("codeBox").value = "";
+      $("codeMsg").textContent = "✅ 已套用，正在從雲端同步…";
+      await syncNow();
+      // 同步完把表單換成最新值，避免按「儲存」時蓋回舊設定
+      form.elements.model.value = MODELS[settings.model] ? settings.model : DEFAULT_MODEL;
+      for (const k of ["anthropicKey", "githubToken", "owner", "tasksRepo", "diaryRepo", "city"]) form.elements[k].value = settings[k] || "";
+      $("codeMsg").textContent = "✅ 完成！外觀、對話和偏好已同步";
+      loadWeather(); refreshTodos().then(refreshProjects); refreshDiary();
+    } catch (e) { $("codeMsg").textContent = `❌ ${e.message}`; }
+  };
   $("locBtn").onclick = () => navigator.geolocation?.getCurrentPosition((p) => {
     saveSettings({ lat: p.coords.latitude, lon: p.coords.longitude, city: "目前位置" });
     loadWeather();
@@ -413,6 +447,11 @@ async function main() {
   $("newsTabs").addEventListener("click", (e) => { const s = e.target.dataset?.s; if (s) { newsSource = s; renderNews(); } });
   $("newsCats").addEventListener("click", (e) => { const c = e.target.closest("[data-c]")?.dataset.c; if (c) { newsCat = c; newsSource = "全部"; renderNews(); } });
   initChat({ state, refreshTodos, openSettings: () => $("settingsBtn").click() });
+  initSync({
+    appearance: reloadAppearance,
+    chat: reloadChat,
+    prefs: () => { loadWeather(); reloadChat(); },
+  });
   tickClock(); setInterval(tickClock, 15 * 1000);
   await loadAll();
   setInterval(loadAll, 15 * 60 * 1000);

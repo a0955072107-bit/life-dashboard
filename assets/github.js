@@ -12,7 +12,12 @@ export function headers() {
 const repoPath = () => `${API}/repos/${settings.owner}/${settings.tasksRepo}`;
 
 // UTF-8 safe base64
-export const b64encode = (s) => btoa(String.fromCharCode(...new TextEncoder().encode(s)));
+export const b64encode = (s) => {
+  const bytes = new TextEncoder().encode(s);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+};
 export const b64decode = (s) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g, "")), (c) => c.charCodeAt(0)));
 
 async function loadJson(path) {

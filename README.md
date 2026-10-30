@@ -13,7 +13,7 @@
 | 📔 日記（心情、標籤、月曆查閱、全文搜尋、可編輯刪除） | 私人 repo `life-diary` 的 `entries/YYYY-MM.json` | 即時讀寫（需要 GitHub Token 有該 repo 權限） |
 | ✅ 代辦事項 | [`life-tasks`](https://github.com/a0955072107-bit/life-tasks) repo 的 `todos.json` | 即時讀寫 |
 | 🤖 AI 助手 | Claude API（聊天、上網搜尋、管代辦、開 AI 任務 issue） | 瀏覽器直接呼叫 |
-| 🎨 外觀 | 9 套主題、5 張冰山風景（每日輪替）、橫式中央留白 / 格狀版面、模糊度、圓角、區塊開關 | 存在本機 |
+| 🎨 外觀 | 9 套主題、5 張冰山風景（每日輪替）、橫式中央留白 / 格狀版面、模糊度、圓角、區塊開關 | 跨裝置同步（見下方） |
 
 橫向螢幕（平板橫放、電腦，寬度 ≥ 1024px）時，卡片分在左右兩側，中間留白顯示冰山風景和時鐘。直向或手機時自動改成一般格狀排版。風景照片來自 Unsplash。
 
@@ -26,6 +26,16 @@
    - **GitHub Token**：到 https://github.com/settings/personal-access-tokens/new 建立 Fine-grained token，Repository access 選 `life-tasks` 和 `life-diary`，Permissions 給 **Contents: Read and write**、**Issues: Read and write**。
    - **Anthropic API Key**：AI 助手用，到 https://console.anthropic.com 建立。
    - 金鑰只存在該裝置的瀏覽器，不會進 repo。每台裝置（電腦、平板）各自設定一次。
+
+## 電腦、平板同步
+
+- **代辦、日記、店語副業**：本來就存在 GitHub，每台裝置看到的都一樣。
+- **外觀、AI 對話紀錄、天氣城市、AI 模型**：自動同步到私人日記 repo（`life-diary`）的 `sync/` 資料夾。改動後約 2 秒上傳；切回頁面時、以及每分鐘會自動拉最新的。兩邊都改時以較晚的為準。
+- **API Key 和 GitHub Token 不會上傳**。新裝置用「設定碼」帶過去：
+  1. 在已設定好的裝置（電腦）按 ⚙ →「📲 把設定複製到另一台裝置」→「複製設定碼」。
+  2. 用 LINE Keep、AirDrop 等傳到平板（設定碼含金鑰，別傳給別人）。
+  3. 平板開生活面板 → ⚙ → 同一區貼上 →「套用」。會自動帶入金鑰並同步外觀、對話和偏好。
+- ⚙ 設定裡會顯示「☁️ 已同步（時間）」；有問題會顯示原因，也可以按「立即同步」。
 
 ## 換 AI 模型
 
@@ -45,6 +55,7 @@ index.html            頁面
 assets/app.js         主程式（天氣、市場卡片、新聞、每日內容、代辦）
 assets/chat.js        AI 助手
 assets/github.js      life-tasks 讀寫
+assets/sync.js        跨裝置同步（外觀、對話、偏好）與設定碼
 assets/theme.js       外觀設定
 scripts/*.py          Actions 用的資料抓取腳本
 data/*.json           自動產生的資料

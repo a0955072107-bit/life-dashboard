@@ -463,3 +463,11 @@ button, input, textarea { font: inherit; color: inherit; }
   .fab { width: 48px; height: 48px; right: 12px; bottom: 12px; font-size: 1.35rem; opacity: .9; }
   .chat { bottom: 70px; right: 12px; }
 }
+
+/* 同步 */
+.sync-box { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--glass-strong); }
+.sync-box .p-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.sync-box .warn { color: var(--down); }
+.sync-box summary { cursor: pointer; margin-top: 8px; }
+.sync-box textarea { width: 100%; box-sizing: border-box; margin-top: 6px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line, rgba(255,255,255,.2)); background: var(--glass); font-family: ui-monospace, monospace; font-size: .75rem; resize: vertical; }
+.sync-box .code-row { margin-top: 8px; }

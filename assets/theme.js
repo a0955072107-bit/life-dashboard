@@ -94,6 +94,13 @@ function render() {
     `<div class="toggle-row">${name}<input type="checkbox" data-sec="${id}" ${a.hidden.includes(id) ? "" : "checked"}></div>`).join("");
 }
 
+// 其他裝置同步過來時重新套用
+export function reloadAppearance() {
+  a = { ...DEFAULTS, ...lsGet(KEY, {}) };
+  apply();
+  if ($("appearance").open) render();
+}
+
 export function initAppearance() {
   apply();
   const dlg = $("appearance");
