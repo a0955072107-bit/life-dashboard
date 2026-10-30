@@ -457,3 +457,9 @@ button, input, textarea { font: inherit; color: inherit; }
   .book-body { grid-template-columns: 1fr; overflow: auto; }
   .book-list-wrap { overflow: visible; }
 }
+
+/* 手機：AI 按鈕縮小、靠邊，不擋內容 */
+@media (max-width: 640px) {
+  .fab { width: 48px; height: 48px; right: 12px; bottom: 12px; font-size: 1.35rem; opacity: .9; }
+  .chat { bottom: 70px; right: 12px; }
+}

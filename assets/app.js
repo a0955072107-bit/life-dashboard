@@ -330,7 +330,9 @@ function renderProjects() {
       }).join("")}</div>`;
     }
 
-    if (p.phases) {
+    if (p.status === "paused") {
+      body += `<div class="muted small p-sub">暫停中，保留 ${open.length} 項待辦；恢復後會重新顯示進度。</div>`;
+    } else if (p.phases) {
       const start = new Date(p.start), end = new Date(p.end), now = tpeToday();
       const total = Math.round((end - start) / (7 * DAY));
       const week = Math.min(total, Math.max(1, Math.floor((now - start) / (7 * DAY)) + 1));

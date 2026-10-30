@@ -3,6 +3,7 @@ name: 更新儀表板資料
 on:
   schedule:
     - cron: "7,37 13-21 * * 1-5"   # 美股交易時段每 30 分鐘更新報價
+    - cron: "7,37 1-5 * * 1-5"     # 台股交易時段（台北 09:07–13:37）每 30 分鐘更新報價
     - cron: "13 22 * * *"          # 台北 06:13：新聞 + 每日內容 + 報價
     - cron: "17 10 * * *"          # 台北 18:17：晚間新聞 + 報價
   workflow_dispatch:
@@ -35,7 +36,7 @@ jobs:
         continue-on-error: true
 
       - name: 國際新聞
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule != '7,37 13-21 * * 1-5'
+        if: github.event_name == 'workflow_dispatch' || (github.event.schedule != '7,37 13-21 * * 1-5' && github.event.schedule != '7,37 1-5 * * 1-5')
         run: python scripts/fetch_news.py
         continue-on-error: true
         env:
