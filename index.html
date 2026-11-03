@@ -2,6 +2,10 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
+  <!-- 內容安全政策：只允許本站與用到的外部來源。
+       script-src 的 sha256 對應本頁兩段內嵌 <script> 和「重新載入」按鈕的 onclick；改了那些程式碼就要重算雜湊，否則會被擋。
+       新增外部資料來源時，記得加進 connect-src / img-src。 -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'sha256-5VlcQgszF0L5PlSy+7dJCmLEuSaRqM106WEd3qG2uZg=' 'sha256-9EOFYjbT11ieOPCTxqjIQCiny/iDg+63qtysvfCDTGU=' 'unsafe-hashes' 'sha256-9gOBGqEQINNDuds+tkXbNzih6klbz+KeCyxEj4KRLeM='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://api.anthropic.com https://api.open-meteo.com https://geocoding-api.open-meteo.com https://cdn.jsdelivr.net; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#0f1630">
   <title>生活儀表板</title>
@@ -213,7 +217,7 @@
         <input type="password" name="anthropicKey" placeholder="sk-ant-…" autocomplete="off"></label>
       <label>AI 助手模型
         <select name="model" id="modelSelect"></select></label>
-      <label>GitHub Token（Fine-grained，需 life-tasks 的 Contents + Issues 讀寫權限）
+      <label>GitHub Token（Fine-grained，需 life-tasks 的 Contents + Issues 讀寫權限，以及 life-diary 的 Contents 讀寫權限）
         <input type="password" name="githubToken" placeholder="github_pat_…" autocomplete="off"></label>
       <label>GitHub 帳號
         <input name="owner"></label>

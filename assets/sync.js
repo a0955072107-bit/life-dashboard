@@ -67,8 +67,10 @@ function applyLocal(sec, data) {
   suppress = true;
   try {
     if (sec === "prefs") {
-      lsSet(SETTINGS_KEY, { ...lsGet(SETTINGS_KEY, {}), ...data });
-      Object.assign(settings, data);
+      // 雲端資料只接受這四個欄位，避免被寫入 githubToken、owner 等設定
+      const safe = Object.fromEntries(PREF_FIELDS.filter((f) => data?.[f] !== undefined).map((f) => [f, data[f]]));
+      lsSet(SETTINGS_KEY, { ...lsGet(SETTINGS_KEY, {}), ...safe });
+      Object.assign(settings, safe);
     } else {
       lsSet(SECTIONS[sec].key, data);
     }

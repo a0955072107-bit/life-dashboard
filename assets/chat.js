@@ -146,13 +146,18 @@ async function runTool(name, input) {
       return { ok: true, item };
     }
     case "complete_todo": {
-      const t = await setTodoDone(input.id, input.done ?? true, "ai-assistant");
+      const done = input.done ?? true;
+      const cur = ctx.state.todos?.items?.find((x) => x.id === input.id);
+      if (!confirm(`AI 助手想把這筆代辦標記為「${done ? "完成" : "未完成"}」：\n\n${cur ? cur.title : input.id}\n\n確定嗎？`)) return { ok: false, cancelled: true, message: "使用者取消" };
+      const t = await setTodoDone(input.id, done, "ai-assistant");
       ctx.refreshTodos();
       return { ok: true, item: t };
     }
     case "create_ai_task": {
-      const body = `${input.body}\n\n---\n_由生活儀表板 AI 助手建立於 ${new Date().toLocaleString("zh-TW")}_`;
-      return { ok: true, ...(await createAiTask({ ...input, body })) };
+      const labels = [...new Set([...(input.labels || []), "needs-user"])];
+      if (!confirm(`AI 助手想在 GitHub 建立 AI 任務（issue）：\n\n標題：${input.title}\n標籤：ai-task、${labels.join("、")}\n\n${input.body.slice(0, 500)}${input.body.length > 500 ? "…" : ""}\n\n確定建立嗎？`)) return { ok: false, cancelled: true, message: "使用者取消" };
+      const body = `（由儀表板 AI 助手建立，請 Yang 確認後移除 needs-user）\n\n${input.body}\n\n---\n_由生活儀表板 AI 助手建立於 ${new Date().toLocaleString("zh-TW")}_`;
+      return { ok: true, ...(await createAiTask({ ...input, labels, body })) };
     }
     case "list_ai_tasks": return listAiTasks(input.state || "open");
     default: throw new Error(`未知工具 ${name}`);
@@ -166,10 +171,14 @@ const TOOL_LABEL = {
 
 /* ---------- 畫面 ---------- */
 function md(text) {
-  const e = text.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  // 先完整跳脫（含引號），之後產生的 HTML 只來自下面固定的樣板
+  const e = String(text).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  // 網址只允許 http(s)://，且不能含空白、括號、引號、角括號或任何 HTML 實體（&quot; &#39; &lt; &gt; 等），遇到就截斷
+  const URL_RE = "https?:\\/\\/(?:(?!&(?:quot|#39|lt|gt);)[^\\s()\"'<>])+";
+  const link = (href, label) => `<a href="${href}" target="_blank" rel="noopener noreferrer">${label}</a>`;
   return e
-    .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-    .replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>')
+    .replace(new RegExp(`\\[([^\\]]+)\\]\\((${URL_RE})\\)`, "g"), (_, label, href) => link(href, label))
+    .replace(new RegExp(`(^|[\\s(])(${URL_RE})`, "g"), (_, pre, href) => pre + link(href, href))
     .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
     .replace(/^#{1,4}\s*(.+)$/gm, "<b>$1</b>");
 }

@@ -327,7 +327,7 @@ function renderProjects() {
       body += `<div class="p-metrics">${p.metrics.map((m) => {
         const tgt = m.target ? `<small>/ ${m.target}</small>` : "";
         const due = m.due ? `<div class="muted small">${daysUntil(m.due) >= 0 ? `剩 ${daysUntil(m.due)} 天` : "已到期"}</div>` : "";
-        return `<div class="p-metric"><div class="muted small">${esc(m.label)}</div><b>${m.value}</b>${tgt}${m.target ? bar((m.value / m.target) * 100) : ""}${due}</div>`;
+        return `<div class="p-metric"><div class="muted small">${esc(m.label)}</div><b>${esc(m.value)}</b>${tgt}${m.target ? bar((m.value / m.target) * 100) : ""}${due}</div>`;
       }).join("")}</div>`;
     }
 
@@ -406,7 +406,7 @@ function initSettings() {
   // 設定碼：電腦複製 → 平板貼上
   $("copyCodeBtn").onclick = async () => {
     const code = exportCode();
-    try { await navigator.clipboard.writeText(code); $("codeMsg").textContent = "✅ 已複製。用 LINE Keep／AirDrop 傳到另一台，在那邊貼上套用（設定碼含金鑰，別傳給別人）"; }
+    try { await navigator.clipboard.writeText(code); $("codeMsg").textContent = "✅ 已複製。用 AirDrop 傳到另一台（或在那台手動輸入），貼上套用。設定碼等於明文金鑰：不要用 LINE 等聊天軟體傳，也別傳給別人；套用後把傳過去的檔案或備忘錄刪掉"; }
     catch { $("codeBox").value = code; $("codeBox").select(); $("codeMsg").textContent = "請手動複製上面的設定碼"; }
   };
   $("applyCodeBtn").onclick = async () => {
