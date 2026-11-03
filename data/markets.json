@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-03T11:02:40+00:00",
+  "updated": "2026-11-03T14:11:29+00:00",
   "quotes": [
     {
       "symbol": "^GSPC",
@@ -178,13 +178,13 @@
       "symbol": "^VIX",
       "name": "VIX 恐慌指數",
       "group": "指數",
-      "price": 21.28,
+      "price": 20.9,
       "prevClose": 21.15,
-      "change": 0.13,
-      "changePct": 0.615,
-      "monthPct": 37.113,
+      "change": -0.25,
+      "changePct": -1.182,
+      "monthPct": 34.665,
       "currency": "USD",
-      "marketTime": 1793702851,
+      "marketTime": 1793714176,
       "history": [
         15.52,
         15.01,
@@ -207,20 +207,20 @@
         17.2,
         19.42,
         21.15,
-        21.28
+        20.9
       ]
     },
     {
       "symbol": "GC=F",
       "name": "黃金期貨",
       "group": "黃金",
-      "price": 3913.5,
+      "price": 3971.7,
       "prevClose": 3969.6001,
-      "change": -56.1001,
-      "changePct": -1.413,
-      "monthPct": -5.853,
+      "change": 2.0999,
+      "changePct": 0.053,
+      "monthPct": -4.453,
       "currency": "USD",
-      "marketTime": 1793703143,
+      "marketTime": 1793714485,
       "history": [
         4156.7998,
         4187.1001,
@@ -243,20 +243,20 @@
         4031.3999,
         3898.8999,
         3969.6001,
-        3913.5
+        3971.7
       ]
     },
     {
       "symbol": "SI=F",
       "name": "白銀期貨",
       "group": "黃金",
-      "price": 48.95,
+      "price": 50.445,
       "prevClose": 50.72,
-      "change": -1.77,
-      "changePct": -3.49,
-      "monthPct": -19.581,
+      "change": -0.275,
+      "changePct": -0.542,
+      "monthPct": -17.125,
       "currency": "USD",
-      "marketTime": 1793703152,
+      "marketTime": 1793714486,
       "history": [
         60.869,
         61.168,
@@ -279,7 +279,7 @@
         52.191,
         49.097,
         50.72,
-        48.95
+        50.445
       ]
     },
     {
@@ -601,13 +601,13 @@
       "symbol": "TWD=X",
       "name": "美元/台幣",
       "group": "匯率",
-      "price": 32.794,
+      "price": 32.786,
       "prevClose": 32.6064,
-      "change": 0.1876,
-      "changePct": 0.575,
-      "monthPct": 3.014,
+      "change": 0.1796,
+      "changePct": 0.551,
+      "monthPct": 2.989,
       "currency": "TWD",
-      "marketTime": 1793703750,
+      "marketTime": 1793714995,
       "history": [
         31.8344,
         31.7514,
@@ -630,20 +630,20 @@
         32.3828,
         32.5669,
         32.6064,
-        32.794
+        32.786
       ]
     },
     {
       "symbol": "JPYTWD=X",
       "name": "日圓/台幣",
       "group": "匯率",
-      "price": 0.2052,
+      "price": 0.2051,
       "prevClose": 0.2069,
-      "change": -0.0017,
-      "changePct": -0.834,
-      "monthPct": 1.675,
+      "change": -0.0018,
+      "changePct": -0.882,
+      "monthPct": 1.626,
       "currency": "TWD",
-      "marketTime": 1793703569,
+      "marketTime": 1793714968,
       "history": [
         0.2018,
         0.201,
@@ -666,7 +666,7 @@
         0.2053,
         0.2063,
         0.2069,
-        0.2052
+        0.2051
       ]
     },
     {
@@ -679,7 +679,7 @@
       "changePct": -0.213,
       "monthPct": 2.98,
       "currency": "TWD",
-      "marketTime": 1793703569,
+      "marketTime": 1793714968,
       "history": [
         0.0237,
         0.0236,
