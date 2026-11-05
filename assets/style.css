@@ -480,3 +480,10 @@ button, input, textarea { font: inherit; color: inherit; }
 .mind-block p { margin: 4px 0 0; }
 .mind-card[hidden] { display: none; }
 [data-hidden~="mind"] .mind-card { display: none; }
+.mind-pager { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.mind-pager button:disabled { opacity: .35; cursor: default; }
+#mindIdx { display: flex; gap: 6px; }
+#mindIdx i { font-style: normal; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid var(--border); font-size: .75rem; }
+#mindIdx i.read { background: var(--glass); }
+#mindIdx i.on { background: var(--glass-strong); color: var(--text); font-weight: 700; border-color: var(--text); }

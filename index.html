@@ -156,10 +156,15 @@
 
     <!-- 商業頭腦・心理學 -->
     <section class="card glass mind-card" id="mindCard">
-      <div class="card-title">🧠 商業頭腦・心理學</div>
+      <div class="card-title">🧠 商業頭腦・心理學 <span class="muted" id="mindProgress"></span></div>
       <div class="chips" id="mindTabs">
         <button class="active" data-k="business">💼 商業頭腦</button>
         <button data-k="psychology">🧠 心理學</button>
+      </div>
+      <div class="mind-pager">
+        <button class="chip-btn" id="mindPrev">‹</button>
+        <span class="muted small" id="mindIdx"></span>
+        <button class="chip-btn" id="mindNext">›</button>
       </div>
       <h3 id="mindTitle">–</h3>
       <p id="mindConcept"></p>

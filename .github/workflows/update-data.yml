@@ -12,6 +12,10 @@ on:
         description: "重新產生每日內容（副業/想法/鼓勵）"
         type: boolean
         default: false
+      mind_only:
+        description: "只重新產生商業頭腦・心理學課程"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -39,6 +43,13 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || (github.event.schedule != '7,37 13-21 * * 1-5' && github.event.schedule != '7,37 1-5 * * 1-5')
         run: python scripts/fetch_news.py
         continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
+
+      - name: 只更新課程
+        if: inputs.mind_only && !inputs.daily
+        run: python scripts/gen_daily.py --mind-only
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}

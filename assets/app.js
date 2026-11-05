@@ -235,12 +235,26 @@ function renderDaily() {
 }
 
 /* ---------- 商業頭腦・心理學 ---------- */
-let mindKey = "business";
+let mindKey = "business", mindIdx = 0;
+const mindLessons = (k) => { const v = state.daily?.mind?.[k]; return Array.isArray(v) ? v : v ? [v] : []; };
+const mindReadKey = () => `lifedash.mindRead.${state.daily?.date}`;
+function mindRead() { try { return new Set(JSON.parse(localStorage.getItem(mindReadKey()) || "[]")); } catch { return new Set(); } }
+
 function renderMind() {
-  const lesson = state.daily?.mind?.[mindKey];
+  const list = mindLessons(mindKey);
   $("mindCard").hidden = !state.daily?.mind;
-  if (!lesson) return;
+  if (!list.length) return;
+  mindIdx = Math.min(mindIdx, list.length - 1);
+  const lesson = list[mindIdx];
+  // 記錄今天讀過哪幾課
+  const read = mindRead(); read.add(`${mindKey}-${mindIdx}`);
+  try { localStorage.setItem(mindReadKey(), JSON.stringify([...read])); } catch { /* ignore */ }
+  const total = mindLessons("business").length + mindLessons("psychology").length;
+  $("mindProgress").textContent = `今天已讀 ${read.size}/${total} 課`;
   $("mindTabs").querySelectorAll("button").forEach((b) => b.classList.toggle("active", b.dataset.k === mindKey));
+  $("mindIdx").innerHTML = list.map((_, i) => `<i class="${i === mindIdx ? "on" : ""} ${read.has(`${mindKey}-${i}`) ? "read" : ""}" data-i="${i}">${i + 1}</i>`).join("");
+  $("mindPrev").disabled = mindIdx === 0;
+  $("mindNext").disabled = mindIdx === list.length - 1;
   $("mindTitle").textContent = lesson.title;
   $("mindConcept").textContent = lesson.concept;
   $("mindExample").textContent = lesson.example;
@@ -462,7 +476,10 @@ async function main() {
   initDiary();
   window.__appReady = true;
   $("newsTabs").addEventListener("click", (e) => { const s = e.target.dataset?.s; if (s) { newsSource = s; renderNews(); } });
-  $("mindTabs").addEventListener("click", (e) => { const k = e.target.closest("[data-k]")?.dataset.k; if (k) { mindKey = k; renderMind(); } });
+  $("mindTabs").addEventListener("click", (e) => { const k = e.target.closest("[data-k]")?.dataset.k; if (k) { mindKey = k; mindIdx = 0; renderMind(); } });
+  $("mindPrev").onclick = () => { mindIdx--; renderMind(); };
+  $("mindNext").onclick = () => { mindIdx++; renderMind(); };
+  $("mindIdx").addEventListener("click", (e) => { const i = e.target.dataset?.i; if (i != null) { mindIdx = +i; renderMind(); } });
   $("newsCats").addEventListener("click", (e) => { const c = e.target.closest("[data-c]")?.dataset.c; if (c) { newsCat = c; newsSource = "全部"; renderNews(); } });
   initChat({ state, refreshTodos, openSettings: () => $("settingsBtn").click() });
   initSync({
