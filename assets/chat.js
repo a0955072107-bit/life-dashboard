@@ -17,7 +17,7 @@ const SYSTEM = `你是使用者的私人生活助手，住在他的「生活儀�
 
 你能做的事：
 - 聊天、提供建議、協助查詢與整理資料。需要即時或你不確定的資訊時，用 web_search 搜尋，並附上來源連結。
-- 讀取儀表板上的資料（天氣、市場報價、國際與財經新聞、今日副業與想法、每日學習、代辦、副業專案 ShopVoice／店語文案的進度與 AI 任務）：呼叫 get_dashboard_snapshot。
+- 讀取儀表板上的資料（天氣、市場報價、國際與財經新聞、今日副業與想法、每日學習、商業頭腦與心理學每日一課、代辦、副業專案 ShopVoice／店語文案的進度與 AI 任務）：呼叫 get_dashboard_snapshot。
 - 管理代辦事項（存在 GitHub repo 的 todos.json）：list_todos / add_todo / complete_todo。新增前若日期或優先度不明確，可合理推斷，不必反覆追問。
 - 建立「AI 任務」：當使用者想把一件需要較長時間、需要寫程式、整理文件或研究的工作交給其他 AI 工作階段處理時，用 create_ai_task 在 GitHub 開一個 issue。任務內容要寫成其他 AI 不需上下文也能獨立執行的完整說明：目標、背景、具體步驟或要求、完成標準、產出放哪裡。
 - 查看已建立的 AI 任務進度：list_ai_tasks。
@@ -33,7 +33,7 @@ const toolsFor = (model) => [
 const TOOLS = [
   {
     name: "get_dashboard_snapshot",
-    description: "取得儀表板目前顯示的所有資料：天氣、市場報價（美股/指數/黃金/匯率）、今日國際與財經新聞摘要與標題、今日副業發想、今日想法、每日學習、每日鼓勵、未完成代辦。回答與這些主題相關的問題前先呼叫。",
+    description: "取得儀表板目前顯示的所有資料：天氣、市場報價（美股/指數/黃金/匯率）、今日國際與財經新聞摘要與標題、今日副業發想、今日想法、每日學習、商業頭腦與心理學每日一課、每日鼓勵、未完成代辦。回答與這些主題相關的問題前先呼叫。",
     input_schema: { type: "object", properties: {}, additionalProperties: false },
     eager_input_streaming: true,
   },

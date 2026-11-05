@@ -9,6 +9,7 @@
 | 🌍 國際＋💹 財經新聞（可切換）＋重點摘要 | 國際：Google 新聞、BBC、Al Jazeera、NPR；財經：Google 新聞財經、BBC Business、CNBC、MarketWatch（摘要由 Claude 產生） | Actions：每天 06:13、18:17（台北） |
 | 💼 副業發想 / 💡 每日想法 / ✨ 每日一句 | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
 | 📚 每日學習（英文、日文、技能、邏輯、理財、冷知識依星期輪替，附小練習） | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
+| 🧠 商業頭腦・心理學（每天各一課：概念、例子、今天就用、思考題） | Claude 生成；沒設金鑰時從 `scripts/pool.json` 輪播 | Actions：每天 06:13 |
 | 🏪 店語副業（ShopVoice 數字與待辦、店語文案 8 週進度、AI 任務） | `life-tasks` 的 `projects.json`、`todos.json`、Issues | 即時讀取 |
 | 📔 日記（心情、標籤、月曆查閱、全文搜尋、可編輯刪除） | 私人 repo `life-diary` 的 `entries/YYYY-MM.json` | 即時讀寫（需要 GitHub Token 有該 repo 權限） |
 | ✅ 代辦事項 | [`life-tasks`](https://github.com/a0955072107-bit/life-tasks) repo 的 `todos.json` | 即時讀寫 |

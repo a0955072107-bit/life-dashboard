@@ -34,7 +34,7 @@ const WALL_CHOICES = [
 
 const SECTIONS = [
   ["quote", "每日一句"], ["weather", "天氣"], ["markets", "市場卡片"], ["todo", "代辦事項"], ["project", "店語副業"], ["diary", "日記"],
-  ["hustle", "副業發想"], ["learn", "每日學習"], ["idea", "今日想法"], ["news", "國際新聞"],
+  ["hustle", "副業發想"], ["learn", "每日學習"], ["mind", "商業頭腦・心理學"], ["idea", "今日想法"], ["news", "國際新聞"],
 ];
 
 const DEFAULTS = { theme: "auto", blur: 22, radius: 22, motion: true, hidden: [], wall: "daily", layout: "auto" };

@@ -10,6 +10,21 @@ from common import claude_client, claude_json, now_iso, read_json, write_json
 TPE = timezone(timedelta(hours=8))
 POOL = json.loads((Path(__file__).parent / "pool.json").read_text(encoding="utf-8"))
 
+# 商業頭腦／心理學每日一課的格式
+LESSON = {
+                "type": "object",
+                "properties": {
+                    "title": {"type": "string"},
+                    "concept": {"type": "string"},
+                    "example": {"type": "string"},
+                    "apply": {"type": "string"},
+                    "question": {"type": "string"},
+                    "answer": {"type": "string"},
+                },
+                "required": ["title", "concept", "example", "apply", "question", "answer"],
+                "additionalProperties": False,
+            }
+
 SCHEMA = {
     "type": "object",
     "properties": {
@@ -49,6 +64,12 @@ SCHEMA = {
             "required": ["category", "title", "content", "examples", "practice", "answer"],
             "additionalProperties": False,
         },
+        "mind": {
+            "type": "object",
+            "properties": {"business": LESSON, "psychology": LESSON},
+            "required": ["business", "psychology"],
+            "additionalProperties": False,
+        },
         "encouragement": {
             "type": "object",
             "properties": {"text": {"type": "string"}, "author": {"type": "string"}},
@@ -56,7 +77,7 @@ SCHEMA = {
             "additionalProperties": False,
         },
     },
-    "required": ["side_hustle", "idea", "learning", "encouragement"],
+    "required": ["side_hustle", "idea", "learning", "mind", "encouragement"],
     "additionalProperties": False,
 }
 
@@ -71,6 +92,10 @@ def from_pool(day: datetime) -> dict:
     return {
         "side_hustle": pick(POOL["side_hustles"]),
         "idea": pick(POOL["ideas"], 7),
+        "mind": {
+            "business": pick(POOL["business_lessons"], 5),
+            "psychology": pick(POOL["psychology_lessons"], 11),
+        },
         "learning": next((x for x in POOL["learnings"][n % len(POOL["learnings"]):] + POOL["learnings"]
                           if x["category"] == LEARN_TOPICS[day.weekday()]), pick(POOL["learnings"])),
         "encouragement": pick(POOL["encouragements"], 3),
@@ -80,7 +105,7 @@ def from_pool(day: datetime) -> dict:
 def main() -> int:
     today = datetime.now(TPE)
     history = read_json("history.json", {})
-    for k in ("side_hustles", "ideas", "learnings"):
+    for k in ("side_hustles", "ideas", "learnings", "business", "psychology"):
         history.setdefault(k, [])
     topic = LEARN_TOPICS[today.weekday()]
     content, generator = None, "pool"
@@ -90,6 +115,7 @@ def main() -> int:
     if client:
         avoid = "、".join(history["side_hustles"][-60:] + history["ideas"][-60:]) or "（無）"
         avoid_learn = "、".join(history["learnings"][-60:]) or "（無）"
+        avoid_mind = "、".join(history["business"][-60:] + history["psychology"][-60:]) or "（無）"
         prompt = f"""今天是 {today:%Y-%m-%d}（{"一二三四五六日"[today.weekday()]}）。請為一位住在台灣、上班族、想增加收入與資產的人產生今天的內容，全部使用繁體中文（台灣用語）：
 
 1. side_hustle：一個具體可執行的副業發想。summary 2–3 句說明是什麼、為什麼現在適合；steps 3–5 個「這週就能開始」的具體步驟；startup_cost、time_needed（每週時數）、potential（合理的月收入範圍，不誇大）。
@@ -102,7 +128,12 @@ def main() -> int:
    - 冷知識・科學：一個有趣且正確的知識，examples 補充細節
    content 3–4 句；practice 是一題能自我檢查的小練習；answer 是解答與簡短說明。內容必須正確，不確定的不要寫。
    避免與最近學過的重複：{avoid_learn}
-4. encouragement：一句溫暖、不老套的每日鼓勵。可以是名人名言（author 填真實出處）或原創（author 填「今日寄語」）。不要捏造名人說過的話。
+4. mind：「商業頭腦」與「心理學」各一課（business、psychology），讓人每天 5 分鐘累積判斷力：
+   - business：商業思維，例如商業模式、定價、單位經濟、護城河、行銷漏斗、談判、現金流、機會成本、看懂財報的一個指標、經典企業案例的關鍵決策
+   - psychology：實用心理學，例如認知偏誤、說服與影響力、動機與習慣、情緒調節、人際溝通、決策心理、消費者心理
+   每課：title 概念名稱（可附英文原名）；concept 3–4 句白話解釋；example 一個具體例子或真實案例（台灣或國際皆可，引用真實公司或研究時內容必須正確，不確定就用虛構情境並寫明「舉例來說」）；apply 今天就能用在工作、副業或生活的一個具體做法；question 一個思考題；answer 參考解答。
+   兩課都避免與最近學過的重複：{avoid_mind}
+5. encouragement：一句溫暖、不老套的每日鼓勵。可以是名人名言（author 填真實出處）或原創（author 填「今日寄語」）。不要捏造名人說過的話。
 
 避免與最近用過的題目重複：{avoid}"""
         try:
@@ -117,6 +148,8 @@ def main() -> int:
     history["side_hustles"] = (history["side_hustles"] + [content["side_hustle"]["title"]])[-90:]
     history["ideas"] = (history["ideas"] + [content["idea"]["title"]])[-90:]
     history["learnings"] = (history["learnings"] + [content["learning"]["title"]])[-90:]
+    history["business"] = (history["business"] + [content["mind"]["business"]["title"]])[-90:]
+    history["psychology"] = (history["psychology"] + [content["mind"]["psychology"]["title"]])[-90:]
     write_json("history.json", history)
     write_json("daily.json", {"date": f"{today:%Y-%m-%d}", "updated": now_iso(), "generator": generator, "ai_status": ai_status, **content})
     print(f"daily: {generator} – {content['side_hustle']['title']}")

@@ -227,10 +227,27 @@ function renderDaily() {
     $("learnPractice").hidden = !L.practice;
     $("learnPractice").open = false;
   }
+  renderMind();
   const idea = d.idea || {};
   $("ideaType").textContent = idea.type || "";
   $("ideaTitle").textContent = idea.title || "–";
   $("ideaDetail").textContent = idea.detail || "";
+}
+
+/* ---------- 商業頭腦・心理學 ---------- */
+let mindKey = "business";
+function renderMind() {
+  const lesson = state.daily?.mind?.[mindKey];
+  $("mindCard").hidden = !state.daily?.mind;
+  if (!lesson) return;
+  $("mindTabs").querySelectorAll("button").forEach((b) => b.classList.toggle("active", b.dataset.k === mindKey));
+  $("mindTitle").textContent = lesson.title;
+  $("mindConcept").textContent = lesson.concept;
+  $("mindExample").textContent = lesson.example;
+  $("mindApply").textContent = lesson.apply;
+  $("mindQ").textContent = lesson.question;
+  $("mindA").textContent = lesson.answer;
+  $("mindQuiz").open = false;
 }
 
 /* ---------- 代辦 ---------- */
@@ -445,6 +462,7 @@ async function main() {
   initDiary();
   window.__appReady = true;
   $("newsTabs").addEventListener("click", (e) => { const s = e.target.dataset?.s; if (s) { newsSource = s; renderNews(); } });
+  $("mindTabs").addEventListener("click", (e) => { const k = e.target.closest("[data-k]")?.dataset.k; if (k) { mindKey = k; renderMind(); } });
   $("newsCats").addEventListener("click", (e) => { const c = e.target.closest("[data-c]")?.dataset.c; if (c) { newsCat = c; newsSource = "全部"; renderNews(); } });
   initChat({ state, refreshTodos, openSettings: () => $("settingsBtn").click() });
   initSync({

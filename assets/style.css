@@ -345,7 +345,8 @@ button, input, textarea { font: inherit; color: inherit; }
       "weather scene todo"
       "market  scene project"
       "learn   scene diary"
-      "quote   scene hustle"
+      "mind    scene hustle"
+      "quote   scene idea"
       "news    scene idea";
     align-items: start;
   }
@@ -359,6 +360,7 @@ button, input, textarea { font: inherit; color: inherit; }
   :root:not([data-layout="grid"]) .grid > .project-card { grid-area: project; }
   :root:not([data-layout="grid"]) .grid > .learn-card { grid-area: learn; }
   :root:not([data-layout="grid"]) .grid > .diary-card { grid-area: diary; }
+  :root:not([data-layout="grid"]) .grid > .mind-card { grid-area: mind; }
   :root:not([data-layout="grid"]) .grid > #ideaCard { grid-area: idea; }
   :root:not([data-layout="grid"]) .quote-card blockquote { font-size: 1.1rem; }
   :root:not([data-layout="grid"]) .mcard { inset: 0 4%; }
@@ -471,3 +473,10 @@ button, input, textarea { font: inherit; color: inherit; }
 .sync-box summary { cursor: pointer; margin-top: 8px; }
 .sync-box textarea { width: 100%; box-sizing: border-box; margin-top: 6px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line, rgba(255,255,255,.2)); background: var(--glass); font-family: ui-monospace, monospace; font-size: .75rem; resize: vertical; }
 .sync-box .code-row { margin-top: 8px; }
+
+/* ===== 商業頭腦・心理學 ===== */
+.mind-block { background: var(--glass); border-radius: 14px; padding: 10px 12px; margin-bottom: 8px; }
+.mind-block b { font-size: .85rem; }
+.mind-block p { margin: 4px 0 0; }
+.mind-card[hidden] { display: none; }
+[data-hidden~="mind"] .mind-card { display: none; }
