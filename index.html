@@ -309,6 +309,7 @@
     // 主程式沒有在 6 秒內啟動（多半是瀏覽器快取了舊檔案），就顯示重新載入提示
     setTimeout(() => { if (!window.__appReady) document.getElementById("reloadBanner").hidden = false; }, 6000);
   </script>
+  <script src="assets/sw-register.js"></script>
   <script type="module" src="assets/app.js"></script>
 </body>
 </html>
