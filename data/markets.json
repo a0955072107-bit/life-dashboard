@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05T21:21:37+00:00",
+  "updated": "2026-11-05T22:22:56+00:00",
   "quotes": [
     {
       "symbol": "^GSPC",
@@ -11,7 +11,7 @@
       "changePct": -4.356,
       "monthPct": -5.95,
       "currency": "USD",
-      "marketTime": 1793913601,
+      "marketTime": 1793914448,
       "history": [
         7818.9302,
         7801.77,
@@ -48,7 +48,7 @@
       "changePct": -5.523,
       "monthPct": -11.902,
       "currency": "USD",
-      "marketTime": 1793913690,
+      "marketTime": 1793916959,
       "history": [
         27599.7891,
         27538.6895,
@@ -85,7 +85,7 @@
       "changePct": -3.436,
       "monthPct": 0.003,
       "currency": "USD",
-      "marketTime": 1793913601,
+      "marketTime": 1793914551,
       "history": [
         51521.2812,
         51179.8711,
@@ -122,7 +122,7 @@
       "changePct": -12.246,
       "monthPct": -31.826,
       "currency": "USD",
-      "marketTime": 1793913693,
+      "marketTime": 1793916959,
       "history": [
         13217.8203,
         13066.1504,
@@ -187,13 +187,13 @@
       "symbol": "^VIX",
       "name": "VIX 恐慌指數",
       "group": "指數",
-      "price": 28.15,
+      "price": 28.18,
       "prevClose": 16.61,
-      "change": 11.54,
-      "changePct": 69.476,
-      "monthPct": 81.379,
+      "change": 11.57,
+      "changePct": 69.657,
+      "monthPct": 81.572,
       "currency": "USD",
-      "marketTime": 1793912791,
+      "marketTime": 1793913301,
       "history": [
         15.52,
         15.01,
@@ -218,20 +218,20 @@
         21.15,
         20.83,
         16.61,
-        28.15
+        28.18
       ]
     },
     {
       "symbol": "GC=F",
       "name": "黃金期貨",
       "group": "黃金",
-      "price": 4096.4,
+      "price": 4097.9,
       "prevClose": 4073.0,
-      "change": 23.4,
-      "changePct": 0.575,
-      "monthPct": -1.453,
+      "change": 24.9,
+      "changePct": 0.611,
+      "monthPct": -1.417,
       "currency": "USD",
-      "marketTime": 1793913091,
+      "marketTime": 1793915999,
       "history": [
         4156.7998,
         4187.1001,
@@ -256,20 +256,20 @@
         3969.6001,
         3940.3999,
         4073.0,
-        4096.3999
+        4097.8999
       ]
     },
     {
       "symbol": "SI=F",
       "name": "白銀期貨",
       "group": "黃金",
-      "price": 51.82,
+      "price": 51.83,
       "prevClose": 52.12,
-      "change": -0.3,
-      "changePct": -0.576,
-      "monthPct": -14.866,
+      "change": -0.29,
+      "changePct": -0.556,
+      "monthPct": -14.85,
       "currency": "USD",
-      "marketTime": 1793913091,
+      "marketTime": 1793915984,
       "history": [
         60.869,
         61.168,
@@ -294,18 +294,18 @@
         50.72,
         49.587,
         52.12,
-        51.82
+        51.83
       ]
     },
     {
       "symbol": "GLD",
       "name": "SPDR 黃金 ETF",
       "group": "黃金",
-      "price": 375.51,
+      "price": 375.49,
       "prevClose": 372.49,
-      "change": 3.02,
-      "changePct": 0.811,
-      "monthPct": -1.768,
+      "change": 3.0,
+      "changePct": 0.805,
+      "monthPct": -1.774,
       "currency": "USD",
       "marketTime": 1793912400,
       "history": [
@@ -331,7 +331,7 @@
         361.65,
         359.26,
         372.49,
-        375.51
+        375.49
       ]
     },
     {
@@ -634,13 +634,13 @@
       "symbol": "TWD=X",
       "name": "美元/台幣",
       "group": "匯率",
-      "price": 33.017,
+      "price": 33.074,
       "prevClose": 32.733,
-      "change": 0.284,
-      "changePct": 0.868,
-      "monthPct": 3.715,
+      "change": 0.341,
+      "changePct": 1.042,
+      "monthPct": 3.894,
       "currency": "TWD",
-      "marketTime": 1793913695,
+      "marketTime": 1793917178,
       "history": [
         31.8344,
         31.7514,
@@ -665,20 +665,20 @@
         32.6064,
         32.5851,
         32.733,
-        33.017
+        33.074
       ]
     },
     {
       "symbol": "JPYTWD=X",
       "name": "日圓/台幣",
       "group": "匯率",
-      "price": 0.2073,
+      "price": 0.2076,
       "prevClose": 0.2065,
-      "change": 0.0008,
-      "changePct": 0.373,
-      "monthPct": 2.716,
+      "change": 0.0011,
+      "changePct": 0.519,
+      "monthPct": 2.864,
       "currency": "TWD",
-      "marketTime": 1793913569,
+      "marketTime": 1793917165,
       "history": [
         0.2018,
         0.201,
@@ -703,7 +703,7 @@
         0.2069,
         0.2063,
         0.2065,
-        0.2073
+        0.2076
       ]
     },
     {
@@ -716,7 +716,7 @@
       "changePct": 0.164,
       "monthPct": 2.98,
       "currency": "TWD",
-      "marketTime": 1793913569,
+      "marketTime": 1793917165,
       "history": [
         0.0237,
         0.0236,
