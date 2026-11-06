@@ -18,6 +18,12 @@
 
 橫向螢幕（平板橫放、電腦，寬度 ≥ 1024px）時，卡片分在左右兩側，中間留白顯示冰山風景和時鐘。直向或手機時自動改成一般格狀排版。風景照片來自 Unsplash。
 
+## 🧭 清醒行動派儀表板（`/qingxing/`）
+
+網址：`https://a0955072107-bit.github.io/life-dashboard/qingxing/`。顯示 IG／抖音粉絲、觀看、熱度與每日入帳、每月收入，資料來自 Notion 的「成長數據」與「收入記錄」兩個資料庫，由 Actions「同步清醒行動派儀表板」每 6 小時（及每晚 21:41）同步到 `qingxing/data.json`。
+
+設定：到 notion.so/profile/integrations 建 Internal integration → 兩個 Notion 資料庫各自「連接」該 integration → repo Secrets 新增 `NOTION_TOKEN` → Actions 手動跑一次。
+
 ## 設定步驟
 
 1. **開啟 GitHub Pages**：Settings → Pages → Source 選 `Deploy from a branch`，Branch 選 `main`、資料夾選 `/ (root)`。網址會是 `https://a0955072107-bit.github.io/life-dashboard/`。

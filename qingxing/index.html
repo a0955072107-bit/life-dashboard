@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>清醒行動派｜數據與收入儀表板</title>
+<meta name="description" content="清醒行動派 IG／抖音成長數據與每日入帳追蹤，資料來自 Notion，每 6 小時自動同步。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F3EE; --card:#FFFFFF; --ink:#2B2B2B; --ink2:#6B6B6B; --ink3:#9A9A9A;
+  --line:#E6E1D8; --grid:#EEEAE3; --accent:#1F3A5F; --accent2:#5C7FA6; --accent3:#B9C7D9;
+  --good:#2E7D5B; --warn:#B8860B; --tint:#EEF2F7;
+  --c1:#1F3A5F; --c2:#C97B4A; --c3:#4E8F79; --c4:#8A6BB5; --c5:#C9A227; --c6:#8E8E8E;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#17191D; --card:#1F2228; --ink:#ECEAE5; --ink2:#A8A6A0; --ink3:#77756F;
+  --line:#2E323A; --grid:#2A2E35; --accent:#8FB0DA; --accent2:#5C7FA6; --accent3:#3A4A5F; --tint:#232A35;
+  --c1:#8FB0DA; --c2:#E29A6A; --c3:#6FB59C; --c4:#AC92D6; --c5:#DEBB4B; --c6:#A5A5A5;
+}}
+:root[data-theme="dark"]{
+  --bg:#17191D; --card:#1F2228; --ink:#ECEAE5; --ink2:#A8A6A0; --ink3:#77756F;
+  --line:#2E323A; --grid:#2A2E35; --accent:#8FB0DA; --accent2:#5C7FA6; --accent3:#3A4A5F; --tint:#232A35;
+  --c1:#8FB0DA; --c2:#E29A6A; --c3:#6FB59C; --c4:#AC92D6; --c5:#DEBB4B; --c6:#A5A5A5;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans TC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 16px 56px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:20px}
+h1{font-size:22px;font-weight:700;margin:0;letter-spacing:.02em}
+h1 small{display:block;font-size:13px;font-weight:400;color:var(--ink2);margin-top:2px}
+.meta{font-size:12.5px;color:var(--ink2);text-align:right}
+.meta a{color:var(--accent);text-decoration:none}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;background:var(--tint);color:var(--accent);margin-left:6px}
+.badge.warn{color:var(--warn)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.seg button{border:0;background:transparent;color:var(--ink2);padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.kpi .l{font-size:12.5px;color:var(--ink2)}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.01em;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12px;color:var(--ink3);margin-top:2px}
+.kpi .d.up{color:var(--good)} .kpi .d.down{color:#B5533C}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 10px;min-width:0}
+.card h2{font-size:15px;font-weight:700;margin:0 0 2px}
+.card .sub{font-size:12.5px;color:var(--ink2);margin-bottom:8px}
+.card.wide{grid-column:1 / -1}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.gridline{stroke:var(--grid)} .axis{stroke:var(--line)}
+.tick{fill:var(--ink3);font-size:11px} .lbl{fill:var(--ink2);font-size:11.5px}
+.empty{color:var(--ink3);font-size:13.5px;padding:28px 0;text-align:center}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;color:var(--ink2);font-weight:500;font-size:12.5px;border-bottom:1px solid var(--line);padding:6px 8px}
+td{padding:7px 8px;border-bottom:1px solid var(--grid);white-space:nowrap}
+td.num,th.num{text-align:right}
+.tbl{overflow-x:auto;margin:0 -16px;padding:0 16px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--ink2);margin:4px 0 2px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 9px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:9;white-space:nowrap}
+.setup{background:var(--tint);border:1px dashed var(--accent3);border-radius:14px;padding:14px 18px;font-size:13.5px;margin-bottom:16px}
+.setup ol{margin:6px 0 0;padding-left:20px}
+.setup code{background:var(--card);padding:1px 6px;border-radius:5px;font-size:12.5px}
+footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
+@media (max-width:640px){ .kpi .v{font-size:22px} h1{font-size:19px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>清醒行動派<small>數據與收入儀表板｜先清醒，再行動</small></h1>
+  <div class="meta" id="meta">載入中…</div>
+</header>
+
+<div id="setup" class="setup" hidden>
+  <strong>尚未連接 Notion。</strong>完成以下三步，資料就會每 6 小時自動進來：
+  <ol>
+    <li>到 <code>notion.so/profile/integrations</code> 建立 Internal integration，複製 token。</li>
+    <li>在 Notion 打開「成長數據」與「收入記錄」兩個資料庫 → 右上角 ··· → 連接 → 選剛建的 integration。</li>
+    <li>GitHub repo <code>life-dashboard</code> → Settings → Secrets → Actions → 新增 <code>NOTION_TOKEN</code>，再到 Actions 手動跑一次「同步清醒行動派儀表板」。</li>
+  </ol>
+</div>
+
+<div class="row">
+  <div class="seg" id="platform" role="group" aria-label="平台">
+    <button aria-pressed="true" data-v="all">全部</button>
+    <button aria-pressed="false" data-v="Instagram">Instagram</button>
+    <button aria-pressed="false" data-v="抖音">抖音</button>
+  </div>
+  <div class="seg" id="range" role="group" aria-label="期間">
+    <button aria-pressed="false" data-v="7">7 天</button>
+    <button aria-pressed="true" data-v="30">30 天</button>
+    <button aria-pressed="false" data-v="90">90 天</button>
+    <button aria-pressed="false" data-v="0">全部</button>
+  </div>
+</div>
+
+<section class="kpis" id="kpis"></section>
+
+<section class="grid">
+  <div class="card"><h2>粉絲數</h2><div class="sub">每日累計追蹤數</div><div id="chFollowers"></div></div>
+  <div class="card"><h2>觀看數</h2><div class="sub">每日內容觀看／觸及</div><div id="chViews"></div></div>
+  <div class="card"><h2>熱度</h2><div class="sub">讚 ＋ 留言×3 ＋ 收藏×5 ＋ 分享×5</div><div id="chHeat"></div></div>
+  <div class="card"><h2>每月收入</h2><div class="sub">NT$，依產品堆疊</div><div id="legProduct" class="legend"></div><div id="chMonthly"></div></div>
+  <div class="card"><h2>每日入帳</h2><div class="sub">期間內每一筆收入</div><div id="chDaily"></div></div>
+  <div class="card wide"><h2>熱度最高的貼文</h2><div class="sub">期間內前 10 篇</div><div class="tbl" id="tblTop"></div></div>
+  <div class="card wide"><h2>最近入帳</h2><div class="sub">最新 15 筆</div><div class="tbl" id="tblIncome"></div></div>
+</section>
+
+<footer>資料由 GitHub Actions 每 6 小時從 Notion 同步 · <a href="../" style="color:inherit">回生活面板</a></footer>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const PRODUCT_COLORS = {
+  "電子書《從迷惘到行動》":"var(--c1)","模板包":"var(--c3)","電子書+模板包組合":"var(--c4)",
+  "工作坊":"var(--c2)","陪跑服務":"var(--c5)","其他":"var(--c6)"
+};
+const PRODUCT_ORDER = Object.keys(PRODUCT_COLORS);
+const state = { platform:"all", range:30, data:null };
+const $ = s => document.querySelector(s);
+const fmt = n => Math.round(n).toLocaleString("zh-Hant-TW");
+const money = n => "NT$ " + fmt(n);
+const tip = $("#tip");
+function showTip(e, html){ tip.innerHTML = html; tip.style.opacity = 1; tip.style.left = (e.clientX+12)+"px"; tip.style.top = (e.clientY-10)+"px"; }
+function hideTip(){ tip.style.opacity = 0; }
+
+try {
+  const saved = localStorage.getItem("qx.filters");
+  if (saved) Object.assign(state, JSON.parse(saved));
+} catch {}
+function persist(){ try{ localStorage.setItem("qx.filters", JSON.stringify({platform:state.platform, range:state.range})); }catch{} }
+
+document.querySelectorAll(".seg").forEach(seg => {
+  const key = seg.id;
+  seg.querySelectorAll("button").forEach(b => {
+    b.setAttribute("aria-pressed", String(String(state[key]) === b.dataset.v));
+    b.onclick = () => {
+      state[key] = key === "range" ? Number(b.dataset.v) : b.dataset.v;
+      seg.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+      persist(); render();
+    };
+  });
+});
+
+fetch("data.json?v=" + Date.now()).then(r => r.json()).then(d => { state.data = d; render(); })
+  .catch(() => { $("#meta").textContent = "讀不到 data.json"; });
+
+function cutoff(){ if (!state.range) return "0000-00-00"; const d = new Date(); d.setDate(d.getDate() - state.range + 1); return d.toISOString().slice(0,10); }
+
+function render(){
+  const d = state.data; if (!d) return;
+  const t = d.generatedAt ? new Date(d.generatedAt).toLocaleString("zh-Hant-TW", {hour12:false, timeZone:"Asia/Taipei"}) : "—";
+  $("#meta").innerHTML = `最後同步 ${t}` + (d.status === "ok" ? `<span class="badge">Notion 已連接</span>` : `<span class="badge warn">${d.status === "no_token" ? "未連接 Notion" : "同步失敗：" + d.status}</span>`);
+  $("#setup").hidden = d.status !== "no_token";
+
+  const from = cutoff();
+  let growth = d.growth.filter(r => r.date >= from && (state.platform === "all" || r.platform === state.platform));
+  const income = d.income.filter(r => r.date >= from);
+
+  // per-day aggregate (sum followers across platforms when "all")
+  const byDay = {};
+  for (const r of growth){ const o = byDay[r.date] ||= {date:r.date, followers:0, views:0, heat:0, n:0}; o.followers += r.followers; o.views += r.views; o.heat += r.heat; o.n++; }
+  const days = Object.values(byDay).sort((a,b) => a.date < b.date ? -1 : 1);
+
+  // KPIs
+  const last = days.at(-1), first = days[0];
+  const followersNow = last ? last.followers : 0;
+  const followersDelta = last && first ? last.followers - first.followers : 0;
+  const views = days.reduce((s,x) => s + x.views, 0);
+  const heat = days.reduce((s,x) => s + x.heat, 0);
+  const ym = new Date().toISOString().slice(0,7);
+  const prevYm = (() => { const x = new Date(); x.setDate(1); x.setMonth(x.getMonth()-1); return x.toISOString().slice(0,7); })();
+  const thisM = (d.monthly.find(m => m.month === ym) || {revenue:0, orders:0});
+  const prevM = (d.monthly.find(m => m.month === prevYm) || {revenue:0, orders:0});
+  const total = d.income.reduce((s,x) => s + x.amount, 0);
+  $("#kpis").innerHTML = [
+    kpi("目前粉絲數", fmt(followersNow), followersDelta ? (followersDelta>0?"+":"") + fmt(followersDelta) + " 期間內" : "期間內無變化", followersDelta>0?"up":followersDelta<0?"down":""),
+    kpi("期間觀看數", fmt(views), days.length ? `${days.length} 天 · 日均 ${fmt(views/days.length)}` : "尚無資料"),
+    kpi("期間熱度", fmt(heat), days.length ? `日均 ${fmt(heat/days.length)}` : "尚無資料"),
+    kpi(`本月收入（${ym.slice(5)} 月）`, money(thisM.revenue), `${thisM.orders} 筆`),
+    kpi(`上月收入（${prevYm.slice(5)} 月）`, money(prevM.revenue), `${prevM.orders} 筆`),
+    kpi("累計收入", money(total), `${d.income.length} 筆`),
+  ].join("");
+
+  lineChart($("#chFollowers"), days, "followers", "var(--c1)", "人");
+  barChart($("#chViews"), days.map(x => ({k:x.date, v:x.views})), "var(--c1)", "次");
+  barChart($("#chHeat"), days.map(x => ({k:x.date, v:x.heat})), "var(--c2)", "分");
+  stackedMonthly($("#chMonthly"), d.monthly);
+  const dailyIncome = {}; for (const r of income) dailyIncome[r.date] = (dailyIncome[r.date]||0) + r.amount;
+  barChart($("#chDaily"), Object.entries(dailyIncome).sort().map(([k,v]) => ({k,v})), "var(--c3)", "元", true);
+
+  const top = growth.filter(r => r.topic).sort((a,b) => b.heat - a.heat).slice(0,10);
+  $("#tblTop").innerHTML = top.length ? `<table><thead><tr><th>日期</th><th>平台</th><th>主題</th><th>格式</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">收藏</th><th class="num">分享</th><th class="num">熱度</th></tr></thead><tbody>${
+    top.map(r => `<tr><td>${r.date.slice(5)}</td><td>${r.platform}</td><td style="white-space:normal;min-width:180px">${esc(r.topic)}</td><td>${r.format}</td><td class="num">${fmt(r.views)}</td><td class="num">${fmt(r.likes)}</td><td class="num">${fmt(r.comments)}</td><td class="num">${fmt(r.saves)}</td><td class="num">${fmt(r.shares)}</td><td class="num"><b>${fmt(r.heat)}</b></td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有貼文資料，發文後在 Notion「成長數據」新增一筆即可。</div>`;
+
+  const recent = [...d.income].sort((a,b) => a.date < b.date ? 1 : -1).slice(0,15);
+  $("#tblIncome").innerHTML = recent.length ? `<table><thead><tr><th>日期</th><th>項目</th><th>產品</th><th class="num">數量</th><th class="num">金額</th><th>平台</th><th>來源</th><th>備註</th></tr></thead><tbody>${
+    recent.map(r => `<tr><td>${r.date}</td><td>${esc(r.item)}</td><td><i style="display:inline-block;width:9px;height:9px;border-radius:3px;background:${PRODUCT_COLORS[r.product]||"var(--c6)"};margin-right:6px;vertical-align:-1px"></i>${esc(r.product)}</td><td class="num">${r.qty}</td><td class="num"><b>${money(r.amount)}</b></td><td>${esc(r.channel)}</td><td>${esc(r.source)}</td><td style="white-space:normal">${esc(r.note)}</td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有收入記錄，有入帳時在 Notion「收入記錄」新增一筆。</div>`;
+}
+
+function kpi(l, v, d, cls=""){ return `<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="d ${cls}">${d}</div></div>`; }
+function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function niceMax(v){ if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); const n = v / p; const m = n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10; return m * p; }
+let W = 600; const H = 220, PL = 44, PR = 12, PT = 12, PB = 28;
+function setW(el){ W = Math.max(280, Math.round(el.clientWidth || 600)); }
+let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(render, 150); });
+
+function frame(max, fmtY){
+  const steps = 4, out = [];
+  for (let i = 0; i <= steps; i++){ const y = PT + (H-PT-PB) * (1 - i/steps); out.push(`<line class="gridline" x1="${PL}" x2="${W-PR}" y1="${y}" y2="${y}"/><text class="tick" x="${PL-6}" y="${y+4}" text-anchor="end">${fmtY(max*i/steps)}</text>`); }
+  return out.join("");
+}
+function xLabels(keys){ const n = keys.length; if (!n) return ""; const every = Math.ceil(n / 6); return keys.map((k,i) => ((i % every === 0 && n-1-i >= every/2) || i === n-1) ? `<text class="tick" x="${xPos(i,n)}" y="${H-8}" text-anchor="middle">${k.slice(5)}</text>` : "").join(""); }
+function xPos(i, n){ return PL + (W-PL-PR) * (i + 0.5)/n; }
+function short(v){ return v >= 10000 ? (v/10000).toFixed(v%10000?1:0) + "萬" : v >= 1000 ? (v/1000).toFixed(v%1000?1:0) + "k" : String(Math.round(v)); }
+
+function lineChart(el, rows, key, color, unit){ setW(el);
+  if (!rows.length) return el.innerHTML = `<div class="empty">尚無資料</div>`;
+  const max = niceMax(Math.max(...rows.map(r => r[key])));
+  const y = v => PT + (H-PT-PB) * (1 - v/max);
+  const n = rows.length;
+  const pts = rows.map((r,i) => [xPos(i,n), y(r[key])]);
+  const path = pts.map((p,i) => (i?"L":"M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+  const area = path + ` L${pts.at(-1)[0].toFixed(1)} ${H-PB} L${pts[0][0].toFixed(1)} ${H-PB} Z`;
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="粉絲數趨勢">${frame(max, short)}
+    <path d="${area}" fill="${color}" fill-opacity=".08"/><path d="${path}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round"/>
+    ${pts.map((p,i) => `<circle cx="${p[0]}" cy="${p[1]}" r="${n>40?2.5:4}" fill="${color}" stroke="var(--card)" stroke-width="2"/><rect x="${p[0]-W/n/2}" y="${PT}" width="${W/n}" height="${H-PT-PB}" fill="transparent" data-i="${i}"/>`).join("")}
+    <line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${xLabels(rows.map(r => r.date))}</svg>`;
+  hover(el, i => `${rows[i].date}<br><b>${fmt(rows[i][key])}</b> ${unit}`);
+}
+
+function barChart(el, items, color, unit, isMoney=false){ setW(el);
+  if (!items.length) return el.innerHTML = `<div class="empty">尚無資料</div>`;
+  const max = niceMax(Math.max(...items.map(r => r.v)));
+  const n = items.length, bw = Math.max(2, Math.min(28, (W-PL-PR)/n - 2));
+  const y = v => PT + (H-PT-PB) * (1 - v/max);
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img">${frame(max, short)}
+    ${items.map((r,i) => { const x = xPos(i,n) - bw/2, h = Math.max(0, H-PB - y(r.v)); return `<rect x="${x}" y="${y(r.v)}" width="${bw}" height="${h}" rx="${Math.min(4,bw/2)}" fill="${color}"/><rect x="${xPos(i,n)-(W-PL-PR)/n/2}" y="${PT}" width="${(W-PL-PR)/n}" height="${H-PT-PB}" fill="transparent" data-i="${i}"/>`; }).join("")}
+    <line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${xLabels(items.map(r => r.k))}</svg>`;
+  hover(el, i => `${items[i].k}<br><b>${isMoney ? money(items[i].v) : fmt(items[i].v) + " " + unit}</b>`);
+}
+
+function stackedMonthly(el, months){ setW(el);
+  const leg = $("#legProduct");
+  if (!months.length){ leg.innerHTML = ""; return el.innerHTML = `<div class="empty">尚無收入資料</div>`; }
+  const used = PRODUCT_ORDER.filter(p => months.some(m => m.byProduct[p]));
+  leg.innerHTML = used.map(p => `<span><i style="background:${PRODUCT_COLORS[p]}"></i>${p}</span>`).join("");
+  const max = niceMax(Math.max(...months.map(m => m.revenue)));
+  const n = months.length, bw = Math.min(56, (W-PL-PR)/n * 0.6);
+  const y = v => PT + (H-PT-PB) * (1 - v/max);
+  el.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="每月收入">${frame(max, short)}
+    ${months.map((m,i) => { let acc = 0; const cx = xPos(i,n); return used.map(p => { const v = m.byProduct[p]||0; if (!v) return ""; const y1 = y(acc+v), h = y(acc) - y1; acc += v; return `<rect x="${cx-bw/2}" y="${y1}" width="${bw}" height="${Math.max(0,h-2)}" rx="3" fill="${PRODUCT_COLORS[p]}"/>`; }).join("") + `<text class="lbl" x="${cx}" y="${y(m.revenue)-6}" text-anchor="middle">${short(m.revenue)}</text><rect x="${cx-(W-PL-PR)/n/2}" y="${PT}" width="${(W-PL-PR)/n}" height="${H-PT-PB}" fill="transparent" data-i="${i}"/>`; }).join("")}
+    <line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${months.map((m,i) => `<text class="tick" x="${xPos(i,n)}" y="${H-8}" text-anchor="middle">${m.month}</text>`).join("")}</svg>`;
+  hover(el, i => { const m = months[i]; return `${m.month} · <b>${money(m.revenue)}</b> · ${m.orders} 筆<br>` + used.filter(p => m.byProduct[p]).map(p => `${p} ${money(m.byProduct[p])}`).join("<br>"); });
+}
+
+function hover(el, html){
+  el.querySelectorAll("rect[data-i]").forEach(r => {
+    r.addEventListener("mousemove", e => showTip(e, html(Number(r.dataset.i))));
+    r.addEventListener("mouseleave", hideTip);
+    r.addEventListener("touchstart", e => showTip(e.touches[0], html(Number(r.dataset.i))), {passive:true});
+  });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+name: 同步清醒行動派儀表板
+
+on:
+  schedule:
+    - cron: "23 */6 * * *"   # 每 6 小時從 Notion 同步
+    - cron: "41 13 * * *"    # 台北 21:41：每晚上傳後再同步一次
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-qingxing
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+
+      - name: 從 Notion 同步
+        run: python scripts/fetch_qingxing.py
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+
+      - name: 提交資料
+        run: |
+          git config user.name "dashboard-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add qingxing/data.json
+          if git diff --cached --quiet; then echo "沒有變更"; exit 0; fi
+          git commit -m "qingxing: 同步 Notion $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+          git pull --rebase origin main
+          git push
