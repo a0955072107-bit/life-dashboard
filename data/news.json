@@ -1,68 +1,815 @@
 {
-  "updated": "2026-11-07T10:53:16+00:00",
+  "updated": "2026-11-07T22:40:42+00:00",
   "brief": [
-    "美國期中選舉民主黨奪下國會兩院，共和黨失去多數，川普政府施政與對中、對台政策走向出現變數，並牽動 2028 大選布局。",
-    "川普證實美軍對伊朗格什姆島發動新一輪打擊但稱「不是戰爭」，卡達稱美方願尋求解方，中東升溫與談判並行，牽動區域安全與油價。",
-    "川普在選後撤換幕僚長，由史蒂芬·米勒接任，外界預期他將對民主黨採強硬對抗，白宮與國會恐陷入僵局。",
-    "巴拉圭總統因銀行倒閉風暴遭彈劾並被軟禁，軍方出面保護，這個台灣友邦政局動盪，對台灣外交也有影響。",
-    "以色列大選未分出勝負，阿拉伯政黨成為關鍵少數，總統赫佐格面臨組閣抉擇，新政府何時成形將影響加薩與地區局勢。",
-    "澳門國安首案宣判，前議員區錦新因顛覆罪成被判囚十二年半，顯示港澳國安法持續收緊，也引發外界對人權的關切。"
+    "以色列總統指派反對派領袖艾森科特組閣，而非總理尼唐亞胡，選後政局生變，也牽動以國未來政策走向。",
+    "波蘭古城克拉科夫發生無差別槍擊，已造成6死15傷，部長稱槍手持極端民族主義觀點，歐洲治安再受關注。",
+    "美國期中選舉民主黨大勝，川普政府面臨共和黨內鬨，並將影響2028大選布局、對外政策與關稅走向。",
+    "美國與伊朗緊張持續，美軍擴大封鎖並稱發動小規模打擊，伊朗發放碘片，中東升高風險仍高。",
+    "美俄烏將在阿布達比重啟談判，但俄軍持續空襲基輔與烏克蘭電網，和平協議進展仍充滿變數。",
+    "巴拉圭前總統因銀行風暴遭起訴並被軟禁，這位我國友邦領導人去職後涉案，衝擊雙邊關係與該國政局。"
   ],
   "briefs": {
     "國際": [
-      "美國期中選舉民主黨奪下國會兩院，共和黨失去多數，川普政府施政與對中、對台政策走向出現變數，並牽動 2028 大選布局。",
-      "川普證實美軍對伊朗格什姆島發動新一輪打擊但稱「不是戰爭」，卡達稱美方願尋求解方，中東升溫與談判並行，牽動區域安全與油價。",
-      "川普在選後撤換幕僚長，由史蒂芬·米勒接任，外界預期他將對民主黨採強硬對抗，白宮與國會恐陷入僵局。",
-      "巴拉圭總統因銀行倒閉風暴遭彈劾並被軟禁，軍方出面保護，這個台灣友邦政局動盪，對台灣外交也有影響。",
-      "以色列大選未分出勝負，阿拉伯政黨成為關鍵少數，總統赫佐格面臨組閣抉擇，新政府何時成形將影響加薩與地區局勢。",
-      "澳門國安首案宣判，前議員區錦新因顛覆罪成被判囚十二年半，顯示港澳國安法持續收緊，也引發外界對人權的關切。"
+      "以色列總統指派反對派領袖艾森科特組閣，而非總理尼唐亞胡，選後政局生變，也牽動以國未來政策走向。",
+      "波蘭古城克拉科夫發生無差別槍擊，已造成6死15傷，部長稱槍手持極端民族主義觀點，歐洲治安再受關注。",
+      "美國期中選舉民主黨大勝，川普政府面臨共和黨內鬨，並將影響2028大選布局、對外政策與關稅走向。",
+      "美國與伊朗緊張持續，美軍擴大封鎖並稱發動小規模打擊，伊朗發放碘片，中東升高風險仍高。",
+      "美俄烏將在阿布達比重啟談判，但俄軍持續空襲基輔與烏克蘭電網，和平協議進展仍充滿變數。",
+      "巴拉圭前總統因銀行風暴遭起訴並被軟禁，這位我國友邦領導人去職後涉案，衝擊雙邊關係與該國政局。"
     ],
     "財經": [
-      "期中選後 AI 股重挫，那斯達克創十八個月來最大跌幅，晶片股雖反彈，但資料中心融資與 AI 投資回報疑慮升高。",
-      "台股本週重挫、跌破三萬九千點，市值蒸發近十八兆創紀錄，融資斷頭潮擴大，國安基金傳出將進場護盤，投資人需留意波動風險。",
-      "台指期夜盤大漲六百多點，收復四萬點，但市場仍擔心反彈力道不足，短線震盪恐持續。",
-      "台積電 ADR 大漲逾 6%，費半勁揚逾 4%，帶動市場期待台股反彈，不過台積電股東人數創高，顯示散戶積極逢低承接。",
-      "日經指數大跌逾三千點、韓股崩跌 6%，亞股同步重挫，顯示 AI 賣壓擴散，台灣出口與電子權值股難以置身事外。",
-      "OpenAI 與白宮官員表示選後仍會持續投資資料中心，但 CoreWeave 債券殖利率破 16%、微軟減少使用新型雲端業者，反映 AI 擴張面臨資金壓力。"
+      "美國期中選後AI股一度重挫、市值蒸發數兆美元，後續費半大漲4.2%、台積電ADR漲逾6%，市場高度震盪。",
+      "台股重摔後市值掉到全球第七、被印度超車，外資賣超逾1.5兆，國安基金5000億能否穩盤成為關鍵。",
+      "融資單日暴減564億，出現創紀錄斷頭潮，群創、聯電等遭重創，散戶槓桿風險升高，投資人須控管資金。",
+      "高盛認為AI股暴跌較像LTCM危機而非網路泡沫，但AI投資何時回收仍是最大疑問，攸關台灣科技股評價。",
+      "傳輝達要求台積電布局3D DRAM以解AI記憶體缺貨，華邦電、群聯、緯穎也看好AI需求，帶動台灣供應鏈。",
+      "美國10月非農新增16.5萬人，聯準會12月升息機率升高，央行同時喊話穩匯，新台幣終止連四貶。"
     ]
   },
   "ai_status": "ok",
   "items": [
     {
-      "title": "Palestinian citizens of Israel put to ‘loyalty test’ after election wins",
-      "link": "https://www.aljazeera.com/features/2026/11/7/palestinian-citizens-of-israel-put-to-loyalty-test-after-election-wins?traffic_source=rss",
+      "title": "Polish gunman who killed 6 people in Krakow has 'ultranationalistic' views, minister says",
+      "link": "https://www.cnbc.com/2026/11/07/krakow-poland-shooting.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T22:39:10+00:00",
+      "summary": "The gunman aimed at random people as he drove into the Main Square, a major tourist destination in the center of the city, Krakow police said."
+    },
+    {
+      "title": "Israel’s president taps opposition candidate Eisenkot to form a government, in setback for Netanyahu",
+      "link": "https://www.cnbc.com/2026/11/07/israel-eisenkot-netanyahu.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T22:36:37+00:00",
+      "summary": "Eisenkot, who ran as the main challenger to Prime Minister Benjamin Netanyahu, is now a step closer to ousting Israel's longest-serving premier."
+    },
+    {
+      "title": "What we know so far after Krakow gun attack",
+      "link": "https://www.bbc.co.uk/news/articles/cmd7q15drwgeo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T22:27:30+00:00",
+      "summary": "Six people were killed in a random shooting in the city's main square, and three bodies were later found at his home."
+    },
+    {
+      "title": "Real Madrid beat Valencia 3-0 to draw level with La Liga leaders Barcelona",
+      "link": "https://www.aljazeera.com/sports/2026/11/7/real-madrid-beat-valencia-3-0-to-draw-level-with-la-liga-leaders-barcelona?traffic_source=rss",
       "source": "Al Jazeera",
       "category": "國際",
       "lang": "en",
-      "published": "2026-11-07T09:48:11+00:00",
-      "summary": "Palestinian citizens of Israel say Arab parties&#039; success in recent elections has led to growing pressure."
+      "published": "2026-11-07T22:21:58+00:00",
+      "summary": "Valverde and Guler&#039;s first half goals put Madrid in the driving seat and Mbappe added a third in the second half."
     },
     {
-      "title": "China’s e-bikes boom as fuel prices rise",
-      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/chinas-e-bikes-boom-as-fuel-prices-rise?traffic_source=rss",
+      "title": "Israel's president tasks opposition leader Eisenkot with forming government",
+      "link": "https://www.bbc.co.uk/news/articles/cmy8367lj5xlo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T22:19:59+00:00",
+      "summary": "Neither PM Benjamin Netanyahu's bloc nor that of his rival secured a majority in last week's election."
+    },
+    {
+      "title": "Risk of Iran war escalation remains high despite Democratic sweep in U.S. midterm elections",
+      "link": "https://www.cnbc.com/2026/11/07/iran-war-midterm-election-oil-price-trump.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T22:17:52+00:00",
+      "summary": "The U.S. and Iran are on a collision course as tensions in the Middle East simmer."
+    },
+    {
+      "title": "Israeli president invites Netanyahu's opposition leader to broker new government",
+      "link": "https://www.npr.org/2026/11/07/nx-s1-6032606/israeli-president-invites-netanyahus-opposition-leader-to-broker-new-government",
+      "source": "NPR World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T22:12:09+00:00",
+      "summary": "Israel's political landscape shifts as President Herzog hands opposition leader Gadi Eisenkot the mandate to form a government, dealing a blow to Benjamin Netanyahu's grip on power."
+    },
+    {
+      "title": "A correspondent finds Cuba's people struggling",
+      "link": "https://www.npr.org/2026/11/07/nx-s1-6029398/a-correspondent-finds-cubas-people-struggling",
+      "source": "NPR World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T22:12:06+00:00",
+      "summary": "Reporting from Cuba comes with distinct challenges especially amid widespread power outages and fuel shortages."
+    },
+    {
+      "title": "Trump offers UFC chief Dana White press secretary job",
+      "link": "https://www.cnbc.com/2026/11/07/trump-ufc-dana-white-press-secretary-offer.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T22:03:06+00:00",
+      "summary": "President Donald Trump offered the job of press secretary to UFC president and CEO Dana White on Saturday."
+    },
+    {
+      "title": "Trump targets Slotkin in call for DOJ probe of alleged Democratic threats to Republicans",
+      "link": "https://www.cnbc.com/2026/11/07/trump-doj-democrats-alleged-threats-slotkin.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T21:59:10+00:00",
+      "summary": "Trump ordered DOJ to examine alleged threats against Republicans while singling out Slotkin."
+    },
+    {
+      "title": "Police clash with protesters as anti-government rallies sweep France",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/police-clash-with-protesters-as-anti-government-rallies-sweep-france?traffic_source=rss",
       "source": "Al Jazeera",
       "category": "國際",
       "lang": "en",
-      "published": "2026-11-07T09:30:07+00:00",
-      "summary": "E-bikes manufacturers in China are are now looking to expand to markets abroad as fuel prices stay high."
+      "published": "2026-11-07T21:24:10+00:00",
+      "summary": "Police have clashed with protesters in Paris as Yellow Vests defied a ban on their rally, leading to arrests."
     },
     {
-      "title": "US Senator Abdul El-Sayed launches ‘Habibi’ political action committee",
-      "link": "https://www.aljazeera.com/news/2026/11/7/el-sayed-launches-habibi-pac-days-after-historic-michigan-senate-win?traffic_source=rss",
+      "title": "Mélenchon promises action against Israeli annexation if elected President",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/melenchon-promises-action-against-israeli-annexation-if-elected-president?traffic_source=rss",
       "source": "Al Jazeera",
       "category": "國際",
       "lang": "en",
-      "published": "2026-11-07T09:18:53+00:00",
-      "summary": "The first Muslim senator&#039;s new committee will let him raise money for other candidates."
+      "published": "2026-11-07T20:53:47+00:00",
+      "summary": "Mélenchon promises action against Israeli annexation if elected President"
     },
     {
-      "title": "美期中選後對伊朗是戰是和？美媒：范斯深度參與談判力促停火 - UDN",
-      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBpSUtpaHA4cEFvblFLcWpFQWw0dzkzbXlJajhyMzVLZkZvWEhlRUJrQ0ZOb1Y3ZjJBRnNvc3dFWXdzSXhpVENFQTJzMjFEbXJLdm1R0gFYQVVfeXFMTTRjblgtTjN1V2hrSXljZDhGU2VLaTAzUGlkWFNmYm1jSE1Oc3pFV2IwbUhrRURZN1VZYjNiOVNoaDR1bHVNTXc5Y1R3MjRjYWg1ckRHdUU4bQ?oc=5",
+      "title": "Who is behind Europe’s suspected hybrid attacks?",
+      "link": "https://www.aljazeera.com/video/inside-story/2026/11/7/who-is-behind-europes-suspected-hybrid-attacks?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T20:48:58+00:00",
+      "summary": "Bomb hoaxes and supermarket cyberattacks are heightening security fears."
+    },
+    {
+      "title": "This retired professor has reinvented himself — as a Taylor Swift scholar",
+      "link": "https://www.marketwatch.com/story/this-retired-professor-has-reinvented-himself-as-a-taylor-swift-scholar-88456c8d?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T20:48:00+00:00",
+      "summary": "His niece convinced him to spend his retirement analyzing Taylor Swift lyrics. Now he’s a successful podcaster at 72."
+    },
+    {
+      "title": "Abdul El-Sayed slams Trump’s tariff war with Canada",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/abdul-el-sayed-slams-trumps-tariff-war-with-canada?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T20:44:34+00:00",
+      "summary": "Michigan Senator-elect Abdul El-Sayed has criticised Trump’s trade war with Canada."
+    },
+    {
+      "title": "Second-guessing my adviser: Is an annuity the right move in this market?",
+      "link": "https://www.marketwatch.com/story/my-adviser-recommended-an-annuity-is-it-the-right-move-in-this-market-environment-00edbbf6?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T20:36:00+00:00",
+      "summary": "“I haven’t committed to the strategy yet and would appreciate some independent perspectives.”"
+    },
+    {
+      "title": "Israel’s president picks Eisenkot over Netanyahu to form next government",
+      "link": "https://www.aljazeera.com/news/2026/11/7/israels-president-picks-eisenkot-over-netanyahu-to-form-next-government?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T20:26:58+00:00",
+      "summary": "Isaac Herzog formally gives Gadi Eisenkot 28 days to secure 61 Knesset seats and replace Netanyahu as prime minister."
+    },
+    {
+      "title": "Israel's president taps opposition candidate, not Netanyahu, to form a government",
+      "link": "https://www.npr.org/2026/11/07/g-s1-152536/netanyahu-israel-government-eisenkot-herzog",
+      "source": "NPR World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T20:18:18+00:00",
+      "summary": "Gadi Eisenkot ran as the main rival to Prime Minister Benjamin Netanyahu, but neither won enough support to command a majority. Israel's main parties have recommended Eisenkot form a new government."
+    },
+    {
+      "title": "More than 140,000 rally as new protests against rising costs sweep France",
+      "link": "https://www.aljazeera.com/news/2026/11/7/more-than-140000-rally-as-new-protests-against-rising-costs-sweep-france?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T20:12:22+00:00",
+      "summary": "Tear gas fired in Paris and Lyon as interior minister warns authorities are &#039;ready and waiting&#039; for rioters and looters."
+    },
+    {
+      "title": "Ukraine’s Zaporizhzhia faces threat as Russian drones close in",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/0711-reported-audrey-in-zaporizhzhia-071126?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T20:10:38+00:00",
+      "summary": "Ukraine’s Zaporizhzhia, once a refuge for those fleeing the war, is now facing growing danger."
+    },
+    {
+      "title": "Paraguay’s ousted president appears before prosecutors after impeachment",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/7-11-clip-paraguay-former-president-detained-appears?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T20:08:47+00:00",
+      "summary": "Former Paraguayan President Santiago Pena has appeared before prosecutors."
+    },
+    {
+      "title": "0050股價跌破90元、0056不到50元…他揭再賠200萬也不慌張的原因！1圖看出最佳進場時機 - 今周刊",
+      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPdzBTSHNYY18wN1NhaFVTcjBCNmZncnB2VnU0OG5TaEhLZ2kyUmxPNElLY1prLUtyNS1tMWxybEZsY213THd5SVRFaGV0M3l0NG1HbTQyTmp4eEs5SnFKT0RkdW1iTG5QemZTSjlpaW1Md0hhd1ZuLUpKOTZmVUU2QQ?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
+      "lang": "zh",
+      "published": "2026-11-07T20:01:19+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMigAFBVV95cUxPdzBTSHNYY18wN1NhaFVTcjBCNmZncnB2VnU0OG5TaEhLZ2kyUmxPNElLY1prLUtyNS1tMWxybEZsY213THd5SVRFaGV0M3l0NG1HbTQyTmp4eEs5SnFKT0RkdW1iTG5QemZTSjlpaW1Md0hhd1ZuLUpKOTZmVUU2QQ?oc=5\" target=\"_blank\">0050股價跌破90元、0056不到50元…他揭再賠200萬也不慌張的原因！1圖看出最佳進"
+    },
+    {
+      "title": "Masked protesters set off firecrackers and block roads in Albania",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/masked-protesters-set-off-firecrackers-and-block-roads-in-albania?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T19:49:19+00:00",
+      "summary": "Police used water cannons to disperse masked protesters in Albania’s capital, Tirana."
+    },
+    {
+      "title": "Here are the 2027 capital-gains tax rates for each income level",
+      "link": "https://www.marketwatch.com/story/here-are-the-2027-capital-gains-tax-rates-for-each-income-level-166fc306?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T19:48:00+00:00",
+      "summary": "How much will you pay in capital-gains taxes next year? The IRS just released this crucial  information."
+    },
+    {
+      "title": "Trump orders DOJ to investigate Democrats for ‘threatening’ people",
+      "link": "https://www.aljazeera.com/news/2026/11/7/trump-orders-doj-to-investigate-democrats-for-threatening-people?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T19:42:46+00:00",
+      "summary": "Trump lashed out at Democrats on Truth Social days after the party won control of Congress."
+    },
+    {
+      "title": "How did AIPAC-backed candidates fare in the US midterm elections?",
+      "link": "https://www.aljazeera.com/news/2026/11/7/how-did-aipac-backed-candidates-fare-in-the-us-midterm-elections?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T19:29:06+00:00",
+      "summary": "Many candidates the pro-Israel group backed still won, but most of the money it spent went to candidates who lost."
+    },
+    {
+      "title": "Malaysian king warns against defying house arrest order for ex-PM Najib",
+      "link": "https://www.aljazeera.com/news/2026/11/7/malaysian-king-warns-against-defying-house-arrest-order-for-ex-pm-najib?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T19:24:21+00:00",
+      "summary": "Attorney general postponed Najib Razak’s transfer from jail after court cleared him for house arrest on Friday."
+    },
+    {
+      "title": "Medicare prescription drug costs will jump 50% in 2027. Doing nothing could cost you.",
+      "link": "https://www.marketwatch.com/story/medicare-prescription-drug-costs-will-jump-50-in-2027-doing-nothing-could-cost-you-b701dfb7?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T19:20:00+00:00",
+      "summary": "Don’t sit on the sidelines during open enrollment."
+    },
+    {
+      "title": "Paraguay's former president charged after bank collapse",
+      "link": "https://www.bbc.co.uk/news/articles/c68jzzvjgdy9o?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T19:17:22+00:00",
+      "summary": "Santiago Peña was ousted due to a banking crisis which left millions of people unable to access their money."
+    },
+    {
+      "title": "Latvian farmers protest over ‘blood grain’ trade with Russia",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/7-11-sv-latvia-farmers-protest-russian-grain-transit?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T19:10:34+00:00",
+      "summary": "Latvian farmers are protesting Russian grain transit, arguing that it helps fund Moscow’s war in Ukraine."
+    },
+    {
+      "title": "年薪245萬前主管屈就賣場！對43歲店長說了這句話 後果超乎預期 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMiiANBVV95cUxORlJ0cHJvOXltNm12aXZwQWVRVGdRaFBuMzF2YkFqV0lRTk5pSUJicEF4Q3g1V0txNkFja2REeWVkd1czMmxOd1hITEMzeW9tSDN6b0RRVUY4M2J6eGlQXzFPUUFlbnFKVjJKM2dTcThScm92RS1NOVdYdzZPT2JjT3FRdTFzZkg2Yk1TSmJaX25LdW55bFp5ajQ2THlFYXhvT2Nxcjk4VWY5dGN2ZDQ3ak9taHNTNU1xdVktQmJMc1o3OURkYjYwMW5ScVFxcHBkVm5iR09CanFzSVRKamhFZGQ3d3RRTzhyNmFHcVlZS3FPRDBpV3Jvd3NBRmRUV1ZrbWhLM1Q5U01ieDNoZzlLb2NkSWlRWXBKV3psVUNuUDBDWGZVd0JfSmYyVl9MT3FQS2t3Vy1WMW1TRXZLS2xsZzhDUTVUbmc1cWZ3MlM3dmZ6R25aQ0t1ZkJFMkF1Z1ZITGN4cHJQQ2t0bWs4X3paN213UlZwNTljNlpIZkV4eTZwQTJVdXRMVw?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
+      "lang": "zh",
+      "published": "2026-11-07T19:08:00+00:00",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiiANBVV95cUxORlJ0cHJvOXltNm12aXZwQWVRVGdRaFBuMzF2YkFqV0lRTk5pSUJicEF4Q3g1V0txNkFja2REeWVkd1czMmxOd1hITEMzeW9tSDN6b0RRVUY4M2J6eGlQXzFPUUFlbnFKVjJKM2dTcThScm92RS1NOVdYdzZPT2JjT3FRdTFzZkg2Yk1TSmJaX25LdW55bFp5ajQ2THlFYXhvT2Nxcjk4VWY5dGN2ZDQ3ak9taHNTNU1xdV"
+    },
+    {
+      "title": "Yemeni gov’t forces report advances as Houthis say deadly strikes hit Sanaa",
+      "link": "https://www.aljazeera.com/news/2026/11/7/yemeni-govt-forces-report-advances-as-houthis-say-deadly-strikes-hit-sanaa?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T19:06:31+00:00",
+      "summary": "Civilians bear the brunt of fighting as 27 people reported killed in strikes on a village in Sanaa province."
+    },
+    {
+      "title": "Demonstration in Berlin calls for an end to arming Israel",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/demonstration-in-berlin-calls-for-an-end-to-arming-israel?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T19:04:04+00:00",
+      "summary": "Demonstration in Berlin calls for an end to arming Israel"
+    },
+    {
+      "title": "Houston mayor orders police to limit cooperation with ICE",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/houston-mayor-orders-police-to-limit-cooperation-with-ice?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T18:55:40+00:00",
+      "summary": "Houston Mayor John Whitmire has instructed police to limit contact with ICE, reversing the city’s previous approach."
+    },
+    {
+      "title": "Paraguay’s ousted president charged over banking scandal",
+      "link": "https://www.aljazeera.com/economy/2026/11/7/paraguays-ousted-president-charged-over-banking-scandal?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T18:35:15+00:00",
+      "summary": "Santiago Pena was impeached over the collapse of Ueno Bank, which left millions unable to access their accounts."
+    },
+    {
+      "title": "US offers $20m reward for information about Iran's nuclear programme",
+      "link": "https://www.bbc.co.uk/news/articles/c6d091ev3p0jo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T18:14:38+00:00",
+      "summary": "Donald Trump has repeatedly raised the prospecting of renewing strikes against Iran's nuclear facilities."
+    },
+    {
+      "title": "Pope Leo hold first mass in Uruguay, urges crowd to be ‘bridge builders’",
+      "link": "https://www.aljazeera.com/news/2026/11/7/pope-leo-hold-first-mass-in-uruguay-urges-crowd-to-be-bridge-builders?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T18:00:21+00:00",
+      "summary": "Vatican says some 40,000 people gathered to listen to the head of the Roman Catholic Church in western city of Paysandu."
+    },
+    {
+      "title": "Gaza wedding festival sees 250 couples married at the same time",
+      "link": "https://www.bbc.co.uk/news/videos/ckr5ygm78j76o?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T17:58:41+00:00",
+      "summary": "A mass wedding for Palestinian brides and grooms has taken place in the rubble-strewn streets of Gaza."
+    },
+    {
+      "title": "Democrats’ big election win revives a difficult Social Security question: Who pays?",
+      "link": "https://www.marketwatch.com/story/democrats-big-election-win-revives-a-difficult-social-security-question-who-pays-17ba9448?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T17:43:00+00:00",
+      "summary": "There are many ideas for saving Social Security. All of them will hurt."
+    },
+    {
+      "title": "Houthis report 25 killed in Yemen strikes",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/houthis-report-25-killed-in-yemen-strikes?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T17:39:23+00:00",
+      "summary": "Yemen’s Houthis say at least 25 people have been killed and 30 injured in air strikes."
+    },
+    {
+      "title": "I’m 65 and worth more than $5.6 million. Can I afford a $200,000 camper?",
+      "link": "https://www.marketwatch.com/story/im-65-and-worth-more-than-5-6-million-can-i-buy-a-200-000-camper-even-though-the-price-feels-crazy-high-55f668f8?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T17:33:00+00:00",
+      "summary": "Math may be cold and unemotional — but finances are not."
+    },
+    {
+      "title": "Lebanese footballer refuses to give up after injuries from Israeli strike",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/lebanese-footballer-refuses-to-give-up-after-injuries-from-israeli-strike?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T17:16:50+00:00",
+      "summary": "After surviving an Israeli airstrike that left her in a coma, Celine Haidar is back on the pitch, coaching footballers."
+    },
+    {
+      "title": "Ousted Paraguayan president appears before prosecutors",
+      "link": "https://www.npr.org/2026/11/07/nx-s1-6033373/paraguay-president-ousted-bank-collapse",
+      "source": "NPR World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T17:14:36+00:00",
+      "summary": "Paraguayan President Santiago Peña was removed from office and placed under house arrest Friday. The Senate voted on his impeachment after the collapse of a state-affiliated bank."
+    },
+    {
+      "title": "Jerusalem Daily: Heavy rains flood Gaza",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/jerusalem-daily-heavy-rains-flood-gaza?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T17:11:29+00:00",
+      "summary": "Jerusalem Daily: Heavy rains flood Gaza"
+    },
+    {
+      "title": "Houthis say at least 25 killed in Saudi air strike",
+      "link": "https://www.bbc.co.uk/news/articles/c65yn1v99ypmo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T17:09:24+00:00",
+      "summary": "Saudi Arabia, which leads a coalition fighting the Houthis in Yemen, has not commented."
+    },
+    {
+      "title": "The wealthiest 10% of Americans are pulling ahead of everyone else. This is what’s making them richer.",
+      "link": "https://www.marketwatch.com/story/the-wealthiest-10-of-americans-are-pulling-ahead-of-everyone-else-this-is-whats-making-them-richer-bd83c2f6?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T17:04:00+00:00",
+      "summary": "The wealthiest 10% have a median net worth that is $800,000 greater than it was three years ago."
+    },
+    {
+      "title": "‘It feels like he’s quietly building a separate life’: My husband inherited $500,000, but he refuses to spend it on our home",
+      "link": "https://www.marketwatch.com/story/it-feels-like-hes-quietly-building-a-separate-life-my-husband-inherited-500-000-but-he-refuses-to-spend-it-on-our-home-06535cff?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T17:01:00+00:00",
+      "summary": "“Our kitchen dates from 1999 and the oven only works if you hit the door a certain way.”"
+    },
+    {
+      "title": "Valencia 0-3 Real Madrid: La Liga – as it happened",
+      "link": "https://www.aljazeera.com/sports/liveblog/2026/11/7/valencia-vs-real-madrid-live-la-liga?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T17:00:12+00:00",
+      "summary": "All the updates as Real Madrid secure eighth consecutive win in all competitions with 3-0 victory at Valencia."
+    },
+    {
+      "title": "Expanding on naval blockade, U.S. military looks to restrict Iranian land commerce",
+      "link": "https://www.cnbc.com/2026/11/07/iran-us-task-force-land-commerce.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T16:56:33+00:00",
+      "summary": "Task Force Iron Gate will focus in part on halting the flow of dual-use technologies used by Iran and stemming what Washington calls illegal revenue streams."
+    },
+    {
+      "title": "Italian foreign minister says hackers leaked his personal data",
+      "link": "https://www.bbc.co.uk/news/articles/cr20wvge32j3o?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T16:50:06+00:00",
+      "summary": "Prime Minister Giorgia Meloni has blamed pro-Russian hackers for publishing the details online."
+    },
+    {
+      "title": "The S&P 500 could be dangerously exposed to AI. Here are some simple alternatives.",
+      "link": "https://www.marketwatch.com/story/the-s-p-500-has-become-a-big-ai-bet-here-are-some-simple-alternatives-3c7574a4?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T16:40:00+00:00",
+      "summary": "The large-cap index is nowhere near as diversified as you think."
+    },
+    {
+      "title": "Decisive election. Dramatic stock swings. How we handled the market last week",
+      "link": "https://www.cnbc.com/investingclub/2026/11/07/decisive-election-dramatic-stock-swings-how-we-handled-the-market-last-week.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T16:31:00+00:00",
+      "summary": "On Friday, Jim Cramer revealed his strategy for navigating this new era at the Investing Club's 4th Annual Meeting."
+    },
+    {
+      "title": "Israel builds 90km network of military roads across southern Lebanon",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/israel-builds-90km-network-of-military-roads-across-southern-lebanon?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T16:30:33+00:00",
+      "summary": "Israel is building roads and military outposts across southern Lebanon."
+    },
+    {
+      "title": "The 2027 tax brackets are out. See what the standard deduction and SALT tax breaks will be.",
+      "link": "https://www.marketwatch.com/story/the-2027-tax-brackets-are-out-see-what-the-standard-deduction-and-salt-tax-breaks-will-be-5dd1d293?mod=mw_rss_topstories",
+      "source": "MarketWatch",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T16:30:00+00:00",
+      "summary": "The tax brackets at the heart of Americans’ income-tax bills will be adjusting at a steeper level in 2027 compared to this year, underscoring inflation’s rekindled presence."
+    },
+    {
+      "title": "Guatemalan lawmaker and three police officers killed in armed attack",
+      "link": "https://www.aljazeera.com/news/2026/11/7/guatemalan-lawmaker-and-three-police-officers-killed-in-armed-attack?traffic_source=rss",
+      "source": "Al Jazeera",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T16:15:18+00:00",
+      "summary": "It happened in a region of the country known to have drug trafficking activity."
+    },
+    {
+      "title": "Why the prognosis for healthcare stocks is uncertain ahead of Congress’ new makeup",
+      "link": "https://www.cnbc.com/2026/11/07/healthcare-stocks-may-face-trouble-due-to-midterm-results.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T16:02:33+00:00",
+      "summary": "Healthcare stocks may struggle to find momentum as the Democrats get ready to take over Congress."
+    },
+    {
+      "title": "No clear winner after tight New Zealand general election",
+      "link": "https://www.bbc.co.uk/news/articles/c3ewev11g1e0o?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T15:56:28+00:00",
+      "summary": "Weeks of coalition talks could follow after preliminary results pointed to a highly divided national parliament."
+    },
+    {
+      "title": "巴西晨運女遭持槍男挾持 為保命答應到「樹下愛愛」 - 自由時報",
+      "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE4waFFlTkpyQTBvcjNmalRSQXRoQklvV1N1SkhMM01fTmNDSzhpUFBWRjBIMTN4d1Bxd2xONnNobkpoOWZoNGtCdmVuUTFtd0czY2tOX2Y5U3AtTEt1NW1IaGpIZGx4QdIBa0FVX3lxTE9yRWZZUEJJdTJ3X3VIakFiMDE3TGNfOFl6ZzdpNThOYkhIRmVPZ2U0aUpRQm9LUnFQVjV0cWlDdXhyRnd6S1NTUGhzSFo4bVZoYjlwQUtzdGNxR0ExTUtLMkVWSGloTlBIVnN3?oc=5",
       "source": "Google 新聞・國際",
       "category": "國際",
       "lang": "zh",
-      "published": "2026-11-07T09:15:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiU0FVX3lxTFBpSUtpaHA4cEFvblFLcWpFQWw0dzkzbXlJajhyMzVLZkZvWEhlRUJrQ0ZOb1Y3ZjJBRnNvc3dFWXdzSXhpVENFQTJzMjFEbXJLdm1R0gFYQVVfeXFMTTRjblgtTjN1V2hrSXljZDhGU2VLaTAzUGlkWFNmYm1jSE1Oc3pFV2IwbUhrRURZN1VZYjNiOVNoaDR1bHVNTXc5Y1R3MjRjYWg1ckRHdUU4bQ?oc=5\" t"
+      "published": "2026-11-07T15:52:14+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiZkFVX3lxTE4waFFlTkpyQTBvcjNmalRSQXRoQklvV1N1SkhMM01fTmNDSzhpUFBWRjBIMTN4d1Bxd2xONnNobkpoOWZoNGtCdmVuUTFtd0czY2tOX2Y5U3AtTEt1NW1IaGpIZGx4QdIBa0FVX3lxTE9yRWZZUEJJdTJ3X3VIakFiMDE3TGNfOFl6ZzdpNThOYkhIRmVPZ2U0aUpRQm9LUnFQVjV0cWlDdXhyRnd6S1NTUGhzSF"
+    },
+    {
+      "title": "白宮幕僚長威爾斯去職 英媒：川普因選舉慘敗怒斥她 - 自由時報",
+      "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1VdkZkUXJLRHJHUmg5c2FFRVM5c0JCWS1fTFV3VnBTUnBvX3lmS0NEcVRwS3pQbDZVVGRMXy1uNmExaV9zRHdTWU5ET3Q3QU83clBuNEhpU01hVVFCbU9nV3MxVmg2UdIBa0FVX3lxTE1RaHZVYm1tb1J4VDBzNWgxYkpGNnNnTjAteEZVTXQwVlRtZ09POElzOTJEa2ZWZjdib3hoM1FCem96YzdGZHAyV2QyQm9mUEJyUWxkNUI4ZGptSVV3dkpiZkhES25KQ0hPSHJZ?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T15:45:32+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiZkFVX3lxTE1VdkZkUXJLRHJHUmg5c2FFRVM5c0JCWS1fTFV3VnBTUnBvX3lmS0NEcVRwS3pQbDZVVGRMXy1uNmExaV9zRHdTWU5ET3Q3QU83clBuNEhpU01hVVFCbU9nV3MxVmg2UdIBa0FVX3lxTE1RaHZVYm1tb1J4VDBzNWgxYkpGNnNnTjAteEZVTXQwVlRtZ09POElzOTJEa2ZWZjdib3hoM1FCem96YzdGZHAyV2QyQm"
+    },
+    {
+      "title": "國安基金5000億夠救市？外資賣超逾1.5兆 分析師曝台股反彈關鍵 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMi_wJBVV95cUxNLU1MNVVCa1JrY2ZaX0pycnF4V19RMTEyUEVUVEtUU2Y4ZFFtZno2RlZtMXU2VXZaMDFhRzd5U3I5RHRWVnI0NU55MlNzX1JkRXVmT0hab3VsVXlMWXhWbU04ckxaa0JUeklhT1ZfdWlPLUwyT0didmlPYU9vd3VOS0pMU2llLS1qcl9vTEtiSkpOOTdsNXNjZ2hVNjEzZDNGZnpkMnZuSkN1NXktVVNaa085b1N2Qm5KTnJhNUdCaVBTVWRhaVpyYV9oTXI2SVdkNVJQVDJvVF8ydDVORE9RU1g0QS1rbGhCYi1qc2l0LS1BZmlqSDhUZnFPMWJMOVB2VXhESW1lTEpqTHZDTVdUS2JDQ3paWnRST005UEMyeHdrRXFIMWJHN2JuQkRUc2tjbGFKZW5LZ2FTcDZkeUR2Z2NBSF9FdXZqM2FpWFg2RWlrV1BpVnI3aTFWZ04tSXlQSk10eVhvMzlsQldtOUJ0WXpTaUFmZFd3bFN0ZmlQOA?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
+      "lang": "zh",
+      "published": "2026-11-07T15:41:11+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMi_wJBVV95cUxNLU1MNVVCa1JrY2ZaX0pycnF4V19RMTEyUEVUVEtUU2Y4ZFFtZno2RlZtMXU2VXZaMDFhRzd5U3I5RHRWVnI0NU55MlNzX1JkRXVmT0hab3VsVXlMWXhWbU04ckxaa0JUeklhT1ZfdWlPLUwyT0didmlPYU9vd3VOS0pMU2llLS1qcl9vTEtiSkpOOTdsNXNjZ2hVNjEzZDNGZnpkMnZuSkN1NXktVVNaa085b1"
+    },
+    {
+      "title": "快訊》波蘭古城爆「無差別槍擊」已6死15傷包括警察- 國際 - 中時新聞網",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5tcnpsZ1FReUNkU2xCY3N5WW43aFc5dDA1Z2FGYnQ3ZmZzcmVhNk53THVWdXBmUmM3ZVQxM3MyQzFfd0tjci1UMXVMdWtaZUg2Vjh2cGlrY19VMFdpVERWTXZUNFJJZkxyc3M3d0Jn?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T15:40:29+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMibkFVX3lxTE5tcnpsZ1FReUNkU2xCY3N5WW43aFc5dDA1Z2FGYnQ3ZmZzcmVhNk53THVWdXBmUmM3ZVQxM3MyQzFfd0tjci1UMXVMdWtaZUg2Vjh2cGlrY19VMFdpVERWTXZUNFJJZkxyc3M3d0Jn?oc=5\" target=\"_blank\">快訊》波蘭古城爆「無差別槍擊」已6死15傷包括警察- 國際</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">中時新聞"
+    },
+    {
+      "title": "Berkshire Hathaway more than doubles buybacks in third quarter as earnings decline",
+      "link": "https://www.cnbc.com/2026/11/07/berkshire-hathaway-q3-2026-earnings-buybacks.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T15:23:46+00:00",
+      "summary": "Berkshire Hathaway said Saturday it accelerated its share repurchases during the third quarter, as operating and overall profits took a hit."
+    },
+    {
+      "title": "UK cannot 'cherry pick' EU single market deal, Barnier tells BBC",
+      "link": "https://www.bbc.co.uk/news/articles/c9kgjj206nzpo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T15:19:35+00:00",
+      "summary": "The former Brexit negotiator says EU countries would reject any British attempts to follow economic rules \"a la carte\"."
+    },
+    {
+      "title": "看屋驚見男鬼站眼前！日女偶像「決定搬進去」還想做朋友 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMi6wJBVV95cUxPYUpMaEVvLUtPUDBZOGZDUlBjT2IzT3l0WEVuREVkSlBWZDdZRTFnUEJlUGNzTmZJZXNWbndlNWRmdXhjOHhwV0FfZXhjYUdCYkdieXpjRGlIUjFpMUV3cHJrTGxLZm9uaGd4eXBsdVVXTUlKaVFLcjdjdFVqVjZ2aFpfWkE0RG1sTmV3bHZEUDh3UEN2YjBwaVJZVlQwQURkS0NOcXpIN2FWRWNSLXRBVWhMbjBQSlo5OXoxOFNzeEoyMzQ3d2FkZkdHNFlSVXM5aE9XNFV1cnlRRDNBdWttS3JwVnBpdmpkb1BXTmhsdTVyWmdMb1ROcTkybWVab056YjQ3MmhDLTVZUkZOZWl0OC00eHdaNERTU05weG41aWwtQU0wblBNZVJ6M1RTTVlITTdjdGxiNm9XSXFKZ09QYUlpUXAwVXFmalpINXpuOU1IRmU5TGlBd1Vic1JjdDU5aXNSRUx2cGpxQkk?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T15:17:00+00:00",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMi6wJBVV95cUxPYUpMaEVvLUtPUDBZOGZDUlBjT2IzT3l0WEVuREVkSlBWZDdZRTFnUEJlUGNzTmZJZXNWbndlNWRmdXhjOHhwV0FfZXhjYUdCYkdieXpjRGlIUjFpMUV3cHJrTGxLZm9uaGd4eXBsdVVXTUlKaVFLcjdjdFVqVjZ2aFpfWkE0RG1sTmV3bHZEUDh3UEN2YjBwaVJZVlQwQURkS0NOcXpIN2FWRWNSLXRBVWhMbjBQSlo5OX"
+    },
+    {
+      "title": "俄軍導彈再襲基輔 烏總統和市長打嘴仗 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMioAJBVV95cUxOd1VXQ055c050V2lOdDdSQlBYWkN5MXo2bXFOSUhvbG5Jd2lSQWdJaXUzR3R1bU93T1F6dGJEMGFmRUpJVHBsVWhRaS1QRjhrNXhxclVCWjNkT2ZDZzFScXZ5QVN0V2U0el9WSXlTVnJORUhZZkpUdUFHUC1OYjJIeTFkckdrNThNRkhEbFp2b3E2b0RkV1FfWW0tYW4xa0xFQUVyMS1ZZVpDNm5VVFJ5RW5SZkNuOW5qTnExSE1MeHJudmRIbTVPTFdSNmJLOThjS3pNVW1ncDRPR01UdHRlVUhoeDVWbnV2UV9WY3c2YlRfajBuTVUwLXM1ZXVKTGlyVGIteUY2bnpXZDFUa1QxYU1ta3RxU0JsZ1RLRDN4UTM?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T14:56:00+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMioAJBVV95cUxOd1VXQ055c050V2lOdDdSQlBYWkN5MXo2bXFOSUhvbG5Jd2lSQWdJaXUzR3R1bU93T1F6dGJEMGFmRUpJVHBsVWhRaS1QRjhrNXhxclVCWjNkT2ZDZzFScXZ5QVN0V2U0el9WSXlTVnJORUhZZkpUdUFHUC1OYjJIeTFkckdrNThNRkhEbFp2b3E2b0RkV1FfWW0tYW4xa0xFQUVyMS1ZZVpDNm5VVFJ5RW5SZk"
+    },
+    {
+      "title": "America's newest small business owners with no employees are off to a hot start in AI era",
+      "link": "https://www.cnbc.com/2026/11/07/americas-new-no-employee-small-business-owners-start-hot-in-ai-era.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T14:45:01+00:00",
+      "summary": "New small business formation is rising for owners who can grow with AI serving in finance, marketing and design roles, eliminating the need for hiring."
+    },
+    {
+      "title": "What midterm election blue wave rebuke of Trump means for renewable energy",
+      "link": "https://www.cnbc.com/2026/11/07/midterm-election-blue-wave-trump-renewable-energy.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T14:33:32+00:00",
+      "summary": "The conservative war on renewable energy suffered a big loss in the rout of President Trump and the GOP in midterm elections. Investors should pay attention."
+    },
+    {
+      "title": "Many workers lose unused FSA money — but could still come out ahead. Here's how",
+      "link": "https://www.cnbc.com/2026/11/07/fsa-forfeit.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T14:30:01+00:00",
+      "summary": "While experts say it's best to use up your FSA money, the tax savings on your contributions could outweigh any amount you forfeit. Here's how to tell."
+    },
+    {
+      "title": "報告：中國跨國鎮壓規模擴大 「僑聯」為白手套 - 世界新聞網",
+      "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE14Ri1Ca0NiRTQ1eXNES0JxZUNtdGhIQzBlUXJnSmRiZGNldFVCc0hNRWg1ekVCMEhvdG5CQ0xZR0dpTkxvUUtGT0d0Q0VuTENZX1E3SUV4Ti1JcTIxNWRuclFR0gFnQVVfeXFMTjJIa3Zpb2NlZUpkUEUyTTVsSEVEb3VweXFNQ0FsZWpvdy1acjZ0Y19mdm44bVNkQkhLckp5Um55bkdTbUItUFJXMnE2WjZNQjd1MExrV29JX1VoRzFmbHUzTW85YzY5WQ?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T14:24:19+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiYkFVX3lxTE14Ri1Ca0NiRTQ1eXNES0JxZUNtdGhIQzBlUXJnSmRiZGNldFVCc0hNRWg1ekVCMEhvdG5CQ0xZR0dpTkxvUUtGT0d0Q0VuTENZX1E3SUV4Ti1JcTIxNWRuclFR0gFnQVVfeXFMTjJIa3Zpb2NlZUpkUEUyTTVsSEVEb3VweXFNQ0FsZWpvdy1acjZ0Y19mdm44bVNkQkhLckp5Um55bkdTbUItUFJXMnE2WjZNQj"
+    },
+    {
+      "title": "31-year-old dumpster diver brought in $140,000 in 12 months: I 'did much more than I thought was possible'",
+      "link": "https://www.cnbc.com/make-it/2026/11/07/dumpster-diver-resale-business.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T14:15:01+00:00",
+      "summary": "Carter Stevens started reselling discarded items from dumpsters around Nashville, Tennessee, in March 2024. Months earlier, he'd been living in his car."
+    },
+    {
+      "title": "Berkshire shares surge as Wall Street swoons amid AI fears",
+      "link": "https://www.cnbc.com/2026/11/07/berkshire-shares-surge-as-wall-street-swoons-amid-ai-fears.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T14:06:20+00:00",
+      "summary": "Berkshire Hathaway shares roared past the S&amp;P 500 index this week and are outperforming the benchmark for the year-to-date."
+    },
+    {
+      "title": "黃仁勳陷入「美人計」？英媒：中國設局 煙硝恐成風暴 - 自由財經",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1UdWMyd2xOVkFrR3k5aGRpTlI2VjVrRnRoak1PcDBUQnB5cGpqV256S0s5T1RKX1NOUUpnRDdtM2tFTE9xdDdEbkpJbV9RVTJfNXpjOFpvUFZwVDVfUURN0gFkQVVfeXFMUDZMZjl4endSSmJmYzFLc21pcnhING90anVXZ2JjbHFKbTBkcmd4Y2lXTXpZLS1HLUZPc1ZRZGxtYnRTd0JwdVdMRzhZNFNsMmdzT19ZSlFrNDJoRkdtMlBtNmlYMQ?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
+      "lang": "zh",
+      "published": "2026-11-07T14:05:10+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE1UdWMyd2xOVkFrR3k5aGRpTlI2VjVrRnRoak1PcDBUQnB5cGpqV256S0s5T1RKX1NOUUpnRDdtM2tFTE9xdDdEbkpJbV9RVTJfNXpjOFpvUFZwVDVfUURN0gFkQVVfeXFMUDZMZjl4endSSmJmYzFLc21pcnhING90anVXZ2JjbHFKbTBkcmd4Y2lXTXpZLS1HLUZPc1ZRZGxtYnRTd0JwdVdMRzhZNFNsMmdzT1"
+    },
+    {
+      "title": "Mark Cuban says he doesn’t ‘give a f---' about growing his net worth—a healthy mindset for non-billionaires too, a financial therapist says",
+      "link": "https://www.cnbc.com/make-it/2026/11/07/mark-cuban-net-worth-money-mindset.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T14:05:01+00:00",
+      "summary": "The billionaire serial entrepreneur says he cares more about the impact he can have by spending and investing, rather than worrying about amassing more wealth."
+    },
+    {
+      "title": "Will this week's blue wave election usher in a Democratic president in 2028?",
+      "link": "https://www.cnbc.com/2026/11/07/2026-midterm-election-blue-wave-2028-president.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T14:00:01+00:00",
+      "summary": "A CNBC analysis of historical election data finds wave elections don't necessarily spell trouble for the party in power during the next presidential year."
+    },
+    {
+      "title": "請病假16年薪水沒少過！私下創業、玩潛水 女教師詐欺近千萬下場慘了 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMiqgNBVV95cUxNQnV5TTJDSGZzN1NhWVJqU0RLXzBESzZRNnd1TjZJQnZFSWgxbHBIVTFUN2IxNmhOeUIzd0RXcnJpeHVSVVRnUE11aXdFWUNpZUZBSmVOaGxITHBzZ05xT3o2anpvX1VGaWxqeUVnd0pjS1haRVJydXowU0NZWmRDbUFxYTlFYW9RYnpiWS1GZlJ2X1RpUzdNR0d2OVBOUl9PMk12UU92TWs0WnhUZFFrMXcxNGhEQ1owQmdkWllLMVlCSWd6YWxWa3lWTUhsekk1Q016RjI2aXFfcFhKWF8xbEJqTlJFcVY5dkpwSDFxMmdDa0o3MndYSDdTeHNEQldaLTZUYmI5WDdXcHdEOG9RQVlUTFFCMk1kZmRvMmxKVzZRakpQOXlUb2NHaFdNbmhuNC1DcklpeEJ2dEhfQVQxVmtTVmxZZnlkWEo5b1BmejcwRHpaTnN2VFVXOVA5RjhQSURFeGpxQXlIV1gyR0lnSks1RFlaVnZWb3d5MWlhUDNRMG5EVks2bkJfZEpCbWwtbXBLTXgxNnQwdERCbkcwVzdMWlAxZngtYlE?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T13:56:00+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiqgNBVV95cUxNQnV5TTJDSGZzN1NhWVJqU0RLXzBESzZRNnd1TjZJQnZFSWgxbHBIVTFUN2IxNmhOeUIzd0RXcnJpeHVSVVRnUE11aXdFWUNpZUZBSmVOaGxITHBzZ05xT3o2anpvX1VGaWxqeUVnd0pjS1haRVJydXowU0NZWmRDbUFxYTlFYW9RYnpiWS1GZlJ2X1RpUzdNR0d2OVBOUl9PMk12UU92TWs0WnhUZFFrMXcxNG"
+    },
+    {
+      "title": "America doesn't like socialism. So why are socialists winning?",
+      "link": "https://www.cnbc.com/2026/11/07/socialism-elections-economy.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T13:01:01+00:00",
+      "summary": "Democratic socialists had their best showing yet at the polls. The problem: Most U.S. voters don't actually like socialism."
+    },
+    {
+      "title": "Anthropic IPO meets AI backlash after midterms show stinging rebuke of data centers",
+      "link": "https://www.cnbc.com/2026/11/07/anthropic-ipo-ai-data-center-backlash.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T13:00:01+00:00",
+      "summary": "Anthropic is poised to become the first pure-play AI company to hit the public market at a time when the public is increasingly leary of the industry."
+    },
+    {
+      "title": "Forget tech and hide out in these stocks instead, Goldman Sachs says",
+      "link": "https://www.cnbc.com/2026/11/07/forget-tech-and-hide-out-in-these-stocks-instead-goldman-sachs-says.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T12:58:23+00:00",
+      "summary": "The giant Wall Street investment bank says there are plenty of quality buying opportunities even as market uncertainty remains."
+    },
+    {
+      "title": "These five stock groups could rally after Democrats' midterms sweep, analysts say",
+      "link": "https://www.cnbc.com/2026/11/07/these-five-stock-types-could-rally-after-us-midterms-analysts-say.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T12:54:47+00:00",
+      "summary": "Clean energy firms, specialty REITs and airline companies and others may be beneficiaries of the 2026 U.S. midterm elections, per Wall Street analysts."
+    },
+    {
+      "title": "核打擊來了？伊朗急發碘片、發核災求生指南 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMirgJBVV95cUxNSlBTMHpPQjhSZ3ZfSlBhenhUTm5jUEtiTEhTVTRlSS1MX3FIUEV3eXpZcW1xWXYxTTg0LTJIWE91ajZNYU0yU1VUX0szY0E0TzV6Q0RYQnZCNnlDaGtZSFdaZWVyU1ZzOFZEWThqUFRqVDZ6RUk5UFhTMGpFM2ZwUjBOQTBMNGppbGpmVGlHQ3l4OTlwclFpbXBxaVlON1dHcjdHT3VnX3E3VjFGbkxPbjJZSjVCLTBkc0ZxdzNKVm9Ja3dGNHBXbTJTUDFkRUtmWlNyNDZBLXJ6Q1ZrN1hwWkhRakM2TjBUckk5ZUJJa1NwUm5UWk81aGVobFM4NTdjdDUxdzBrb2hiZl9EWFgzMjhleVBDeEhBVWZUTV9HYjlFb2dMei10czdQOUxQUQ?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T12:54:23+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMirgJBVV95cUxNSlBTMHpPQjhSZ3ZfSlBhenhUTm5jUEtiTEhTVTRlSS1MX3FIUEV3eXpZcW1xWXYxTTg0LTJIWE91ajZNYU0yU1VUX0szY0E0TzV6Q0RYQnZCNnlDaGtZSFdaZWVyU1ZzOFZEWThqUFRqVDZ6RUk5UFhTMGpFM2ZwUjBOQTBMNGppbGpmVGlHQ3l4OTlwclFpbXBxaVlON1dHcjdHT3VnX3E3VjFGbkxPbjJZSj"
+    },
+    {
+      "title": "Russian strikes wound nine and damage Ukraine's power network ahead of talks",
+      "link": "https://www.bbc.co.uk/news/articles/cm4g1nq8158po?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T12:49:36+00:00",
+      "summary": "The attacks come before Ukrainian and Russian delegations are due to take part in trilateral talks in Abu Dhabi next week."
+    },
+    {
+      "title": "台股黑色星期五狠摔！郭哲榮鞠躬道歉重壓2億 狂喊明年5萬7 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMi-gJBVV95cUxQaUY0bzlyN1RFZThuQjNhS3l1LXBGRk9lT192NE12bVhGakFhSFhVMHdycWJBejhoR0NRTmdCTVBNeHJkR3N1YXZrOVVMSUtXa3ZvX2liZW1RSWZsNENXOGdiR2hHeEhEQVJSd1AteWNMNVJnbGlpc0J3TkhzcWljbHlUVGtUdV9ua0I5eHhRcFdVaVdzRnc5RzkxRTFEVWNtdXdSNUdCcm9jTlBoOUROQU4yYWcyUE9sTXl4RGdFVXlWYnFYWWJyQXBYS3lESVdxX0ltYmVpU1F4Nmt2LWlWWWM1YlB4VjBHY0lZYU5McG4yYWJ2ZThfVVg0bHNfamlPbFdIdVNhcjJjTWRmdFZ5QlJJQ25acWJlNTVyYW1ONGl1M296VlNxSW1FbEJfQUs4MXItVlZXZVFtLTZUMmt1VDRpaEhHMU8xWXR6TmNvaEhLLUhJaDlfTFNjWk5qbjJRZ2FKM0FuanpReVZsdVVxaWVJQnJCbnlWN2c?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
+      "lang": "zh",
+      "published": "2026-11-07T12:35:07+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMi-gJBVV95cUxQaUY0bzlyN1RFZThuQjNhS3l1LXBGRk9lT192NE12bVhGakFhSFhVMHdycWJBejhoR0NRTmdCTVBNeHJkR3N1YXZrOVVMSUtXa3ZvX2liZW1RSWZsNENXOGdiR2hHeEhEQVJSd1AteWNMNVJnbGlpc0J3TkhzcWljbHlUVGtUdV9ua0I5eHhRcFdVaVdzRnc5RzkxRTFEVWNtdXdSNUdCcm9jTlBoOUROQU4yYW"
+    },
+    {
+      "title": "Four things we learned this week about 2028 White House race",
+      "link": "https://www.bbc.co.uk/news/articles/cq1m41n3v7mmo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T12:23:28+00:00",
+      "summary": "The seismic Democratic gains in Congress could shape the presidential election, so who had a good night and who's making moves?"
+    },
+    {
+      "title": "Tech companies face mounting child safety lawsuits while pushing AI into schools",
+      "link": "https://www.cnbc.com/2026/11/07/snap-social-media-teen-safety-lawsuits.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-07T12:00:01+00:00",
+      "summary": "Lawsuits against Snap, Meta and Google are creating headwinds for tech companies just as artificial intelligence tools expand into classrooms."
+    },
+    {
+      "title": "川普出招淡化共和黨期中選舉慘敗！宣布2028年美國將辦全球最大航空展 - 鉅亨網",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBvN3BNOXNQaV9KQ0dNSEtzeUxNd3ZaT19COUN3MDhkcU1Ddk1vU0NBZVk3VGpkeTRJNkRRemkxSU1oaEhkdUlrY3ppeDNPbmc?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T11:10:03+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiT0FVX3lxTFBvN3BNOXNQaV9KQ0dNSEtzeUxNd3ZaT19COUN3MDhkcU1Ddk1vU0NBZVk3VGpkeTRJNkRRemkxSU1oaEhkdUlrY3ppeDNPbmc?oc=5\" target=\"_blank\">川普出招淡化共和黨期中選舉慘敗！宣布2028年美國將辦全球最大航空展</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">鉅亨網</font></li><li><a href=\"https://news"
+    },
+    {
+      "title": "慈父為兒遠赴澳洲打工9年！ 外送遭流浪漢持刀捅殺身亡- 社會 - 中時新聞網",
+      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5yb2RHc21MZ1BIWDVMYWhzNWJ5ZnV6NnFrbjVHUVBtVVhJWUwtNTRxLU1TZXJGWkZnNzk0Tk9zYmdKU19SanFLVmxzQ2gxSXVwa3YtbGdiM0NMdlJDR3BGMHhaM08yMUl5S2drZWN3?oc=5",
+      "source": "Google 新聞・國際",
+      "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T09:41:30+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMibkFVX3lxTE5yb2RHc21MZ1BIWDVMYWhzNWJ5ZnV6NnFrbjVHUVBtVVhJWUwtNTRxLU1TZXJGWkZnNzk0Tk9zYmdKU19SanFLVmxzQ2gxSXVwa3YtbGdiM0NMdlJDR3BGMHhaM08yMUl5S2drZWN3?oc=5\" target=\"_blank\">慈父為兒遠赴澳洲打工9年！ 外送遭流浪漢持刀捅殺身亡- 社會</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">中時新"
+    },
+    {
+      "title": "AI砸錢 何時回本？聯發科蔡力行揭AI投資真相 - Yahoo股市",
+      "link": "https://news.google.com/rss/articles/CBMirwJBVV95cUxOT1hRRjRDOTFPV3haNXdqY0VJSlVMRm41Ui1OdXJ5SC1EQ19qcFNtQjlpR1pBTEpLZDRWTlBuTUFUSzB2aDFBczZGeFdlUEo0M3A0V2lVcXlJSnltcDRmRy1iVlluZEVVeVN4QmVSNkJqUGxlNGF1ODBleVVHWFRoWmoyMDdrZ1QxYlZUcGRRMC1JRldtbEt0bW5tMWxvQXFCQldXMm9aVk85SDRoekZITXdfQ2hsUl9vWlNuNFVScVZCdUtvSkZEVDdUSzc4QmJXQ2dEM3dtUS1WblVRblBKdG8taTB4anlrUGRhZUhiWFlGS1hVdzFDOUg2RklzNHdnaDAtRDZXWVl5RGZSY1F1b0dhVGNzeFcwbnJEVDNWUlJfQktaeDQ4d3NENDRic0k?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
+      "lang": "zh",
+      "published": "2026-11-07T09:27:37+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMirwJBVV95cUxOT1hRRjRDOTFPV3haNXdqY0VJSlVMRm41Ui1OdXJ5SC1EQ19qcFNtQjlpR1pBTEpLZDRWTlBuTUFUSzB2aDFBczZGeFdlUEo0M3A0V2lVcXlJSnltcDRmRy1iVlluZEVVeVN4QmVSNkJqUGxlNGF1ODBleVVHWFRoWmoyMDdrZ1QxYlZUcGRRMC1JRldtbEt0bW5tMWxvQXFCQldXMm9aVk85SDRoekZITXdfQ2"
     },
     {
       "title": "快訊／中油宣布最新油價 各油品下週價格一次看 - 東森新聞",
@@ -74,85 +821,49 @@
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiVEFVX3lxTE8tUF9IcVYxclU4OTZRY1lnNkFFTVp2eWpVbWJpTjI5dzFmVFNHbFhadzk3dU1VQWJsU0o5Q1BVYkpQYjI3Tk9sdlM4QUJKUWRJcXhGOQ?oc=5\" target=\"_blank\">快訊／中油宣布最新油價 各油品下週價格一次看</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">東森新聞</font></li><li><a href=\"https://news.goo"
     },
     {
-      "title": "月薪22萬免上班？老師「請病假16年」竟爽領全薪 擁兩房還偷經營副業 - UDN",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1TVEZ4eE9yQlhvLXVhNjJfQzYxRWtCM2p1enN5eWFNd2dra083cHVXbHY1cm5aajB2WVlVUDlGNWxrZ01PdjBBd0NkS0N6eGxh0gFWQVVfeXFMTVNsbkR4R1B6S283czEtbmVpa250WE41ZTlXLVhSblBxX0Q0Z01odzdFUnNWM1E0RW1ORHVadGtjcGZOd0RpMXF2LU9HWTdSSmRUUkduc2c?oc=5",
+      "title": "Texas mayor instructs police to limit co-operation with ICE",
+      "link": "https://www.bbc.co.uk/news/articles/c8dx33d22zkro?at_medium=RSS&at_campaign=rss",
+      "source": "BBC World",
+      "category": "國際",
+      "lang": "en",
+      "published": "2026-11-07T08:15:55+00:00",
+      "summary": "There has been months of public outcry in Houston after an Immigration and Customs Enforcement (ICE) officer fatally shot a man who was driving to work."
+    },
+    {
+      "title": "美俄烏下週阿布達比重啟談判！川普稱接近達成協議、俄軍突襲基輔釀2傷 - 鉅亨網",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5XUERIYkVhVXdXWXU5dHFwYzZQRTZ1TG1MQVdYSGd3REd3b3JZZWQ5VTRfVWQ5Wk15LXpkc2VwTEMxNzVROHFHV0FvdzNyaG8?oc=5",
       "source": "Google 新聞・國際",
       "category": "國際",
       "lang": "zh",
-      "published": "2026-11-07T09:05:27+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiUEFVX3lxTE1TVEZ4eE9yQlhvLXVhNjJfQzYxRWtCM2p1enN5eWFNd2dra083cHVXbHY1cm5aajB2WVlVUDlGNWxrZ01PdjBBd0NkS0N6eGxh0gFWQVVfeXFMTVNsbkR4R1B6S283czEtbmVpa250WE41ZTlXLVhSblBxX0Q0Z01odzdFUnNWM1E0RW1ORHVadGtjcGZOd0RpMXF2LU9HWTdSSmRUUkduc2c?oc=5\" target=\""
+      "published": "2026-11-07T08:10:03+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiT0FVX3lxTE5XUERIYkVhVXdXWXU5dHFwYzZQRTZ1TG1MQVdYSGd3REd3b3JZZWQ5VTRfVWQ5Wk15LXpkc2VwTEMxNzVROHFHV0FvdzNyaG8?oc=5\" target=\"_blank\">美俄烏下週阿布達比重啟談判！川普稱接近達成協議、俄軍突襲基輔釀2傷</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">鉅亨網</font></li><li><a href=\"https://news."
     },
     {
-      "title": "Why a wave of bomb threats is proving so difficult for Europe's aviation authorities to contain",
-      "link": "https://www.cnbc.com/2026/11/07/hoax-bomb-threats-flights-europe.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-07T09:01:57+00:00",
-      "summary": "The \"weakest point of aviation is targeting it in-flight,\" analysts say — but any change to procedures will be a lengthy process."
-    },
-    {
-      "title": "Will Trump strike nuclear sites again as Iran engages ‘cognitive warfare’?",
-      "link": "https://www.aljazeera.com/news/2026/11/7/will-trump-strike-nuclear-sites-again-as-iran-engages-cognitive?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T08:45:36+00:00",
-      "summary": "The US president has been sending mixed messages after his party suffered a defeat at the midterm elections."
-    },
-    {
-      "title": "癌末只剩3個月！日男「撿到2千萬日幣」狂花　8個月後沒死被判坐牢 - ETtoday新聞雲",
-      "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTE5lcmJtSHllbEY5QWZReExIbURXWU8yRzcyTWJwaFZpNUh1aXBCWW1IQWNtN2V6ZE1lSGktV0l2bFBteDd2OURWcWs5REM4VGNTcHZPYVRQeFBuNmk2ZlHSAUtBVV95cUxONnRhMnVvYkk5TGVlTWg0QlFCak1LZTJwLWVwZTdJdmlWRkJDUC1OanRWVFdtclRxVFB4cUp0UmRmLWFfbklyWEd4cDQ?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-07T08:30:00+00:00",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiXkFVX3lxTE5lcmJtSHllbEY5QWZReExIbURXWU8yRzcyTWJwaFZpNUh1aXBCWW1IQWNtN2V6ZE1lSGktV0l2bFBteDd2OURWcWs5REM4VGNTcHZPYVRQeFBuNmk2ZlHSAUtBVV95cUxONnRhMnVvYkk5TGVlTWg0QlFCak1LZTJwLWVwZTdJdmlWRkJDUC1OanRWVFdtclRxVFB4cUp0UmRmLWFfbklyWEd4cDQ?oc=5\" target=\"_bla"
-    },
-    {
-      "title": "Doncic’s 53 points lift Lakers as Cavs top Sixers in LeBron James’s return",
-      "link": "https://www.aljazeera.com/sports/2026/11/7/doncic-lakers-lebron-cavaliers-sixers-nba-cup-basketball?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T08:10:01+00:00",
-      "summary": "LA Lakers star Doncic closed the first half with an astonishing shot from well beyond the half-court line."
-    },
-    {
-      "title": "黃之鋒遭重判英美日等10國聯合譴責 港府回應稱「歪曲事實」 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMi-AJBVV95cUxQMlJveFJZWDNkVWxrU2V4ZHNWQWV1OWt0QVZfNkhRWlNMSzZrN2lOeGM4dWNkV29hZTgxSjFJMHI5bXNpcTBjNThKdXJicUtHMVd4Rm9tS0hEZG0zZ01iWGhzZW5aYWMxbDZYVHVQRHhiendTeVZZOWJ4RlNkZnhBN2JOWEM5TlRRZEtlVFFleldsNTJ5eUZnSHhjakZyck5DN2Y2VnBIRzh3Q3NLcmx0RnBFaUtucExzSzUxQnBROUZHd0hNRVdGeUZoeTR3MUM3ZzhZT1dFalhrR0M4TlBfUnlST2pPek1RZFdQTEhvY0cxVG1fZHRMSVZQS1k3b2lzTGFDMXZxQVEtam43cXRNTXNnTVRRTFcwNXpnVUhSUjRFTy1fX3Z2NHNMRllnY2VuWnJlTjFzQ0t3STB5cHJXcGY5MGNnZGN6amNlYllkY1NEd3poTHVsbnZJSVBwV3ROOVdLM2EtWi1DZmhjbW0ybTlnTlc4UW5N?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-07T08:05:56+00:00",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMi-AJBVV95cUxQMlJveFJZWDNkVWxrU2V4ZHNWQWV1OWt0QVZfNkhRWlNMSzZrN2lOeGM4dWNkV29hZTgxSjFJMHI5bXNpcTBjNThKdXJicUtHMVd4Rm9tS0hEZG0zZ01iWGhzZW5aYWMxbDZYVHVQRHhiendTeVZZOWJ4RlNkZnhBN2JOWEM5TlRRZEtlVFFleldsNTJ5eUZnSHhjakZyck5DN2Y2VnBIRzh3Q3NLcmx0RnBFaUtucExzSz"
-    },
-    {
-      "title": "黃仁勳捲中國女間諜案再爆新料！美方備忘錄揭戀情疑雲 輝達拒回應 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMisgNBVV95cUxOWEU3Tmp4RU5PUktNaks5OTJrc1lvQkMzUGRmMmhMVUxkdkVJdVFSTUlvVFl2SVNqSTdkemtQQ2hINGxVX1NaX0dEdmxPQi00R1VrUjlMZ1dmRFoweGRjMk1yNGNEU0o4QzNELVVONXR0WnBWZzNBdW5vVjdGbkxnWlh0OUhXYURhZnZtZl9Ia0tteTV5R3JHcXctMVB5b0t3XzhRR3hBangxc2NjejQwdVhlQ0d0ZmFJOUtfQm41b1F4M2FGNjJkNV9fQzRtZEtWaWdzZklLeWR0cm84eGVuckxsUUQtU0J2NkJjV01FY0R4MzlhLXJiaVZHd29SWmNNYm1VaEE2TlFDN19DeWh4Q3JSRnZTNklqMV96NDZMV2VWSm9Na2Q0aEtFSGlvS1RmTTROZU9mQ1Z6dXhYeGNVa3BnYXhudWpxSWtlSGdfQ2tXY3Z3eFhYUWRxQVNsSDFsbXNzYzBqdnhQM1NkbDJibjAzaWd4OUR1MkNYdlU5TmgtMHVOcU9RUmdESVNPeWJQTmpkSzRheTA5M3Zqb1ViZHNMTWxDMi1zUmE4OVlYV18wQQ?oc=5",
+      "title": "【專家之眼】美國期中選舉後 AI發展的新走向 - UDN",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5lV3dObTRqMlpGeHA0M2k0MzBWdDgzMHhTVjA5djNpMjRHSk41MGJfY3I4Tmc3cVhwWnBYWkRHS1EzQ1BEYWNIdmkyQXcya1JrRVY4?oc=5",
       "source": "Google 新聞・財經",
       "category": "財經",
       "lang": "zh",
-      "published": "2026-11-07T07:55:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMisgNBVV95cUxOWEU3Tmp4RU5PUktNaks5OTJrc1lvQkMzUGRmMmhMVUxkdkVJdVFSTUlvVFl2SVNqSTdkemtQQ2hINGxVX1NaX0dEdmxPQi00R1VrUjlMZ1dmRFoweGRjMk1yNGNEU0o4QzNELVVONXR0WnBWZzNBdW5vVjdGbkxnWlh0OUhXYURhZnZtZl9Ia0tteTV5R3JHcXctMVB5b0t3XzhRR3hBangxc2NjejQwdVhlQ0"
+      "published": "2026-11-07T07:57:38+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiU0FVX3lxTE5lV3dObTRqMlpGeHA0M2k0MzBWdDgzMHhTVjA5djNpMjRHSk41MGJfY3I4Tmc3cVhwWnBYWkRHS1EzQ1BEYWNIdmkyQXcya1JrRVY4?oc=5\" target=\"_blank\">【專家之眼】美國期中選舉後 AI發展的新走向</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">UDN</font></li><li><a href=\"https://news.google"
     },
     {
-      "title": "Houston mayor curbs cooperation of US city’s police with ICE",
-      "link": "https://www.aljazeera.com/news/2026/11/7/houston-mayor-curbs-cooperation-of-us-citys-police-with-ice?traffic_source=rss",
-      "source": "Al Jazeera",
+      "title": "黃之鋒被加判10年重刑 邱垂正聲援：無法無罪獲釋將成香港汙點 - UDN",
+      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFAyR2FmMHBzUDZ0QXVNVTJVckI2NTNBSWFRZmEzVnZvU0ZZcXpJblBLdWx4LUhJNExCeTV1S0RTU3pkaVk0czVmTmNqSkVtU1hX0gFWQVVfeXFMTWY0dHVoUEJidjlNdC1JbUZZLUJveXctMzdDS3RDOF82b3NWNGRoQ0kwUFdQYW5iU3I3eHRXSGx5Q3hmak9DUnRaeGtPd25vWlBxMXpxR0E?oc=5",
+      "source": "Google 新聞・國際",
       "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T07:50:16+00:00",
-      "summary": "People stopped for minor traffic violations will no longer be referred to US Immigration and Customs Enforcement."
+      "lang": "zh",
+      "published": "2026-11-07T07:56:03+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiUEFVX3lxTFAyR2FmMHBzUDZ0QXVNVTJVckI2NTNBSWFRZmEzVnZvU0ZZcXpJblBLdWx4LUhJNExCeTV1S0RTU3pkaVk0czVmTmNqSkVtU1hX0gFWQVVfeXFMTWY0dHVoUEJidjlNdC1JbUZZLUJveXctMzdDS3RDOF82b3NWNGRoQ0kwUFdQYW5iU3I3eHRXSGx5Q3hmak9DUnRaeGtPd25vWlBxMXpxR0E?oc=5\" target=\""
     },
     {
-      "title": "台指期夜盤大漲646點收復4萬點！國安基金周一進場護盤 市場仍憂反彈無力 - UDN",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5jSGh6eUxhTGRHRE4xcTlYU2pYTkh4bENCUl8zbldLR2ZoZEtWMHRUdlBickcxYTA4cmVvMmhXUGxWdTl5YWpGc0lXYTloMzBqcEHSAVdBVV95cUxQaUd4aEtzTkVMeGhPZnZUUFJremRUNnhTYndoSTZZVnpxMjFVSmYyRTV0N1RKbTg3d2tsQWFsdHR3bnFZZlg1dmFmZmk4OGoyaUtObkIxWW8?oc=5",
+      "title": "台股市值跌至全球第七 滑落三名 被印度超車了 - 自由財經",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBybDRhcjVuR2hTTlMxRnMtSDVSRnJhdnhvWmhiMGVEc0xaaFVMaUgwUzB3T0s0RUlBUll5NnlydzJYOUVuRkIyMVh6SVl0QXZGUG8zSFliemdXTUNSVHhJ0gFkQVVfeXFMTUo0RUt6cEZ1VjNFWEp2dlJEZ29CVDR4VC1mVkZvY1RJV0JCVkRRcXFnYThuOHRYZmZlU1lUVk9lWWphamRGWnQ2ODZ1REZ4b0lIVmlreF81NUF3ZnJ6SjFKZEU2Uw?oc=5",
       "source": "Google 新聞・財經",
       "category": "財經",
       "lang": "zh",
-      "published": "2026-11-07T07:42:56+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiUkFVX3lxTE5jSGh6eUxhTGRHRE4xcTlYU2pYTkh4bENCUl8zbldLR2ZoZEtWMHRUdlBickcxYTA4cmVvMmhXUGxWdTl5YWpGc0lXYTloMzBqcEHSAVdBVV95cUxQaUd4aEtzTkVMeGhPZnZUUFJremRUNnhTYndoSTZZVnpxMjFVSmYyRTV0N1RKbTg3d2tsQWFsdHR3bnFZZlg1dmFmZmk4OGoyaUtObkIxWW8?oc=5\" targ"
+      "published": "2026-11-07T07:44:00+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTFBybDRhcjVuR2hTTlMxRnMtSDVSRnJhdnhvWmhiMGVEc0xaaFVMaUgwUzB3T0s0RUlBUll5NnlydzJYOUVuRkIyMVh6SVl0QXZGUG8zSFliemdXTUNSVHhJ0gFkQVVfeXFMTUo0RUt6cEZ1VjNFWEp2dlJEZ29CVDR4VC1mVkZvY1RJV0JCVkRRcXFnYThuOHRYZmZlU1lUVk9lWWphamRGWnQ2ODZ1REZ4b0lIVm"
     },
     {
       "title": "Trump says U.S. carried out ‘minor strikes’ on Iran as missiles hit Qeshm Island",
@@ -164,67 +875,31 @@
       "summary": "Trump said the U.S. carried out ‘minor strikes’ on Iran after Iranian media reported two missiles hit Qeshm Island near the Strait of Hormuz."
     },
     {
-      "title": "泰國自動通關開放33國！台灣竟被排除 - 東森新聞",
-      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBiZDNmZ3JlZjNuQnRhSC11RXJzVFdydU5CdFZJSU9BVE5qYzZ1ZDlkbVJFWUJNbnBiYXR3UVJ6LTRIQ2R2Q1k1ZzRrVTdVVGtubkZZ?oc=5",
+      "title": "人氣女星爆侵占9億捐款！清晨遭警方破門逮捕 資產遭凍結 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMi9wJBVV95cUxPSXU1R2swWlZJckZ2TVE1b29Pb0sxcGlUSjFwRVhyLWY2akRZUXJjQVpzMk4zRk5QbjUxTG9JSXRQNGFLS0kxb2ZENjlEWGE2YXdQcjlWc1o0RzlleDZfQXk4bEdVVFNQR2JHSlVadzB6Mk9Bd1Jjc3g2aXAwd21BUjNfN1VvamdfVXlfQUZNSW0wdDVxNVRfMkV5WEFEN1JvdWZlek5CeHowdGN4UDVDWS16a3RoUDNGQzAzaUkwN3lPc3NSQ3NnN2VJU3loQXZKV1JKVmk2THRNZGZYVm9rWkFQejJobkowRjVzQ0pLdGstOTdIS2xtUDlKbEFPaGgySWthbTlwRVcyWU1BY3BuQUZCRUZWTWJPRUF0dXpQRHhTMUpJRjlKTm1kT1BmMUxURVV5MjVmdDlrQlR0TUs2T0FfN0ViNlhUb3M0YktpdHd6Vzl6ZWY1UVhKeVBlOUZIMzY1RkNibEdIeWxMSElBV25VQU1EYjQ?oc=5",
       "source": "Google 新聞・國際",
       "category": "國際",
       "lang": "zh",
-      "published": "2026-11-07T07:33:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiU0FVX3lxTFBiZDNmZ3JlZjNuQnRhSC11RXJzVFdydU5CdFZJSU9BVE5qYzZ1ZDlkbVJFWUJNbnBiYXR3UVJ6LTRIQ2R2Q1k1ZzRrVTdVVGtubkZZ?oc=5\" target=\"_blank\">泰國自動通關開放33國！台灣竟被排除</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">東森新聞</font></li><li><a href=\"https://news.google.co"
+      "published": "2026-11-07T07:32:00+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMi9wJBVV95cUxPSXU1R2swWlZJckZ2TVE1b29Pb0sxcGlUSjFwRVhyLWY2akRZUXJjQVpzMk4zRk5QbjUxTG9JSXRQNGFLS0kxb2ZENjlEWGE2YXdQcjlWc1o0RzlleDZfQXk4bEdVVFNQR2JHSlVadzB6Mk9Bd1Jjc3g2aXAwd21BUjNfN1VvamdfVXlfQUZNSW0wdDVxNVRfMkV5WEFEN1JvdWZlek5CeHowdGN4UDVDWS16a3"
     },
     {
-      "title": "Paraguay's president impeached and under house arrest after bank collapse",
-      "link": "https://www.bbc.co.uk/news/articles/c68jzzvjgdy9o?at_medium=RSS&at_campaign=rss",
+      "title": "Meghan's father Thomas Markle under house arrest after child sex abuse material charge",
+      "link": "https://www.bbc.co.uk/news/articles/cqgkvv8m8pgyo?at_medium=RSS&at_campaign=rss",
       "source": "BBC World",
       "category": "國際",
       "lang": "en",
-      "published": "2026-11-07T07:20:00+00:00",
-      "summary": "Santiago Peña was ousted due to a banking crisis which left millions of people unable to access their money."
+      "published": "2026-11-07T07:27:44+00:00",
+      "summary": "The 82-year-old appeared in court in Florida after the FBI searched two Los Angeles-area storage units he rented."
     },
     {
-      "title": "拿鐵喝到「加料小強」反胃狂吐！店員竟笑著道歉 顧客氣炸公開錄音 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMinANBVV95cUxOSHFaNWNkSk96Y0hMT3ZzRXJHVkNWLTZUYm5sdzUwOENGZFFhdkthS2pJT0tlcW9VYlFoSXEzOXE3S1BDdjlSUHlvT2V2U0dMX0Q3VVFKUEM2WERsMzYzN09wbm44VWl2RVZRQXpUTjdxbHFXY3drenF3SHFrdWtBV0h0c2JhQWM1SklwQ0ZRUnlzTXRRUUZVTlNMMFhDOGdUNFl0S3VpU3VBNXFUZzY4ZU9VYTQ4OFd3MnZ2M1RHZXJHb01XWmJWLWtROVFfWnlxMlJONVA0YnctYWVkbExiV1FHcWttcG5hc1lwczZ6MnZDY1JLSjM5dm9feGc5RmRacHhEQUx3MFluRHVUVlQtNlJkdkJEc2VQQ3IwWnByZC1fcUZmZU1scjZOMWRHNG14dnpXdmtod18zclI4ZFE0ZU42ZTU5cEc3Mi1uWjYwX0EwZlJPV3Bva295cmJVeEFSRUZJTEtBMjQ0cEVRT1kxNi15NGx3NXM0cjRpbUFhQy11MXFIdTJ6c1RpZFJ0Q05BSmNreGRmYXZHWTRp?oc=5",
+      "title": "泰國自動通關開放33國！台灣竟被排除 近9.5萬人搶先用 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMi2AJBVV95cUxOVmd3RkhfcFZpSm9DeHQwY2dMeHRDZEpfN0hRajUxRHRucEwydDlrdDJLNzJfX2VDWm40d19aS3daVDFmeGJEMnhNZHY1VU4zeXpSRlhMZUU5ZFlBa3pqMDJkLVp5czdSbjA0ekpIUmdOQW1UYkhaUDhPdjczU0JLXzVtcm9SUjRxdEpzOUkwS1NrSGxtNWU1SzRCMkpwS3RWakJvTWV4ZWYxRGxXTEFJVm1SZ25vS0xvME9KUnE1RWhTWENobE9SdWFtanFNdFhzYm9ISnZ1T1NHLU56QlNtdGRRX25CQ19jSTEtMlVUUUU1bDJWNHhFTUdQazBXckFIT19jSndTRUJWYU93QVBwWU9rY3dFd3EtU3FiczZVTWRlMGZ3eGdqOGhDNzQwWVJ4NEhwMlFTNE0tMjg4cmhmT0tQSWx5RF96aTBycmhHaTVRSFhHSUh2Wg?oc=5",
       "source": "Google 新聞・國際",
       "category": "國際",
       "lang": "zh",
-      "published": "2026-11-07T07:15:37+00:00",
-      "summary": "<a href=\"https://news.google.com/rss/articles/CBMinANBVV95cUxOSHFaNWNkSk96Y0hMT3ZzRXJHVkNWLTZUYm5sdzUwOENGZFFhdkthS2pJT0tlcW9VYlFoSXEzOXE3S1BDdjlSUHlvT2V2U0dMX0Q3VVFKUEM2WERsMzYzN09wbm44VWl2RVZRQXpUTjdxbHFXY3drenF3SHFrdWtBV0h0c2JhQWM1SklwQ0ZRUnlzTXRRUUZVTlNMMFhDOGdUNFl0S3VpU3VBNXFUZzY4ZU9VYTQ4OFd3Mn"
-    },
-    {
-      "title": "Qatari PM says US willing to seek solution to war with Iran",
-      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/qatari-pm-says-us-willing-to-seek-solution-to-war-with-iran?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T07:10:37+00:00",
-      "summary": "Qatari PM says US willing to seek solution to war with Iran"
-    },
-    {
-      "title": "WTA apologises to Pegula for broadcast of ‘diva’ comment about Andreeva",
-      "link": "https://www.aljazeera.com/sports/2026/11/7/jessica-pegula-mirra-andreeva-diva-comment-wta-finals-tennis?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T07:09:12+00:00",
-      "summary": "Pegula&#039;s conversation with her coach on a practice court at Indian Wells was broadcast on a WTA YouTube livestream."
-    },
-    {
-      "title": "Trump confirms US strikes in Iran, insists ‘it’s not a war’",
-      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/trump-confirms-us-strikes-in-iran-insists-its-not-a?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T07:05:01+00:00",
-      "summary": "US President Donald Trump said America has carried out ‘minor strikes’ on Iran’s Qeshm Island."
-    },
-    {
-      "title": "傳台積電跨界搶飯碗、ADR強彈6％ 挑戰三星、美光與SK海力士地位 - 自由財經",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE4zd1h1MFNndHhEalEzQmpDS1J4ZzhuWkxha3VsQi14QThnbi1iWS13TW9fbDE3NlRlTndab0d3VEd4czlOVUFGT2F6RExmYkNEdHJnT3ZKaHpleTZHd1Jr?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-07T07:02:41+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE4zd1h1MFNndHhEalEzQmpDS1J4ZzhuWkxha3VsQi14QThnbi1iWS13TW9fbDE3NlRlTndab0d3VEd4czlOVUFGT2F6RExmYkNEdHJnT3ZKaHpleTZHd1Jr?oc=5\" target=\"_blank\">傳台積電跨界搶飯碗、ADR強彈6％ 挑戰三星、美光與SK海力士地位</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">自由財經</font></li><li>"
+      "published": "2026-11-07T07:06:15+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMi2AJBVV95cUxOVmd3RkhfcFZpSm9DeHQwY2dMeHRDZEpfN0hRajUxRHRucEwydDlrdDJLNzJfX2VDWm40d19aS3daVDFmeGJEMnhNZHY1VU4zeXpSRlhMZUU5ZFlBa3pqMDJkLVp5czdSbjA0ekpIUmdOQW1UYkhaUDhPdjczU0JLXzVtcm9SUjRxdEpzOUkwS1NrSGxtNWU1SzRCMkpwS3RWakJvTWV4ZWYxRGxXTEFJVm1SZ2"
     },
     {
       "title": "Pope in 'pretty good health' as he starts Latin America tour",
@@ -236,175 +911,40 @@
       "summary": "Pope Leo travels to Uruguay just three weeks after having surgery for lung cancer."
     },
     {
-      "title": "‘Every person has their luck’: Morocco’s beach metal detectorists",
-      "link": "https://www.aljazeera.com/news/2026/11/7/beachcombers-in-morocco-hunt-for-hidden-treasure?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T06:47:45+00:00",
-      "summary": "For many, the search is driven less by profit than by the thrill of an unexpected discovery."
-    },
-    {
-      "title": "期中選後算帳！川普慘敗怒換幕僚長 米勒接任將硬槓民主黨 - UDN",
-      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9xT0RXTk9DcFYzSzdrWTlhRmtTWWVKYkRubmFDMEd6OTlydkdQZUhpQjVxVmtmUmNaM040ejNkYlliNTZUdVB3cDBUY0ZqejFnaHU00gFYQVVfeXFMUDl5ZWV6X2NaS0JPM3UwbmtqaFNCVWxKb3V5LWhHN1hOMVM2enN6U2RmXzkyc0h5cWhZTWNfY25iSGl3aU1vNU9ueVc3U3lhQXpBWUZuRm1Leg?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-07T06:39:56+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiU0FVX3lxTE9xT0RXTk9DcFYzSzdrWTlhRmtTWWVKYkRubmFDMEd6OTlydkdQZUhpQjVxVmtmUmNaM040ejNkYlliNTZUdVB3cDBUY0ZqejFnaHU00gFYQVVfeXFMUDl5ZWV6X2NaS0JPM3UwbmtqaFNCVWxKb3V5LWhHN1hOMVM2enN6U2RmXzkyc0h5cWhZTWNfY25iSGl3aU1vNU9ueVc3U3lhQXpBWUZuRm1Leg?oc=5\" t"
-    },
-    {
-      "title": "Do not investigate Trump’s corporate allies until he leaves office",
-      "link": "https://www.aljazeera.com/opinions/2026/11/7/do-not-investigate-trumps-corporate-allies-until-he-leaves-office?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T06:38:27+00:00",
-      "summary": "The US presidential pardon power has created a constitutional absurdity that can protect those accused of corruption."
-    },
-    {
-      "title": "How the Iran war helped Democrats win the midterms",
-      "link": "https://www.aljazeera.com/opinions/2026/11/7/how-the-iran-war-helped-democrats-win-the-midterms?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T06:26:58+00:00",
-      "summary": "Tehran brought the costs of war into American homes, fuelling the backlash against Trump&#039;s party."
-    },
-    {
-      "title": "Carlos Alcaraz saves match points to reach Paris Masters semifinals",
-      "link": "https://www.aljazeera.com/sports/2026/11/7/carlos-alcaraz-match-point-paris-masters-semifinals-tennis?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T06:21:04+00:00",
-      "summary": "Seven-time Grand Slam champion Alcaraz is through to the Paris Masters semifinals for the first time in his career."
-    },
-    {
-      "title": "Two main parties neck and neck after New Zealand vote, early count",
-      "link": "https://www.aljazeera.com/news/2026/11/7/governing-party-leads-in-new-zealands-knife-edge-vote-early-results?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T06:20:27+00:00",
-      "summary": "Early results suggests New Zealand&#039;s National and Labour parties polling just short of 30 percent of the popular vote."
-    },
-    {
-      "title": "伊朗爆核災危機？政府發碘片下3指令：僅15分鐘逃生 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMiygJBVV95cUxPM1laVjBwbTRvOXVyeHN6LXFxZlZXWnE1dnFjTWJVdVA3OXN1RHd0VHhaZjRiV2xtd09DdTBJU19HNHJqcUMxMUR4Q2N1SXN1bVFESk9jTm5iQW96TVNiSHZicXIxcjJoazFOZWFLdkZXRG1md1RnMmhFbVRlU3M0dGFOeF9UZ3RQLTY1aTZMY3JiV3FFdWtGYTJfODhmTzd5TVU2N0hfOEVHX1Nabi1tSDd4QjhkakVHcFZDNGdYeEhrTHRzek13VVRtQzRmWm5VN0theC1DbTB6bmRfQ29HQ2VLQXRsZjdERmJpY3dISTBfV0VNdkFNZ0ptNmVva2l4T0tBZDZ3bzBJNzdXQ3BtYkFLTnpHUG5oSUljNWdHMWJ5T21fWmQtSE45Y2JlRElhd2g3d2Q3M2VVQW13eC1MbVN5T3VsUjhXUEE?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-07T06:17:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiygJBVV95cUxPM1laVjBwbTRvOXVyeHN6LXFxZlZXWnE1dnFjTWJVdVA3OXN1RHd0VHhaZjRiV2xtd09DdTBJU19HNHJqcUMxMUR4Q2N1SXN1bVFESk9jTm5iQW96TVNiSHZicXIxcjJoazFOZWFLdkZXRG1md1RnMmhFbVRlU3M0dGFOeF9UZ3RQLTY1aTZMY3JiV3FFdWtGYTJfODhmTzd5TVU2N0hfOEVHX1Nabi1tSDd4Qj"
-    },
-    {
-      "title": "The race is on to build the first fusion power plant — and Europe is looking to Japan for help",
-      "link": "https://www.cnbc.com/2026/11/07/proxima-fusion-power-japan-supply-chain.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-07T06:00:01+00:00",
-      "summary": "Fusion energy has the potential to provide abundant, clean power. Now, the race is on to develop the world’s first commercial plant."
-    },
-    {
-      "title": "‘Alien-cortical’ mice: Can human brain cells grow inside animals?",
-      "link": "https://www.aljazeera.com/news/2026/11/7/alien-cortical-mice-can-human-brain-cells-grow-inside-animals?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T05:57:25+00:00",
-      "summary": "Modified mice with human brain cells ignite debates over neurohybrids and the future of cross-species medical research."
-    },
-    {
-      "title": "Paraguay’s Pena under military protection in bank collapse chaos",
-      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/aje-onl-nf_paraguays-pena-under-house-arrest-061126?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T05:51:23+00:00",
-      "summary": "Paraguay moves ex-President Santiago Pena to military base for protection after dramatic day in Asuncion."
-    },
-    {
-      "title": "金價漲勢踩煞車！美就業超預期 黃金跌破4100美元 - 東森新聞",
-      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE96Z1pjTnp2eTAzU2tGQWJBSi15OFhuZWdpeURwU3czOGhkQlhXeTJ3TTVtdWtaUUxYMnRfRjgwV3RERzFVYUVzVHEwR1djRlhmblotRkZXbw?oc=5",
+      "title": "〈華邦電展望〉AI一枝獨秀！擴產效益明年顯現 焦佑鈞示警「擔心下一個不景氣太晚來」 - 鉅亨網",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE45THp3WHNvMThWTHFsU282Mnd6eXlJLXJHSEZMREZSMFV6aW9tWU9XUlZHWU44NVZ6REJjSURWS25ENU9GUVdKWUs3ZEhQM2c?oc=5",
       "source": "Google 新聞・財經",
       "category": "財經",
       "lang": "zh",
-      "published": "2026-11-07T05:48:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiV0FVX3lxTE96Z1pjTnp2eTAzU2tGQWJBSi15OFhuZWdpeURwU3czOGhkQlhXeTJ3TTVtdWtaUUxYMnRfRjgwV3RERzFVYUVzVHEwR1djRlhmblotRkZXbw?oc=5\" target=\"_blank\">金價漲勢踩煞車！美就業超預期 黃金跌破4100美元</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">東森新聞</font></li><li><a href=\"https://n"
+      "published": "2026-11-07T06:40:17+00:00",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMiT0FVX3lxTE45THp3WHNvMThWTHFsU282Mnd6eXlJLXJHSEZMREZSMFV6aW9tWU9XUlZHWU44NVZ6REJjSURWS25ENU9GUVdKWUs3ZEhQM2c?oc=5\" target=\"_blank\">〈華邦電展望〉AI一枝獨秀！擴產效益明年顯現 焦佑鈞示警「擔心下一個不景氣太晚來」</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">鉅亨網</font><strong><a href=\"https://news.g"
     },
     {
-      "title": "Khawaja claims entire Australia team knew about 2018 ball-tampering scandal",
-      "link": "https://www.aljazeera.com/sports/2026/11/7/australia-cricket-ball-tampering-sandpapergate-usman-khawaja?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T05:46:54+00:00",
-      "summary": "The &#039;Sandpapergate&#039; scandal saw ⁠Australia scuffing the ball with sandpaper in the March 2018 test ​in Cape Town."
-    },
-    {
-      "title": "借錢投資賠光光！37歲工程師負債210萬陳屍飯店 遺書中向家人道歉 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMilANBVV95cUxPMXZwMXpTdU40a1o0R0NIa0JGVFBRRWg5aW1HUWE4endFc25VR1VYVVpJcEwyai0xYUN0eVZ5LXAyT09kbVRYZmxFTy1SbXU5Y1NLUkRwandNbDBzc0xkbGQyazI0bTQtb0JkdHVJVzhVaFpWZ1JwNWFUdmRodWp5cll6aXlXd1NhM082MUM4dllIOU1ZWXdNVHB6c2k2dTNnaTFnN2NtRkdGQ19zRzhlNTVyMzlxUDIwdkpxS29xYVNSNGxYMW1vNUN2T3h4VVRvQlpMcGJuWWdzNXNnbGxjMjA1TGJLamRiNWVvSG9xdnU0V1RnRGxBMWs0RGtTd2NKRERDczNRWWJGUTRqX25rZDRlR2xPN0w3V2VyS2U5VTIybHRaUVNYUmprcEh5T2Z1M1c1ZDQ3V2ltM0U4eUZMZ25FSFM1a1ZtdnpQMUNwbE9UNktfSU9wRFFXRnBNNlkxUkRiS3R1MDRmcjc1RGNENGhSRjNxUUF5aUVtY0EyOEhOZWNseTd3ZWpILU82SC0zX0Uwcg?oc=5",
+      "title": "期中選後硬起來？川普政府警告中國：立刻履行稀土與農產品承諾 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMimgNBVV95cUxOMEtCTVo1YV94dWctQ1l4c3pRRlJKa0pURThqRWpEcmF0SEU1WWVBT1B4Ujd4cXdGdjRxUWdia2dva0lkU051NU12MTc3c0ZtcTA2THgyQl96NHhmaG9vNHp2ekFmSENoc3NSbm5YaVV2VjN5X29zNVA5WDZ4Y1NzUDVzYU9Yemllb0NkdWx2bUlPYzFscm9oQThpM3dMRlRBX0U1QzNKeWtQb0dMVDJfd3BGZVViaFNNak5sS1h6VlVWZkJBVVQ3SHpWZmdKNllIWUJfWll3RjU4cWpNOGpXZ09TNERXNE8yVThhUkJLd25oSmxhR3pYbE1sVFRkei0yU2NiY3lXckdnOFNUMDIxYmFGTnluTk1jNDJPbGZVdG5xSkYtYXViWUw4Q3o4YTdwNmx0c3hPS1BHby03VHRoZkN3eWhFQnlPOXN5SFVWcWlPT09Lc1N0N0tNaXFYeEt4V3h6NU1abGFpajV6TDgwTWduZ29xSnNkSTk1ZjZiY2g4ZW9Lc2N1N1lFNlZwcWRIYXpOTUNBakVvdw?oc=5",
       "source": "Google 新聞・國際",
       "category": "國際",
+      "lang": "zh",
+      "published": "2026-11-07T06:33:11+00:00",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMimgNBVV95cUxOMEtCTVo1YV94dWctQ1l4c3pRRlJKa0pURThqRWpEcmF0SEU1WWVBT1B4Ujd4cXdGdjRxUWdia2dva0lkU051NU12MTc3c0ZtcTA2THgyQl96NHhmaG9vNHp2ekFmSENoc3NSbm5YaVV2VjN5X29zNVA5WDZ4Y1NzUDVzYU9Yemllb0NkdWx2bUlPYzFscm9oQThpM3dMRlRBX0U1QzNKeWtQb0dMVDJfd3BGZVViaFNNak"
+    },
+    {
+      "title": "台股跌逾20％想認賠！他問「短期盤整可以先賣再立刻買回嗎」 鄉民急勸：別亂動 - Yahoo股市",
+      "link": "https://news.google.com/rss/articles/CBMipwNBVV95cUxQeDN6d1JvOFNVTmNNTDZuaTNmajFqQVlmNHJpMHZlc2tSdzM0RENhcmFBYW9WaXhnVlF0YjlhNkdNektMaV9SYWt5dG93LXlPUzVNU0VGWmI1bmg0elFJTV9SeldXZWtwMGI3UVFzQ29Uc0FORXN6N0ZJb0FCUUlqbXlKMFN6VDJSUkE5Q1BBcjJxU0FKZE54cmwxQ1FyeFZRZ2pMT0lLTHQ4N0xjRlB0X2ZuS00yU19iVXR0RFZ6SzgwZVJwXzl5bERrTmptRzhCNHVGNXZ1MVVMczVid2ZETEdZend0ajhUcXVEVzVtZHd1cVJGVnBReVVPM2FuQl8xN1JUVEk3SG10NEI1VlA1clJnZks0RXdsZ0NNcUVLaUV0SkNaT3ZDTTBTN2FnZy1YajVCLVpBLURCOEtVcUJ2RV8yS0pGeUIxOWx0ekg1U2RoZ0pjNktQZmZzNlJxRnBhaDdTeEpQVjRvdnlzOV9jZXR6TEo5TzJpbXRJTzZVTDdZcXZ3cjhuMDQzVHdGeWFWTFRDeFNTMmJVNEdZQU5SRmxKMHZGd0U?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
       "lang": "zh",
       "published": "2026-11-07T05:26:32+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMilANBVV95cUxPMXZwMXpTdU40a1o0R0NIa0JGVFBRRWg5aW1HUWE4endFc25VR1VYVVpJcEwyai0xYUN0eVZ5LXAyT09kbVRYZmxFTy1SbXU5Y1NLUkRwandNbDBzc0xkbGQyazI0bTQtb0JkdHVJVzhVaFpWZ1JwNWFUdmRodWp5cll6aXlXd1NhM082MUM4dllIOU1ZWXdNVHB6c2k2dTNnaTFnN2NtRkdGQ19zRzhlNTVyMz"
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMipwNBVV95cUxQeDN6d1JvOFNVTmNNTDZuaTNmajFqQVlmNHJpMHZlc2tSdzM0RENhcmFBYW9WaXhnVlF0YjlhNkdNektMaV9SYWt5dG93LXlPUzVNU0VGWmI1bmg0elFJTV9SeldXZWtwMGI3UVFzQ29Uc0FORXN6N0ZJb0FCUUlqbXlKMFN6VDJSUkE5Q1BBcjJxU0FKZE54cmwxQ1FyeFZRZ2pMT0lLTHQ4N0xjRlB0X2ZuS00yU19iVX"
     },
     {
-      "title": "President Herzog faces key choice as Israel struggles to form government",
-      "link": "https://www.aljazeera.com/news/2026/11/7/president-herzog-faces-key-choice-as-israel-struggles-to-form-government?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T05:16:18+00:00",
-      "summary": "Eisenkot&#039;s bloc and Arab-led parties seek to oust Netanyahu, but failure to form government could leave him in power."
-    },
-    {
-      "title": "Russia launches missile attack on Kyiv, injuring residents",
-      "link": "https://www.aljazeera.com/news/2026/11/7/russia-launches-missile-attack-on-kyiv-injuring-residents?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T05:11:03+00:00",
-      "summary": "Air strikes damage buildings and injure two civilians after Zelenskyy warns of potential for new attacks."
-    },
-    {
-      "title": "‘One less gang leader’: Haiti’s prime minister celebrates police operation",
-      "link": "https://www.aljazeera.com/news/2026/11/7/one-less-gang-leader-haitis-prime-minister-celebrates-police-operation?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T05:02:49+00:00",
-      "summary": "Haiti&#039;s National Police announced that alleged gang leader Mathias Saintil was killed in an exchange of gunfire."
-    },
-    {
-      "title": "台股崩盤「全台灣他最緊張」？名醫示警再跌一、兩周恐出大事：連任黑天鵝已現 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMiwANBVV95cUxPYVVXbHBoaWltQjZoQUJpYmlxRjZoZk43bEowRDFrc3ctWERFNGxvaVFXRHBWcDRPNjFobVFtZkpOLWg3TEVnWWM2VjB3Q0dMdkh0RVhyODRzWFk2WnUzWlRLdC1BRzJwMW9aM1NveDhhbkdweTVTSTVUSkVaNGg0cmcza2ZlUW5lMnA4RkNDMjVYS2FFUDM1YjVmUXU1YS13Um1leURyYXJQRjF3RnozdVdDcVdYaGJJOENERFpQaUJWSThvb0Q3a0gxMS1xdWVqM2ZTamstamIwa0pGRlg3NGRWcWs1MEpNblc5R0pUbTR6YzVMVE1UQVY3VjFjOUNaOFozNDhhYzVqRk8wQTJ4eTZsbWNUUXZLYl9rTU9LaE03RS1MM1VlbVBtVEpLdU5iMzBKbVpOZzJseVVkUXc0aUloNVdsZW4xVnlxWUx3UlBLMjByUTR2VGR4SzJWTk1KbDdwRENfTWdoYjJHYVNCcktEODh6UWdxWUszWWl2WlpBWFJac3ZvdVZoX0w4a1dkblNYczBYQXVEdlpIQ3lsZmZjRnNFUWx3LVBRTG9jSzk2RXY5R1pnR3dzb3JQNFNa?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-07T04:51:22+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiwANBVV95cUxPYVVXbHBoaWltQjZoQUJpYmlxRjZoZk43bEowRDFrc3ctWERFNGxvaVFXRHBWcDRPNjFobVFtZkpOLWg3TEVnWWM2VjB3Q0dMdkh0RVhyODRzWFk2WnUzWlRLdC1BRzJwMW9aM1NveDhhbkdweTVTSTVUSkVaNGg0cmcza2ZlUW5lMnA4RkNDMjVYS2FFUDM1YjVmUXU1YS13Um1leURyYXJQRjF3RnozdVdDcV"
-    },
-    {
-      "title": "US Treasury sanctions eight Canadian money exchange firms over Iran ties",
-      "link": "https://www.aljazeera.com/economy/2026/11/7/us-treasury-sanctions-eight-canadian-money-exchange-firms-over-iran-ties?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T04:50:46+00:00",
-      "summary": "US Treasury claims firms helped sanctioned Iranian entities and handled funds linked to alleged drug trafficking boss."
-    },
-    {
-      "title": "客廳撞見老公與婆婆發生關係！ 人妻崩潰報警：早就懷疑2人不尋常 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMimwNBVV95cUxQNUItUmJzQVJvbnA1UUdYUUJWMkYtQVd1MjdQLWkxczJjVVRVX0V1c19IQ2YyUVdQNG0xSXB6OG5mdnpoX2g0U3hTWkw2dVlXVDAzbGlIbHhSQV9hSTFsZzNwQWRCcE5rSVpjZHRCNTdhQ1A0WnR0bWRnTTVNZ0g3QTJQaDhCbWM4TmpOZGZ4ZUJyTTFEWTE1OTdkRUJTamxzSFJfMS1BWkZGd3lDcFByUDJWS19tYWZLNXZxSlVkd1RaZmhpVklfRVFwTXNQUlVoWDk5ZnhQR0sxeDZ2c1BpY0w0TG5vTlR5ZTh3NzFaZ0NpZUhIZUdYSmhXYUZaUzdlZkQ3cXVMMFNpVWZZcG5Pcm96enBnOEdBbm9jb19iT0hMYmFNUFVPdkdDU1pWTWdsbXBuSDhVazdnU2MzRUVaVjlvOEJiQWFBMmRpRlV4NXFXbEcxbENUaHlnTENpck5acjZQWnlVN1kycVU2V1RBMUs1S2FRZmpVeVdjaTkzZkt5SjZhWFpxNTV2ZmFsWTZDR2pRX29hNHhySWc?oc=5",
+      "title": "美期中選後對伊朗是戰是和？美媒：范斯深度參與談判力促停火 - UDN",
+      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBpSUtpaHA4cEFvblFLcWpFQWw0dzkzbXlJajhyMzVLZkZvWEhlRUJrQ0ZOb1Y3ZjJBRnNvc3dFWXdzSXhpVENFQTJzMjFEbXJLdm1R0gFYQVVfeXFMTTRjblgtTjN1V2hrSXljZDhGU2VLaTAzUGlkWFNmYm1jSE1Oc3pFV2IwbUhrRURZN1VZYjNiOVNoaDR1bHVNTXc5Y1R3MjRjYWg1ckRHdUU4bQ?oc=5",
       "source": "Google 新聞・國際",
       "category": "國際",
       "lang": "zh",
-      "published": "2026-11-07T04:32:07+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMimwNBVV95cUxQNUItUmJzQVJvbnA1UUdYUUJWMkYtQVd1MjdQLWkxczJjVVRVX0V1c19IQ2YyUVdQNG0xSXB6OG5mdnpoX2g0U3hTWkw2dVlXVDAzbGlIbHhSQV9hSTFsZzNwQWRCcE5rSVpjZHRCNTdhQ1A0WnR0bWRnTTVNZ0g3QTJQaDhCbWM4TmpOZGZ4ZUJyTTFEWTE1OTdkRUJTamxzSFJfMS1BWkZGd3lDcFByUDJWS1"
+      "published": "2026-11-07T05:10:25+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiU0FVX3lxTFBpSUtpaHA4cEFvblFLcWpFQWw0dzkzbXlJajhyMzVLZkZvWEhlRUJrQ0ZOb1Y3ZjJBRnNvc3dFWXdzSXhpVENFQTJzMjFEbXJLdm1R0gFYQVVfeXFMTTRjblgtTjN1V2hrSXljZDhGU2VLaTAzUGlkWFNmYm1jSE1Oc3pFV2IwbUhrRURZN1VZYjNiOVNoaDR1bHVNTXc5Y1R3MjRjYWg1ckRHdUU4bQ?oc=5\" t"
     },
     {
       "title": "愈跌買愈兇！台積電一周暴增7.3萬股東 總人數326萬刷新高 - Yahoo股市",
@@ -416,121 +956,13 @@
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMi9wJBVV95cUxPU2FWNlhmUXB2eE1VUWNxQWg1d2VuTXN5TkVpOHZkd2pKNnpSZjR3ejNuR0FkTHBycS02ZXZBWWM3dmdZRXFzWTMxRWl3bkRuMXl2UkhSRDV5T0ZiV1ZkREdLZzFmY21XR3h0alQ4eFhMbWRxR09zcHdVcERGay00aXFZajZTMFFnMnkzZGNVSTBNSmtWQjF2SHd0eVFnS1EwX00wbnZfUFFYUF9YZEZaQjR6Nj"
     },
     {
-      "title": "Los Angeles reacts to historic mayoral election",
-      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/los-angeles-reacts-to-historic-mayoral-election?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T04:14:12+00:00",
-      "summary": "Los Angeles reacts to historic mayoral election"
-    },
-    {
-      "title": "〈美股盤後〉晶片股反彈！費半勁揚逾4.2% 台積電ADR升超6% 那指標普周線四連黑 - 鉅亨網",
-      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBTZjZpWHhIQmdXOGwzMk5XNHQ1aDh0c0VfaUMwWHdULUV2d3ozTWdfZDhZMDFrbGRHQ3JPN2NxYVI1MFBoNWNIZER1ZlBfU3M?oc=5",
+      "title": "台股暴跌的兇手？外媒一文揪出引爆關鍵 - 自由財經",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9ZZVAtUl9TcXJTUFMyUkdtVFQ4NmlYaF9XWkozczk3clUwdmVCNG10MGpQS2QtMjA2WWVMVU1wQlZrZHF6RlpQcWpZMlBDUnRHTXl1UzQ5ZzZuMzc1SEc00gFkQVVfeXFMTVVNa0xRQjg5V1U5UnpjMmpDbUt3RXhYQzFVWldJSGtkZ21NQjJEdEVDVmVSMlJ4aFlCNWVVQ2FRY3FjU1p1ZlRQcUJYcUpGTWFWRmVrdnI1eE9jMjE4WUhETkNiTA?oc=5",
       "source": "Google 新聞・財經",
       "category": "財經",
       "lang": "zh",
-      "published": "2026-11-07T04:13:19+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiT0FVX3lxTFBTZjZpWHhIQmdXOGwzMk5XNHQ1aDh0c0VfaUMwWHdULUV2d3ozTWdfZDhZMDFrbGRHQ3JPN2NxYVI1MFBoNWNIZER1ZlBfU3M?oc=5\" target=\"_blank\">〈美股盤後〉晶片股反彈！費半勁揚逾4.2% 台積電ADR升超6% 那指標普周線四連黑</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">鉅亨網</font></li><li><a href=\"http"
-    },
-    {
-      "title": "Protesters storm site of Microsoft’s planned Amsterdam data centre",
-      "link": "https://www.aljazeera.com/video/newsfeed/2026/11/7/protesters-storm-site-of-microsofts-planned-amsterdam-data-centre?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T04:08:02+00:00",
-      "summary": "Activists in Amsterdam have stormed the site of a proposed Microsoft data centre. Al Jazeera’s Step Vaessen reports."
-    },
-    {
-      "title": "台股重挫跌破39000點！主播示警1事未完成：恐還沒跌完 - UDN",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE82eWVYSTh4OXJoMWVZNk5sSnRJc2ZYVEZEYWdFWmNMZ0VHd1Z2M1EtajdYazlOYjZzenRRMXlwTGM3eXBzQ3YtWExueFhUSFA0cmfSAVdBVV95cUxOeF93eU9EZFJtX2JUVnprODdJTWxhbnpVdjdXcDRGdHhNSEZQMkt3VDF1MTJTUDN0X1R6M0hJN0tLSXNvNGJPNldabkNOTG5wRHh1emZZODQ?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-07T03:53:22+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiUkFVX3lxTE82eWVYSTh4OXJoMWVZNk5sSnRJc2ZYVEZEYWdFWmNMZ0VHd1Z2M1EtajdYazlOYjZzenRRMXlwTGM3eXBzQ3YtWExueFhUSFA0cmfSAVdBVV95cUxOeF93eU9EZFJtX2JUVnprODdJTWxhbnpVdjdXcDRGdHhNSEZQMkt3VDF1MTJTUDN0X1R6M0hJN0tLSXNvNGJPNldabkNOTG5wRHh1emZZODQ?oc=5\" targ"
-    },
-    {
-      "title": "Trump confirms new US strikes on Iran’s Qeshm island",
-      "link": "https://www.aljazeera.com/news/2026/11/7/trump-confirms-new-us-strikes-on-irans-qeshm-island?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T03:53:01+00:00",
-      "summary": "The US president also claims &#039;a lot of progress&#039; in Washington&#039;s negotiations with Tehran."
-    },
-    {
-      "title": "How the US midterm elections reflected resistance to data centres",
-      "link": "https://www.aljazeera.com/economy/2026/11/7/how-the-us-midterm-elections-reflected-resistance-to-data-centres?traffic_source=rss",
-      "source": "Al Jazeera",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-07T03:22:41+00:00",
-      "summary": "Voters rejected data centre development in all but one of the 41 measures addressing the issue in Tuesday&#039;s midterms."
-    },
-    {
-      "title": "烏F-16狂掃4700架俄國無人機 半數戰機卻陷維修困境 - 自由軍武頻道",
-      "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1POFctSlVveFJMWDJNMnRBM0lSRFUyblZHVFhqc3o0QkFHTG96dVhoZTdVVThWWEt4VkNkdmZMT29IbExUb3k1MURNVlREREd4R3l3QkYtNUw4QWpnSHh3Y9IBZkFVX3lxTFBYRElqX1FxQ0VtNnoyQXFPU0RDYmJVV3ppXy1abjdndTgtdkI4ejE3UlFhUnBic1ZqckJPM1M3WmxPZzdMSG53ZE5PWkFyVjhzaGQ5akI1eFE3dmJMRGNCV3RHNk5Jdw?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-07T03:03:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiYEFVX3lxTE1POFctSlVveFJMWDJNMnRBM0lSRFUyblZHVFhqc3o0QkFHTG96dVhoZTdVVThWWEt4VkNkdmZMT29IbExUb3k1MURNVlREREd4R3l3QkYtNUw4QWpnSHh3Y9IBZkFVX3lxTFBYRElqX1FxQ0VtNnoyQXFPU0RDYmJVV3ppXy1abjdndTgtdkI4ejE3UlFhUnBic1ZqckJPM1M3WmxPZzdMSG53ZE5PWkFyVjhzaG"
-    },
-    {
-      "title": "新台幣逆勢強彈將止貶回升？專家：反轉仍有很長一段路 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMilwNBVV95cUxOU05TQm9JOGVzT3EtZXBmUXU5OGZjOWlOeERTRDdnVDBzNFI2dVZGWmUwV29wOUNZWi0zcVo3Q3B5d0hia0hURlNFVUlaLVlhTC15Qk1pQjVTUDliV3huT2RKVVNSY1BqUWp4dGVCMGhrQjNBVndsMXFacHQ2VVF2ODVpaDFxb3doZXdYWlVmSkZVU04yTmJMcDVZZE96QWlFNUxIYkZ1NUtwWHJkNVZMMGZaTDVOMGdsZjN5Z19faHZSVzNyMUJDSWI0Y3ZURGJFSWdhdGxzYjV0eTktSU55VDBkTmRfMkNmdHRkSV9GQTBRQ2dJS1U0WTg0MXRCZV9YYUJtZTA3MWpXZUpDaTUyVGxSc01QZHhHTGRxdG4xeWNWRl82dFV5VUtncnhPYktLWVZ2LTByMmh2NE9sVktwV2x1S0dOejY3eVdkb0dDSnpFNG1FMlY5YVhMYUN4MXNEVjh2T1ZSWndyTXNVeEp1UFNLYWd5Y2xrRklHR2NPaE1na2xTMnZFV3VnVDk4YldfOFk5aVVWZw?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-07T02:53:05+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMilwNBVV95cUxOU05TQm9JOGVzT3EtZXBmUXU5OGZjOWlOeERTRDdnVDBzNFI2dVZGWmUwV29wOUNZWi0zcVo3Q3B5d0hia0hURlNFVUlaLVlhTC15Qk1pQjVTUDliV3huT2RKVVNSY1BqUWp4dGVCMGhrQjNBVndsMXFacHQ2VVF2ODVpaDFxb3doZXdYWlVmSkZVU04yTmJMcDVZZE96QWlFNUxIYkZ1NUtwWHJkNVZMMGZaTD"
-    },
-    {
-      "title": "黃仁勳遭陸女間諜鎖定！美情報機構揭北京驚人布局- 國際 - 中時新聞網",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBKSUo4Y2doUk1ISEh3LWlaNk05NURfbHRRRTJrV2VZblpkWFdJa2g4VTQtSDV6amExSnBCaWtOSnFOdkNwUnNFc3FYZWcyOUZvX3ZoOU5TX1lUV1dWQldMZ2tfMTBvNV93WjJ0TkJ3?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-07T02:33:56+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMibkFVX3lxTFBKSUo4Y2doUk1ISEh3LWlaNk05NURfbHRRRTJrV2VZblpkWFdJa2g4VTQtSDV6amExSnBCaWtOSnFOdkNwUnNFc3FYZWcyOUZvX3ZoOU5TX1lUV1dWQldMZ2tfMTBvNV93WjJ0TkJ3?oc=5\" target=\"_blank\">黃仁勳遭陸女間諜鎖定！美情報機構揭北京驚人布局- 國際</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">中時新聞網<"
-    },
-    {
-      "title": "黃仁勳自爆「最討厭問A答B」！網秒想到他：根本100%全中| 財經 - 三立新聞",
-      "link": "https://news.google.com/rss/articles/CBMiSEFVX3lxTFBILTMyRTFSR3lSNzR6WGNqWS1MMUJKa08yUHJJdktyZW1ham5kMFNQRVRfWmMwSnA4ckdRRmNPdWdPalY0VVNDNQ?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-07T02:31:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiSEFVX3lxTFBILTMyRTFSR3lSNzR6WGNqWS1MMUJKa08yUHJJdktyZW1ham5kMFNQRVRfWmMwSnA4ckdRRmNPdWdPalY0VVNDNQ?oc=5\" target=\"_blank\">黃仁勳自爆「最討厭問A答B」！網秒想到他：根本100%全中| 財經</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">三立新聞</font></li><li><a href=\"https://news.google.c"
-    },
-    {
-      "title": "砸2億抄底0050被傳「哲哲跑路了」！郭哲榮親回3字：好笑嗎 - ETtoday財經雲",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9GRnBnRWlKVUJKU0tsWjkxTEdydUFXS1dybGlwdm5nTUFnMVVXVW9oVERoLTNWclpseDB5LVMwREJtNzlhQnFaSGNhTU4xa3NzTGfSAVBBVV95cUxQSDJoQ0ZoeXRkbUZqbVJsQXYxT29aR1BTRkFNWEFUcFg3Ni0tcFBYT1UxRGFNeFc3Q3JDbW5PYVFsRXpOZHlseVRLeVlLakpXLQ?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-07T02:25:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiUkFVX3lxTE9GRnBnRWlKVUJKU0tsWjkxTEdydUFXS1dybGlwdm5nTUFnMVVXVW9oVERoLTNWclpseDB5LVMwREJtNzlhQnFaSGNhTU4xa3NzTGfSAVBBVV95cUxQSDJoQ0ZoeXRkbUZqbVJsQXYxT29aR1BTRkFNWEFUcFg3Ni0tcFBYT1UxRGFNeFc3Q3JDbW5PYVFsRXpOZHlseVRLeVlLakpXLQ?oc=5\" target=\"_blan"
-    },
-    {
-      "title": "梅根82歲老父藏7500張「兒少性虐影音」恐關20年到死 竟是親兒舉報 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMiggNBVV95cUxPY0U5UkxYSEhqa29LOVFWSzI5VmxtNlRDdUpXejR2N2NLSXBRVDNadENDM0tZQjlSeDVhZTFOdU1ibTZidmFQQjVVMVFrSjU0Ujh1R2RaQWc5Wk0xSzFJTWJPYVNuSkxxcmIyRnF6b3R4YzNJYjE2ZlpCaXprV1J6VWdZb1BiYmw1WXVIRVJBS1lDQkRmX2p3N1NNYk5DWG1ZenJXSkVTVkVzd0JkRV94U09CRTFLZWVWaWp2VklqWlNwcV81UlpLa0hXWEJ1dW1iS2pnalNXUDBRenJjalBiREpqV2RyRW1EZ3gxVjdaS1JzRjRKMEZjRldxSWF2akhUWEdhVFVmcE5kcWxVRzhaRFVXQklVSUpPeG11VkM3OG9oNk0ybWFmTnVSeG0wUHZaaGtFR0hUNExsYU1xdWdFR0k3S2t0NXFwOG11ZHE1cFZyZldzVW0zSm03Zk9fUGFadWJ2SVZLNlFsSkJFOU1vSjJ1Z1hoYUZMeklENVM0R29QQQ?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-07T02:15:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiggNBVV95cUxPY0U5UkxYSEhqa29LOVFWSzI5VmxtNlRDdUpXejR2N2NLSXBRVDNadENDM0tZQjlSeDVhZTFOdU1ibTZidmFQQjVVMVFrSjU0Ujh1R2RaQWc5Wk0xSzFJTWJPYVNuSkxxcmIyRnF6b3R4YzNJYjE2ZlpCaXprV1J6VWdZb1BiYmw1WXVIRVJBS1lDQkRmX2p3N1NNYk5DWG1ZenJXSkVTVkVzd0JkRV94U09CRT"
-    },
-    {
-      "title": "Inside the card-grading empire shaping the price of Pokémon cards",
-      "link": "https://www.cnbc.com/2026/11/06/card-pokemon-grading-psa-collectors-price.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-07T02:00:01+00:00",
-      "summary": "PSA’s resale premium, backlog and grading-market dominance shape what collectors pay — and how much their Pokémon cards may fetch."
+      "published": "2026-11-07T02:33:57+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE9ZZVAtUl9TcXJTUFMyUkdtVFQ4NmlYaF9XWkozczk3clUwdmVCNG10MGpQS2QtMjA2WWVMVU1wQlZrZHF6RlpQcWpZMlBDUnRHTXl1UzQ5ZzZuMzc1SEc00gFkQVVfeXFMTVVNa0xRQjg5V1U5UnpjMmpDbUt3RXhYQzFVWldJSGtkZ21NQjJEdEVDVmVSMlJ4aFlCNWVVQ2FRY3FjU1p1ZlRQcUJYcUpGTWFWRm"
     },
     {
       "title": "冬天的救贖！日本超商飲料櫃驚現「白湯」 她試喝驚呼：好瘋好讚 - UDN",
@@ -540,6 +972,15 @@
       "lang": "zh",
       "published": "2026-11-07T01:41:12+00:00",
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiU0FVX3lxTFBQeEt6Mk5WUjBlN1ZQejVTbm0tV0dLX0J2QzdvMHNuODlPUWRtSUZTUWpCLS1OZkhscjZJTmNtckVxV1c3YVk3V0xhNWl6cW1BNzdN0gFYQVVfeXFMTXRFV3d0VUNDUWJCMVJVNDJCNVV3V0NVNjR0NHRyMTFwSFdaYmJwZ28tVnp5UUZ6OVlrT2d4Y2plcVFEQmNpZUNzZFdUMGxNN1BrdVd5ZnJ0dg?oc=5\" t"
+    },
+    {
+      "title": "台股崩跌恐沖散洋流？台北人「驚人股利」曝光作家示警小心賭爛票：就看護盤成效了| 李瑋萱 | 新聞 - 風傳媒",
+      "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1MS2FKYnhjMjhEaUU4VVlxOHZCOG0xWkJUZ3NsX1ZPNTdVam9IWUdjZ0ZrZlZlUTRtemRLZGN1TkZCVWtDY0dtNXBEck9IZw?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
+      "lang": "zh",
+      "published": "2026-11-07T01:40:00+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiTkFVX3lxTE1MS2FKYnhjMjhEaUU4VVlxOHZCOG0xWkJUZ3NsX1ZPNTdVam9IWUdjZ0ZrZlZlUTRtemRLZGN1TkZCVWtDY0dtNXBEck9IZw?oc=5\" target=\"_blank\">台股崩跌恐沖散洋流？台北人「驚人股利」曝光作家示警小心賭爛票：就看護盤成效了| 李瑋萱 | 新聞</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">風傳媒</font></li><li><a href="
     },
     {
       "title": "This man refused life-saving treatment because of his religion - days later the rules changed",
@@ -569,13 +1010,13 @@
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMi0AJBVV95cUxPb0JpNzhlQTlhSzQ5aWw0cXdUbFNJc0JVN1lwVUozWUFDdWQtVXRNUG43TTVsdEZXbkpZU0oyVEVrMmxLaU8wanc5djBsNTQ2MWJSdk5tbmtfOXlGQ1VvY2NWMEEtWWVKU1dvcUN2dXNITFNJd0J2WFdaOG84VndYZGRLMkFYV1ZmdzB3aHJ3UHpNR2t2Mzh5R2FOa2M2QXNYN2xLME9uMmJ0T05md28wa3R0eU"
     },
     {
-      "title": "民主黨勝選重擊美股！女議員喊停AI開發跟馬斯克開戰 遭網友圍剿 - UDN",
-      "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE4tUy1leGZrVDE1UTYxdXFJVko0alBHRlBWRW05Um5SQl9sVFVxOGJYNlNseXBsZzE4T2tOVjg0TDNFdGNXYjJhN1duU1VvdnA5MUlJ0gFYQVVfeXFMTXdVOWFvanZqbVJuSkhabjBSeGhMcE5HWm5XMXAzQmc2d3BIMXRJYzROdGI3cE16ZTM0TTdIRWx4TElET3c4SW9HckFTWlU4bG8wamk4MWhpYw?oc=5",
+      "title": "輝達要求台積電進軍先進記憶體市場？傳組建 3D DRAM 產線解 AI 缺貨荒 - TechNews 科技新報",
+      "link": "https://news.google.com/rss/articles/CBMiW0FVX3lxTE9xOEY5Ul84YzdKZ0NvS0RsM2g4UkhDM1RYYmJsLVA0djBSUmxXNk5pOUIzejE3UmNQeks5V1dWMEtLNWVvRTBQUnpGLVlENkNfQTZvVVltWF9hRkk?oc=5",
       "source": "Google 新聞・財經",
       "category": "財經",
       "lang": "zh",
-      "published": "2026-11-07T01:03:29+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiU0FVX3lxTE4tUy1leGZrVDE1UTYxdXFJVko0alBHRlBWRW05Um5SQl9sVFVxOGJYNlNseXBsZzE4T2tOVjg0TDNFdGNXYjJhN1duU1VvdnA5MUlJ0gFYQVVfeXFMTXdVOWFvanZqbVJuSkhabjBSeGhMcE5HWm5XMXAzQmc2d3BIMXRJYzROdGI3cE16ZTM0TTdIRWx4TElET3c4SW9HckFTWlU4bG8wamk4MWhpYw?oc=5\" t"
+      "published": "2026-11-07T01:07:02+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiW0FVX3lxTE9xOEY5Ul84YzdKZ0NvS0RsM2g4UkhDM1RYYmJsLVA0djBSUmxXNk5pOUIzejE3UmNQeks5V1dWMEtLNWVvRTBQUnpGLVlENkNfQTZvVVltWF9hRkk?oc=5\" target=\"_blank\">輝達要求台積電進軍先進記憶體市場？傳組建 3D DRAM 產線解 AI 缺貨荒</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">TechNews 科技新報</font"
     },
     {
       "title": "1998還是2000？高盛：AI股暴跌更像LTCM危機而非網路泡沫化 但最大疑問仍是投資回報 - 鉅亨網",
@@ -587,22 +1028,13 @@
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiT0FVX3lxTFAySUtSbkZpZFE2RVplblN2RE40M0xBT1FFVnBDU2s1RmZORVBFZWRheEc3cE9FSEJLOHY5RlUyTF84NGozM3JacjJUaHFyVW8?oc=5\" target=\"_blank\">1998還是2000？高盛：AI股暴跌更像LTCM危機而非網路泡沫化 但最大疑問仍是投資回報</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">鉅亨網</font></li><li><a href=\""
     },
     {
-      "title": "川普慘敗俄國慌了！普丁盟友崩潰放話：不贏就讓世界化為灰燼- 國際 - 中時新聞網",
-      "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1KNTlUMDZrZEg2clNJdzFPdy15YnRIVTVUN1lxWVctcWNQcW1hLTNfT28xci1xc25jMnJyNVVSbWRLUkRqSXdiODFnLWNfOFVrQ0g4YTFJOXZNd0FxZ0xJQ3Jwd0loWFFjZ1BDXzJn?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
+      "title": "美股｜AI股回魂！費半勁揚4.2％ 台積ADR大漲逾6％ - 工商時報",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1kMFVuQVhGQXVVWDh5NHRTNVF5a3hxcTVCMEZWbmlfNTZwZEJHS2dobWVfcTB4cjVudC1UWHk5cU5sM1ZJVzlyWlg0ek10Z1BKOWZtMC1hazZxRVlYb25Z?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
       "lang": "zh",
-      "published": "2026-11-07T00:17:52+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMibkFVX3lxTE1KNTlUMDZrZEg2clNJdzFPdy15YnRIVTVUN1lxWVctcWNQcW1hLTNfT28xci1xc25jMnJyNVVSbWRLUkRqSXdiODFnLWNfOFVrQ0g4YTFJOXZNd0FxZ0xJQ3Jwd0loWFFjZ1BDXzJn?oc=5\" target=\"_blank\">川普慘敗俄國慌了！普丁盟友崩潰放話：不贏就讓世界化為灰燼- 國際</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">中"
-    },
-    {
-      "title": "Cornell faculty pass no-confidence vote over leadership's handling of Jane Doe allegations",
-      "link": "https://www.bbc.co.uk/news/articles/c933xxl8yv0go?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T23:46:08+00:00",
-      "summary": "Friday's resolution by academic staff is largely symbolic as they do not have the power to remove those in charge of the university."
+      "published": "2026-11-07T00:08:00+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE1kMFVuQVhGQXVVWDh5NHRTNVF5a3hxcTVCMEZWbmlfNTZwZEJHS2dobWVfcTB4cjVudC1UWHk5cU5sM1ZJVzlyWlg0ek10Z1BKOWZtMC1hazZxRVlYb25Z?oc=5\" target=\"_blank\">美股｜AI股回魂！費半勁揚4.2％ 台積ADR大漲逾6％</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">工商時報</font></li><li><a hr"
     },
     {
       "title": "創紀錄斷頭潮1表看》單日融資暴減564億被抬出場！群創、聯電、友達…遭血洗「正五神教」還在死命加碼連19增 - 上市櫃 - 旺得富理財網",
@@ -614,148 +1046,31 @@
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiakFVX3lxTE5nenp6TDN1OTRpeTMtRmlpR0luRG10OGpwdTNEMVgyRmlWNk1PdExrNllGM2xZNFJqMzFVRS1XZUwycjBMbFg2UUJCdFh1b3BnbWhXa29hZVAzMjBUY2RtMzFtbkRQUExIQ0E?oc=5\" target=\"_blank\">創紀錄斷頭潮1表看》單日融資暴減564億被抬出場！群創、聯電、友達…遭血洗「正五神教」還在死命加碼連19增 - 上市櫃</a>&nbsp;&nbsp;<"
     },
     {
-      "title": "貿易休戰恐生變？英媒：美國警告中國 立即履行釜山貿易協議 - UDN",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE9YcUo1YzJ4WWhBUWZpR2xfTzh4bnJwZ0RoZkd5S09tWEJaUlR0WDBVd1FlckxRUUM1eFhPVTI4LVlaWEh0SnVpYkpTX3ZMSmdD0gFWQVVfeXFMTmJsck9FYy1Beng3d0Z2ZlY1SDhmc2M0VUFwdU04RHJXMW9FcTM0WUhYaHk3YWJ4N09sblhIdGxuR1A2NjdrTDQ3ekRnazZ5WDFudkQ2SHc?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
+      "title": "Mississippi Senate: Colom increases lead over Hyde-Smith to nearly 2,500 votes",
+      "link": "https://www.cnbc.com/2026/11/05/mississippi-senate-election-scott-colom-hyde-smith.html",
+      "source": "CNBC",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-06T23:12:56+00:00",
+      "summary": "The Mississippi Senate election could be determined by the mail-in ballots received after Election Day, whose legality was upheld by the Supreme Court."
+    },
+    {
+      "title": "Elon Musk appears to signal the end of the road for Cybertruck",
+      "link": "https://www.bbc.co.uk/news/articles/cq1j33w7d232o?at_medium=RSS&at_campaign=rss",
+      "source": "BBC Business",
+      "category": "財經",
+      "lang": "en",
+      "published": "2026-11-06T21:49:50+00:00",
+      "summary": "Musk said it was to make room for production of its Cybercabs - autonomous taxis without a driver."
+    },
+    {
+      "title": "央行喊話穩匯 台幣終結連4黑 - Yahoo新聞",
+      "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNT1NCOVRKX2RZWGdhcEk2OWZlNTUtWUh4VUcydzZ2QVVpeF9oN2t1ZjBuZUJIYk1ELUJ4ZVhKOFZQcmsxMkg2cEVBeWs0N1pnTjJyWEJCTEk1aTA0cWNWYnRxT0xfNFRkRlpsa0E0d2l0STltR1F1MmVneDF2dS1vU0JrUU5xdDdqUVEzMjJJdFdFajlMZnMxSE8tZXhtei00V3B6eUx6N3hmM0M0V0FHU1BnSEw2c0VIZ3JzZ0hsTDRRRV9tQmRiY2MxenhIVXhDYnp0ZFU3cklzSFAzSUp5dDhMeU5aUQ?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
       "lang": "zh",
-      "published": "2026-11-06T23:31:46+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiUEFVX3lxTE9YcUo1YzJ4WWhBUWZpR2xfTzh4bnJwZ0RoZkd5S09tWEJaUlR0WDBVd1FlckxRUUM1eFhPVTI4LVlaWEh0SnVpYkpTX3ZMSmdD0gFWQVVfeXFMTmJsck9FYy1Beng3d0Z2ZlY1SDhmc2M0VUFwdU04RHJXMW9FcTM0WUhYaHk3YWJ4N09sblhIdGxuR1A2NjdrTDQ3ekRnazZ5WDFudkQ2SHc?oc=5\" target=\""
-    },
-    {
-      "title": "With Stephen Miller pick, Trump readies for a battle",
-      "link": "https://www.bbc.co.uk/news/articles/crp3gg2z171go?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T23:24:15+00:00",
-      "summary": "The US president's promotion of Miller, a loyal partisan firebrand to be his new chief of staff sets up likely clashes with Congress."
-    },
-    {
-      "title": "OpenAI will keep investing in AI data centers despite election results, CFO tells CNBC",
-      "link": "https://www.cnbc.com/2026/11/06/open-ai-data-centers-election.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T22:25:58+00:00",
-      "summary": "Voters across the country on Tuesday voiced their support for candidates who have pledged to place restrictions on data center development."
-    },
-    {
-      "title": "Elon Musk appears to signal the end of the road for Cybertruck",
-      "link": "https://www.bbc.co.uk/news/articles/cq1j33w7d232o?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T21:49:50+00:00",
-      "summary": "Musk said it was to make room for production of its Cybercabs - autonomous taxis without a driver."
-    },
-    {
-      "title": "Elon Musk appears to signal the end of the road for Cybertruck",
-      "link": "https://www.bbc.co.uk/news/articles/cq1j33w7d232o?at_medium=RSS&at_campaign=rss",
-      "source": "BBC Business",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:49:50+00:00",
-      "summary": "Musk said it was to make room for production of its Cybercabs - autonomous taxis without a driver."
-    },
-    {
-      "title": "‘I have no financial safety net’: I’m 66, rely on Social Security and have just $500 in savings. What hope do I have?",
-      "link": "https://www.marketwatch.com/story/i-have-no-financial-safety-net-im-66-rely-on-social-security-and-have-500-in-savings-what-politician-speaks-for-me-be2126cb?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:45:00+00:00",
-      "summary": "“Sometimes I wonder whether wealthier Americans should trade places with people like me.”"
-    },
-    {
-      "title": "Elon Musk opens the door for a big SpaceX acquisition",
-      "link": "https://www.marketwatch.com/story/elon-musk-opens-the-door-for-a-big-spacex-acquisition-4f62bcad?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:45:00+00:00",
-      "summary": "The rocket and satellite-internet company is looking to challenge telecom giants."
-    },
-    {
-      "title": "Sen. Chris Murphy released from hospital after stroke, will miss votes for 'several weeks' as he rehabs",
-      "link": "https://www.cnbc.com/2026/11/06/chris-murphy-stroke-hospital-senate.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:40:09+00:00",
-      "summary": "The Connecticut Democrat Murphy has been discussed as a possible candidate for the White House in 2028."
-    },
-    {
-      "title": "Data centers run on debt. That was a problem for bonds this year — and it’s only going to get worse.",
-      "link": "https://www.marketwatch.com/story/data-centers-run-on-debt-that-was-a-problem-for-bonds-this-year-and-its-only-going-to-get-worse-09c03be6?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:37:00+00:00",
-      "summary": "AI debt issuance this year overwhelmed investor portfolios, and has disappointed from a performance perspective. The funding need won’t get any better with Democrats in control of Congress."
-    },
-    {
-      "title": "Nvidia, AMD and other chip stocks rebound — but is relief from the ‘violent’ selloff only temporary?",
-      "link": "https://www.marketwatch.com/story/nvidia-amd-and-other-chip-stocks-rebound-is-the-violent-ai-selloff-over-8f7df533?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:24:00+00:00",
-      "summary": "Analysts warn of further volatility ahead, although there are several new factors that work in the AI trade’s favor."
-    },
-    {
-      "title": "Nasdaq rebounds 1% following worst session in 18 months as traders snap up tech shares: Live updates",
-      "link": "https://www.cnbc.com/2026/11/05/stock-market-today-live-updates.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:22:40+00:00",
-      "summary": "A bout of hard selling battered the stock market Thursday, sending the three major averages to their worst session since April 2025."
-    },
-    {
-      "title": "OpenAI bugging suspect Alfozan pleads not guilty",
-      "link": "https://www.cnbc.com/2026/11/06/openai-bugging-alfozan-saudi.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:15:47+00:00",
-      "summary": "Saudi national Abdulrahman Alfozan is charged with planting a recording device in a conference room at artificial intelligence giant OpenAI."
-    },
-    {
-      "title": "‘It seems bizarre’: We’re in our 80s with $950,000 in traditional IRAs. Why is our adviser pushing Roth conversions?",
-      "link": "https://www.marketwatch.com/story/it-seems-bizarre-were-in-our-80s-with-950-000-in-traditional-iras-why-is-our-adviser-pushing-us-to-do-roth-conversions-a665f990?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:15:00+00:00",
-      "summary": "“Our basic living expenses are covered by $110,000 in annual pensions and Social Security.”"
-    },
-    {
-      "title": "‘It feels like he’s quietly building a separate life’: My husband inherited $500,000, but he refuses to spend it on our home",
-      "link": "https://www.marketwatch.com/story/it-feels-like-hes-quietly-building-a-separate-life-my-husband-inherited-500-000-but-he-refuses-to-spend-it-on-our-home-06535cff?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:15:00+00:00",
-      "summary": "“Our kitchen dates from 1999 and the oven only works if you hit the door a certain way.”"
-    },
-    {
-      "title": "Further turmoil could be in store for tech stocks. What to watch in the week ahead",
-      "link": "https://www.cnbc.com/2026/11/06/stock-market-next-week-outlook-for-nov-9-13-2026.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:12:41+00:00",
-      "summary": "Investors wrapped up a topsy-turvy week in markets, and that volatility isn't expected to be over just yet."
-    },
-    {
-      "title": "Investors brace for lower Anthropic valuation, calling $1.5 trillion a 'stretch'",
-      "link": "https://www.cnbc.com/2026/11/06/investors-brace-for-anthropic-valuation-1point5-trillion-a-stretch.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T21:07:07+00:00",
-      "summary": "Anthropic could list below a $1.5 trillion valuation, trailing previous expectations, as the AI trade sours on Wall Street."
+      "published": "2026-11-06T21:30:00+00:00",
+      "summary": "<a href=\"https://news.google.com/rss/articles/CBMi5gFBVV95cUxNT1NCOVRKX2RZWGdhcEk2OWZlNTUtWUh4VUcydzZ2QVVpeF9oN2t1ZjBuZUJIYk1ELUJ4ZVhKOFZQcmsxMkg2cEVBeWs0N1pnTjJyWEJCTEk1aTA0cWNWYnRxT0xfNFRkRlpsa0E0d2l0STltR1F1MmVneDF2dS1vU0JrUU5xdDdqUVEzMjJJdFdFajlMZnMxSE8tZXhtei00V3B6eUx6N3hmM0M0V0FHU1BnSEw2c0VIZ3"
     },
     {
       "title": "AI stocks climb after trillions wiped from market values",
@@ -774,15 +1089,6 @@
       "lang": "en",
       "published": "2026-11-06T21:06:25+00:00",
       "summary": "Investors had been selling off tech shares in part due to concerns the Democrat election victory would mean slower AI development."
-    },
-    {
-      "title": "Micron’s stock is dirt cheap — and that’s igniting a fierce online debate",
-      "link": "https://www.marketwatch.com/story/microns-stock-is-dirt-cheap-and-thats-igniting-a-fierce-online-debate-0626791d?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T20:58:00+00:00",
-      "summary": "Valuation purists see a ridiculously inexpensive stock, but some semiconductor investors say Micron’s earnings power won’t hold up."
     },
     {
       "title": "Israel's Arab-led parties in spotlight after inconclusive election",
@@ -792,51 +1098,6 @@
       "lang": "en",
       "published": "2026-11-06T20:42:51+00:00",
       "summary": "Israel's center-right opposition has a chance to unseat Netanyahu — but backing of Arab-led parties will be key."
-    },
-    {
-      "title": "Here's a rapid-fire update on all 31 of our stocks, including 2 to buy now",
-      "link": "https://www.cnbc.com/investingclub/2026/11/06/heres-a-rapid-fire-update-on-our-31-stocks-including-2-to-buy-now.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T20:36:03+00:00",
-      "summary": "We closed out a wild market week on Friday at the Investing Club's fourth Annual Meeting at the New York Stock Exchange."
-    },
-    {
-      "title": "My 93-year-old father changed his will at the 11th hour, leaving my brother his entire $500,000 estate. Can I challenge it?",
-      "link": "https://www.marketwatch.com/story/my-93-year-old-father-changed-his-will-at-the-11th-hour-leaving-my-brother-his-entire-500-000-estate-can-i-challenge-it-ecfc63d2?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T20:15:00+00:00",
-      "summary": "“My brother had no job and needed a place to live.”"
-    },
-    {
-      "title": "A disturbing employment trend is hiding beneath the latest strong job numbers",
-      "link": "https://www.cnbc.com/2026/11/06/long-term-unemployment-october-jobs-report.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T20:11:17+00:00",
-      "summary": "The average jobless worker's bout of unemployment surpassed 27 weeks in October, the highest outside of the pandemic period in a decade."
-    },
-    {
-      "title": "Mississippi Senate: Longshot Ty Pinkins says he aimed to spoil Hyde-Smith, boost Colom vote",
-      "link": "https://www.cnbc.com/2026/11/06/mississippi-senate-ty-pinkins-colom-hyde-smith.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T19:44:33+00:00",
-      "summary": "Ty Pinkins said he avoided campaigning in heavily Black areas of Mississippi to avoid harming chances for Democrat Scott Colom, who, like him, is Black."
-    },
-    {
-      "title": "Top House Oversight Democrat warns Trump family to 'lawyer up'",
-      "link": "https://www.cnbc.com/2026/11/06/robert-garcia-trump-congress-oversight-investigations.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T19:42:36+00:00",
-      "summary": "With Democrats set to take control of the House in January, Rep. Robert Garcia is promising sweeping probes into Trump, his family and his administration."
     },
     {
       "title": "Credit feels harder to get. Here’s what to do before applying for a new credit card",
@@ -875,51 +1136,6 @@
       "summary": "A healthcare intelligence-sharing organization is warning its members to lock down systems following cyberattacks on cold storage systems, including a French blood bank."
     },
     {
-      "title": "Data center double-down: Hassett says blue wave won't stop AI build-out",
-      "link": "https://www.cnbc.com/2026/11/06/data-centers-ai-elections-hassett.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T18:54:22+00:00",
-      "summary": "Data centers are a crucial part of President Donald Trump's push to win the global artificial intelligence race, which he continues despite the midterm results."
-    },
-    {
-      "title": "Cybertruck’s run comes to an end as Musk kills off pricey pet project",
-      "link": "https://www.marketwatch.com/story/is-it-the-end-of-the-cybertruck-elon-musk-announces-factory-will-shift-production-3e33cafd?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T18:54:00+00:00",
-      "summary": "The Cybertruck failed to catch on with car buyers due to high prices and some notable recalls."
-    },
-    {
-      "title": "My adviser recommended an annuity. Is it the right move in this market environment?",
-      "link": "https://www.marketwatch.com/story/my-adviser-recommended-an-annuity-is-it-the-right-move-in-this-market-environment-00edbbf6?mod=mw_rss_topstories",
-      "source": "MarketWatch",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T18:53:00+00:00",
-      "summary": "“I haven’t committed to the strategy yet and would appreciate some independent perspectives.”"
-    },
-    {
-      "title": "Microsoft plans to use fewer neoclouds as AI buildout shows signs of strain",
-      "link": "https://www.cnbc.com/2026/11/06/microsoft-moves-to-consolidate-its-relationships-with-neoclouds-in-ai.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T18:40:58+00:00",
-      "summary": "Microsoft is winding down the number of neoclouds it counts as partners, picking key suppliers and focusing on its own data centers."
-    },
-    {
-      "title": "OpenAI, Arm and Qualcomm executives react to post-midterm AI sell-off",
-      "link": "https://www.cnbc.com/2026/11/06/tech-executives-ai-data-center-selloff-midterms.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T18:35:08+00:00",
-      "summary": "Executives of major tech companies are largely projecting optimism about continued growth in the artificial intelligence sector despite a post-midterm sell-off."
-    },
-    {
       "title": "Why the US midterms sparked an AI stock selloff",
       "link": "https://www.bbc.co.uk/news/articles/crlykkzwwpydo?at_medium=RSS&at_campaign=rss",
       "source": "BBC Business",
@@ -927,15 +1143,6 @@
       "lang": "en",
       "published": "2026-11-06T18:32:16+00:00",
       "summary": "Fears of more AI regulation appear to have sparked fear among investors, but  concerns about the industry have been growing for some time."
-    },
-    {
-      "title": "AI crush is powering one stock to sky-high valuations",
-      "link": "https://www.cnbc.com/2026/11/06/ai-crush-is-powering-one-stock-to-sky-high-valuations.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T18:15:44+00:00",
-      "summary": "Despite sky-high valuations, Mike Khouw argues Costco shares could present a compelling buy."
     },
     {
       "title": "Spain's rail authorities face European fraud probe after Urda rail disaster",
@@ -956,33 +1163,6 @@
       "summary": "A post-Brexit deal on food standards has raised questions over the future naming of the classic British snack."
     },
     {
-      "title": "The AI ‘credit card’ is getting costlier as CoreWeave bond yield tops 16%",
-      "link": "https://www.cnbc.com/2026/11/06/coreweave-bond-yield-tops-16percent-as-ai-credit-stress-rises.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T17:09:53+00:00",
-      "summary": "Coreweave's steep yields reflect stress in the AI debt markets as investors worry about a data center slowdown. What comes next."
-    },
-    {
-      "title": "This pharmaceutical ETF is outperforming. Why it could keep climbing",
-      "link": "https://www.cnbc.com/2026/11/06/this-pharmaceutical-etf-is-outperforming-why-it-could-keep-climbing.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T16:57:09+00:00",
-      "summary": "The Invesco Pharmaceuticals ETF continues to outperform as other areas of the market weaken, making it an investment opportunity worth watching."
-    },
-    {
-      "title": "Dozens of Democrats eyeing 2028 presidential run, says former Obama aide",
-      "link": "https://www.bbc.co.uk/news/articles/cx8dzzy8n713o?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T16:51:01+00:00",
-      "summary": "Jim Messina tells the BBC that after Democrats' midterm victories he's talked to \"over two dozen campaigns\", with some already hiring staff."
-    },
-    {
       "title": "Spate of bomb threats poses serious challenge to airline industry",
       "link": "https://www.bbc.co.uk/news/articles/cv8ezz9yn6pyo?at_medium=RSS&at_campaign=rss",
       "source": "BBC World",
@@ -990,33 +1170,6 @@
       "lang": "en",
       "published": "2026-11-06T16:18:44+00:00",
       "summary": "After a week of disruption, airlines are facing both safety and financial concerns."
-    },
-    {
-      "title": "Four midterms takeaways for 2028 White House race",
-      "link": "https://www.bbc.co.uk/news/articles/cq1m41n3v7mmo?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T16:12:22+00:00",
-      "summary": "The buzz about the presidential election is already under way - here's what we learned this week."
-    },
-    {
-      "title": "Two dead after bus crashes in France, officials say",
-      "link": "https://www.bbc.co.uk/news/articles/cmly00l4p3lwo?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T15:33:52+00:00",
-      "summary": "One child and one young adult were killed in the crash, local authorities say, with more injured."
-    },
-    {
-      "title": "Judge blocks construction of Trump's massive arch after federal agency approval",
-      "link": "https://www.bbc.co.uk/news/articles/cq99zd93ryvko?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T15:30:42+00:00",
-      "summary": "The Trump administration had hoped the construction of the 250-foot arch could begin as early as this week."
     },
     {
       "title": "PM tells firms to publish salaries in job adverts ahead of new law",
@@ -1046,15 +1199,6 @@
       "summary": "Officials across Europe reported a slew of bomb threats against multiple flights, following a string of hoaxes that caused flight diversions this week. Three broadcasters also received threats."
     },
     {
-      "title": "Tesla to wind down Cybertruck production in Texas next year to ramp Cybercab, Musk says",
-      "link": "https://www.cnbc.com/2026/11/06/tesla-cybertruck-texas-musk.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T15:06:11+00:00",
-      "summary": "The Cybertruck and its polarizing design gained a niche following, but it did not achieve mass-market sales and Tesla has issued several voluntary recalls."
-    },
-    {
       "title": "Watch: Is it the end of the road for Tesla's Cybertruck?",
       "link": "https://www.bbc.co.uk/news/videos/cv8ezz9ll7nyo?at_medium=RSS&at_campaign=rss",
       "source": "BBC World",
@@ -1071,15 +1215,6 @@
       "lang": "zh",
       "published": "2026-11-06T14:58:15+00:00",
       "summary": "在剛剛結束的美國中期選舉中，多個支持共和黨的州「翻藍」，民主黨奪得國會參眾兩院控制權。這次選舉結果為何具有重大意義？又將如何影響美國與世界其他國家的關係？"
-    },
-    {
-      "title": "Tanzanian opposition leader found guilty of inciting unrest but acquitted of treason",
-      "link": "https://www.bbc.co.uk/news/articles/ckp8g4pm0y4lo?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T14:57:08+00:00",
-      "summary": "The 58-year-old, who has been detained since April last year, says the charges are politically motivated."
     },
     {
       "title": "The leader of a Kenyan doomsday cult is sentenced to 200 years in prison",
@@ -1100,22 +1235,13 @@
       "summary": "Paul Mackenzie ordered his followers to starve their children to death in a forest so they could \"meet Jesus\"."
     },
     {
-      "title": "Jay Rockefeller, heir to famed dynasty and healthcare advocate in U.S. Senate, dies at 89",
-      "link": "https://www.cnbc.com/2026/11/06/jay-rockefeller-heir-to-famed-dynasty-and-healthcare-advocate-in-us-senate-dies-at-89.html",
-      "source": "CNBC",
+      "title": "意外！美國非農就業大增16.5萬人聯準會12月升息機率升- 國際 - 工商時報",
+      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE95eFdEWnpYM3BJWmc1cEo4RTViczNQeHFqd1lsZk5kY29BT3ZaT0V0MmkxM19VV2FheTA3dDZBbFB2V1RuckZNNzZ4QTRkSGN2cFlwbnc2a2pYTzcySWRN?oc=5",
+      "source": "Google 新聞・財經",
       "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T14:25:51+00:00",
-      "summary": "John D. \"Jay\" Rockefeller IV, the progeny of one of America's most famous and wealthiest families, died on Friday at his home in Washington. He was 89."
-    },
-    {
-      "title": "宣揚「餓死才能上天堂」 肯亞邪教教主害死190童僅判200年徒刑 - Yahoo新聞",
-      "link": "https://news.google.com/rss/articles/CBMi8gJBVV95cUxOTVFnZ0kzXy1qTl9wZ3l2dVZkSTBjOFhkV09xZU1NVFhncnIwWTNlRzJtQ0xrQkdMS3RVeHhMVS1YclZWOXB6ZzE4WWxKN0FlSURIemcwdUc3MU80bWNJR0FpbXc0ZTBLVGh3U25JRm9Pd1BTNm9fa2NlQm5mNVRfTF9iZUZuNVJUUUQ0ZXpQbmZQQWFvSTRib0MzV3NqcmZQek1UWmZPV1hucGVtLTJMVC1yRzdkRnJQVVlHWVRGZ09ReWp5RjAyQUlQVjRBaEV1RXRiN3IwSjAySWw2TUdjdmlYel9sM2liTHl5V3V6Qlc3Vm5wMDZMMDgtUmJJbW9najZ2Q3Z4QzU0T1QyOGxWNEpUQmVqODF1ZUFiRHRMU3lIUy1adHBnZ3l4VVh1emZ1Q2dJUjdPTk5aNGJPVEhLWlk0ZVNhRjU0RnM1MmJCalBpeHlMYmdoc3Jib1ZtNUt2X25pZFNjd3hxbkk1UFMzTGJn?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
       "lang": "zh",
-      "published": "2026-11-06T14:20:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMi8gJBVV95cUxOTVFnZ0kzXy1qTl9wZ3l2dVZkSTBjOFhkV09xZU1NVFhncnIwWTNlRzJtQ0xrQkdMS3RVeHhMVS1YclZWOXB6ZzE4WWxKN0FlSURIemcwdUc3MU80bWNJR0FpbXc0ZTBLVGh3U25JRm9Pd1BTNm9fa2NlQm5mNVRfTF9iZUZuNVJUUUQ0ZXpQbmZQQWFvSTRib0MzV3NqcmZQek1UWmZPV1hucGVtLTJMVC1yRz"
+      "published": "2026-11-06T14:29:00+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE95eFdEWnpYM3BJWmc1cEo4RTViczNQeHFqd1lsZk5kY29BT3ZaT0V0MmkxM19VV2FheTA3dDZBbFB2V1RuckZNNzZ4QTRkSGN2cFlwbnc2a2pYTzcySWRN?oc=5\" target=\"_blank\">意外！美國非農就業大增16.5萬人聯準會12月升息機率升- 國際</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">工商時報</font></li><li><"
     },
     {
       "title": "Ex-lawmaker gets 12.5 years in Macao's first national security case",
@@ -1136,6 +1262,15 @@
       "summary": "Staunch US support of Israel has been raised as one of the reasons why Republicans performed so badly."
     },
     {
+      "title": "獨家／又出包！永豐銀「無法轉入」股民憂：被迫違約交割 - 東森電視",
+      "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE13VVlQeVRoMzhpaDNXSDBSc2pnZHlpdjZOSmNCdXVKUFVwRkdFODg0WnRHN0RmWDRRbk8yaTNzN212a1NwdDBtbTl2ZjRlVW40cWdQMXdvMA?oc=5",
+      "source": "Google 新聞・財經",
+      "category": "財經",
+      "lang": "zh",
+      "published": "2026-11-06T13:14:00+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiV0FVX3lxTE13VVlQeVRoMzhpaDNXSDBSc2pnZHlpdjZOSmNCdXVKUFVwRkdFODg0WnRHN0RmWDRRbk8yaTNzN212a1NwdDBtbTl2ZjRlVW40cWdQMXdvMA?oc=5\" target=\"_blank\">獨家／又出包！永豐銀「無法轉入」股民憂：被迫違約交割</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">東森電視</font></li><li><a href=\"https://"
+    },
+    {
       "title": "敗選川普續徵關稅300% 共和內鬨瘋抓戰犯 - Yahoo新聞",
       "link": "https://news.google.com/rss/articles/CBMimAJBVV95cUxNanIzUHh4UzRXQVMtUmQ2RnRaOTJ6QzJ5eUN2eWlOX2FaRzB4bUtCUVlPV2NydTJEU2JGYjNWSWpUUVFWLU1GaENudFVhUXRCOS1FcENMUGs3Uk9OZDFHZlZBS0ZoOUJLVlk2YU0wWU5IM3Z0S1YyQW4xQ3Y2c19DUk9PUVlyZEZXZkR4Z3c1NTJrZFdON1p2YXJocmlmMklQak9MakZaWHM4WTZ5cVVCblEzTU1UZW5GU3A1MHhVanFsVlBid1ZackFld0l2Q2JreVZDSEVvU2NrdlpMeGxVZFk5bjYybk1QR3dqeS15eFcxM1ZxaFZYcENieEJMWnJaZWVpend4ZEUzM1FhWWlmcUxtaGRyRHdR?oc=5",
       "source": "Google 新聞・國際",
@@ -1154,22 +1289,13 @@
       "summary": "這是澳門首宗國安案，案件過程並不公開，區錦新由「指派律師」辯護，審理法官及律師身份不明。從預審、開審到宣判，外界只能從政府新聞稿得知消息。"
     },
     {
-      "title": "強攻 AI 與企業級市場，潘健成：群聯擺脫依賴低價庫存邁入 AI 營運收割期 - TechNews 科技新報",
-      "link": "https://news.google.com/rss/articles/CBMi9wFBVV95cUxPWnl1UVVNUV9KSUd0b0VsRDhDdGhrY3BrYlk3ZEQ5T2lwY0ZKMTZwVTRQamVhX1V0VndnUWM2UmtSTzBNMVlJYzhfOV93enA1WTc2Q2h2M1dscU5qc3NzWTd4SHh5TXkxSnpWcDRjNXJnUHRZUVlMbjZ4Z1FyS3BCZkZmd2hmaHlZcElkY09MdEZCNm84anN5WTI0NjhmVl94THl2SFg2ZV8zXzVSOEhhY3U1RDdzQTRUbW4yaFQ0TFRYRkZYWF9DeTBfam96amY4c0ZkUDFSS2U0ZTFFX3JHeXNIb3dFZDBJYzNVR2diSTBjc1lNVk4w?oc=5",
+      "title": "〈群聯法說〉潘健成：明年企業級SSD需求看增 維持6成毛利率不合理、追求總額成長 - 鉅亨網",
+      "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9NaC1zR2pRSTRHZnE1ZEhwYU12V2EzMDJ3eVgyejlCaFNURUVUb0JrYjhPSGdkRHlSdWRGYkhCNWpBeVRkZllGTkVMdU0xaG8?oc=5",
       "source": "Google 新聞・財經",
       "category": "財經",
       "lang": "zh",
-      "published": "2026-11-06T12:53:10+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMi9wFBVV95cUxPWnl1UVVNUV9KSUd0b0VsRDhDdGhrY3BrYlk3ZEQ5T2lwY0ZKMTZwVTRQamVhX1V0VndnUWM2UmtSTzBNMVlJYzhfOV93enA1WTc2Q2h2M1dscU5qc3NzWTd4SHh5TXkxSnpWcDRjNXJnUHRZUVlMbjZ4Z1FyS3BCZkZmd2hmaHlZcElkY09MdEZCNm84anN5WTI0NjhmVl94THl2SFg2ZV8zXzVSOEhhY3U1RD"
-    },
-    {
-      "title": "Russian extremist group denies sending hoax bomb threats",
-      "link": "https://www.bbc.co.uk/news/articles/cm2d66n0lx1yo?at_medium=RSS&at_campaign=rss",
-      "source": "BBC World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T12:51:38+00:00",
-      "summary": "Scores of flights across Europe have received bomb threats this week, but no explosives have been found so far."
+      "published": "2026-11-06T13:02:03+00:00",
+      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiT0FVX3lxTE9NaC1zR2pRSTRHZnE1ZEhwYU12V2EzMDJ3eVgyejlCaFNURUVUb0JrYjhPSGdkRHlSdWRGYkhCNWpBeVRkZllGTkVMdU0xaG8?oc=5\" target=\"_blank\">〈群聯法說〉潘健成：明年企業級SSD需求看增 維持6成毛利率不合理、追求總額成長</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">鉅亨網</font></li><li><a href=\"https:"
     },
     {
       "title": "緯穎前三季每股賺94.04元超越去年全年- 產業 - 工商時報",
@@ -1181,15 +1307,6 @@
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTFBJV0pWQUhVd3hndFdaM014VUV4NnFXTzJoSXVDbm8zclZhbWlSYmZhSW5DRlprZThzNWhvcXhIR1hmQlpNZk5vZE1oU1E4dFBvUlNaZV9RaUJPSWZKUG1n?oc=5\" target=\"_blank\">緯穎前三季每股賺94.04元超越去年全年- 產業</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">工商時報</font></li><li><a href=\""
     },
     {
-      "title": "Judge halts construction of Trump's arch. And, Labor Department to release jobs report",
-      "link": "https://www.npr.org/2026/11/06/g-s1-152213/up-first-newsletter-job-market-trump-arch-school-enrollment-harmeet-dhillon",
-      "source": "NPR World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T12:24:52+00:00",
-      "summary": "A judge has blocked construction of Trump's arch moments after it won federal approval to proceed. And, the Labor Department is set to release the latest jobs report today, a day after stocks plunged."
-    },
-    {
       "title": "澳門國安首案宣判：區錦新顛覆罪成囚12年半，妻子斥「莫須有迫害」 - BBC",
       "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9Nd0FEc0RpcHo3cEwwVzlnRVZwcEtqY1BXWFZBNWMzcDlKSlZEbDVmODZlOC1jQzg3WVpqR2dfX2hwZkJMY0IwNWNBdkQ2UkV0TC03ZHJ2cTBPQndGQTdkRDFQckhhOTDSAWxBVV95cUxQZFJtM3FTbzk1ZllkLUctU24zN3FHQXdBTlpTdm9xN2hja3hqcjZVbFpFZUhVZGpMb2QzMURkR3JFWnNQVDJMUnhJdDRZcDZFOEFoRm5UQWtuYlZ0WUVuNU5VUTdaOGJYNEtWU20?oc=5",
       "source": "Google 新聞・國際",
@@ -1199,24 +1316,6 @@
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9Nd0FEc0RpcHo3cEwwVzlnRVZwcEtqY1BXWFZBNWMzcDlKSlZEbDVmODZlOC1jQzg3WVpqR2dfX2hwZkJMY0IwNWNBdkQ2UkV0TC03ZHJ2cTBPQndGQTdkRDFQckhhOTDSAWxBVV95cUxQZFJtM3FTbzk1ZllkLUctU24zN3FHQXdBTlpTdm9xN2hja3hqcjZVbFpFZUhVZGpMb2QzMURkR3JFWnNQVDJMUnhJdD"
     },
     {
-      "title": "台股本週跌點、市值蒸發近18兆破紀錄 平均每股股民荷包縮水64萬 - 自由財經",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1IMUxScGwxZjZQNTI4QzlRa0RDeXlVUzgzYXlZT0RVN2Z2MzhhM3pWbEpZT3E3M0lPWGJDM25FekhkSkJwWi1hb0dxMVJHOHRUVXZPRUhVaVBQX3ZFTnJv0gFkQVVfeXFMUHhTeXQ3MzFrdmZLMV9Obi1SSzZTT0RRV2xGaXMteUpXNDBRSThXNHo4Zk1OOTJDNDFqSmdZN3ZPSWNrM2xBLVFWaEJ1WVo0YkJEMFBRaV9FVlhLVWFjMTlQQ1hkZg?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-06T11:35:40+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE1IMUxScGwxZjZQNTI4QzlRa0RDeXlVUzgzYXlZT0RVN2Z2MzhhM3pWbEpZT3E3M0lPWGJDM25FekhkSkJwWi1hb0dxMVJHOHRUVXZPRUhVaVBQX3ZFTnJv0gFkQVVfeXFMUHhTeXQ3MzFrdmZLMV9Obi1SSzZTT0RRV2xGaXMteUpXNDBRSThXNHo4Zk1OOTJDNDFqSmdZN3ZPSWNrM2xBLVFWaEJ1WVo0YkJEMF"
-    },
-    {
-      "title": "政治人物「大改造」？從台灣「九合一」選舉看候選人「形象工程」",
-      "link": "https://www.bbc.com/zhongwen/watch/c9rkyyzgmy3eo/trad?at_medium=RSS&at_campaign=rss",
-      "source": "BBC 中文",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-06T11:24:32+00:00",
-      "summary": "在現代選舉中，形象經營已是不可或缺的一環。隨台灣「九合一」地方選舉將登場，台北市長候選人沈伯洋與蔣萬安的個人形象與公眾人設，也成為選戰攻防話題。"
-    },
-    {
       "title": "元太砸近28億買觀音廠，拓AI高速傳輸材料商機- 新聞 - MoneyDJ",
       "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNNWhMMThuUjJLVzd4WFFXbHBnOGhNa011SEZwUUVKdzBGT1NhRFF1dEJMR05VYVNzbjFVaWFLbmJXUF9TcEIzWXlTbFNoSU90aXlmRmY1bHZmM080UWtpZDByNTBfRzk5UjBNdnNtc1V3V1FzUHk4TmpzRXBDQmlIMW1JZEVxSy1VYVgwTFo4V29WQQ?oc=5",
       "source": "Google 新聞・財經",
@@ -1224,141 +1323,6 @@
       "lang": "zh",
       "published": "2026-11-06T11:17:00+00:00",
       "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMikgFBVV95cUxNNWhMMThuUjJLVzd4WFFXbHBnOGhNa011SEZwUUVKdzBGT1NhRFF1dEJMR05VYVNzbjFVaWFLbmJXUF9TcEIzWXlTbFNoSU90aXlmRmY1bHZmM080UWtpZDByNTBfRzk5UjBNdnNtc1V3V1FzUHk4TmpzRXBDQmlIMW1JZEVxSy1VYVgwTFo4V29WQQ?oc=5\" target=\"_blank\">元太砸近28億買觀音廠，拓AI高速傳輸材料"
-    },
-    {
-      "title": "歐洲航空業虛假炸彈威脅：誰是幕後黑手？",
-      "link": "https://www.bbc.com/zhongwen/articles/c60qkk15l8d0o/trad?at_medium=RSS&at_campaign=rss",
-      "source": "BBC 中文",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-06T11:14:01+00:00",
-      "summary": "其中一條線索，是羅馬機場當局收到的一封恐嚇電郵，寄件者自稱是「男性國家戰士」（Fighters of the Male State）。"
-    },
-    {
-      "title": "華邦電10月營收293.61億、年增近257％ 第四季DRAM合約價看漲- 產業 - 工商時報",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5EX0p6WVlmY2QxUWtWNHlpTVlVcHliWC1hckRJWGFVeVNfbXByckZ3RXdlMjV1VGRjOExNR2N3V0NyZ2F0czB2MGdSVzNqeUpUYVJmVlkyT0RibWxtU2Jn?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-06T10:57:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTE5EX0p6WVlmY2QxUWtWNHlpTVlVcHliWC1hckRJWGFVeVNfbXByckZ3RXdlMjV1VGRjOExNR2N3V0NyZ2F0czB2MGdSVzNqeUpUYVJmVlkyT0RibWxtU2Jn?oc=5\" target=\"_blank\">華邦電10月營收293.61億、年增近257％ 第四季DRAM合約價看漲- 產業</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">工商時報</font></"
-    },
-    {
-      "title": "美國中期選舉：共和黨失去兩院，對華政策與對台軍售會轉向嗎？ - BBC",
-      "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBxQWZNZDloZ2twWHYydTd3NzRoU3k0aGtVN2dCbnRvejRIa1lRX0pvejZmY1ZKXzBsaUtWQmVhRU4zaEVEam80VWhMNmxKTW91cjYydXpMZXRYRVZhdm8tMUV4MDhWRFHSAWxBVV95cUxPRXFVTHg0Tng3VUdJQVhFX29FUzQtdjdiSDctc3BGcnowcHNValM5OTY3VjJxcXZBOXFJVDZ1MHplN3hnWFZvQTlLVG9waEdQR3YySWg2bTQ0VzNRT3UxUnVteU5kbGlYUS1JYnE?oc=5",
-      "source": "Google 新聞・國際",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-06T10:41:34+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiZ0FVX3lxTFBxQWZNZDloZ2twWHYydTd3NzRoU3k0aGtVN2dCbnRvejRIa1lRX0pvejZmY1ZKXzBsaUtWQmVhRU4zaEVEam80VWhMNmxKTW91cjYydXpMZXRYRVZhdm8tMUV4MDhWRFHSAWxBVV95cUxPRXFVTHg0Tng3VUdJQVhFX29FUzQtdjdiSDctc3BGcnowcHNValM5OTY3VjJxcXZBOXFJVDZ1MHplN3hnWFZvQTlLVG"
-    },
-    {
-      "title": "0050跌破百元！ 他喊「跌1元買1張」不停損：破產也認了 - Yahoo股市",
-      "link": "https://news.google.com/rss/articles/CBMiwAJBVV95cUxNRDdEdlY3YkVzYnlJcjlYbVpVLWdsaGloYTRWTjlwTXZUOVJsVHRNU3M5eVNGYjQtSm1wb2lBaWg1VDFnTDN4eWlvbjdQcTY2bkp0RjhsUXhvdzVidnJPd3ZEOHQ3eUZmVEVaNENtR25RbEJFU1BPV2F0Z1l3Q25JMWhrRUdDOUYtU1ZqNUxBaWVqSzFwT3RIRHlVcV9VOUxtNEptZUpBaXJJdExyRkF3R3hEVWs5SXZGVXpSRTIyWUtJSkFZNlY3OGNCSjR3dDhqaFdscGxxbGVJeTlES0FwR2NhU0psUmtzQ2JWSl9OMGNHWWVuR3JSZ0FBQkJqMHgybXpsMFJMcjJNbnhxNFhVRjY0VTZNMEtHcHNEVUc3UGZDajJUWjZIWVZkdFVBR2w1LURpZ0FVN1VfempPelZ5bQ?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-06T10:41:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiwAJBVV95cUxNRDdEdlY3YkVzYnlJcjlYbVpVLWdsaGloYTRWTjlwTXZUOVJsVHRNU3M5eVNGYjQtSm1wb2lBaWg1VDFnTDN4eWlvbjdQcTY2bkp0RjhsUXhvdzVidnJPd3ZEOHQ3eUZmVEVaNENtR25RbEJFU1BPV2F0Z1l3Q25JMWhrRUdDOUYtU1ZqNUxBaWVqSzFwT3RIRHlVcV9VOUxtNEptZUpBaXJJdExyRkF3R3hEVW"
-    },
-    {
-      "title": "Drones are changing warfare. But defense giants are still making billions from old-school weapons",
-      "link": "https://www.cnbc.com/2026/11/06/defense-military-tech-earnings.html",
-      "source": "CNBC",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T10:39:51+00:00",
-      "summary": "The world's biggest defense firms are finding that demand for traditional military equipment remains strong even as drones and AI reshape how wars are fought."
-    },
-    {
-      "title": "美國中期選舉：共和黨失去兩院，對華政策與對台軍售會轉向嗎？",
-      "link": "https://www.bbc.com/zhongwen/articles/cqr7ydkrnpxno/trad?at_medium=RSS&at_campaign=rss",
-      "source": "BBC 中文",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-06T10:21:19+00:00",
-      "summary": "美國期中選舉民主黨取得兩院多數後，專家普遍認為，特朗普（川普）以個人外交主導的中國政策與對台軍售節奏將面臨國會更多監督與拉鋸，但總統仍掌握主要決策權。"
-    },
-    {
-      "title": "How does it affect me if share prices fall?",
-      "link": "https://www.bbc.co.uk/news/articles/c33zdz2m1e2o?at_medium=RSS&at_campaign=rss",
-      "source": "BBC Business",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T09:21:50+00:00",
-      "summary": "Changes in the FTSE 100 and other indexes are not just for financial experts, they can affect our lives."
-    },
-    {
-      "title": "After cancer surgery, Pope Leo embarks on Latin America trip",
-      "link": "https://www.npr.org/2026/11/06/nx-s1-6032454/pope-leo-latin-america-trip",
-      "source": "NPR World",
-      "category": "國際",
-      "lang": "en",
-      "published": "2026-11-06T09:19:57+00:00",
-      "summary": "Pope Leo XIV is kicking off a three-nation tour of Latin America with a visit to Uruguay, three weeks after undergoing lung cancer surgery that had put the entire trip into question."
-    },
-    {
-      "title": "塞爾維亞電視台為何在節目中就「多年來的片面報道」道歉？",
-      "link": "https://www.bbc.com/zhongwen/articles/cmed33yn48gdo/trad?at_medium=RSS&at_campaign=rss",
-      "source": "BBC 中文",
-      "category": "國際",
-      "lang": "zh",
-      "published": "2026-11-06T08:00:58+00:00",
-      "summary": "塞爾維亞公共廣播機構於武契奇敗選後直播道歉，承認多年偏頗報導、視而不見。新聞室內部不滿累積十年，編輯與高層請辭，反對派聲音開始出現，但分析指此舉象徵意義大於結構性改革。"
-    },
-    {
-      "title": "美國「去冰補滿不收取額外費用」 台灣星巴克300字正式回應 - ETtoday新聞雲",
-      "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE84c2ljcFFGVTVzRC16eDBQcnN5M1IwWnBaaXZSeUNNRkNHSm5PZjkxd0MyT1RiMTNVLWFTTjNvYnBoSWNuZ2xTd254eEZSWkZjSkE?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-06T07:17:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiUkFVX3lxTE84c2ljcFFGVTVzRC16eDBQcnN5M1IwWnBaaXZSeUNNRkNHSm5PZjkxd0MyT1RiMTNVLWFTTjNvYnBoSWNuZ2xTd254eEZSWkZjSkE?oc=5\" target=\"_blank\">美國「去冰補滿不收取額外費用」 台灣星巴克300字正式回應</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">ETtoday新聞雲</font></li><li><a href=\"https:"
-    },
-    {
-      "title": "亞股慘綠一片！日經指數狂瀉3643點失守5萬8 韓股崩跌6％ - 自由時報",
-      "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFA3ZDBhdGh4SDNxcU1GWlNmMFdMeTJwNGROaWVVMjhMTXpuZEpaZjlpT2o1NGdHZ2V1S0JkblpCbTdUUjdsN3p6allwTWFuWENCY1U0SjJpdWNta09IUEU00gFkQVVfeXFMUHJYb2VZSnV6RjZ4b0UzTjRZaXdsbzZxejZHM3pxVndNTjBwY253alZpMS1aMnNxLV9sYWtXMmxtX2RoY00yY0pyYzU2ZjZtMlZ1N0JrR3E3bHdHNGczMHJYNmo2ZQ?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-06T06:45:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiX0FVX3lxTFA3ZDBhdGh4SDNxcU1GWlNmMFdMeTJwNGROaWVVMjhMTXpuZEpaZjlpT2o1NGdHZ2V1S0JkblpCbTdUUjdsN3p6allwTWFuWENCY1U0SjJpdWNta09IUEU00gFkQVVfeXFMUHJYb2VZSnV6RjZ4b0UzTjRZaXdsbzZxejZHM3pxVndNTjBwY253alZpMS1aMnNxLV9sYWtXMmxtX2RoY00yY0pyYzU2ZjZtMlZ1N0"
-    },
-    {
-      "title": "AI股血洗，美國政策轉彎？台積電、台達電、聯電、友達能抄底？蔡明翰：買這檔抱1年賺15％「過去70年無一例外」 - 今周刊",
-      "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOd0Z2Y3JxNVZfeFcwTUZDS3A2WHJKUlZ0WnRYcDZxSHJGSDI3SE1lSXZNeTdyTmVJR2VpMjdwOEJlY25ucWxQTnNiVXdQdWotaDhkbHRnaVpxeWtwRm9hcnIydWpyb3oyN3JVNjZNT0ozUmZRc0o5eGNMS25pTmlpSg?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-06T06:30:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMigAFBVV95cUxOd0Z2Y3JxNVZfeFcwTUZDS3A2WHJKUlZ0WnRYcDZxSHJGSDI3SE1lSXZNeTdyTmVJR2VpMjdwOEJlY25ucWxQTnNiVXdQdWotaDhkbHRnaVpxeWtwRm9hcnIydWpyb3oyN3JVNjZNT0ozUmZRc0o5eGNMS25pTmlpSg?oc=5\" target=\"_blank\">AI股血洗，美國政策轉彎？台積電、台達電、聯電、友達能抄底？蔡明翰：買這檔抱1年賺15％「"
-    },
-    {
-      "title": "永豐交割戶注意！「轉帳失敗」傳災情，快做2件事自保：避免違約交割 | 下班經濟學 | 風生活 - 風傳媒",
-      "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBxTEgxc0tjQ0xFdDhWMkJORDlvd25ZamlndlpzVFdPdTFOMkJDRUFmUENIZHo3Ui1HNGF2ZWUtT2w1OHhrRThkMzZOV1FWTEJm?oc=5",
-      "source": "Google 新聞・財經",
-      "category": "財經",
-      "lang": "zh",
-      "published": "2026-11-06T03:51:00+00:00",
-      "summary": "<ol><li><a href=\"https://news.google.com/rss/articles/CBMiUEFVX3lxTFBxTEgxc0tjQ0xFdDhWMkJORDlvd25ZamlndlpzVFdPdTFOMkJDRUFmUENIZHo3Ui1HNGF2ZWUtT2w1OHhrRThkMzZOV1FWTEJm?oc=5\" target=\"_blank\">永豐交割戶注意！「轉帳失敗」傳災情，快做2件事自保：避免違約交割 | 下班經濟學 | 風生活</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">風傳媒</font></li><li><a href="
-    },
-    {
-      "title": "The engine parts that 'fight the laws of the universe'",
-      "link": "https://www.bbc.co.uk/news/articles/cwe9lmp1pyyxo?at_medium=RSS&at_campaign=rss",
-      "source": "BBC Business",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T00:06:06+00:00",
-      "summary": "Investment has surged into the making of jet turbine blades - an extremely difficult component to make."
-    },
-    {
-      "title": "'I was asked if I was a crier': Your worst job interviews revealed",
-      "link": "https://www.bbc.co.uk/news/articles/c3j4751pqnj8o?at_medium=RSS&at_campaign=rss",
-      "source": "BBC Business",
-      "category": "財經",
-      "lang": "en",
-      "published": "2026-11-06T00:02:52+00:00",
-      "summary": "Bad job interviews can be horrible to experience in the moment, but there is a lot they can teach us about the world of work"
     }
   ]
 }
