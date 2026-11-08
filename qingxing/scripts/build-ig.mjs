@@ -90,4 +90,16 @@ for (const post of POSTS) {
   console.log(`Day ${post.day}：${total} 張圖${post.draft ? '（草稿）' : ''}`)
 }
 await browser.close()
-console.log(`完成 ${made} 篇`)
+
+// 給後台儀表板看的排程清單（qingxing/schedule.json）：每篇的日期、標題、格式、狀態、封面
+const schedule = POSTS.map((p) => {
+  const name = `${p.date}-day${String(p.day).padStart(2, '0')}-${p.slug}`
+  return {
+    day: p.day, date: p.date, kind: p.kind, status: p.draft ? 'draft' : 'ready',
+    title: p.slides[0].replace('｜', ' '),
+    cover: `ig/${p.slides.length > 1 ? `${name}-1` : name}.jpg`,
+    note: p.draft ? '草稿：要補內容才會自動發' : '',
+  }
+})
+writeFileSync(join(here, '..', 'schedule.json'), JSON.stringify(schedule, null, 1) + '\n')
+console.log(`完成 ${made} 篇，排程清單 ${schedule.length} 篇`)

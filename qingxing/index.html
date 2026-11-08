@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>清醒行動派｜數據與收入儀表板</title>
+<title>清醒行動派｜後台</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1F3A5F">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <meta name="description" content="清醒行動派 IG／抖音成長數據與每日入帳追蹤，資料來自 Notion，每 6 小時自動同步。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -64,6 +68,18 @@ td.num,th.num{text-align:right}
 .setup{background:var(--tint);border:1px dashed var(--accent3);border-radius:14px;padding:14px 18px;font-size:13.5px;margin-bottom:16px}
 .setup ol{margin:6px 0 0;padding-left:20px}
 .setup code{background:var(--card);padding:1px 6px;border-radius:5px;font-size:12.5px}
+[hidden]{display:none!important}
+.actions{gap:8px}
+.btn{display:inline-flex;align-items:center;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:10px;padding:7px 14px;font:inherit;font-size:13.5px;text-decoration:none;cursor:pointer}
+.btn.ghost{background:var(--card);color:var(--accent);border-color:var(--line)}
+.sched{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
+.post{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg);text-decoration:none;color:inherit}
+.post img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--grid)}
+.post div{padding:7px 9px 9px;font-size:12px;line-height:1.45}
+.post b{display:block;font-size:12.5px}
+.post .tag{display:inline-block;font-size:11px;padding:0 6px;border-radius:99px;background:var(--tint);color:var(--accent);margin-top:3px}
+.post .tag.draft{background:#FDF1D8;color:#8A5A00}
+.post.today{outline:2px solid var(--accent)}
 footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
 @media (max-width:640px){ .kpi .v{font-size:22px} h1{font-size:19px} }
 </style>
@@ -71,7 +87,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
 <body>
 <div class="wrap">
 <header>
-  <h1>清醒行動派<small>數據與收入儀表板｜先清醒，再行動</small></h1>
+  <h1>清醒行動派<small>後台：數據、收入、IG 排程｜先清醒，再行動</small></h1>
   <div class="meta" id="meta">載入中…</div>
 </header>
 
@@ -98,9 +114,18 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
   </div>
 </div>
 
+<div class="row actions">
+  <a class="btn" href="https://app.notion.com/p/c6c1c75e84454b7f9e4fe7fa73fcdd5e" target="_blank" rel="noopener">＋ 記錄今天數據</a>
+  <a class="btn" href="https://app.notion.com/p/68fe898d466e4538ac2686aa8b629dd9" target="_blank" rel="noopener">＋ 記錄一筆收入</a>
+  <a class="btn ghost" href="https://portaly.cc/qingxing.action" target="_blank" rel="noopener">Portaly 頁面</a>
+  <a class="btn ghost" href="https://www.instagram.com/qingxing.action/" target="_blank" rel="noopener">IG 帳號</a>
+  <button class="btn ghost" id="installBtn" hidden>安裝成 App</button>
+</div>
+
 <section class="kpis" id="kpis"></section>
 
 <section class="grid">
+  <div class="card wide"><h2>接下來的 IG 排程</h2><div class="sub">每晚 20:00 自動發；標「草稿」的要先補內容才會發</div><div id="sched" class="sched"></div></div>
   <div class="card"><h2>粉絲數</h2><div class="sub">每日累計追蹤數</div><div id="chFollowers"></div></div>
   <div class="card"><h2>觀看數</h2><div class="sub">每日內容觀看／觸及</div><div id="chViews"></div></div>
   <div class="card"><h2>熱度</h2><div class="sub">讚 ＋ 留言×3 ＋ 收藏×5 ＋ 分享×5</div><div id="chHeat"></div></div>
@@ -110,14 +135,14 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
   <div class="card wide"><h2>最近入帳</h2><div class="sub">最新 15 筆</div><div class="tbl" id="tblIncome"></div></div>
 </section>
 
-<footer>資料由 GitHub Actions 每 6 小時從 Notion 同步 · <a href="../" style="color:inherit">回生活面板</a></footer>
+<footer>數據每 6 小時從 Notion 同步，IG 排程每次發文設定更新後同步 · <a href="../" style="color:inherit">回生活面板</a></footer>
 </div>
 <div class="tip" id="tip"></div>
 
 <script>
 const PRODUCT_COLORS = {
-  "電子書《從迷惘到行動》":"var(--c1)","模板包":"var(--c3)","電子書+模板包組合":"var(--c4)",
-  "工作坊":"var(--c2)","陪跑服務":"var(--c5)","其他":"var(--c6)"
+  "電子書《從迷惘到行動》":"var(--c1)","Notion 清醒行動系統":"var(--c3)","電子書+Notion系統組合":"var(--c4)","進階版":"var(--c2)",
+  "陪跑服務":"var(--c5)","其他":"var(--c6)"
 };
 const PRODUCT_ORDER = Object.keys(PRODUCT_COLORS);
 const state = { platform:"all", range:30, data:null };
@@ -145,6 +170,28 @@ document.querySelectorAll(".seg").forEach(seg => {
     };
   });
 });
+
+// ---- IG 排程（schedule.json 由 build-ig.mjs 產生）----
+const WD = ["日","一","二","三","四","五","六"]
+fetch("schedule.json?v=" + Date.now()).then(r => r.json()).then(list => {
+  const today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10)
+  const next = list.filter(p => p.date >= today).slice(0, 7)
+  const el = document.getElementById("sched")
+  if (!next.length) { el.innerHTML = '<div class="empty">接下來沒有排程貼文，請 Claude 排下個月的內容。</div>'; return }
+  el.innerHTML = next.map(p => {
+    const d = new Date(p.date + "T00:00:00+08:00")
+    const kind = { carousel: "輪播", reel: "短影音日", quote: "金句" }[p.kind] || p.kind
+    return `<a class="post${p.date === today ? " today" : ""}" href="${p.cover}" target="_blank" rel="noopener"><img loading="lazy" src="${p.cover}" alt="">` +
+      `<div><b>${p.date.slice(5).replace("-", "/")}（${WD[d.getUTCDay()]}）Day ${p.day}</b>${esc(p.title)}<br>` +
+      `<span class="tag${p.status === "draft" ? " draft" : ""}">${p.status === "draft" ? "草稿" : kind}</span></div></a>`
+  }).join("")
+}).catch(() => { document.getElementById("sched").innerHTML = '<div class="empty">讀不到排程</div>' })
+
+// ---- 安裝成 Chrome App ----
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {})
+let installEvt = null
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; document.getElementById("installBtn").hidden = false })
+document.getElementById("installBtn").onclick = async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt = null; document.getElementById("installBtn").hidden = true }
 
 fetch("data.json?v=" + Date.now()).then(r => r.json()).then(d => { state.data = d; render(); })
   .catch(() => { $("#meta").textContent = "讀不到 data.json"; });

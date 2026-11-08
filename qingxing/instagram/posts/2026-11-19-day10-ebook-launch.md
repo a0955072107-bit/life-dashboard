@@ -8,7 +8,7 @@ images:
   - qingxing/ig/2026-11-19-day10-ebook-launch-5.jpg
   - qingxing/ig/2026-11-19-day10-ebook-launch-6.jpg
   - qingxing/ig/2026-11-19-day10-ebook-launch-7.jpg
-status: draft
+status: ready
 ---
 《從迷惘到行動》今天上架。
 
