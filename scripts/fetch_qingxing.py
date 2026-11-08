@@ -1,8 +1,10 @@
-"""清醒行動派：從 Notion 兩個資料庫（成長數據、收入記錄）同步到 qingxing/data.json。
+"""清醒行動派：從 Notion 兩個資料庫（成長數據、收入記錄）同步，加密後寫到 qingxing/data.enc.json。
 
-需要環境變數 NOTION_TOKEN（Notion integration token），
-且兩個資料庫都要在 Notion 裡「連接」給該 integration。
-沒有 token 時保留現有 data.json，只更新 generatedAt 與狀態。
+需要環境變數：
+  NOTION_TOKEN        Notion integration token（兩個資料庫都要在 Notion 裡「連接」給它）
+  QX_DASH_PASSWORD    後台密碼。資料用 AES-256-GCM 加密（金鑰由密碼經 PBKDF2-SHA256 產生），
+                      網頁要輸入同一組密碼才能解開。repo 是公開的，所以絕不寫出未加密的資料。
+沒有 token 時保留上次的資料，只更新時間與狀態；沒有密碼時直接失敗、不寫任何檔案。
 """
 import json
 import os
@@ -11,10 +13,39 @@ from collections import defaultdict
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
+import base64
+
 import requests
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "qingxing" / "data.json"
+OUT = ROOT / "qingxing" / "data.enc.json"
+PASSWORD = os.environ.get("QX_DASH_PASSWORD", "")
+ITERATIONS = 310_000
+
+
+def _key(salt: bytes) -> bytes:
+    kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=ITERATIONS)
+    return kdf.derive(PASSWORD.encode("utf-8"))
+
+
+def encrypt(obj: dict) -> dict:
+    salt, iv = os.urandom(16), os.urandom(12)
+    ct = AESGCM(_key(salt)).encrypt(iv, json.dumps(obj, ensure_ascii=False).encode("utf-8"), None)
+    b = lambda x: base64.b64encode(x).decode()  # noqa: E731
+    return {"v": 1, "kdf": "PBKDF2-SHA256", "iter": ITERATIONS, "salt": b(salt), "iv": b(iv), "ct": b(ct)}
+
+
+def decrypt(env: dict) -> dict:
+    d = lambda k: base64.b64decode(env[k])  # noqa: E731
+    return json.loads(AESGCM(_key(d("salt"))).decrypt(d("iv"), d("ct"), None))
+
+
+def save(obj: dict) -> None:
+    OUT.parent.mkdir(exist_ok=True)
+    OUT.write_text(json.dumps(encrypt(obj)) + "\n", encoding="utf-8")
 
 GROWTH_DB = os.environ.get("NOTION_GROWTH_DB", "c6c1c75e84454b7f9e4fe7fa73fcdd5e")
 INCOME_DB = os.environ.get("NOTION_INCOME_DB", "68fe898d466e4538ac2686aa8b629dd9")
@@ -69,7 +100,15 @@ def n(x):
 
 
 def main() -> int:
-    prev = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
+    if not PASSWORD:
+        print("::error::還沒設定 QX_DASH_PASSWORD（後台密碼），為了不公開資料，這次不寫入任何檔案", file=sys.stderr)
+        return 1
+    prev = {}
+    if OUT.exists():
+        try:
+            prev = decrypt(json.loads(OUT.read_text(encoding="utf-8")))
+        except Exception:  # 換了密碼或檔案壞掉：從 Notion 重新抓
+            prev = {}
     out = {
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "brand": "清醒行動派",
@@ -80,7 +119,7 @@ def main() -> int:
     }
     if not TOKEN:
         out["status"] = "no_token"
-        OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        save(out)
         print("沒有 NOTION_TOKEN，保留舊資料")
         return 0
 
@@ -141,9 +180,8 @@ def main() -> int:
         out["status"] = f"error {type(e).__name__}"
         print("同步失敗：", e, file=sys.stderr)
 
-    OUT.parent.mkdir(exist_ok=True)
-    OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"成長 {len(out['growth'])} 筆、收入 {len(out['income'])} 筆、狀態 {out['status']}")
+    save(out)
+    print(f"已加密寫入。成長 {len(out['growth'])} 筆、收入 {len(out['income'])} 筆、狀態 {out['status']}")
     return 0
 
 

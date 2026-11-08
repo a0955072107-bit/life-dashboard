@@ -20,9 +20,9 @@
 
 ## 🧭 清醒行動派儀表板（`/qingxing/`）
 
-網址：`https://a0955072107-bit.github.io/life-dashboard/qingxing/`。顯示 IG／抖音粉絲、觀看、熱度與每日入帳、每月收入，資料來自 Notion 的「成長數據」與「收入記錄」兩個資料庫，由 Actions「同步清醒行動派儀表板」每 6 小時（及每晚 21:41）同步到 `qingxing/data.json`。
+網址：`https://a0955072107-bit.github.io/life-dashboard/qingxing/`。顯示 IG／抖音粉絲、觀看、熱度與每日入帳、每月收入，資料來自 Notion 的「成長數據」與「收入記錄」兩個資料庫，由 Actions「同步清醒行動派儀表板」每 6 小時（及每晚 21:41）同步，**用後台密碼加密**後存成 `qingxing/data.enc.json`（repo 是公開的，所以不存未加密的資料）。可以用 Chrome 安裝成 App。
 
-設定：到 notion.so/profile/integrations 建 Internal integration → 兩個 Notion 資料庫各自「連接」該 integration → repo Secrets 新增 `NOTION_TOKEN` → Actions 手動跑一次。
+設定：到 notion.so/profile/integrations 建 Internal integration → 兩個 Notion 資料庫各自「連接」該 integration → repo Secrets 新增 `NOTION_TOKEN` 與 `QX_DASH_PASSWORD`（後台密碼）→ Actions 手動跑一次。
 
 ## 設定步驟
 

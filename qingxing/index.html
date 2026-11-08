@@ -69,6 +69,13 @@ td.num,th.num{text-align:right}
 .setup ol{margin:6px 0 0;padding-left:20px}
 .setup code{background:var(--card);padding:1px 6px;border-radius:5px;font-size:12.5px}
 [hidden]{display:none!important}
+.lock{position:fixed;inset:0;background:var(--bg);z-index:20;display:flex;align-items:center;justify-content:center;padding:16px}
+.lockcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 24px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px}
+.lockcard h2{margin:4px 0 0;font-size:20px}.lockcard p{margin:0;color:var(--ink2);font-size:13.5px}
+.lockcard input[type=password]{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.lockcard label{font-size:13px;color:var(--ink2)}.lockcard .btn{justify-content:center;padding:10px}
+.lockicon{width:56px;height:56px;border-radius:14px;background:#1F3A5F;color:#F6F3EE;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
+.lockmsg{color:#B5533C;font-size:13px;min-height:18px}
 .actions{gap:8px}
 .btn{display:inline-flex;align-items:center;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:10px;padding:7px 14px;font:inherit;font-size:13.5px;text-decoration:none;cursor:pointer}
 .btn.ghost{background:var(--card);color:var(--accent);border-color:var(--line)}
@@ -90,6 +97,27 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
   <h1>清醒行動派<small>後台：數據、收入、IG 排程｜先清醒，再行動</small></h1>
   <div class="meta" id="meta">載入中…</div>
 </header>
+
+<div id="lock" class="lock" hidden>
+  <form id="lockForm" class="lockcard">
+    <div class="lockicon">清醒</div>
+    <h2>後台已上鎖</h2>
+    <p>粉絲與收入資料有加密，輸入後台密碼才看得到。</p>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="後台密碼" required>
+    <label><input id="remember" type="checkbox" checked> 在這台裝置記住密碼</label>
+    <button class="btn" type="submit">解鎖</button>
+    <div id="lockMsg" class="lockmsg"></div>
+  </form>
+</div>
+
+<div id="pwSetup" class="setup" hidden>
+  <strong>還沒設定後台密碼。</strong>為了不讓收入和粉絲數公開，資料要加密後才會顯示：
+  <ol>
+    <li>GitHub repo <code>life-dashboard</code> → Settings → Secrets and variables → Actions → New repository secret。</li>
+    <li>Name 填 <code>QX_DASH_PASSWORD</code>，Secret 填你自己想的密碼（至少 10 個字，不要跟其他帳號一樣）。</li>
+    <li>Actions → 「同步清醒行動派儀表板」→ Run workflow。約 1 分鐘後重新整理這頁，輸入同一組密碼。</li>
+  </ol>
+</div>
 
 <div id="setup" class="setup" hidden>
   <strong>尚未連接 Notion。</strong>完成以下三步，資料就會每 6 小時自動進來：
@@ -120,6 +148,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
   <a class="btn ghost" href="https://portaly.cc/qingxing.action" target="_blank" rel="noopener">Portaly 頁面</a>
   <a class="btn ghost" href="https://www.instagram.com/qingxing.action/" target="_blank" rel="noopener">IG 帳號</a>
   <button class="btn ghost" id="installBtn" hidden>安裝成 App</button>
+  <button class="btn ghost" id="logout" type="button">登出</button>
 </div>
 
 <section class="kpis" id="kpis"></section>
@@ -193,8 +222,43 @@ let installEvt = null
 addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; document.getElementById("installBtn").hidden = false })
 document.getElementById("installBtn").onclick = async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt = null; document.getElementById("installBtn").hidden = true }
 
-fetch("data.json?v=" + Date.now()).then(r => r.json()).then(d => { state.data = d; render(); })
-  .catch(() => { $("#meta").textContent = "讀不到 data.json"; });
+// ---- 解鎖：data.enc.json 用後台密碼加密（AES-256-GCM，PBKDF2-SHA256）----
+const KEY_STORE = "qx.pw"
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0))
+async function decryptData(env, pw) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"])
+  const key = await crypto.subtle.deriveKey({ name: "PBKDF2", hash: "SHA-256", salt: b64(env.salt), iterations: env.iter }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"])
+  const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(env.iv) }, key, b64(env.ct))
+  return JSON.parse(new TextDecoder().decode(plain))
+}
+function lockScreen(env, msg) {
+  const box = document.getElementById("lock")
+  box.hidden = false
+  document.getElementById("lockMsg").textContent = msg || ""
+  document.getElementById("lockForm").onsubmit = async e => {
+    e.preventDefault()
+    const pw = document.getElementById("pw").value
+    try {
+      state.data = await decryptData(env, pw)
+      try { if (document.getElementById("remember").checked) localStorage.setItem(KEY_STORE, pw) } catch {}
+      box.hidden = true; render()
+    } catch { document.getElementById("lockMsg").textContent = "密碼不對，再試一次" }
+  }
+  document.getElementById("pw").focus()
+}
+fetch("data.enc.json?v=" + Date.now()).then(r => {
+  if (r.status === 404) { $("#meta").textContent = "還沒設定後台密碼"; document.getElementById("pwSetup").hidden = false; throw "skip" }
+  return r.json()
+}).then(async env => {
+  let saved = null
+  try { saved = localStorage.getItem(KEY_STORE) } catch {}
+  if (saved) {
+    try { state.data = await decryptData(env, saved); render(); return } catch { try { localStorage.removeItem(KEY_STORE) } catch {} }
+  }
+  $("#meta").textContent = "已上鎖"
+  lockScreen(env, saved ? "密碼已更換，請重新輸入" : "")
+}).catch(e => { if (e !== "skip") $("#meta").textContent = "讀不到資料" })
+document.getElementById("logout").onclick = () => { try { localStorage.removeItem(KEY_STORE) } catch {}; location.reload() }
 
 function cutoff(){ if (!state.range) return "0000-00-00"; const d = new Date(); d.setDate(d.getDate() - state.range + 1); return d.toISOString().slice(0,10); }
 
