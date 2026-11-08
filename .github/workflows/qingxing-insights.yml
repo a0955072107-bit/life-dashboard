@@ -1,0 +1,63 @@
+name: 清醒行動派 每晚抓 IG／Threads 數據
+
+# 每晚 23:40（台北）用 IG 與 Threads 權杖讀當天數據，寫進 Notion「成長數據」，再重新同步後台。
+on:
+  schedule:
+    - cron: '40 15 * * *'   # UTC 15:40 ＝ 台北 23:40
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '要抓哪一天（YYYY-MM-DD，台北；空白＝今天）'
+        type: string
+        default: ''
+      dry_run:
+        description: '試跑（只印數字，不寫 Notion）'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-qingxing
+  cancel-in-progress: false
+
+jobs:
+  insights:
+    if: github.event_name == 'workflow_dispatch' || vars.QX_IG_BOT_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests cryptography
+
+      - name: 抓數據寫 Notion
+        run: python scripts/qingxing_insights.py
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.QX_IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ vars.QX_IG_USER_ID || '17841479844842573' }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.QX_THREADS_ACCESS_TOKEN }}
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          TARGET_DATE: ${{ inputs.date }}
+          DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
+
+      - name: 重新同步後台
+        if: ${{ inputs.dry_run != true }}
+        run: python scripts/fetch_qingxing.py
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          QX_DASH_PASSWORD: ${{ secrets.QX_DASH_PASSWORD }}
+
+      - name: 提交資料
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git config user.name "dashboard-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add qingxing/data.enc.json
+          if git diff --cached --quiet; then echo "沒有變更"; exit 0; fi
+          git commit -m "qingxing: 每晚數據 $(TZ=Asia/Taipei date '+%Y-%m-%d')"
+          git pull --rebase origin main
+          git push
