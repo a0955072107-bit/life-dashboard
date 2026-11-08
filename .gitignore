@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# 付費內容的輸出檔不要提交
+qingxing/ebook-mobile/*.pdf
