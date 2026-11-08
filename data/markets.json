@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08T10:53:37+00:00",
+  "updated": "2026-11-08T22:41:22+00:00",
   "quotes": [
     {
       "symbol": "^GSPC",
@@ -291,7 +291,7 @@
         49.587,
         52.12,
         52.233,
-        51.803
+        51.942
       ]
     },
     {
@@ -631,13 +631,13 @@
       "symbol": "TWD=X",
       "name": "美元/台幣",
       "group": "匯率",
-      "price": 32.765,
-      "prevClose": 32.8212,
-      "change": -0.0562,
-      "changePct": -0.171,
-      "monthPct": 3.109,
+      "price": 32.77,
+      "prevClose": 33.1093,
+      "change": -0.3393,
+      "changePct": -1.025,
+      "monthPct": 3.125,
       "currency": "TWD",
-      "marketTime": 1794002400,
+      "marketTime": 1794177236,
       "history": [
         31.7769,
         31.8483,
@@ -661,20 +661,21 @@
         32.5851,
         32.733,
         32.8212,
-        33.1093
+        33.1093,
+        32.77
       ]
     },
     {
       "symbol": "JPYTWD=X",
       "name": "日圓/台幣",
       "group": "匯率",
-      "price": 0.2046,
-      "prevClose": 0.2073,
-      "change": -0.0027,
-      "changePct": -1.287,
-      "monthPct": 1.907,
+      "price": 0.2047,
+      "prevClose": 0.2103,
+      "change": -0.0056,
+      "changePct": -2.657,
+      "monthPct": 1.957,
       "currency": "TWD",
-      "marketTime": 1794003992,
+      "marketTime": 1794177389,
       "history": [
         0.2008,
         0.2015,
@@ -698,20 +699,21 @@
         0.2063,
         0.2065,
         0.2073,
-        0.2103
+        0.2103,
+        0.2047
       ]
     },
     {
       "symbol": "KRWTWD=X",
       "name": "韓元/台幣",
       "group": "匯率",
-      "price": 0.024,
-      "prevClose": 0.0245,
-      "change": -0.0005,
-      "changePct": -1.933,
-      "monthPct": 1.168,
+      "price": 0.0241,
+      "prevClose": 0.0244,
+      "change": -0.0003,
+      "changePct": -1.189,
+      "monthPct": 1.589,
       "currency": "TWD",
-      "marketTime": 1794003992,
+      "marketTime": 1794177389,
       "history": [
         0.0237,
         0.0238,
@@ -735,7 +737,8 @@
         0.0242,
         0.0244,
         0.0245,
-        0.0244
+        0.0244,
+        0.0241
       ]
     }
   ],
