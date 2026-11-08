@@ -168,7 +168,10 @@ async function runComments(me) {
     })).data || []
     for (const c of comments) {
       if (actions >= MAX_ACTIONS) return
-      const plan = planCommentReply(c, me, config, now)
+      // 規則可加 dates: ["YYYY-MM-DD"]，只對那幾天發的貼文生效（例如 1/2/3 在不同天代表不同選項）
+      const postDate = new Date(new Date(m.timestamp).getTime() + 8 * 3600e3).toISOString().slice(0, 10)
+      const rules = (config.rules || []).filter((r) => !r.dates || r.dates.includes(postDate))
+      const plan = planCommentReply(c, me, { ...config, rules }, now)
       if (!plan) continue
       actions++
       if (DRY) {
