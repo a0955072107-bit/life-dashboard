@@ -86,10 +86,11 @@ def main() -> int:
     tz = timezone(timedelta(hours=8))
     start = date.fromisoformat(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1] else datetime.now(tz).date() + timedelta(days=1)
     out_dir = Path(sys.argv[2] if len(sys.argv) > 2 else "tiktok-out").resolve()
+    days = int(sys.argv[3]) if len(sys.argv) > 3 and sys.argv[3] else 7
     out_dir.mkdir(parents=True, exist_ok=True)
     schedule = json.loads((ROOT / "schedule.json").read_text(encoding="utf-8"))
-    week = [p for p in schedule if start <= date.fromisoformat(p["date"]) < start + timedelta(days=7)]
-    listing = [f"清醒行動派 TikTok 本週排程（{start:%m/%d} 起 7 天）",
+    week = [p for p in schedule if start <= date.fromisoformat(p["date"]) < start + timedelta(days=days)]
+    listing = [f"清醒行動派 TikTok 本週排程（{start:%m/%d} 起 {days} 天）",
                "在電腦用 Chrome 打開 TikTok Studio → 上傳 → 選影片 → 貼上同名 .txt 的文案 → 排程時間選當天 20:00。",
                "標「草稿」的那天先不要排，等 IG 那篇補好再做。", ""]
     repo = os.environ.get("GITHUB_REPOSITORY", "a0955072107-bit/life-dashboard")

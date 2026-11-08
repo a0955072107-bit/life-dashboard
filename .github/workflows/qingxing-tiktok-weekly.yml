@@ -8,7 +8,11 @@ on:
   workflow_dispatch:
     inputs:
       start:
-        description: '從哪一天開始的 7 天（YYYY-MM-DD，空白＝明天）'
+        description: '從哪一天開始（YYYY-MM-DD，空白＝明天）'
+        type: string
+        default: ''
+      days:
+        description: '做幾天（預設 7）'
         type: string
         default: ''
 
@@ -24,7 +28,7 @@ jobs:
       - name: 安裝 ffmpeg
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - name: 產生影片
-        run: python3 qingxing/scripts/build-tiktok.py "${{ inputs.start }}" out
+        run: python3 qingxing/scripts/build-tiktok.py "${{ inputs.start }}" out "${{ inputs.days }}"
       - name: 放到 Releases
         env:
           GH_TOKEN: ${{ github.token }}
