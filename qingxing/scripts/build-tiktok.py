@@ -2,10 +2,12 @@
 
 用法：python3 qingxing/scripts/build-tiktok.py [開始日期 YYYY-MM-DD] [輸出資料夾]
   不給日期 → 從明天（台灣時間）開始的 7 天
-輸出：每天一支 MP4、一個同名 .txt（TikTok 文案），以及「本週排程清單.txt」。
+輸出：每天一支 MP4、一個同名 .txt（TikTok 文案）、schedule.txt（本週排程清單），
+以及 manifest.json（下載網址＋文案＋排程時間，給後台頁面和 Claude 自己讀）。
 圖卡用 qingxing/ig/ 裡已產生的 JPG（1080×1350），上下補米白色變成 9:16，每張停 2.5–3.5 秒、淡入淡出。
 """
 import json
+import os
 import re
 import subprocess
 import sys
@@ -70,6 +72,12 @@ def main() -> int:
     listing = [f"清醒行動派 TikTok 本週排程（{start:%m/%d} 起 7 天）",
                "在電腦用 Chrome 打開 TikTok Studio → 上傳 → 選影片 → 貼上同名 .txt 的文案 → 排程時間選當天 20:00。",
                "標「草稿」的那天先不要排，等 IG 那篇補好再做。", ""]
+    repo = os.environ.get("GITHUB_REPOSITORY", "a0955072107-bit/life-dashboard")
+    tag = f"tiktok-{start}"
+    base = f"https://github.com/{repo}/releases/download/{tag}"
+    manifest = {"start": start.isoformat(), "tag": tag,
+                "release": f"https://github.com/{repo}/releases/tag/{tag}",
+                "generatedAt": datetime.now(tz).isoformat(timespec="seconds"), "items": []}
     made = 0
     for p in week:
         d = date.fromisoformat(p["date"])
@@ -79,16 +87,24 @@ def main() -> int:
         post = parse_post(post_file)
         name = f"{p['date']}-Day{p['day']:02d}"
         label = f"{d:%m/%d}（{WEEKDAY[d.weekday()]}）20:00　Day {p['day']}　{p['title']}"
+        item = {"day": p["day"], "date": p["date"], "weekday": WEEKDAY[d.weekday()],
+                "publish_at": f"{p['date']} 20:00", "title": p["title"], "status": post["status"]}
+        manifest["items"].append(item)
         if post["status"] != "ready":
             listing.append(f"✏️ {label}　→ 草稿，先不要排")
             continue
         secs = make_video([ROOT.parent / img for img in post["images"]], out_dir / f"{name}.mp4")
-        (out_dir / f"{name}.txt").write_text(tiktok_caption(post["caption"]) + "\n", encoding="utf-8")
+        caption = tiktok_caption(post["caption"])
+        (out_dir / f"{name}.txt").write_text(caption + "\n", encoding="utf-8")
+        item.update({"file": f"{name}.mp4", "video_url": f"{base}/{name}.mp4",
+                     "caption_url": f"{base}/{name}.txt", "seconds": round(secs), "caption": caption})
         listing.append(f"✅ {label}　→ {name}.mp4（{secs:.0f} 秒）＋ {name}.txt")
         made += 1
     if not week:
         listing.append("這 7 天沒有排程貼文，請 Claude 排下個月的內容。")
-    (out_dir / "本週排程清單.txt").write_text("\n".join(listing) + "\n", encoding="utf-8")
+    # 檔名用英文：GitHub Releases 會把中文檔名改成 default.txt
+    (out_dir / "schedule.txt").write_text("\n".join(listing) + "\n", encoding="utf-8")
+    (out_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("\n".join(listing))
     print(f"完成 {made} 支影片 → {out_dir}")
     return 0

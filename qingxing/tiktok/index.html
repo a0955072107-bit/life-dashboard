@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok 本週影片｜清醒行動派</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--ink:#1F3A5F;--bg:#F6F3EE;--card:#fff;--muted:#6B7280;--line:#E5E0D8;--ok:#2F7D5B;--draft:#B7791F}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#222;font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.6}
+main{max-width:760px;margin:0 auto;padding:24px 16px 48px}
+h1{color:var(--ink);font-size:1.5rem;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 20px;font-size:.95rem}
+.steps{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:.95rem}
+.steps ol{margin:6px 0 0;padding-left:1.3em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.head{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between}
+.when{font-weight:700;color:var(--ink);font-size:1.05rem}
+.title{font-weight:600}
+.badge{font-size:.8rem;padding:2px 8px;border-radius:99px;color:#fff;background:var(--ok)}
+.badge.draft{background:var(--draft)}
+.meta{color:var(--muted);font-size:.85rem;margin:4px 0 10px;word-break:break-all}
+pre{white-space:pre-wrap;word-break:break-word;background:var(--bg);border-radius:8px;padding:10px 12px;margin:0 0 10px;font:inherit;font-size:.92rem}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-block;border:0;border-radius:8px;padding:8px 14px;font:inherit;font-size:.92rem;cursor:pointer;text-decoration:none;background:var(--ink);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.err{color:#B42318}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#14181F;--card:#1C222C;--line:#2B3340;--muted:#9AA4B2;--ink:#9DB8DA}
+  body{color:#E6E8EB}
+  .btn{color:#14181F}
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>TikTok 本週影片</h1>
+  <p class="sub" id="sub">讀取中…</p>
+  <div class="steps">
+    <strong>排程步驟</strong>
+    <ol>
+      <li>按「下載影片」，影片會存到「下載」資料夾。</li>
+      <li>在 TikTok Studio 按上傳，選這支影片。</li>
+      <li>按「複製文案」，貼到說明欄。</li>
+      <li>排程時間選卡片上的日期 20:00。</li>
+    </ol>
+  </div>
+  <div id="list"></div>
+</main>
+<script>
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+fetch("latest.json?v=" + Date.now()).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(m => {
+  const ready = m.items.filter(i => i.status === "ready").length;
+  document.getElementById("sub").innerHTML =
+    `${esc(m.start)} 起 7 天，共 ${ready} 支可排程。` +
+    ` <a href="${esc(m.release)}">GitHub 下載頁</a>`;
+  document.getElementById("list").innerHTML = m.items.map((i, n) => `
+    <div class="card" id="day${i.day}">
+      <div class="head">
+        <span class="when">${esc(i.date.slice(5).replace("-", "/"))}（${esc(i.weekday)}）20:00 · Day ${i.day}</span>
+        <span class="badge ${i.status === "ready" ? "" : "draft"}">${i.status === "ready" ? "可排程" : "草稿，先不排"}</span>
+      </div>
+      <div class="title">${esc(i.title)}</div>
+      ${i.status === "ready" ? `
+        <div class="meta">檔名：${esc(i.file)}（${i.seconds} 秒）</div>
+        <pre id="cap${n}">${esc(i.caption)}</pre>
+        <div class="btns">
+          <a class="btn" href="${esc(i.video_url)}" download>下載影片</a>
+          <button class="btn ghost" data-cap="${n}">複製文案</button>
+        </div>` : `<div class="meta">IG 那篇補好後，下週再一起做。</div>`}
+    </div>`).join("");
+  document.querySelectorAll("[data-cap]").forEach(b => b.onclick = async () => {
+    const text = document.getElementById("cap" + b.dataset.cap).textContent;
+    try { await navigator.clipboard.writeText(text); b.textContent = "已複製 ✓"; }
+    catch { b.textContent = "請手動選取文字複製"; }
+    setTimeout(() => b.textContent = "複製文案", 2000);
+  });
+}).catch(e => {
+  document.getElementById("sub").innerHTML = `<span class="err">還沒有本週清單（${esc(e.message)}）。等週六 10:13 自動產生，或到 GitHub Actions 手動執行「清醒行動派 TikTok 每週影片」。</span>`;
+});
+</script>
+</body>
+</html>
