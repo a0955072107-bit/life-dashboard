@@ -35,8 +35,12 @@ def tiktok_caption(ig_caption: str) -> str:
     lines = [l for l in ig_caption.splitlines() if not l.strip().startswith("#")]
     tags = re.findall(r"#[\w一-鿿]+", ig_caption)
     tags = [t for t in tags if t not in ("#清醒行動派", "#先清醒再行動")][:3]
-    text = "\n".join(lines).strip().replace("留言「清醒」", "留言「清醒」或點主頁連結").replace("首頁 Bio", "主頁")
-    return f"{text}\n\n完整圖文在 IG @qingxing.action\n\n#清醒行動派 {' '.join(tags)} #自我成長 #fyp"
+    text = "\n".join(lines).strip().replace("首頁 Bio", "主頁").replace("首頁連結", "主頁連結").replace("連結在首頁", "連結在主頁")
+    # TikTok 留言不會自動私訊，提醒可以點主頁連結；原文已經有講連結的就不重複
+    if "留言「清醒」" in text and "連結" not in text:
+        text = text.replace("留言「清醒」", "留言「清醒」或點主頁連結", 1)
+    extra = [t for t in ("#自我成長", "#fyp") if t not in tags]
+    return f"{text}\n\n完整圖文在 IG @qingxing.action\n\n#清醒行動派 {' '.join(tags + extra)}"
 
 
 def reel_caption(ig_caption: str) -> str:
