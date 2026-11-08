@@ -1,0 +1,41 @@
+# 清醒行動派 IG 機器人：每 30 分鐘自動發文、回留言、回私訊。說明見 qingxing/instagram/README.md
+name: 清醒行動派 IG 機器人
+
+on:
+  schedule:
+    - cron: '2,32 * * * *' # 每小時第 2、32 分（UTC）；20:00 的貼文約 20:02–20:15 發出
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '試跑（只看會做什麼，不真的發文或回覆）'
+        type: boolean
+        default: true
+      tasks:
+        description: '要做哪些事（post＝發文、comments＝回留言、dms＝回私訊）'
+        type: string
+        default: 'post,comments,dms'
+
+concurrency:
+  group: qingxing-ig-bot
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    # 自動排程要等你在 Settings → Variables 設 QX_IG_BOT_ENABLED=true 才會跑；手動按 Run 隨時可以跑
+    if: github.event_name == 'workflow_dispatch' || vars.QX_IG_BOT_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: 執行機器人
+        run: node qingxing/instagram/bot.mjs
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.QX_IG_ACCESS_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
+          BOT_TASKS: ${{ inputs.tasks || 'post,comments,dms' }}

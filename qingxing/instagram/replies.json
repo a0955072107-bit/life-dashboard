@@ -1,0 +1,47 @@
+{
+  "site": "https://a0955072107-bit.github.io/life-dashboard",
+  "rules": [
+    {
+      "name": "qx-free",
+      "keywords": ["清醒", "行動表", "7天", "7 天", "領表", "免費"],
+      "comment_reply": "@{username} 7 天清醒行動表私訊給你了 📩",
+      "private_reply": "嗨，這是《7 天清醒行動表》👉 https://portaly.cc/qingxing.action\n每天只回答一題，5 分鐘。\n第 7 天做完，回來告訴我你發現了什麼，我會回你。",
+      "dm_reply": "嗨，這是《7 天清醒行動表》👉 https://portaly.cc/qingxing.action\n每天只回答一題，5 分鐘。\n第 7 天做完，回來告訴我你發現了什麼，我會回你。"
+    },
+    {
+      "name": "qx-ebook",
+      "keywords": ["電子書", "從迷惘到行動", "多少錢", "價格", "價錢", "怎麼買", "購買", "組合"],
+      "comment_reply": "@{username} 資訊私訊給你了 📘",
+      "private_reply": "《從迷惘到行動》是一套 6 章的操作手冊，每章都有可以直接填的工作頁，另外附手機精簡版。\n也有「電子書＋Notion 清醒行動系統」組合，比分開買便宜。\n現在的價格和內容都在這裡 👉 https://portaly.cc/qingxing.action\n每兩週會加新章節並調價，早買的人之後更新都免費。",
+      "dm_reply": "《從迷惘到行動》是一套 6 章的操作手冊，每章都有可以直接填的工作頁，另外附手機精簡版。\n也有「電子書＋Notion 清醒行動系統」組合，比分開買便宜。\n現在的價格和內容都在這裡 👉 https://portaly.cc/qingxing.action\n每兩週會加新章節並調價，早買的人之後更新都免費。"
+    },
+    {
+      "name": "qx-advanced",
+      "keywords": ["進階版", "陪跑"],
+      "dm_reply": "謝謝你問 🙌\n進階版「用 AI 打造個人行動系統」12 月上架：教你把 AI 設定成自己的行動教練，再做一個寫著你名字的儀表板。\n文字陪跑只開放給買過組合或進階版的人，全程文字、不用通話，一次限 8 位。\n想先排隊的話，回我「排隊」就好，開放時第一個通知你。"
+    },
+    {
+      "name": "qx-type-1",
+      "exact_keywords": ["1", "第一種", "第1種"],
+      "comment_reply": "@{username} 一直想的人，先動一小步就好：挑一件事，只做 5 分鐘，做完再想下一步。"
+    },
+    {
+      "name": "qx-type-2",
+      "exact_keywords": ["2", "第二種", "第2種"],
+      "comment_reply": "@{username} 一直動的人，先停 15 分鐘：寫下這週做了什麼，劃掉其實不重要的那幾件。"
+    },
+    {
+      "name": "qx-type-3",
+      "exact_keywords": ["3", "第三種", "第3種"],
+      "comment_reply": "@{username} 你已經在對的路上了，下一步一樣小就好 👍"
+    },
+    {
+      "name": "qx-checkin",
+      "keywords": ["打卡"],
+      "comment_reply": "@{username} 收到你的打卡 ✅ 明天繼續，漏一天也沒關係，第二天回來就好。"
+    }
+  ],
+  "default_comment_reply": "",
+  "comment_fallback_reply": "@{username} 連結在首頁 Bio 喔 👆",
+  "default_dm_reply": "嗨，謝謝你傳訊息來 🙌 我是清醒行動派。\n想領免費的《7 天清醒行動表》回「清醒」；想了解電子書回「電子書」。\n其他問題我看到會親自回你。"
+}

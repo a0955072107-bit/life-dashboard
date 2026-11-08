@@ -1,0 +1,38 @@
+# 清醒行動派 IG 權杖 60 天會過期：每週一自動續期，並把新權杖存回 GitHub Secrets。
+# 需要 Secrets：QX_IG_ACCESS_TOKEN、GH_PAT（可寫入這個 repo Secrets 的權杖）
+name: 清醒行動派 IG 權杖自動續期
+
+on:
+  schedule:
+    - cron: '47 1 * * 1' # 每週一 09:47（台灣時間）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    if: github.event_name == 'workflow_dispatch' || vars.QX_IG_BOT_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 續期並存回
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.QX_IG_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          set -euo pipefail
+          if [ -z "$IG_ACCESS_TOKEN" ]; then echo "::error::還沒設定 QX_IG_ACCESS_TOKEN"; exit 1; fi
+          if [ -z "$GH_TOKEN" ]; then echo "::error::還沒設定 GH_PAT，無法把新權杖存回 Secrets（見 qingxing/instagram/README.md 第 4 步）"; exit 1; fi
+          resp=$(curl -sS -G https://graph.instagram.com/refresh_access_token \
+            --data-urlencode grant_type=ig_refresh_token \
+            --data-urlencode "access_token=$IG_ACCESS_TOKEN")
+          new=$(printf '%s' "$resp" | jq -r '.access_token // empty')
+          if [ -z "$new" ]; then
+            echo "::error::續期失敗：$(printf '%s' "$resp" | jq -r '.error.message // "未知錯誤"')"
+            exit 1
+          fi
+          echo "::add-mask::$new"
+          days=$(( $(printf '%s' "$resp" | jq -r '.expires_in') / 86400 ))
+          gh secret set QX_IG_ACCESS_TOKEN --repo "$GITHUB_REPOSITORY" --body "$new"
+          echo "✅ 已續期，新權杖 $days 天後到期"
