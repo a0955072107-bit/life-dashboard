@@ -94,9 +94,10 @@ async function publish(me, post) {
 // Reels：影片放在網站 public/ig/，IG 自己來下載、轉檔，通常要 1～3 分鐘
 async function publishReel(me, post) {
   const url = imageUrl(SITE, post.video)
-  const res = await fetch(url, { method: 'HEAD' })
+  const res = await fetch(url, { method: 'HEAD', redirect: 'follow' })
   const type = res.headers.get('content-type') || ''
-  if (!res.ok || !type.includes('mp4')) {
+  // GitHub Releases 的 mp4 會轉址到 octet-stream，也接受
+  if (!res.ok || !(type.includes('mp4') || type.includes('octet-stream') || /\.mp4(\?|$)/i.test(url))) {
     warn(`${post.file}：影片還沒上線或不是 mp4（${res.status} ${type}）${url} — 下次再試`)
     return false
   }

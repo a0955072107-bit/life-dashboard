@@ -38,6 +38,26 @@ def tiktok_caption(ig_caption: str) -> str:
     return f"{text}\n\n完整圖文在 IG @qingxing.action\n\n#清醒行動派 {' '.join(tags)} #自我成長 #fyp"
 
 
+def reel_caption(ig_caption: str) -> str:
+    """IG Reel 文案：去掉 hashtag 後的正文（含結尾問句）＋原本的 hashtag。"""
+    lines = [l for l in ig_caption.splitlines() if not l.strip().startswith("#")]
+    tags = re.findall(r"#[\w一-鿿]+", ig_caption)
+    return "\n".join(lines).strip() + "\n\n" + " ".join(tags)
+
+
+def write_reel_post(p: dict, post: dict, video_url: str) -> Path:
+    """每支影片也排成 IG Reel（21:30，跟 20:00 的圖卡錯開），由 IG 機器人用 video: 發佈。"""
+    path = ROOT / "instagram" / "posts" / f"{p['date']}-reel-day{p['day']:02d}.md"
+    path.write_text(
+        "---\n"
+        f"# Day {p['day']} 的 TikTok 影片同步發 IG Reel；影片在 GitHub Releases，由 build-tiktok.py 產生\n"
+        f"publish_at: {p['date']}T21:30:00+08:00\n"
+        f"video: {video_url}\n"
+        f"status: {post['status']}\n"
+        "---\n" + reel_caption(post["caption"]) + "\n", encoding="utf-8")
+    return path
+
+
 def make_video(images: list[Path], out: Path) -> float:
     n = len(images)
     durs = [6.0] if n == 1 else [2.5] + [3.0] * (n - 2) + [3.5]
@@ -98,6 +118,8 @@ def main() -> int:
         (out_dir / f"{name}.txt").write_text(caption + "\n", encoding="utf-8")
         item.update({"file": f"{name}.mp4", "video_url": f"{base}/{name}.mp4",
                      "caption_url": f"{base}/{name}.txt", "seconds": round(secs), "caption": caption})
+        write_reel_post(p, post, item["video_url"])
+        item["reel_post"] = f"instagram/posts/{p['date']}-reel-day{p['day']:02d}.md"
         listing.append(f"✅ {label}　→ {name}.mp4（{secs:.0f} 秒）＋ {name}.txt")
         made += 1
     if not week:
