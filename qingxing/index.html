@@ -8,49 +8,80 @@
 <meta name="theme-color" content="#1F3A5F">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
-<meta name="description" content="清醒行動派 IG／抖音成長數據與每日入帳追蹤，資料來自 Notion，每 6 小時自動同步。">
+<meta name="description" content="清醒行動派 IG／TikTok 成長數據、每日入帳與發佈日曆，資料來自 Notion，每 6 小時自動同步。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F6F3EE; --card:#FFFFFF; --ink:#2B2B2B; --ink2:#6B6B6B; --ink3:#9A9A9A;
   --line:#E6E1D8; --grid:#EEEAE3; --accent:#1F3A5F; --accent2:#5C7FA6; --accent3:#B9C7D9;
-  --good:#2E7D5B; --warn:#B8860B; --tint:#EEF2F7;
+  --good:#2E7D5B; --warn:#B8860B; --bad:#B5533C; --tint:#EEF2F7; --pill:#1F3A5F; --pill-ink:#F6F3EE;
   --c1:#1F3A5F; --c2:#C97B4A; --c3:#4E8F79; --c4:#8A6BB5; --c5:#C9A227; --c6:#8E8E8E;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#17191D; --card:#1F2228; --ink:#ECEAE5; --ink2:#A8A6A0; --ink3:#77756F;
-  --line:#2E323A; --grid:#2A2E35; --accent:#8FB0DA; --accent2:#5C7FA6; --accent3:#3A4A5F; --tint:#232A35;
+  --line:#2E323A; --grid:#2A2E35; --accent:#8FB0DA; --accent2:#5C7FA6; --accent3:#3A4A5F; --tint:#232A35; --pill:#ECEAE5; --pill-ink:#17191D;
   --c1:#8FB0DA; --c2:#E29A6A; --c3:#6FB59C; --c4:#AC92D6; --c5:#DEBB4B; --c6:#A5A5A5;
 }}
 :root[data-theme="dark"]{
   --bg:#17191D; --card:#1F2228; --ink:#ECEAE5; --ink2:#A8A6A0; --ink3:#77756F;
-  --line:#2E323A; --grid:#2A2E35; --accent:#8FB0DA; --accent2:#5C7FA6; --accent3:#3A4A5F; --tint:#232A35;
+  --line:#2E323A; --grid:#2A2E35; --accent:#8FB0DA; --accent2:#5C7FA6; --accent3:#3A4A5F; --tint:#232A35; --pill:#ECEAE5; --pill-ink:#17191D;
   --c1:#8FB0DA; --c2:#E29A6A; --c3:#6FB59C; --c4:#AC92D6; --c5:#DEBB4B; --c6:#A5A5A5;
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans TC",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1120px;margin:0 auto;padding:28px 16px 56px}
-header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:20px}
-h1{font-size:22px;font-weight:700;margin:0;letter-spacing:.02em}
-h1 small{display:block;font-size:13px;font-weight:400;color:var(--ink2);margin-top:2px}
-.meta{font-size:12.5px;color:var(--ink2);text-align:right}
-.meta a{color:var(--accent);text-decoration:none}
-.badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;background:var(--tint);color:var(--accent);margin-left:6px}
+a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px 56px}
+
+/* ---- 頂部列 ---- */
+.topbar{position:sticky;top:0;z-index:12;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar .in{max-width:1180px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex:none}
+.brand .mark{width:30px;height:30px;border-radius:9px;background:#1F3A5F;color:#F6F3EE;font-weight:900;font-size:11px;display:flex;align-items:center;justify-content:center;letter-spacing:.02em}
+.brand b{font-size:15px;font-weight:700;letter-spacing:.02em}
+.brand small{display:block;font-size:11px;color:var(--ink3);line-height:1.2;font-weight:400}
+.meta{font-size:12px;color:var(--ink2);margin-left:auto;text-align:right;white-space:nowrap}
+.meta a{text-decoration:none}
+.badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;background:var(--tint);color:var(--accent);margin-left:6px}
 .badge.warn{color:var(--warn)}
-.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px}
+.iconbtn{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:9px;width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font:inherit;flex:none}
+.iconbtn:hover{color:var(--ink)}
+
+/* ---- 分頁：滑動藥丸 ---- */
+.tabs{position:relative;display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;isolation:isolate;flex:none;max-width:100%;overflow:hidden}
+.tabs .layer{display:flex;gap:2px}
+.tabs .layer.top{position:absolute;inset:3px;pointer-events:none;clip-path:inset(0 100% 0 0 round 999px);transition:clip-path .45s cubic-bezier(.4,0,.2,1)}
+.tabs button,.tabs .top span{appearance:none;border:0;background:transparent;font:inherit;font-size:13.5px;font-weight:500;color:var(--ink2);padding:6px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;line-height:1.3}
+.tabs button:hover{color:var(--ink)}
+.tabs .top span{color:var(--pill-ink);position:relative}
+.tabs .pill{position:absolute;top:3px;bottom:3px;left:0;width:0;border-radius:999px;background:var(--pill);z-index:-1;transition:transform .45s cubic-bezier(.4,0,.2,1),width .45s cubic-bezier(.4,0,.2,1)}
+.tabs .n{font-size:10.5px;background:var(--tint);color:var(--accent);padding:0 6px;border-radius:999px;font-weight:600}
+.tabs .top .n{background:color-mix(in srgb,var(--pill-ink) 20%,transparent);color:var(--pill-ink)}
+@media (prefers-reduced-motion: reduce){ .tabs .pill,.tabs .layer.top{transition:none} }
+
+.page{display:none;animation:fade .25s ease}
+.page.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.pagehead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 14px}
+.pagehead h1{font-size:20px;margin:0;font-weight:700;letter-spacing:.01em}
+.pagehead h1 small{display:block;font-size:12.5px;font-weight:400;color:var(--ink2)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
 .seg button{border:0;background:transparent;color:var(--ink2);padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+
+/* ---- 卡片 ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
 .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .kpi .l{font-size:12.5px;color:var(--ink2)}
 .kpi .v{font-size:26px;font-weight:700;letter-spacing:-.01em;margin-top:2px;font-variant-numeric:tabular-nums}
 .kpi .d{font-size:12px;color:var(--ink3);margin-top:2px}
-.kpi .d.up{color:var(--good)} .kpi .d.down{color:#B5533C}
+.kpi .d.up{color:var(--good)} .kpi .d.down{color:var(--bad)}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 10px;min-width:0}
-.card h2{font-size:15px;font-weight:700;margin:0 0 2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 16px 12px;min-width:0}
+.card h2{font-size:15px;font-weight:700;margin:0 0 2px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.card h2 a{font-size:12.5px;font-weight:500;text-decoration:none}
 .card .sub{font-size:12.5px;color:var(--ink2);margin-bottom:8px}
 .card.wide{grid-column:1 / -1}
 svg{display:block;width:100%;height:auto;overflow:visible}
@@ -65,39 +96,111 @@ td.num,th.num{text-align:right}
 .legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--ink2);margin:4px 0 2px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 .tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;padding:6px 9px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:9;white-space:nowrap}
-.setup{background:var(--tint);border:1px dashed var(--accent3);border-radius:14px;padding:14px 18px;font-size:13.5px;margin-bottom:16px}
+.setup{background:var(--tint);border:1px dashed var(--accent3);border-radius:14px;padding:14px 18px;font-size:13.5px;margin:16px 0 0}
 .setup ol{margin:6px 0 0;padding-left:20px}
 .setup code{background:var(--card);padding:1px 6px;border-radius:5px;font-size:12.5px}
 [hidden]{display:none!important}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:10px;padding:7px 14px;font:inherit;font-size:13.5px;text-decoration:none;cursor:pointer}
+.btn.ghost{background:var(--card);color:var(--accent);border-color:var(--line)}
+.btn.sm{padding:4px 10px;font-size:12.5px;border-radius:8px}
+.tag{display:inline-block;font-size:11px;padding:0 7px;border-radius:99px;background:var(--tint);color:var(--accent);line-height:18px}
+.tag.draft{background:#FDF1D8;color:#8A5A00}
+.tag.tt{background:#F1E9F5;color:#6B4A8C}
+.tag.done{background:#E6F2EC;color:#2E7D5B}
+:root[data-theme="dark"] .tag.draft,:root:not([data-theme="light"]) .tag.draft{background:#3A2F18;color:#E7B85A}
+
+/* ---- 鎖定 ---- */
 .lock{position:fixed;inset:0;background:var(--bg);z-index:20;display:flex;align-items:center;justify-content:center;padding:16px}
 .lockcard{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 24px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px}
 .lockcard h2{margin:4px 0 0;font-size:20px}.lockcard p{margin:0;color:var(--ink2);font-size:13.5px}
 .lockcard input[type=password]{font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
 .lockcard label{font-size:13px;color:var(--ink2)}.lockcard .btn{justify-content:center;padding:10px}
 .lockicon{width:56px;height:56px;border-radius:14px;background:#1F3A5F;color:#F6F3EE;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px}
-.lockmsg{color:#B5533C;font-size:13px;min-height:18px}
-.actions{gap:8px}
-.btn{display:inline-flex;align-items:center;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:10px;padding:7px 14px;font:inherit;font-size:13.5px;text-decoration:none;cursor:pointer}
-.btn.ghost{background:var(--card);color:var(--accent);border-color:var(--line)}
-.sched{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px}
-.post{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg);text-decoration:none;color:inherit}
-.post img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--grid)}
-.post div{padding:7px 9px 9px;font-size:12px;line-height:1.45}
-.post b{display:block;font-size:12.5px}
-.post .tag{display:inline-block;font-size:11px;padding:0 6px;border-radius:99px;background:var(--tint);color:var(--accent);margin-top:3px}
-.post .tag.draft{background:#FDF1D8;color:#8A5A00}
-.post.today{outline:2px solid var(--accent)}
+.lockmsg{color:var(--bad);font-size:13px;min-height:18px}
+
+/* ---- 總覽 ---- */
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:12px;margin-bottom:12px;align-items:start}
+.next{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);gap:18px;align-items:start}
+.next img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:var(--grid)}
+.next .eyebrow{font-size:12.5px;color:var(--ink2);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.next h3{margin:6px 0 4px;font-size:20px;line-height:1.35;font-weight:700}
+.count{font-size:40px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1;margin:10px 0 2px}
+.count small{font-size:13px;font-weight:400;color:var(--ink2);letter-spacing:0;margin-left:6px}
+.next .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--grid);font-size:13.5px}
+.list li:last-child{border-bottom:0}
+.list .d{font-variant-numeric:tabular-nums;color:var(--ink2);font-size:12.5px;width:66px;flex:none}
+.list .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list .in{font-size:12px;color:var(--ink3);flex:none;font-variant-numeric:tabular-nums}
+.list .in.soon{color:var(--warn);font-weight:600}
+.list .in.today{color:var(--bad);font-weight:700}
+.list img{width:30px;height:38px;object-fit:cover;border-radius:5px;background:var(--grid);flex:none}
+.checks{list-style:none;margin:0;padding:0;font-size:13.5px}
+.checks li{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--grid)}
+.checks li:last-child{border-bottom:0}
+.checks .dot{width:8px;height:8px;border-radius:50%;background:var(--accent3);margin-top:8px;flex:none}
+.checks .dot.hot{background:var(--bad)}
+.checks small{display:block;color:var(--ink3);font-size:12px}
+
+/* ---- 日曆 ---- */
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal .wd{font-size:12px;color:var(--ink2);text-align:center;padding:2px 0 6px}
+.cell{min-height:118px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:4px;position:relative;min-width:0}
+.cell.out{opacity:.4}
+.cell .dn{font-size:12px;color:var(--ink2);display:flex;justify-content:space-between;align-items:center;font-variant-numeric:tabular-nums}
+.cell.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.cell.today .dn b{background:var(--accent);color:#fff;border-radius:999px;min-width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;padding:0 5px;font-size:11.5px}
+.cell .ev{display:flex;gap:6px;align-items:flex-start;text-decoration:none;color:inherit;border-radius:7px;padding:3px;background:var(--card);border:1px solid var(--line);min-width:0}
+.cell .ev img{width:26px;height:32px;object-fit:cover;border-radius:4px;background:var(--grid);flex:none}
+.cell .ev span{font-size:11.5px;line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.cell .ev.draft{border-style:dashed}
+.cell .mk{display:flex;gap:4px;flex-wrap:wrap;margin-top:auto}
+.cell .mk i{font-style:normal;font-size:10px;padding:0 5px;border-radius:99px;line-height:15px}
+.cell .mk .ig{background:var(--tint);color:var(--accent)}
+.cell .mk .tt{background:#F1E9F5;color:#6B4A8C}
+.cell .mk .dr{background:#FDF1D8;color:#8A5A00}
+.cell .mk .ms{background:#E6F2EC;color:#2E7D5B}
+.cal-nav{display:flex;align-items:center;gap:8px}
+.cal-nav b{min-width:110px;text-align:center;font-size:15px}
+.agenda{display:none}
+@media (max-width:720px){
+  .cal{display:none}
+  .agenda{display:block}
+  .hero{grid-template-columns:1fr}
+  .next{grid-template-columns:110px 1fr;gap:12px}
+  .next h3{font-size:16px}.count{font-size:30px}
+  .topbar .in{flex-wrap:wrap;gap:8px}
+  .brand small{display:none}
+  .tabs{order:3;width:100%;justify-content:space-between}
+  .tabs button,.tabs .top span{padding:6px 10px;font-size:13px}
+  .tabs .layer{width:100%}.tabs .layer button,.tabs .layer span{flex:1;justify-content:center}
+  .meta{margin-left:auto}
+}
 footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
-@media (max-width:640px){ .kpi .v{font-size:22px} h1{font-size:19px} }
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <h1>清醒行動派<small>後台：數據、收入、IG 排程｜先清醒，再行動</small></h1>
+<div class="topbar"><div class="in">
+  <a class="brand" href="#overview"><span class="mark">清醒</span><span><b>清醒行動派</b><small>後台｜先清醒，再行動</small></span></a>
+  <nav class="tabs" id="tabs" aria-label="分頁">
+    <div class="pill"></div>
+    <div class="layer base">
+      <button data-page="overview">總覽</button>
+      <button data-page="calendar">日曆 <span class="n" id="nCal"></span></button>
+      <button data-page="stats">數據</button>
+      <button data-page="income">收入</button>
+    </div>
+    <div class="layer top" aria-hidden="true">
+      <span>總覽</span><span>日曆 <span class="n" id="nCal2"></span></span><span>數據</span><span>收入</span>
+    </div>
+  </nav>
   <div class="meta" id="meta">載入中…</div>
-</header>
+  <button class="iconbtn" id="installBtn" hidden title="安裝成 App">⤓</button>
+  <button class="iconbtn" id="logout" type="button" title="登出">⎋</button>
+</div></div>
 
+<div class="wrap">
 <div id="lock" class="lock" hidden>
   <form id="lockForm" class="lockcard">
     <div class="lockicon">清醒</div>
@@ -109,7 +212,6 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
     <div id="lockMsg" class="lockmsg"></div>
   </form>
 </div>
-
 <div id="pwSetup" class="setup" hidden>
   <strong>還沒設定後台密碼。</strong>為了不讓收入和粉絲數公開，資料要加密後才會顯示：
   <ol>
@@ -118,7 +220,6 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
     <li>Actions → 「同步清醒行動派儀表板」→ Run workflow。約 1 分鐘後重新整理這頁，輸入同一組密碼。</li>
   </ol>
 </div>
-
 <div id="setup" class="setup" hidden>
   <strong>尚未連接 Notion。</strong>完成以下三步，資料就會每 6 小時自動進來：
   <ol>
@@ -128,66 +229,135 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
   </ol>
 </div>
 
-<div class="row">
-  <div class="seg" id="platform" role="group" aria-label="平台">
-    <button aria-pressed="true" data-v="all">全部</button>
-    <button aria-pressed="false" data-v="Instagram">Instagram</button>
-    <button aria-pressed="false" data-v="抖音">抖音</button>
+<!-- ===== 總覽 ===== -->
+<section class="page" id="page-overview">
+  <div class="pagehead">
+    <h1 id="greet">早安<small id="todayLine"></small></h1>
+    <div class="row">
+      <a class="btn" href="https://app.notion.com/p/c6c1c75e84454b7f9e4fe7fa73fcdd5e" target="_blank" rel="noopener">＋ 記錄今天數據</a>
+      <a class="btn" href="https://app.notion.com/p/68fe898d466e4538ac2686aa8b629dd9" target="_blank" rel="noopener">＋ 記錄一筆收入</a>
+      <a class="btn ghost" href="https://portaly.cc/qingxing.action" target="_blank" rel="noopener">Portaly</a>
+      <a class="btn ghost" href="https://www.instagram.com/qingxing.action/" target="_blank" rel="noopener">IG</a>
+      <a class="btn ghost" href="tiktok/" target="_blank" rel="noopener">TikTok 本週</a>
+    </div>
   </div>
-  <div class="seg" id="range" role="group" aria-label="期間">
-    <button aria-pressed="false" data-v="7">7 天</button>
-    <button aria-pressed="true" data-v="30">30 天</button>
-    <button aria-pressed="false" data-v="90">90 天</button>
-    <button aria-pressed="false" data-v="0">全部</button>
+  <section class="kpis" id="kpisOverview"></section>
+  <div class="hero">
+    <div class="card"><h2>下一篇要發的<span id="nextWhen" class="tag"></span></h2><div class="sub">IG 每晚 20:00 自動發，TikTok 同時段排程</div><div id="next" class="next"></div></div>
+    <div class="card"><h2>重要日期<a href="https://claude.ai/artifact/V2ff56DB3Smt5QuXwCaFN5" target="_blank" rel="noopener">藍圖 ↗</a></h2><div class="sub">接下來的檔期與上架日</div><ul class="list" id="dates"></ul></div>
   </div>
-</div>
+  <div class="grid">
+    <div class="card"><h2>接下來 7 天<a href="#calendar" data-go="calendar">看日曆 ↗</a></h2><div class="sub">標「草稿」的要先補內容才會發</div><ul class="list" id="upcoming"></ul></div>
+    <div class="card"><h2>今天要做的</h2><div class="sub">每天的固定動作</div><ul class="checks" id="checks"></ul></div>
+  </div>
+</section>
 
-<div class="row actions">
-  <a class="btn" href="https://app.notion.com/p/c6c1c75e84454b7f9e4fe7fa73fcdd5e" target="_blank" rel="noopener">＋ 記錄今天數據</a>
-  <a class="btn" href="https://app.notion.com/p/68fe898d466e4538ac2686aa8b629dd9" target="_blank" rel="noopener">＋ 記錄一筆收入</a>
-  <a class="btn ghost" href="https://portaly.cc/qingxing.action" target="_blank" rel="noopener">Portaly 頁面</a>
-  <a class="btn ghost" href="https://www.instagram.com/qingxing.action/" target="_blank" rel="noopener">IG 帳號</a>
-  <button class="btn ghost" id="installBtn" hidden>安裝成 App</button>
-  <button class="btn ghost" id="logout" type="button">登出</button>
-</div>
+<!-- ===== 日曆 ===== -->
+<section class="page" id="page-calendar">
+  <div class="pagehead">
+    <h1>發佈日曆<small>IG 貼文、TikTok 影片、電子書更新與檔期</small></h1>
+    <div class="cal-nav">
+      <button class="iconbtn" id="calPrev" title="上個月">‹</button>
+      <b id="calTitle"></b>
+      <button class="iconbtn" id="calNext" title="下個月">›</button>
+      <button class="btn ghost sm" id="calToday">今天</button>
+    </div>
+  </div>
+  <div class="card wide">
+    <div class="legend" style="margin-bottom:10px"><span><i style="background:var(--accent)"></i>IG 貼文</span><span><i style="background:#8A6BB5"></i>TikTok 影片</span><span><i style="background:#C9A227"></i>草稿待補</span><span><i style="background:#4E8F79"></i>檔期／上架／更新</span></div>
+    <div class="cal" id="cal"></div>
+    <div class="agenda" id="agenda"></div>
+  </div>
+</section>
 
-<section class="kpis" id="kpis"></section>
+<!-- ===== 數據 ===== -->
+<section class="page" id="page-stats">
+  <div class="pagehead">
+    <h1>成長數據<small>粉絲、觀看、熱度；資料來自 Notion「成長數據」</small></h1>
+    <div class="row">
+      <div class="seg" id="platform" role="group" aria-label="平台">
+        <button aria-pressed="true" data-v="all">全部</button>
+        <button aria-pressed="false" data-v="Instagram">Instagram</button>
+        <button aria-pressed="false" data-v="抖音">TikTok</button>
+      </div>
+      <div class="seg" id="range" role="group" aria-label="期間">
+        <button aria-pressed="false" data-v="7">7 天</button>
+        <button aria-pressed="true" data-v="30">30 天</button>
+        <button aria-pressed="false" data-v="90">90 天</button>
+        <button aria-pressed="false" data-v="0">全部</button>
+      </div>
+    </div>
+  </div>
+  <section class="kpis" id="kpisStats"></section>
+  <div class="grid">
+    <div class="card"><h2>粉絲數</h2><div class="sub">每日累計追蹤數</div><div id="chFollowers"></div></div>
+    <div class="card"><h2>觀看數</h2><div class="sub">每日內容觀看／觸及</div><div id="chViews"></div></div>
+    <div class="card wide"><h2>熱度</h2><div class="sub">讚 ＋ 留言×3 ＋ 收藏×5 ＋ 分享×5</div><div id="chHeat"></div></div>
+    <div class="card wide"><h2>熱度最高的貼文</h2><div class="sub">期間內前 10 篇</div><div class="tbl" id="tblTop"></div></div>
+  </div>
+</section>
 
-<section class="grid">
-  <div class="card wide"><h2>接下來的 IG 排程</h2><div class="sub">每晚 20:00 自動發；標「草稿」的要先補內容才會發</div><div id="sched" class="sched"></div></div>
-  <div class="card"><h2>粉絲數</h2><div class="sub">每日累計追蹤數</div><div id="chFollowers"></div></div>
-  <div class="card"><h2>觀看數</h2><div class="sub">每日內容觀看／觸及</div><div id="chViews"></div></div>
-  <div class="card"><h2>熱度</h2><div class="sub">讚 ＋ 留言×3 ＋ 收藏×5 ＋ 分享×5</div><div id="chHeat"></div></div>
-  <div class="card"><h2>每月收入</h2><div class="sub">NT$，依產品堆疊</div><div id="legProduct" class="legend"></div><div id="chMonthly"></div></div>
-  <div class="card"><h2>每日入帳</h2><div class="sub">期間內每一筆收入</div><div id="chDaily"></div></div>
-  <div class="card wide"><h2>熱度最高的貼文</h2><div class="sub">期間內前 10 篇</div><div class="tbl" id="tblTop"></div></div>
-  <div class="card wide"><h2>最近入帳</h2><div class="sub">最新 15 筆</div><div class="tbl" id="tblIncome"></div></div>
+<!-- ===== 收入 ===== -->
+<section class="page" id="page-income">
+  <div class="pagehead">
+    <h1>收入<small>NT$；資料來自 Notion「收入記錄」</small></h1>
+    <div class="row"><a class="btn" href="https://app.notion.com/p/68fe898d466e4538ac2686aa8b629dd9" target="_blank" rel="noopener">＋ 記錄一筆收入</a></div>
+  </div>
+  <section class="kpis" id="kpisIncome"></section>
+  <div class="grid">
+    <div class="card"><h2>每月收入</h2><div class="sub">依產品堆疊</div><div id="legProduct" class="legend"></div><div id="chMonthly"></div></div>
+    <div class="card"><h2>每日入帳</h2><div class="sub">依數據頁的期間篩選</div><div id="chDaily"></div></div>
+    <div class="card wide"><h2>最近入帳</h2><div class="sub">最新 15 筆</div><div class="tbl" id="tblIncome"></div></div>
+  </div>
 </section>
 
 <footer>數據每 6 小時從 Notion 同步，IG 排程每次發文設定更新後同步 · <a href="../" style="color:inherit">回生活面板</a></footer>
 </div>
 <div class="tip" id="tip"></div>
-
 <script>
 const PRODUCT_COLORS = {
   "電子書《從迷惘到行動》":"var(--c1)","Notion 清醒行動系統":"var(--c3)","電子書+Notion系統組合":"var(--c4)","進階版":"var(--c2)",
   "陪跑服務":"var(--c5)","團體方案":"#7A8B99","其他":"var(--c6)"
 };
 const PRODUCT_ORDER = Object.keys(PRODUCT_COLORS);
-const state = { platform:"all", range:30, data:null };
+// 重要日期（來自專案總覽）
+const MILESTONES = [
+  ["2026-11-10","IG 每日 20:00 自動發文開始"],
+  ["2026-11-19","電子書＋組合在 Portaly 上架（390／690）"],
+  ["2026-11-19","首發 30 名送 7 天回饋（到 11/26）"],
+  ["2026-11-29","Day 20 草稿要補截圖與讀者回饋"],
+  ["2026-12-01","團體方案開發開始"],
+  ["2026-12-03","電子書 V2 更新，漲到 490"],
+  ["2026-12-09","30 天 IG 主題結束"],
+  ["2026-12-10","讀者推薦計畫開始（分 30%）"],
+  ["2026-12-15","進階版上架 1,490"],
+  ["2026-12-17","電子書 V3 更新，漲到 590"],
+  ["2026-12-26","新年 90 天檔期開始（到 1/10）"],
+  ["2026-12-31","電子書 V4 更新，漲到 690 封頂"],
+  ["2027-01-08","30 天文字陪跑開放（限 8 人）"],
+  ["2027-01-28","電子書每月更新"],["2027-02-28","電子書每月更新"],["2027-03-28","電子書每月更新"],["2027-04-28","電子書每月更新"],
+];
+const WD = ["日","一","二","三","四","五","六"];
+const TZ = "Asia/Taipei";
+const state = { platform:"all", range:30, data:null, schedule:[], tiktok:[], page:"overview", cal:null };
 const $ = s => document.querySelector(s);
 const fmt = n => Math.round(n).toLocaleString("zh-Hant-TW");
 const money = n => "NT$ " + fmt(n);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const tip = $("#tip");
 function showTip(e, html){ tip.innerHTML = html; tip.style.opacity = 1; tip.style.left = (e.clientX+12)+"px"; tip.style.top = (e.clientY-10)+"px"; }
 function hideTip(){ tip.style.opacity = 0; }
+// 台北時間工具
+function tpeNow(){ return new Date(Date.now() + 8*3600e3); }           // 以 UTC 欄位表示台北時間
+function tpeToday(){ return tpeNow().toISOString().slice(0,10); }
+function ymd(d){ return d.toISOString().slice(0,10); }
+function addDays(s, n){ const d = new Date(s + "T00:00:00Z"); d.setUTCDate(d.getUTCDate()+n); return ymd(d); }
+function daysBetween(a, b){ return Math.round((new Date(b+"T00:00:00Z") - new Date(a+"T00:00:00Z"))/864e5); }
+function mmdd(s){ return s.slice(5).replace("-","/"); }
+function wd(s){ return WD[new Date(s+"T00:00:00Z").getUTCDay()]; }
 
-try {
-  const saved = localStorage.getItem("qx.filters");
-  if (saved) Object.assign(state, JSON.parse(saved));
-} catch {}
+try { const saved = localStorage.getItem("qx.filters"); if (saved) Object.assign(state, JSON.parse(saved)); } catch {}
 function persist(){ try{ localStorage.setItem("qx.filters", JSON.stringify({platform:state.platform, range:state.range})); }catch{} }
-
 document.querySelectorAll(".seg").forEach(seg => {
   const key = seg.id;
   seg.querySelectorAll("button").forEach(b => {
@@ -200,27 +370,137 @@ document.querySelectorAll(".seg").forEach(seg => {
   });
 });
 
-// ---- IG 排程（schedule.json 由 build-ig.mjs 產生）----
-const WD = ["日","一","二","三","四","五","六"]
-fetch("schedule.json?v=" + Date.now()).then(r => r.json()).then(list => {
-  const today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10)
-  const next = list.filter(p => p.date >= today).slice(0, 7)
-  const el = document.getElementById("sched")
-  if (!next.length) { el.innerHTML = '<div class="empty">接下來沒有排程貼文，請 Claude 排下個月的內容。</div>'; return }
-  el.innerHTML = next.map(p => {
-    const d = new Date(p.date + "T00:00:00+08:00")
-    const kind = { carousel: "輪播", reel: "短影音日", quote: "金句" }[p.kind] || p.kind
-    return `<a class="post${p.date === today ? " today" : ""}" href="${p.cover}" target="_blank" rel="noopener"><img loading="lazy" src="${p.cover}" alt="">` +
-      `<div><b>${p.date.slice(5).replace("-", "/")}（${WD[d.getUTCDay()]}）Day ${p.day}</b>${esc(p.title)}<br>` +
-      `<span class="tag${p.status === "draft" ? " draft" : ""}">${p.status === "draft" ? "草稿" : kind}</span></div></a>`
-  }).join("")
-}).catch(() => { document.getElementById("sched").innerHTML = '<div class="empty">讀不到排程</div>' })
+// ---- 分頁＋滑動藥丸 ----
+const tabs = $("#tabs"), pill = tabs.querySelector(".pill"), topLayer = tabs.querySelector(".layer.top");
+const PAGES = ["overview","calendar","stats","income"];
+function movePill(animate = true){
+  const btn = tabs.querySelector(`button[data-page="${state.page}"]`); if (!btn) return;
+  const base = btn.parentElement;
+  const x = btn.offsetLeft, w = btn.offsetWidth, total = base.offsetWidth;
+  if (!animate){ pill.style.transition = "none"; topLayer.style.transition = "none"; }
+  pill.style.transform = `translateX(${x}px)`; pill.style.width = w + "px";
+  topLayer.style.clipPath = `inset(0 ${Math.max(0, total - x - w)}px 0 ${x}px round 999px)`;
+  if (!animate) requestAnimationFrame(() => { pill.style.transition = ""; topLayer.style.transition = ""; });
+}
+function go(page, push = true){
+  if (!PAGES.includes(page)) page = "overview";
+  state.page = page;
+  document.querySelectorAll(".page").forEach(p => p.classList.toggle("on", p.id === "page-" + page));
+  movePill();
+  if (push && location.hash !== "#" + page) history.replaceState(null, "", "#" + page);
+  try { localStorage.setItem("qx.page", page); } catch {}
+  if (page === "stats" || page === "income") render();     // 分頁顯示後才量得到寬度
+  if (page === "calendar") renderCalendar();
+  window.scrollTo({ top: 0 });
+}
+tabs.querySelectorAll("button").forEach(b => b.onclick = () => go(b.dataset.page));
+document.addEventListener("click", e => { const a = e.target.closest("[data-go]"); if (a){ e.preventDefault(); go(a.dataset.go); } });
+addEventListener("hashchange", () => go(location.hash.slice(1), false));
+let rz; addEventListener("resize", () => { movePill(false); clearTimeout(rz); rz = setTimeout(render, 150); });
+document.fonts?.ready.then(() => movePill(false));
+(() => { let p = location.hash.slice(1); if (!PAGES.includes(p)) { try { p = localStorage.getItem("qx.page") || "overview"; } catch { p = "overview"; } } go(p); })();
+
+// ---- 排程（schedule.json 由 build-ig.mjs 產生；latest.json 由 build-tiktok.py 產生）----
+Promise.all([
+  fetch("schedule.json?v=" + Date.now()).then(r => r.json()).catch(() => []),
+  fetch("tiktok/latest.json?v=" + Date.now()).then(r => r.json()).then(j => j.items || []).catch(() => []),
+]).then(([sched, tt]) => {
+  state.schedule = sched.sort((a,b) => a.date < b.date ? -1 : 1);
+  state.tiktok = tt;
+  renderOverview(); renderCalendar();
+  const left = sched.filter(p => p.date >= tpeToday()).length;
+  $("#nCal").textContent = $("#nCal2").textContent = left || "";
+});
+let countdownTimer;
+function renderOverview(){
+  const now = tpeNow(), today = tpeToday();
+  const h = now.getUTCHours();
+  $("#greet").firstChild.textContent = h < 5 ? "晚安" : h < 11 ? "早安" : h < 18 ? "午安" : "晚安";
+  $("#todayLine").textContent = `${now.getUTCMonth()+1} 月 ${now.getUTCDate()} 日（${WD[now.getUTCDay()]}）`;
+  // 下一篇：今天 20:00 前算今天，之後算明天
+  const afterPost = h >= 20;
+  const next = state.schedule.find(p => p.date > today || (p.date === today && !afterPost));
+  const nextEl = $("#next"), whenEl = $("#nextWhen");
+  clearInterval(countdownTimer);
+  if (!next){
+    nextEl.innerHTML = `<div class="empty" style="grid-column:1/-1">接下來沒有排程貼文，請 Claude 排下個月的內容。</div>`; whenEl.textContent = "";
+  } else {
+    const kind = { carousel:"輪播", reel:"短影音日", quote:"金句" }[next.kind] || next.kind;
+    const tt = state.tiktok.find(t => t.date === next.date);
+    const diff = daysBetween(today, next.date);
+    whenEl.textContent = diff === 0 ? "今晚" : diff === 1 ? "明晚" : `${diff} 天後`;
+    nextEl.innerHTML = `<a href="${next.cover}" target="_blank" rel="noopener"><img src="${next.cover}" alt=""></a>
+      <div><div class="eyebrow">${mmdd(next.date)}（${wd(next.date)}）· Day ${next.day} <span class="tag ${next.status==="draft"?"draft":""}">${next.status==="draft"?"草稿，要先補內容":kind}</span>${tt ? `<span class="tag tt">TikTok 同日</span>`:""}</div>
+      <h3>${esc(next.title)}</h3>
+      <div class="count" id="count"></div>
+      <div class="sub" id="countSub"></div>
+      <div class="acts"><a class="btn ghost sm" href="${next.cover}" target="_blank" rel="noopener">看圖卡</a>
+        ${tt ? `<a class="btn ghost sm" href="${tt.video_url}" target="_blank" rel="noopener">下載 TikTok 影片</a>` : ""}
+        <a class="btn ghost sm" href="https://www.instagram.com/qingxing.action/" target="_blank" rel="noopener">開 IG</a></div></div>`;
+    const target = new Date(next.date + "T20:00:00+08:00");
+    const tick = () => {
+      const ms = target - Date.now();
+      if (ms <= 0){ $("#count").innerHTML = `應已發出<small>20:53 會自動確認</small>`; $("#countSub").textContent = ""; return; }
+      const s = Math.floor(ms/1000), d = Math.floor(s/86400), hh = Math.floor(s%86400/3600), mm = Math.floor(s%3600/60), ss = s%60;
+      $("#count").innerHTML = (d ? `${d}<small>天</small> ` : "") + `${String(hh).padStart(2,"0")}:${String(mm).padStart(2,"0")}:${String(ss).padStart(2,"0")}<small>到 20:00 發文</small>`;
+      $("#countSub").textContent = next.status === "draft" ? "⚠ 這篇還是草稿，機器人不會發，要先補截圖與數據。" : "圖卡與文案已就緒，機器人會自動發。";
+    };
+    tick(); countdownTimer = setInterval(tick, 1000);
+  }
+  // 接下來 7 天
+  const up = state.schedule.filter(p => p.date >= today).slice(0, 7);
+  $("#upcoming").innerHTML = up.length ? up.map(p => {
+    const diff = daysBetween(today, p.date), tt = state.tiktok.some(t => t.date === p.date);
+    return `<li><img loading="lazy" src="${p.cover}" alt=""><span class="d">${mmdd(p.date)}（${wd(p.date)}）</span><span class="t">Day ${p.day}　${esc(p.title)}</span>${p.status==="draft"?`<span class="tag draft">草稿</span>`:""}${tt?`<span class="tag tt">TT</span>`:""}<span class="in ${diff===0?"today":diff<=2?"soon":""}">${diff===0?"今天":diff+" 天"}</span></li>`;
+  }).join("") : `<li class="empty">沒有排程</li>`;
+  // 重要日期
+  const ms = MILESTONES.filter(([d]) => d >= today).slice(0, 8);
+  $("#dates").innerHTML = ms.map(([d, t]) => { const diff = daysBetween(today, d); return `<li><span class="d">${mmdd(d)}（${wd(d)}）</span><span class="t">${t}</span><span class="in ${diff===0?"today":diff<=3?"soon":""}">${diff===0?"今天":diff+" 天"}</span></li>`; }).join("");
+  // 今天要做的
+  const todayPost = state.schedule.find(p => p.date === today);
+  const items = [
+    todayPost && todayPost.status === "draft" ? ["hot", `補 Day ${todayPost.day} 草稿的截圖與數據`, "不補的話今晚 20:00 不會發"] : null,
+    ["", "20:00 後回 IG 留言、看 TikTok 數據", "機器人會回「清醒」留言，其他要自己回"],
+    ["", "睡前在 Notion 記今天的粉絲數與觀看數", "成長數據資料庫，一天一筆就好"],
+    h >= 21 ? ["", "確認今晚貼文真的發出", "20:53 的排程會查機器人紀錄"] : null,
+    ms.some(([d]) => daysBetween(today, d) <= 3) ? ["hot", `${ms.find(([d]) => daysBetween(today, d) <= 3)[1]}`, "3 天內的檔期，先準備"] : null,
+  ].filter(Boolean);
+  $("#checks").innerHTML = items.map(([c, t, s]) => `<li><span class="dot ${c}"></span><div>${t}<small>${s}</small></div></li>`).join("");
+}
+
+// ---- 日曆 ----
+const calTitle = $("#calTitle");
+$("#calPrev").onclick = () => { state.cal.setUTCMonth(state.cal.getUTCMonth()-1); renderCalendar(); };
+$("#calNext").onclick = () => { state.cal.setUTCMonth(state.cal.getUTCMonth()+1); renderCalendar(); };
+$("#calToday").onclick = () => { state.cal = null; renderCalendar(); };
+function renderCalendar(){
+  const today = tpeToday();
+  if (!state.cal){ const n = tpeNow(); state.cal = new Date(Date.UTC(n.getUTCFullYear(), n.getUTCMonth(), 1)); }
+  const y = state.cal.getUTCFullYear(), m = state.cal.getUTCMonth();
+  calTitle.textContent = `${y} 年 ${m+1} 月`;
+  const first = new Date(Date.UTC(y, m, 1)), start = addDays(ymd(first), -first.getUTCDay());
+  const byDate = {}; for (const p of state.schedule) (byDate[p.date] ||= {}).ig = p;
+  for (const t of state.tiktok) (byDate[t.date] ||= {}).tt = t;
+  for (const [d, t] of MILESTONES) ((byDate[d] ||= {}).ms ||= []).push(t);
+  const cells = [], agenda = [];
+  for (let i = 0; i < 42; i++){
+    const d = addDays(start, i), inMonth = d.slice(0,7) === `${y}-${String(m+1).padStart(2,"0")}`;
+    if (i === 35 && !inMonth) break;
+    const e = byDate[d] || {}, day = Number(d.slice(8));
+    const ig = e.ig ? `<a class="ev ${e.ig.status==="draft"?"draft":""}" href="${e.ig.cover}" target="_blank" rel="noopener" title="Day ${e.ig.day}：${esc(e.ig.title)}"><img loading="lazy" src="${e.ig.cover}" alt=""><span>${esc(e.ig.title)}</span></a>` : "";
+    const mk = [e.ig ? `<i class="ig">IG D${e.ig.day}</i>` : "", e.ig?.status === "draft" ? `<i class="dr">草稿</i>` : "", e.tt ? `<i class="tt">TikTok</i>` : "", ...(e.ms||[]).map(t => `<i class="ms" title="${esc(t)}">${esc(t.length > 9 ? t.slice(0,9)+"…" : t)}</i>`)].join("");
+    cells.push(`<div class="cell ${inMonth?"":"out"} ${d===today?"today":""}"><div class="dn"><b>${day}</b><span>${d===today?"今天":""}</span></div>${ig}<div class="mk">${mk}</div></div>`);
+    if (inMonth && (e.ig || e.tt || e.ms)) agenda.push(`<li><span class="d">${mmdd(d)}（${wd(d)}）</span><span class="t">${e.ig ? `Day ${e.ig.day}　${esc(e.ig.title)}` : (e.ms||[]).join("；")}</span>${e.ig?.status==="draft"?`<span class="tag draft">草稿</span>`:""}${e.tt?`<span class="tag tt">TT</span>`:""}${e.ig && e.ms ? `<span class="tag done" title="${esc(e.ms.join("；"))}">檔期</span>`:""}</li>`);
+  }
+  $("#cal").innerHTML = WD.map(w => `<div class="wd">${w}</div>`).join("") + cells.join("");
+  $("#agenda").innerHTML = agenda.length ? `<ul class="list">${agenda.join("")}</ul>` : `<div class="empty">這個月沒有排程</div>`;
+}
 
 // ---- 安裝成 Chrome App ----
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {})
 let installEvt = null
-addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; document.getElementById("installBtn").hidden = false })
-document.getElementById("installBtn").onclick = async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt = null; document.getElementById("installBtn").hidden = true }
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; $("#installBtn").hidden = false })
+$("#installBtn").onclick = async () => { if (!installEvt) return; installEvt.prompt(); await installEvt.userChoice; installEvt = null; $("#installBtn").hidden = true }
 
 // ---- 解鎖：data.enc.json 用後台密碼加密（AES-256-GCM，PBKDF2-SHA256）----
 const KEY_STORE = "qx.pw"
@@ -232,22 +512,22 @@ async function decryptData(env, pw) {
   return JSON.parse(new TextDecoder().decode(plain))
 }
 function lockScreen(env, msg) {
-  const box = document.getElementById("lock")
+  const box = $("#lock")
   box.hidden = false
-  document.getElementById("lockMsg").textContent = msg || ""
-  document.getElementById("lockForm").onsubmit = async e => {
+  $("#lockMsg").textContent = msg || ""
+  $("#lockForm").onsubmit = async e => {
     e.preventDefault()
-    const pw = document.getElementById("pw").value
+    const pw = $("#pw").value
     try {
       state.data = await decryptData(env, pw)
-      try { if (document.getElementById("remember").checked) localStorage.setItem(KEY_STORE, pw) } catch {}
+      try { if ($("#remember").checked) localStorage.setItem(KEY_STORE, pw) } catch {}
       box.hidden = true; render()
-    } catch { document.getElementById("lockMsg").textContent = "密碼不對，再試一次" }
+    } catch { $("#lockMsg").textContent = "密碼不對，再試一次" }
   }
-  document.getElementById("pw").focus()
+  $("#pw").focus()
 }
 fetch("data.enc.json?v=" + Date.now()).then(r => {
-  if (r.status === 404) { $("#meta").textContent = "還沒設定後台密碼"; document.getElementById("pwSetup").hidden = false; throw "skip" }
+  if (r.status === 404) { $("#meta").textContent = "還沒設定後台密碼"; $("#pwSetup").hidden = false; throw "skip" }
   return r.json()
 }).then(async env => {
   let saved = null
@@ -258,26 +538,21 @@ fetch("data.enc.json?v=" + Date.now()).then(r => {
   $("#meta").textContent = "已上鎖"
   lockScreen(env, saved ? "密碼已更換，請重新輸入" : "")
 }).catch(e => { if (e !== "skip") $("#meta").textContent = "讀不到資料" })
-document.getElementById("logout").onclick = () => { try { localStorage.removeItem(KEY_STORE) } catch {}; location.reload() }
+$("#logout").onclick = () => { try { localStorage.removeItem(KEY_STORE) } catch {}; location.reload() }
 
+// ---- 數據與收入 ----
 function cutoff(){ if (!state.range) return "0000-00-00"; const d = new Date(); d.setDate(d.getDate() - state.range + 1); return d.toISOString().slice(0,10); }
-
 function render(){
   const d = state.data; if (!d) return;
-  const t = d.generatedAt ? new Date(d.generatedAt).toLocaleString("zh-Hant-TW", {hour12:false, timeZone:"Asia/Taipei"}) : "—";
+  const t = d.generatedAt ? new Date(d.generatedAt).toLocaleString("zh-Hant-TW", {hour12:false, timeZone:TZ}) : "—";
   $("#meta").innerHTML = `最後同步 ${t}` + (d.status === "ok" ? `<span class="badge">Notion 已連接</span>` : `<span class="badge warn">${d.status === "no_token" ? "未連接 Notion" : "同步失敗：" + d.status}</span>`);
   $("#setup").hidden = d.status !== "no_token";
-
   const from = cutoff();
   let growth = d.growth.filter(r => r.date >= from && (state.platform === "all" || r.platform === state.platform));
   const income = d.income.filter(r => r.date >= from);
-
-  // per-day aggregate (sum followers across platforms when "all")
   const byDay = {};
   for (const r of growth){ const o = byDay[r.date] ||= {date:r.date, followers:0, views:0, heat:0, n:0}; o.followers += r.followers; o.views += r.views; o.heat += r.heat; o.n++; }
   const days = Object.values(byDay).sort((a,b) => a.date < b.date ? -1 : 1);
-
-  // KPIs
   const last = days.at(-1), first = days[0];
   const followersNow = last ? last.followers : 0;
   const followersDelta = last && first ? last.followers - first.followers : 0;
@@ -288,38 +563,37 @@ function render(){
   const thisM = (d.monthly.find(m => m.month === ym) || {revenue:0, orders:0});
   const prevM = (d.monthly.find(m => m.month === prevYm) || {revenue:0, orders:0});
   const total = d.income.reduce((s,x) => s + x.amount, 0);
-  $("#kpis").innerHTML = [
-    kpi("目前粉絲數", fmt(followersNow), followersDelta ? (followersDelta>0?"+":"") + fmt(followersDelta) + " 期間內" : "期間內無變化", followersDelta>0?"up":followersDelta<0?"down":""),
-    kpi("期間觀看數", fmt(views), days.length ? `${days.length} 天 · 日均 ${fmt(views/days.length)}` : "尚無資料"),
-    kpi("期間熱度", fmt(heat), days.length ? `日均 ${fmt(heat/days.length)}` : "尚無資料"),
-    kpi(`本月收入（${ym.slice(5)} 月）`, money(thisM.revenue), `${thisM.orders} 筆`),
-    kpi(`上月收入（${prevYm.slice(5)} 月）`, money(prevM.revenue), `${prevM.orders} 筆`),
-    kpi("累計收入", money(total), `${d.income.length} 筆`),
-  ].join("");
-
-  lineChart($("#chFollowers"), days, "followers", "var(--c1)", "人");
-  barChart($("#chViews"), days.map(x => ({k:x.date, v:x.views})), "var(--c1)", "次");
-  barChart($("#chHeat"), days.map(x => ({k:x.date, v:x.heat})), "var(--c2)", "分");
-  stackedMonthly($("#chMonthly"), d.monthly);
-  const dailyIncome = {}; for (const r of income) dailyIncome[r.date] = (dailyIncome[r.date]||0) + r.amount;
-  barChart($("#chDaily"), Object.entries(dailyIncome).sort().map(([k,v]) => ({k,v})), "var(--c3)", "元", true);
-
-  const top = growth.filter(r => r.topic).sort((a,b) => b.heat - a.heat).slice(0,10);
-  $("#tblTop").innerHTML = top.length ? `<table><thead><tr><th>日期</th><th>平台</th><th>主題</th><th>格式</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">收藏</th><th class="num">分享</th><th class="num">熱度</th></tr></thead><tbody>${
-    top.map(r => `<tr><td>${r.date.slice(5)}</td><td>${r.platform}</td><td style="white-space:normal;min-width:180px">${esc(r.topic)}</td><td>${r.format}</td><td class="num">${fmt(r.views)}</td><td class="num">${fmt(r.likes)}</td><td class="num">${fmt(r.comments)}</td><td class="num">${fmt(r.saves)}</td><td class="num">${fmt(r.shares)}</td><td class="num"><b>${fmt(r.heat)}</b></td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有貼文資料，發文後在 Notion「成長數據」新增一筆即可。</div>`;
-
-  const recent = [...d.income].sort((a,b) => a.date < b.date ? 1 : -1).slice(0,15);
-  $("#tblIncome").innerHTML = recent.length ? `<table><thead><tr><th>日期</th><th>項目</th><th>產品</th><th class="num">數量</th><th class="num">金額</th><th>平台</th><th>來源</th><th>備註</th></tr></thead><tbody>${
-    recent.map(r => `<tr><td>${r.date}</td><td>${esc(r.item)}</td><td><i style="display:inline-block;width:9px;height:9px;border-radius:3px;background:${PRODUCT_COLORS[r.product]||"var(--c6)"};margin-right:6px;vertical-align:-1px"></i>${esc(r.product)}</td><td class="num">${r.qty}</td><td class="num"><b>${money(r.amount)}</b></td><td>${esc(r.channel)}</td><td>${esc(r.source)}</td><td style="white-space:normal">${esc(r.note)}</td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有收入記錄，有入帳時在 Notion「收入記錄」新增一筆。</div>`;
+  const kFollow = kpi("目前粉絲數", fmt(followersNow), followersDelta ? (followersDelta>0?"+":"") + fmt(followersDelta) + " 期間內" : "期間內無變化", followersDelta>0?"up":followersDelta<0?"down":"");
+  const kViews = kpi("期間觀看數", fmt(views), days.length ? `${days.length} 天 · 日均 ${fmt(views/days.length)}` : "尚無資料");
+  const kHeat = kpi("期間熱度", fmt(heat), days.length ? `日均 ${fmt(heat/days.length)}` : "尚無資料");
+  const kThis = kpi(`本月收入（${ym.slice(5)} 月）`, money(thisM.revenue), `${thisM.orders} 筆`);
+  const kPrev = kpi(`上月收入（${prevYm.slice(5)} 月）`, money(prevM.revenue), `${prevM.orders} 筆`);
+  const kTotal = kpi("累計收入", money(total), `${d.income.length} 筆`);
+  const avg = d.income.length ? total / d.income.length : 0;
+  $("#kpisOverview").innerHTML = kFollow + kViews + kThis + kTotal;
+  $("#kpisStats").innerHTML = kFollow + kViews + kHeat;
+  $("#kpisIncome").innerHTML = kThis + kPrev + kTotal + kpi("平均客單價", money(avg), d.income.length ? `${d.income.length} 筆平均` : "尚無資料");
+  if (state.page === "stats"){
+    lineChart($("#chFollowers"), days, "followers", "var(--c1)", "人");
+    barChart($("#chViews"), days.map(x => ({k:x.date, v:x.views})), "var(--c1)", "次");
+    barChart($("#chHeat"), days.map(x => ({k:x.date, v:x.heat})), "var(--c2)", "分");
+    const top = growth.filter(r => r.topic).sort((a,b) => b.heat - a.heat).slice(0,10);
+    $("#tblTop").innerHTML = top.length ? `<table><thead><tr><th>日期</th><th>平台</th><th>主題</th><th>格式</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">收藏</th><th class="num">分享</th><th class="num">熱度</th></tr></thead><tbody>${
+      top.map(r => `<tr><td>${r.date.slice(5)}</td><td>${r.platform}</td><td style="white-space:normal;min-width:180px">${esc(r.topic)}</td><td>${r.format}</td><td class="num">${fmt(r.views)}</td><td class="num">${fmt(r.likes)}</td><td class="num">${fmt(r.comments)}</td><td class="num">${fmt(r.saves)}</td><td class="num">${fmt(r.shares)}</td><td class="num"><b>${fmt(r.heat)}</b></td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有貼文資料，發文後在 Notion「成長數據」新增一筆即可。</div>`;
+  }
+  if (state.page === "income"){
+    stackedMonthly($("#chMonthly"), d.monthly);
+    const dailyIncome = {}; for (const r of income) dailyIncome[r.date] = (dailyIncome[r.date]||0) + r.amount;
+    barChart($("#chDaily"), Object.entries(dailyIncome).sort().map(([k,v]) => ({k,v})), "var(--c3)", "元", true);
+    const recent = [...d.income].sort((a,b) => a.date < b.date ? 1 : -1).slice(0,15);
+    $("#tblIncome").innerHTML = recent.length ? `<table><thead><tr><th>日期</th><th>項目</th><th>產品</th><th class="num">數量</th><th class="num">金額</th><th>平台</th><th>來源</th><th>備註</th></tr></thead><tbody>${
+      recent.map(r => `<tr><td>${r.date}</td><td>${esc(r.item)}</td><td><i style="display:inline-block;width:9px;height:9px;border-radius:3px;background:${PRODUCT_COLORS[r.product]||"var(--c6)"};margin-right:6px;vertical-align:-1px"></i>${esc(r.product)}</td><td class="num">${r.qty}</td><td class="num"><b>${money(r.amount)}</b></td><td>${esc(r.channel)}</td><td>${esc(r.source)}</td><td style="white-space:normal">${esc(r.note)}</td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有收入記錄，有入帳時在 Notion「收入記錄」新增一筆。</div>`;
+  }
 }
-
 function kpi(l, v, d, cls=""){ return `<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="d ${cls}">${d}</div></div>`; }
-function esc(s){ return String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function niceMax(v){ if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); const n = v / p; const m = n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10; return m * p; }
 let W = 600; const H = 220, PL = 44, PR = 12, PT = 12, PB = 28;
 function setW(el){ W = Math.max(280, Math.round(el.clientWidth || 600)); }
-let rz; addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(render, 150); });
-
 function frame(max, fmtY){
   const steps = 4, out = [];
   for (let i = 0; i <= steps; i++){ const y = PT + (H-PT-PB) * (1 - i/steps); out.push(`<line class="gridline" x1="${PL}" x2="${W-PR}" y1="${y}" y2="${y}"/><text class="tick" x="${PL-6}" y="${y+4}" text-anchor="end">${fmtY(max*i/steps)}</text>`); }
@@ -328,7 +602,6 @@ function frame(max, fmtY){
 function xLabels(keys){ const n = keys.length; if (!n) return ""; const every = Math.ceil(n / 6); return keys.map((k,i) => ((i % every === 0 && n-1-i >= every/2) || i === n-1) ? `<text class="tick" x="${xPos(i,n)}" y="${H-8}" text-anchor="middle">${k.slice(5)}</text>` : "").join(""); }
 function xPos(i, n){ return PL + (W-PL-PR) * (i + 0.5)/n; }
 function short(v){ return v >= 10000 ? (v/10000).toFixed(v%10000?1:0) + "萬" : v >= 1000 ? (v/1000).toFixed(v%1000?1:0) + "k" : String(Math.round(v)); }
-
 function lineChart(el, rows, key, color, unit){ setW(el);
   if (!rows.length) return el.innerHTML = `<div class="empty">尚無資料</div>`;
   const max = niceMax(Math.max(...rows.map(r => r[key])));
@@ -343,7 +616,6 @@ function lineChart(el, rows, key, color, unit){ setW(el);
     <line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${xLabels(rows.map(r => r.date))}</svg>`;
   hover(el, i => `${rows[i].date}<br><b>${fmt(rows[i][key])}</b> ${unit}`);
 }
-
 function barChart(el, items, color, unit, isMoney=false){ setW(el);
   if (!items.length) return el.innerHTML = `<div class="empty">尚無資料</div>`;
   const max = niceMax(Math.max(...items.map(r => r.v)));
@@ -354,7 +626,6 @@ function barChart(el, items, color, unit, isMoney=false){ setW(el);
     <line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${xLabels(items.map(r => r.k))}</svg>`;
   hover(el, i => `${items[i].k}<br><b>${isMoney ? money(items[i].v) : fmt(items[i].v) + " " + unit}</b>`);
 }
-
 function stackedMonthly(el, months){ setW(el);
   const leg = $("#legProduct");
   if (!months.length){ leg.innerHTML = ""; return el.innerHTML = `<div class="empty">尚無收入資料</div>`; }
@@ -368,7 +639,6 @@ function stackedMonthly(el, months){ setW(el);
     <line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${months.map((m,i) => `<text class="tick" x="${xPos(i,n)}" y="${H-8}" text-anchor="middle">${m.month}</text>`).join("")}</svg>`;
   hover(el, i => { const m = months[i]; return `${m.month} · <b>${money(m.revenue)}</b> · ${m.orders} 筆<br>` + used.filter(p => m.byProduct[p]).map(p => `${p} ${money(m.byProduct[p])}`).join("<br>"); });
 }
-
 function hover(el, html){
   el.querySelectorAll("rect[data-i]").forEach(r => {
     r.addEventListener("mousemove", e => showTip(e, html(Number(r.dataset.i))));
