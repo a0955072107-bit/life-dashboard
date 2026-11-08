@@ -49,16 +49,17 @@ a{color:var(--accent)}
 .iconbtn:hover{color:var(--ink)}
 
 /* ---- 分頁：滑動藥丸 ---- */
-.tabs{position:relative;display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;isolation:isolate;flex:none;max-width:100%;overflow:hidden}
+/* 藥丸裡放一份文字副本，藥丸往右移 x，副本往左移 -x，兩邊用同一個數字所以永遠對齊 */
+.tabs{position:relative;display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;flex:none;max-width:100%;overflow:hidden}
 .tabs .layer{display:flex;gap:2px}
-.tabs .layer.top{position:absolute;inset:3px;pointer-events:none;clip-path:inset(0 100% 0 0 round 999px);transition:clip-path .45s cubic-bezier(.4,0,.2,1)}
-.tabs button,.tabs .top span{appearance:none;border:0;background:transparent;font:inherit;font-size:13.5px;font-weight:500;color:var(--ink2);padding:6px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;line-height:1.3}
+.tabs button,.tabs .top span{appearance:none;border:0;background:transparent;font:inherit;font-size:13.5px;font-weight:500;color:var(--ink2);padding:6px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;line-height:1.3;margin:0}
 .tabs button:hover{color:var(--ink)}
-.tabs .top span{color:var(--pill-ink);position:relative}
-.tabs .pill{position:absolute;top:3px;bottom:3px;left:0;width:0;border-radius:999px;background:var(--pill);z-index:-1;transition:transform .45s cubic-bezier(.4,0,.2,1),width .45s cubic-bezier(.4,0,.2,1)}
-.tabs .n{font-size:10.5px;background:var(--tint);color:var(--accent);padding:0 6px;border-radius:999px;font-weight:600}
+.tabs .pill{position:absolute;top:3px;bottom:3px;left:3px;width:0;border-radius:999px;background:var(--pill);overflow:hidden;pointer-events:none;will-change:transform,width;transition:transform .45s cubic-bezier(.4,0,.2,1),width .45s cubic-bezier(.4,0,.2,1)}
+.tabs .pill .layer.top{position:absolute;top:0;left:0;height:100%;will-change:transform;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.tabs .top span{color:var(--pill-ink)}
+.tabs .n{font-size:10.5px;background:var(--tint);color:var(--accent);padding:0 6px;border-radius:999px;font-weight:600;line-height:16px}
 .tabs .top .n{background:color-mix(in srgb,var(--pill-ink) 20%,transparent);color:var(--pill-ink)}
-@media (prefers-reduced-motion: reduce){ .tabs .pill,.tabs .layer.top{transition:none} }
+@media (prefers-reduced-motion: reduce){ .tabs .pill,.tabs .pill .layer.top{transition:none} }
 
 .page{display:none;animation:fade .25s ease}
 .page.on{display:block}
@@ -177,6 +178,16 @@ td.num,th.num{text-align:right}
   .tabs .layer{width:100%}.tabs .layer button,.tabs .layer span{flex:1;justify-content:center}
   .meta{margin-left:auto}
 }
+/* ---- 記錄表單 ---- */
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px;margin-top:6px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink2)}
+.form input,.form select{width:100%;font:inherit;font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);min-width:0}
+.form input:focus,.form select:focus{outline:2px solid var(--accent3);border-color:var(--accent)}
+.form .full{grid-column:1 / -1}
+.form .hint{font-size:12.5px;color:var(--ink2)}
+.form .hint.ok{color:var(--good)} .form .hint.bad{color:var(--bad)}
+.list .st{font-size:11.5px;padding:0 7px;border-radius:99px;background:var(--tint);color:var(--accent);flex:none}
+.list .st.ok{background:#E6F2EC;color:#2E7D5B}.list .st.bad{background:#FBE9E5;color:#B5533C}
 footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
 </style>
 </head>
@@ -184,16 +195,16 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
 <div class="topbar"><div class="in">
   <a class="brand" href="#overview"><span class="mark">清醒</span><span><b>清醒行動派</b><small>後台｜先清醒，再行動</small></span></a>
   <nav class="tabs" id="tabs" aria-label="分頁">
-    <div class="pill"></div>
     <div class="layer base">
       <button data-page="overview">總覽</button>
       <button data-page="calendar">日曆 <span class="n" id="nCal"></span></button>
       <button data-page="stats">數據</button>
       <button data-page="income">收入</button>
+      <button data-page="record">記錄</button>
     </div>
-    <div class="layer top" aria-hidden="true">
-      <span>總覽</span><span>日曆 <span class="n" id="nCal2"></span></span><span>數據</span><span>收入</span>
-    </div>
+    <div class="pill" aria-hidden="true"><div class="layer top">
+      <span>總覽</span><span>日曆 <span class="n" id="nCal2"></span></span><span>數據</span><span>收入</span><span>記錄</span>
+    </div></div>
   </nav>
   <div class="meta" id="meta">載入中…</div>
   <button class="iconbtn" id="installBtn" hidden title="安裝成 App">⤓</button>
@@ -311,6 +322,58 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
   </div>
 </section>
 
+<!-- ===== 記錄 ===== -->
+<section class="page" id="page-record">
+  <div class="pagehead">
+    <h1>記錄<small>在這裡填，會自動寫進 Notion，約 1–2 分鐘後後台更新</small></h1>
+    <div class="row"><button class="btn ghost sm" id="ghSetupBtn" type="button">GitHub 權杖設定</button><button class="btn ghost sm" id="syncNow" type="button">立刻重新同步</button></div>
+  </div>
+  <div id="ghSetup" class="setup" hidden>
+    <strong>第一次使用要給後台一把 GitHub 權杖</strong>（只存在這台裝置的瀏覽器，後台會用它請 GitHub 機器人把資料寫進 Notion）：
+    <ol>
+      <li>GitHub 右上角頭像 → Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token。</li>
+      <li>Repository access 選 <b>Only select repositories</b> → <code>life-dashboard</code>；Permissions → Repository permissions → <b>Contents：Read and write</b>（只要這一項）；Expiration 選一年。</li>
+      <li>複製產生的 <code>github_pat_…</code> 貼到下面，按儲存。</li>
+    </ol>
+    <form id="ghForm" class="row" style="margin-top:10px"><input id="ghToken" type="password" placeholder="github_pat_…" autocomplete="off" style="flex:1;min-width:220px;font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)"><button class="btn" type="submit">儲存</button><button class="btn ghost" type="button" id="ghClear">清除</button></form>
+    <div id="ghMsg" class="lockmsg" style="margin-top:6px"></div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h2>今天的平台數據</h2><div class="sub">一天一個平台一筆；睡前填，填的是當下看到的累計粉絲數與今天的互動</div>
+      <form id="fGrowth" class="form">
+        <label>日期<input name="date" type="date" required></label>
+        <label>平台<select name="platform"><option>Instagram</option><option value="抖音">TikTok（抖音）</option><option>Threads</option></select></label>
+        <label>粉絲數（累計）<input name="followers" type="number" min="0" inputmode="numeric" placeholder="例 128"></label>
+        <label>觀看／觸及<input name="views" type="number" min="0" inputmode="numeric"></label>
+        <label>讚<input name="likes" type="number" min="0" inputmode="numeric"></label>
+        <label>留言<input name="comments" type="number" min="0" inputmode="numeric"></label>
+        <label>收藏<input name="saves" type="number" min="0" inputmode="numeric"></label>
+        <label>分享<input name="shares" type="number" min="0" inputmode="numeric"></label>
+        <label class="full">發文主題<input name="topic" type="text" placeholder="自動帶入當天排程"></label>
+        <label>格式<select name="format"><option>輪播</option><option>Reels</option><option>單圖</option><option>限動</option></select></label>
+        <label>備註<input name="note" type="text"></label>
+        <div class="full row"><button class="btn" type="submit">送出</button><span class="hint" id="gHint"></span></div>
+      </form>
+    </div>
+    <div class="card">
+      <h2>一筆收入</h2><div class="sub">有入帳就記一筆；金額填實際收到的</div>
+      <form id="fIncome" class="form">
+        <label>日期<input name="date" type="date" required></label>
+        <label>產品<select name="product" id="prodSel"></select></label>
+        <label>數量<input name="qty" type="number" min="1" value="1" inputmode="numeric"></label>
+        <label>單價 NT$<input name="unit" type="number" min="0" inputmode="numeric"></label>
+        <label>實收金額 NT$<input name="amount" type="number" min="0" inputmode="numeric" required></label>
+        <label>收款平台<select name="channel"><option>Portaly</option><option>Gumroad</option><option>轉帳</option><option>其他</option></select></label>
+        <label>來源<select name="source"><option>IG</option><option value="抖音">TikTok</option><option>Email</option><option>推薦</option><option>其他</option></select></label>
+        <label>備註<input name="note" type="text" placeholder="例：首發 30 名"></label>
+        <div class="full row"><button class="btn" type="submit">送出</button><span class="hint" id="iHint"></span></div>
+      </form>
+    </div>
+    <div class="card wide"><h2>剛送出的</h2><div class="sub">送出後要等 GitHub 機器人寫進 Notion 再同步回來，通常 1–2 分鐘；這裡先記著</div><ul class="list" id="pending"><li class="empty">目前沒有</li></ul></div>
+  </div>
+</section>
+
 <footer>數據每 6 小時從 Notion 同步，IG 排程每次發文設定更新後同步 · <a href="../" style="color:inherit">回生活面板</a></footer>
 </div>
 <div class="tip" id="tip"></div>
@@ -371,15 +434,17 @@ document.querySelectorAll(".seg").forEach(seg => {
 });
 
 // ---- 分頁＋滑動藥丸 ----
-const tabs = $("#tabs"), pill = tabs.querySelector(".pill"), topLayer = tabs.querySelector(".layer.top");
-const PAGES = ["overview","calendar","stats","income"];
+const tabs = $("#tabs"), pill = tabs.querySelector(".pill"), topLayer = pill.querySelector(".layer.top"), baseLayer = tabs.querySelector(".layer.base");
+const PAGES = ["overview","calendar","stats","income","record"];
 function movePill(animate = true){
   const btn = tabs.querySelector(`button[data-page="${state.page}"]`); if (!btn) return;
-  const base = btn.parentElement;
-  const x = btn.offsetLeft, w = btn.offsetWidth, total = base.offsetWidth;
+  const x = btn.offsetLeft - baseLayer.offsetLeft, w = btn.offsetWidth;   // 相對於底層，底層與藥丸都從 padding 3px 起算
+  topLayer.style.width = baseLayer.offsetWidth + "px";          // 副本跟底層一樣寬，字才會對齊
+  const btns = baseLayer.children, copies = topLayer.children;
+  for (let i = 0; i < btns.length && i < copies.length; i++){ copies[i].style.width = btns[i].offsetWidth + "px"; copies[i].style.justifyContent = "center"; }
   if (!animate){ pill.style.transition = "none"; topLayer.style.transition = "none"; }
   pill.style.transform = `translateX(${x}px)`; pill.style.width = w + "px";
-  topLayer.style.clipPath = `inset(0 ${Math.max(0, total - x - w)}px 0 ${x}px round 999px)`;
+  topLayer.style.transform = `translateX(${-x}px)`;
   if (!animate) requestAnimationFrame(() => { pill.style.transition = ""; topLayer.style.transition = ""; });
 }
 function go(page, push = true){
@@ -407,7 +472,7 @@ Promise.all([
 ]).then(([sched, tt]) => {
   state.schedule = sched.sort((a,b) => a.date < b.date ? -1 : 1);
   state.tiktok = tt;
-  renderOverview(); renderCalendar();
+  renderOverview(); renderCalendar(); fillTopic();
   const left = sched.filter(p => p.date >= tpeToday()).length;
   $("#nCal").textContent = $("#nCal2").textContent = left || "";
 });
@@ -495,6 +560,96 @@ function renderCalendar(){
   $("#cal").innerHTML = WD.map(w => `<div class="wd">${w}</div>`).join("") + cells.join("");
   $("#agenda").innerHTML = agenda.length ? `<ul class="list">${agenda.join("")}</ul>` : `<div class="empty">這個月沒有排程</div>`;
 }
+
+// ---- 記錄：表單 → GitHub repository_dispatch → Actions 寫進 Notion → 重新同步 ----
+const GH_REPO = "a0955072107-bit/life-dashboard", GH_KEY = "qx.gh", PEND_KEY = "qx.pending";
+const ghToken = () => { try { return localStorage.getItem(GH_KEY) || ""; } catch { return ""; } };
+const ghSetup = $("#ghSetup");
+$("#ghSetupBtn").onclick = () => { ghSetup.hidden = !ghSetup.hidden; };
+$("#ghForm").onsubmit = async e => {
+  e.preventDefault();
+  const t = $("#ghToken").value.trim(); if (!t) return;
+  $("#ghMsg").textContent = "檢查中…";
+  const r = await fetch(`https://api.github.com/repos/${GH_REPO}`, { headers: { Authorization: `Bearer ${t}`, Accept: "application/vnd.github+json" } }).catch(() => null);
+  if (!r || !r.ok){ $("#ghMsg").textContent = "權杖不對或沒有這個 repo 的權限"; return; }
+  try { localStorage.setItem(GH_KEY, t); } catch {}
+  $("#ghToken").value = ""; $("#ghMsg").textContent = "已儲存，可以開始記錄"; setTimeout(() => { ghSetup.hidden = true; $("#ghMsg").textContent = ""; }, 1200);
+};
+$("#ghClear").onclick = () => { try { localStorage.removeItem(GH_KEY); } catch {}; $("#ghMsg").textContent = "已清除"; };
+async function dispatch(payload){
+  const t = ghToken();
+  if (!t){ ghSetup.hidden = false; throw new Error("還沒設定 GitHub 權杖"); }
+  const r = await fetch(`https://api.github.com/repos/${GH_REPO}/dispatches`, {
+    method: "POST", headers: { Authorization: `Bearer ${t}`, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
+    body: JSON.stringify({ event_type: "qx-record", client_payload: payload }),
+  });
+  if (r.status === 401 || r.status === 403) throw new Error("權杖失效或權限不足（需要 Contents: Read and write）");
+  if (!r.ok) throw new Error("GitHub 回應 " + r.status);
+}
+function pendingList(){ try { return JSON.parse(localStorage.getItem(PEND_KEY) || "[]"); } catch { return []; } }
+function savePending(list){ try { localStorage.setItem(PEND_KEY, JSON.stringify(list.slice(-20))); } catch {} }
+function renderPending(){
+  const list = pendingList().slice().reverse();
+  $("#pending").innerHTML = list.length ? list.map(p => `<li><span class="d">${mmdd(p.date)}</span><span class="t">${esc(p.label)}</span><span class="st ${p.status}">${{ sent:"已送出，等同步", ok:"已同步", bad:"失敗" }[p.status] || p.status}</span></li>`).join("") : `<li class="empty">目前沒有</li>`;
+}
+function markSynced(){
+  // 同步回來後，看資料裡有沒有這筆（同日期同平台／同日期同金額）
+  const d = state.data; if (!d) return;
+  const list = pendingList(); let changed = false;
+  for (const p of list){
+    if (p.status !== "sent") continue;
+    const hit = p.kind === "growth" ? d.growth.some(r => r.date === p.date && r.platform === p.platform && (p.sentAt < Date.parse(d.generatedAt)))
+      : d.income.some(r => r.date === p.date && Math.abs(r.amount - p.amount) < 0.5 && (p.sentAt < Date.parse(d.generatedAt)));
+    if (hit){ p.status = "ok"; changed = true; }
+  }
+  if (changed){ savePending(list); renderPending(); }
+}
+const formData = f => Object.fromEntries([...new FormData(f)].map(([k,v]) => [k, v.trim()]));
+const today = () => tpeToday();
+$("#fGrowth").date.value = today(); $("#fIncome").date.value = today();
+$("#prodSel").innerHTML = PRODUCT_ORDER.map(p => `<option>${p}</option>`).join("");
+const PRICE_HINT = { "電子書《從迷惘到行動》":390, "Notion 清醒行動系統":490, "電子書+Notion系統組合":690, "進階版":1490, "陪跑服務":4800, "團體方案":4990 };
+$("#prodSel").onchange = () => { const f = $("#fIncome"); if (PRICE_HINT[f.product.value]) { f.unit.value = PRICE_HINT[f.product.value]; f.amount.value = PRICE_HINT[f.product.value] * (Number(f.qty.value) || 1); } };
+$("#fIncome").qty.oninput = $("#fIncome").unit.oninput = () => { const f = $("#fIncome"); if (f.unit.value) f.amount.value = Number(f.unit.value) * (Number(f.qty.value) || 1); };
+function fillTopic(){ const f = $("#fGrowth"); const p = state.schedule.find(x => x.date === f.date.value); if (p && !f.topic.dataset.manual){ f.topic.value = `Day ${p.day} ${p.title}`; f.format.value = { carousel:"輪播", reel:"Reels", quote:"單圖" }[p.kind] || "輪播"; } }
+$("#fGrowth").date.onchange = fillTopic; $("#fGrowth").topic.oninput = e => { e.target.dataset.manual = "1"; };
+async function submitForm(form, kind, hintEl, label){
+  const v = formData(form), hint = $(hintEl);
+  hint.className = "hint"; hint.textContent = "送出中…";
+  try {
+    await dispatch({ kind, ...v });
+    const list = pendingList();
+    list.push({ kind, date: v.date, platform: v.platform, amount: Number(v.amount), label: label(v), status: "sent", sentAt: Date.now() });
+    savePending(list); renderPending();
+    hint.className = "hint ok"; hint.textContent = "已送出，1–2 分鐘後會同步回來";
+    if (kind === "growth"){ ["followers","views","likes","comments","saves","shares","note"].forEach(k => form[k].value = ""); }
+    else { form.note.value = ""; }
+    pollSync();
+  } catch (err){ hint.className = "hint bad"; hint.textContent = err.message; }
+}
+$("#fGrowth").onsubmit = e => { e.preventDefault(); submitForm(e.target, "growth", "#gHint", v => `${v.platform === "抖音" ? "TikTok" : v.platform} 粉絲 ${v.followers || "—"}、觀看 ${v.views || "—"}`); };
+$("#fIncome").onsubmit = e => { e.preventDefault(); submitForm(e.target, "income", "#iHint", v => `${v.product} ×${v.qty || 1}　NT$ ${v.amount}`); };
+let pollTimer;
+function pollSync(){
+  clearInterval(pollTimer); let n = 0;
+  pollTimer = setInterval(async () => {
+    if (++n > 12) return clearInterval(pollTimer);        // 最多等 6 分鐘
+    try {
+      const env = await fetch("data.enc.json?v=" + Date.now()).then(r => r.json());
+      const pw = localStorage.getItem(KEY_STORE); if (!pw) return;
+      const fresh = await decryptData(env, pw);
+      if (fresh.generatedAt !== state.data?.generatedAt){ state.data = fresh; render(); markSynced(); }
+    } catch {}
+  }, 30000);
+}
+$("#syncNow").onclick = async () => {
+  const t = ghToken(); if (!t){ ghSetup.hidden = false; return; }
+  const r = await fetch(`https://api.github.com/repos/${GH_REPO}/actions/workflows/update-qingxing.yml/dispatches`, { method: "POST", headers: { Authorization: `Bearer ${t}`, Accept: "application/vnd.github+json", "Content-Type": "application/json" }, body: JSON.stringify({ ref: "main" }) });
+  $("#syncNow").textContent = r.ok ? "已請機器人同步（約 1 分鐘）" : "同步失敗 " + r.status;
+  if (r.ok) pollSync();
+  setTimeout(() => $("#syncNow").textContent = "立刻重新同步", 4000);
+};
+renderPending();
 
 // ---- 安裝成 Chrome App ----
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {})
@@ -589,6 +744,7 @@ function render(){
     $("#tblIncome").innerHTML = recent.length ? `<table><thead><tr><th>日期</th><th>項目</th><th>產品</th><th class="num">數量</th><th class="num">金額</th><th>平台</th><th>來源</th><th>備註</th></tr></thead><tbody>${
       recent.map(r => `<tr><td>${r.date}</td><td>${esc(r.item)}</td><td><i style="display:inline-block;width:9px;height:9px;border-radius:3px;background:${PRODUCT_COLORS[r.product]||"var(--c6)"};margin-right:6px;vertical-align:-1px"></i>${esc(r.product)}</td><td class="num">${r.qty}</td><td class="num"><b>${money(r.amount)}</b></td><td>${esc(r.channel)}</td><td>${esc(r.source)}</td><td style="white-space:normal">${esc(r.note)}</td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有收入記錄，有入帳時在 Notion「收入記錄」新增一筆。</div>`;
   }
+  markSynced();
 }
 function kpi(l, v, d, cls=""){ return `<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="d ${cls}">${d}</div></div>`; }
 function niceMax(v){ if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))); const n = v / p; const m = n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10; return m * p; }
