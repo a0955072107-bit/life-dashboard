@@ -576,12 +576,12 @@ $("#ghForm").onsubmit = async e => {
   $("#ghToken").value = ""; $("#ghMsg").textContent = "已儲存，可以開始記錄"; setTimeout(() => { ghSetup.hidden = true; $("#ghMsg").textContent = ""; }, 1200);
 };
 $("#ghClear").onclick = () => { try { localStorage.removeItem(GH_KEY); } catch {}; $("#ghMsg").textContent = "已清除"; };
-async function dispatch(payload){
+async function dispatch(payload, eventType = "qx-record"){
   const t = ghToken();
   if (!t){ ghSetup.hidden = false; throw new Error("還沒設定 GitHub 權杖"); }
   const r = await fetch(`https://api.github.com/repos/${GH_REPO}/dispatches`, {
     method: "POST", headers: { Authorization: `Bearer ${t}`, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
-    body: JSON.stringify({ event_type: "qx-record", client_payload: payload }),
+    body: JSON.stringify({ event_type: eventType, client_payload: payload }),
   });
   if (r.status === 401 || r.status === 403) throw new Error("權杖失效或權限不足（需要 Contents: Read and write）");
   if (!r.ok) throw new Error("GitHub 回應 " + r.status);
@@ -643,11 +643,10 @@ function pollSync(){
   }, 30000);
 }
 $("#syncNow").onclick = async () => {
-  const t = ghToken(); if (!t){ ghSetup.hidden = false; return; }
-  const r = await fetch(`https://api.github.com/repos/${GH_REPO}/actions/workflows/update-qingxing.yml/dispatches`, { method: "POST", headers: { Authorization: `Bearer ${t}`, Accept: "application/vnd.github+json", "Content-Type": "application/json" }, body: JSON.stringify({ ref: "main" }) });
-  $("#syncNow").textContent = r.ok ? "已請機器人同步（約 1 分鐘）" : "同步失敗 " + r.status;
-  if (r.ok) pollSync();
-  setTimeout(() => $("#syncNow").textContent = "立刻重新同步", 4000);
+  if (!ghToken()){ ghSetup.hidden = false; return; }
+  try { await dispatch({ kind: "sync" }, "qx-sync"); $("#syncNow").textContent = "已請機器人同步（約 1 分鐘）"; pollSync(); }
+  catch (err){ $("#syncNow").textContent = "同步失敗：" + err.message; }
+  setTimeout(() => $("#syncNow").textContent = "立刻重新同步", 5000);
 };
 renderPending();
 

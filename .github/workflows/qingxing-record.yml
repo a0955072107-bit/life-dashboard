@@ -3,7 +3,7 @@ name: 清醒行動派 後台記錄寫入 Notion
 # 後台「記錄」分頁按送出 → 瀏覽器呼叫 GitHub API repository_dispatch（event_type=qx-record）→ 這裡寫進 Notion 並重新同步。
 on:
   repository_dispatch:
-    types: [qx-record]
+    types: [qx-record, qx-sync]   # qx-sync 只重新同步，不寫 Notion
 
 permissions:
   contents: write
@@ -23,6 +23,7 @@ jobs:
       - run: pip install requests cryptography
 
       - name: 寫進 Notion
+        if: github.event.action == 'qx-record'
         run: python scripts/qingxing_record.py
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
