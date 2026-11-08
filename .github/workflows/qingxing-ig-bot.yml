@@ -37,5 +37,6 @@ jobs:
         run: node qingxing/instagram/bot.mjs
         env:
           IG_ACCESS_TOKEN: ${{ secrets.QX_IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ vars.QX_IG_USER_ID || '17841479844842573' }}  # @qingxing.action 的 IG 帳號 ID
           DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
           BOT_TASKS: ${{ inputs.tasks || 'post,comments,dms' }}

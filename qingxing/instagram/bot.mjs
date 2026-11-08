@@ -19,7 +19,13 @@ const config = JSON.parse(readFileSync(join(here, 'replies.json'), 'utf8'))
 const TOKEN = process.env.IG_ACCESS_TOKEN
 const DRY = process.env.DRY_RUN === 'true'
 const TASKS = (process.env.BOT_TASKS || 'post,comments,dms').split(',').map((s) => s.trim())
-const API = process.env.IG_API_BASE || `https://graph.instagram.com/${process.env.IG_API_VERSION || 'v26.0'}`
+// 兩種權杖：舊版 IGAA…（Instagram 登入）走 graph.instagram.com；新版統一登入的系統用戶權杖 EAA…（永不到期）走 graph.facebook.com，
+// 而且要知道 IG 帳號 ID（IG_USER_ID，Meta 開發者頁「產生存取權杖」區帳號名下那串數字）。
+const IS_FB_TOKEN = (process.env.IG_ACCESS_TOKEN || '').startsWith('EAA')
+const API = process.env.IG_API_BASE || (IS_FB_TOKEN
+  ? `https://graph.facebook.com/${process.env.IG_API_VERSION || 'v21.0'}`
+  : `https://graph.instagram.com/${process.env.IG_API_VERSION || 'v26.0'}`)
+const IG_USER_ID = process.env.IG_USER_ID || ''
 const SITE = (process.env.SITE_URL || config.site).replace(/\/$/, '')
 const MAX_LATE_HOURS = Number(process.env.MAX_LATE_HOURS || 48)
 const MAX_ACTIONS = Number(process.env.MAX_ACTIONS || 20)
@@ -194,12 +200,13 @@ async function runComments(me) {
 }
 
 // ---------- 3. 回私訊 ----------
-async function listConversations() {
+async function listConversations(me) {
   const params = { fields: 'id,updated_time', limit: 20 }
+  const base = IS_FB_TOKEN ? `/${me.userId}/conversations` : '/me/conversations'
   try {
-    return (await ig('GET', '/me/conversations', { ...params, platform: 'instagram' })).data || []
+    return (await ig('GET', base, { ...params, platform: 'instagram' })).data || []
   } catch {
-    return (await ig('GET', '/me/conversations', params)).data || []
+    return (await ig('GET', base, params)).data || []
   }
 }
 
@@ -216,7 +223,7 @@ async function loadMessages(convId) {
 }
 
 async function runDms(me) {
-  const convs = (await listConversations()).filter((c) => (now - new Date(c.updated_time)) / 3600_000 <= 24)
+  const convs = (await listConversations(me)).filter((c) => (now - new Date(c.updated_time)) / 3600_000 <= 24)
   let replied = 0
   for (const conv of convs) {
     if (actions >= MAX_ACTIONS) return
@@ -245,8 +252,15 @@ async function main() {
     log('::notice::還沒設定 IG_ACCESS_TOKEN，機器人先不動作。設定方法見 qingxing/instagram/README.md')
     return
   }
-  const info = await ig('GET', '/me', { fields: 'id,user_id,username' })
-  const me = { id: info.id, userId: info.user_id || info.id, username: info.username }
+  let me
+  if (IS_FB_TOKEN) {
+    if (!IG_USER_ID) { console.log('::error::系統用戶權杖（EAA…）要搭配 IG_USER_ID（Settings → Variables 設 QX_IG_USER_ID，值是 Meta 開發者頁帳號名下那串數字）'); process.exit(1) }
+    const info = await ig('GET', `/${IG_USER_ID}`, { fields: 'id,username' })
+    me = { id: info.id, userId: info.id, username: info.username }
+  } else {
+    const info = await ig('GET', '/me', { fields: 'id,user_id,username' })
+    me = { id: info.id, userId: info.user_id || info.id, username: info.username }
+  }
   log(`IG 帳號：@${me.username}${DRY ? '（試跑模式，不會真的發文或回覆）' : ''}`)
   const steps = { post: runPosts, comments: runComments, dms: runDms }
   for (const t of TASKS) {

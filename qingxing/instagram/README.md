@@ -33,7 +33,9 @@
 `life-dashboard` repo → **Settings → Secrets and variables → Actions → New repository secret**
 Name：`QX_IG_ACCESS_TOKEN`，Secret：貼上第 2 步的權杖
 
-### 第 4 步：讓權杖自動續期（不做的話 60 天後會停）
+> 2026-11 實際接法：Meta 新版頁面叫「API setup with Unified login」，要先建「商家資產管理組合」、建一個設定（勾 instagram_business_* 權限、重新導向網址隨便填一個 https 網址）、把帳號加成 Instagram 測試人員並在 https://www.instagram.com/accounts/manage_access/ 接受，再按「產生權杖」。拿到的是 `EAA…` 開頭的系統用戶權杖，**永不到期**，機器人會自動改走 graph.facebook.com，並用 workflow 裡的 IG 帳號 ID（17841479844842573）。拿到這種權杖的話第 4 步可以跳過。
+
+### 第 4 步：讓權杖自動續期（舊版 IGAA… 權杖才需要）
 1. 打開 <https://github.com/settings/personal-access-tokens/new>
 2. Token name：`qingxing-ig`；Expiration：最長；Repository access：**Only select repositories** → 選 `life-dashboard`
 3. Permissions → Repository permissions → **Secrets** 改成 **Read and write** → **Generate token** → 複製

@@ -23,6 +23,7 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "$IG_ACCESS_TOKEN" ]; then echo "::error::還沒設定 QX_IG_ACCESS_TOKEN"; exit 1; fi
+          case "$IG_ACCESS_TOKEN" in EAA*) echo "系統用戶權杖（EAA…）永不到期，不用續期"; exit 0;; esac
           if [ -z "$GH_TOKEN" ]; then echo "::error::還沒設定 GH_PAT，無法把新權杖存回 Secrets（見 qingxing/instagram/README.md 第 4 步）"; exit 1; fi
           resp=$(curl -sS -G https://graph.instagram.com/refresh_access_token \
             --data-urlencode grant_type=ig_refresh_token \
