@@ -17,6 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]  # qingxing/
 BG = "0xF6F3EE"
 FADE = 0.4
+MIN_TOTAL = 15.0  # 每支至少 15 秒
 WEEKDAY = "一二三四五六日"
 
 
@@ -61,6 +62,10 @@ def write_reel_post(p: dict, post: dict, video_url: str) -> Path:
 def make_video(images: list[Path], out: Path) -> float:
     n = len(images)
     durs = [6.0] if n == 1 else [2.5] + [3.0] * (n - 2) + [3.5]
+    # 太短的影片（單圖金句、字卡少）TikTok 不太推：整體拉到至少 MIN_TOTAL 秒，每張等比例放慢
+    if sum(durs) < MIN_TOTAL:
+        k = MIN_TOTAL / sum(durs)
+        durs = [d * k for d in durs]
     args = ["ffmpeg", "-y", "-loglevel", "error"]
     for img, d in zip(images, durs):
         args += ["-loop", "1", "-t", f"{d + FADE:.2f}", "-i", str(img)]
