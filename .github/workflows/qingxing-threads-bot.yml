@@ -3,7 +3,7 @@ name: 清醒行動派 Threads 機器人
 
 on:
   schedule:
-    - cron: '17,47 * * * *' # 每小時第 17、47 分（UTC）；08:30 的貼文約 08:47 發出
+    - cron: '7,27,47 * * * *' # 每小時三次（UTC）；GitHub 常跳過或延後，多排幾個時段
   workflow_dispatch:
     inputs:
       dry_run:

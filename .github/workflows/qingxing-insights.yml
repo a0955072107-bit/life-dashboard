@@ -1,9 +1,9 @@
 name: 清醒行動派 每晚抓 IG／Threads 數據
 
-# 每晚 23:40（台北）用 IG 與 Threads 權杖讀當天數據，寫進 Notion「成長數據」，再重新同步後台。
+# 每晚 23:20（台北）用 IG 與 Threads 權杖讀當天數據，寫進 Notion「成長數據」，再重新同步後台。
 on:
   schedule:
-    - cron: '40 15 * * *'   # UTC 15:40 ＝ 台北 23:40
+    - cron: '20 15 * * *'   # UTC 15:20 ＝ 台北 23:20（GitHub 常延遲，程式裡凌晨 3 點前都算前一天）
   workflow_dispatch:
     inputs:
       date:

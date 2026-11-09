@@ -148,7 +148,10 @@ def upsert(date: str, s: dict):
 
 
 def main() -> int:
-    date = os.environ.get("TARGET_DATE") or datetime.now(TPE).strftime("%Y-%m-%d")
+    now = datetime.now(TPE)
+    # 排程 23:20 常被 GitHub 延後到隔天 0 點多：凌晨 3 點前跑的都算前一天
+    default_day = (now - timedelta(days=1)) if now.hour < 3 else now
+    date = os.environ.get("TARGET_DATE") or default_day.strftime("%Y-%m-%d")
     if not DRY and not os.environ.get("NOTION_TOKEN"):
         print("::error::沒有 NOTION_TOKEN", file=sys.stderr); return 1
     failures = 0

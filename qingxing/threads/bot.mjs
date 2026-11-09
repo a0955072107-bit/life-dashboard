@@ -65,8 +65,9 @@ async function main() {
   if (!due.length) return
   const recent = (await th('GET', '/me/threads', { fields: 'id,text,timestamp', limit: 50 })).data || []
   const seen = new Set(recent.map((t) => norm(t.text)))
+  log(`最近已在 Threads 上：${recent.slice(0, 6).map((t) => `${(t.timestamp || '').slice(5, 16)}「${norm(t.text).slice(0, 14)}…」`).join('、')}`)
   for (const p of due) {
-    if (seen.has(norm(p.text))) continue
+    if (seen.has(norm(p.text))) { log(`${p.id}（${p.slot}）已在 Threads 上，跳過`); continue }
     if (DRY) { log(`[試跑] 會發 ${p.id}（${p.slot}）：${p.text.slice(0, 40).replace(/\n/g, ' ')}…`); return }
     try {
       const { id } = await th('POST', `/${me.id}/threads`, { media_type: 'TEXT', text: p.text })
