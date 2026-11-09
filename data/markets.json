@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08T22:41:22+00:00",
+  "updated": "2026-11-09T02:04:02+00:00",
   "quotes": [
     {
       "symbol": "^GSPC",
@@ -153,17 +153,14 @@
       "symbol": "^TWII",
       "name": "台灣加權",
       "group": "指數",
-      "price": 39701.64,
-      "prevClose": 41574.7188,
-      "change": -1873.0788,
-      "changePct": -4.505,
-      "monthPct": -20.314,
+      "price": 41667.66,
+      "prevClose": 39701.6406,
+      "change": 1966.0194,
+      "changePct": 4.952,
+      "monthPct": -15.485,
       "currency": "TWD",
-      "marketTime": 1793943195,
+      "marketTime": 1794188635,
       "history": [
-        49822.5508,
-        49806.3711,
-        49313.4414,
         49301.9609,
         48341.3086,
         48625.8281,
@@ -181,7 +178,8 @@
         43307.5391,
         42948.9102,
         41574.7188,
-        39701.6406
+        39701.6406,
+        41667.6602
       ]
     },
     {
@@ -226,13 +224,13 @@
       "symbol": "GC=F",
       "name": "黃金期貨",
       "group": "黃金",
-      "price": 4074.9,
-      "prevClose": 4113.5,
-      "change": -38.6,
-      "changePct": -0.938,
-      "monthPct": -1.975,
+      "price": 4133.7,
+      "prevClose": 4074.8999,
+      "change": 58.8001,
+      "changePct": 1.443,
+      "monthPct": -0.561,
       "currency": "USD",
-      "marketTime": 1794002399,
+      "marketTime": 1794189238,
       "history": [
         4157.0,
         4216.2998,
@@ -255,20 +253,21 @@
         3940.3999,
         4073.0,
         4113.5,
-        4074.8999
+        4074.8999,
+        4133.7002
       ]
     },
     {
       "symbol": "SI=F",
       "name": "白銀期貨",
       "group": "黃金",
-      "price": 51.942,
-      "prevClose": 52.233,
-      "change": -0.291,
-      "changePct": -0.557,
-      "monthPct": -12.058,
+      "price": 53.26,
+      "prevClose": 51.803,
+      "change": 1.457,
+      "changePct": 2.813,
+      "monthPct": -9.827,
       "currency": "USD",
-      "marketTime": 1794002399,
+      "marketTime": 1794189235,
       "history": [
         59.064,
         60.67,
@@ -291,7 +290,8 @@
         49.587,
         52.12,
         52.233,
-        51.942
+        51.803,
+        53.26
       ]
     },
     {
@@ -631,16 +631,14 @@
       "symbol": "TWD=X",
       "name": "美元/台幣",
       "group": "匯率",
-      "price": 32.77,
+      "price": 32.791,
       "prevClose": 33.1093,
-      "change": -0.3393,
-      "changePct": -1.025,
-      "monthPct": 3.125,
+      "change": -0.3183,
+      "changePct": -0.961,
+      "monthPct": 2.711,
       "currency": "TWD",
-      "marketTime": 1794177236,
+      "marketTime": 1794189841,
       "history": [
-        31.7769,
-        31.8483,
         31.9254,
         31.9161,
         31.9278,
@@ -662,23 +660,21 @@
         32.733,
         32.8212,
         33.1093,
-        32.77
+        32.791
       ]
     },
     {
       "symbol": "JPYTWD=X",
       "name": "日圓/台幣",
       "group": "匯率",
-      "price": 0.2047,
+      "price": 0.2052,
       "prevClose": 0.2103,
-      "change": -0.0056,
-      "changePct": -2.657,
-      "monthPct": 1.957,
+      "change": -0.0051,
+      "changePct": -2.419,
+      "monthPct": 1.597,
       "currency": "TWD",
-      "marketTime": 1794177389,
+      "marketTime": 1794189693,
       "history": [
-        0.2008,
-        0.2015,
         0.202,
         0.2017,
         0.2014,
@@ -700,23 +696,21 @@
         0.2065,
         0.2073,
         0.2103,
-        0.2047
+        0.2052
       ]
     },
     {
       "symbol": "KRWTWD=X",
       "name": "韓元/台幣",
       "group": "匯率",
-      "price": 0.0241,
+      "price": 0.0242,
       "prevClose": 0.0244,
-      "change": -0.0003,
-      "changePct": -1.189,
-      "monthPct": 1.589,
+      "change": -0.0002,
+      "changePct": -0.779,
+      "monthPct": 1.878,
       "currency": "TWD",
-      "marketTime": 1794177389,
+      "marketTime": 1794189693,
       "history": [
-        0.0237,
-        0.0238,
         0.0238,
         0.0238,
         0.0239,
@@ -738,7 +732,7 @@
         0.0244,
         0.0245,
         0.0244,
-        0.0241
+        0.0242
       ]
     }
   ],
