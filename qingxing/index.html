@@ -290,6 +290,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
         <button aria-pressed="true" data-v="all">全部</button>
         <button aria-pressed="false" data-v="Instagram">Instagram</button>
         <button aria-pressed="false" data-v="抖音">TikTok</button>
+        <button aria-pressed="false" data-v="Threads">Threads</button>
       </div>
       <div class="seg" id="range" role="group" aria-label="期間">
         <button aria-pressed="false" data-v="7">7 天</button>
@@ -717,7 +718,15 @@ function render(){
   const thisM = (d.monthly.find(m => m.month === ym) || {revenue:0, orders:0});
   const prevM = (d.monthly.find(m => m.month === prevYm) || {revenue:0, orders:0});
   const total = d.income.reduce((s,x) => s + x.amount, 0);
-  const kFollow = kpi("目前粉絲數", fmt(followersNow), followersDelta ? (followersDelta>0?"+":"") + fmt(followersDelta) + " 期間內" : "期間內無變化", followersDelta>0?"up":followersDelta<0?"down":"");
+  let kFollow;
+  if (state.platform === "all"){
+    const byP = {};
+    for (const r of growth) if (!byP[r.platform] || r.date > byP[r.platform].date) byP[r.platform] = r;
+    const parts = ["Instagram","Threads","抖音"].filter(p => byP[p]).map(p => `${{Instagram:"IG",Threads:"Threads","抖音":"TikTok"}[p]} ${fmt(byP[p].followers)}`);
+    kFollow = `<div class="kpi"><div class="l">目前粉絲數（各平台）</div><div class="v" style="font-size:19px;line-height:1.5">${parts.join("<br>") || "0"}</div><div class="d">${parts.length ? "最新一筆" : "尚無資料"}</div></div>`;
+  } else {
+    kFollow = kpi("目前粉絲數", fmt(followersNow), followersDelta ? (followersDelta>0?"+":"") + fmt(followersDelta) + " 期間內" : "期間內無變化", followersDelta>0?"up":followersDelta<0?"down":"");
+  }
   const kViews = kpi("期間觀看數", fmt(views), days.length ? `${days.length} 天 · 日均 ${fmt(views/days.length)}` : "尚無資料");
   const kHeat = kpi("期間熱度", fmt(heat), days.length ? `日均 ${fmt(heat/days.length)}` : "尚無資料");
   const kThis = kpi(`本月收入（${ym.slice(5)} 月）`, money(thisM.revenue), `${thisM.orders} 筆`);
@@ -728,7 +737,7 @@ function render(){
   $("#kpisStats").innerHTML = kFollow + kViews + kHeat;
   $("#kpisIncome").innerHTML = kThis + kPrev + kTotal + kpi("平均客單價", money(avg), d.income.length ? `${d.income.length} 筆平均` : "尚無資料");
   if (state.page === "stats"){
-    lineChart($("#chFollowers"), days, "followers", "var(--c1)", "人");
+    if (state.platform === "all") multiLine($("#chFollowers"), growth); else lineChart($("#chFollowers"), days, "followers", "var(--c1)", "人");
     barChart($("#chViews"), days.map(x => ({k:x.date, v:x.views})), "var(--c1)", "次");
     barChart($("#chHeat"), days.map(x => ({k:x.date, v:x.heat})), "var(--c2)", "分");
     const top = growth.filter(r => r.topic).sort((a,b) => b.heat - a.heat).slice(0,10);
@@ -770,6 +779,19 @@ function lineChart(el, rows, key, color, unit){ setW(el);
     ${pts.map((p,i) => `<circle cx="${p[0]}" cy="${p[1]}" r="${n>40?2.5:4}" fill="${color}" stroke="var(--card)" stroke-width="2"/><rect x="${p[0]-W/n/2}" y="${PT}" width="${W/n}" height="${H-PT-PB}" fill="transparent" data-i="${i}"/>`).join("")}
     <line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${xLabels(rows.map(r => r.date))}</svg>`;
   hover(el, i => `${rows[i].date}<br><b>${fmt(rows[i][key])}</b> ${unit}`);
+}
+const P_COLOR = { Instagram:"var(--c1)", Threads:"var(--c4)", "抖音":"var(--c2)" }, P_NAME = { Instagram:"IG", Threads:"Threads", "抖音":"TikTok" };
+function multiLine(el, rows){ setW(el);
+  const plats = ["Instagram","Threads","抖音"].filter(p => rows.some(r => r.platform === p));
+  if (!plats.length) return el.innerHTML = `<div class="empty">尚無資料</div>`;
+  const dates = [...new Set(rows.map(r => r.date))].sort();
+  const series = plats.map(p => { const m = {}; for (const r of rows) if (r.platform === p) m[r.date] = r.followers; return { p, pts: dates.map((d,i) => m[d] == null ? null : [xPos(i, dates.length), m[d]]) }; });
+  const max = niceMax(Math.max(1, ...rows.map(r => r.followers)));
+  const y = v => PT + (H-PT-PB) * (1 - v/max);
+  const paths = series.map(s => { let d = ""; for (const pt of s.pts){ if (!pt) continue; d += (d ? "L" : "M") + pt[0].toFixed(1) + " " + y(pt[1]).toFixed(1) + " "; } return `<path d="${d}" fill="none" stroke="${P_COLOR[s.p]}" stroke-width="2" stroke-linejoin="round"/>` + s.pts.filter(Boolean).map(pt => `<circle cx="${pt[0]}" cy="${y(pt[1])}" r="3.5" fill="${P_COLOR[s.p]}" stroke="var(--card)" stroke-width="2"/>`).join(""); }).join("");
+  const hits = dates.map((d,i) => `<rect x="${xPos(i,dates.length)-(W-PL-PR)/dates.length/2}" y="${PT}" width="${(W-PL-PR)/dates.length}" height="${H-PT-PB}" fill="transparent" data-i="${i}"/>`).join("");
+  el.innerHTML = `<div class="legend">${plats.map(p => `<span><i style="background:${P_COLOR[p]}"></i>${P_NAME[p]}</span>`).join("")}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="各平台粉絲數">${frame(max, short)}${paths}${hits}<line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${xLabels(dates)}</svg>`;
+  hover(el, i => `${dates[i]}<br>` + series.map(s => s.pts[i] ? `${P_NAME[s.p]} <b>${fmt(s.pts[i][1])}</b>` : "").filter(Boolean).join("<br>"));
 }
 function barChart(el, items, color, unit, isMoney=false){ setW(el);
   if (!items.length) return el.innerHTML = `<div class="empty">尚無資料</div>`;
