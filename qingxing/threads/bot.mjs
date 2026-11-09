@@ -62,10 +62,10 @@ async function main() {
   const due = duePosts(posts, now, MAX_LATE_HOURS)
   const upcoming = posts.filter((p) => p.status === 'ready' && new Date(p.publish_at) > now).length
   log(`Threads：共 ${posts.length} 則，排程中 ${upcoming} 則，現在該發 ${due.length} 則`)
-  if (!due.length) return
   const recent = (await th('GET', '/me/threads', { fields: 'id,text,timestamp', limit: 50 })).data || []
+  log(`最近已在 Threads 上：${recent.slice(0, 6).map((t) => `${(t.timestamp || '').slice(5, 16)}「${norm(t.text).slice(0, 14)}…」`).join('、') || '（還沒有貼文）'}`)
+  if (!due.length) return
   const seen = new Set(recent.map((t) => norm(t.text)))
-  log(`最近已在 Threads 上：${recent.slice(0, 6).map((t) => `${(t.timestamp || '').slice(5, 16)}「${norm(t.text).slice(0, 14)}…」`).join('、')}`)
   for (const p of due) {
     if (seen.has(norm(p.text))) { log(`${p.id}（${p.slot}）已在 Threads 上，跳過`); continue }
     if (DRY) { log(`[試跑] 會發 ${p.id}（${p.slot}）：${p.text.slice(0, 40).replace(/\n/g, ' ')}…`); return }
