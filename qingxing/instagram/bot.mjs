@@ -145,9 +145,9 @@ async function runPosts(me) {
   const upcoming = valid.filter((p) => p.status === 'ready' && p.publishAt > now)
   log(`貼文：共 ${posts.length} 篇，排程中 ${upcoming.length} 篇，現在該發 ${due.length} 篇${bad ? `，${bad} 篇有問題` : ''}`)
   if (due.length === 0) return
-  const recent = (await ig('GET', `/${me.userId}/media`, { fields: 'id,caption,timestamp', limit: 25 })).data || []
+  const recent = (await ig('GET', `/${me.userId}/media`, { fields: 'id,caption,timestamp,media_type,media_product_type', limit: 25 })).data || []
   for (const post of due) {
-    if (alreadyPosted(post, recent)) continue
+    if (alreadyPosted(post, recent)) { log(`${post.file} 已在 IG 上（文案相同），跳過`); continue }
     try {
       if (await publish(me, post)) return // 一次執行只發一篇，避免洗版
     } catch (e) {

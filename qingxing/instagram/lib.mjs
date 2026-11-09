@@ -93,9 +93,15 @@ export function normalizeCaption(s = '') {
   return s.replace(/\s+/g, ' ').trim().slice(0, 300).toLowerCase()
 }
 
+// 同一天的圖卡與 Reel 文案可能很像，所以只跟「同類型」的已發貼文比（影片只跟影片比，圖卡只跟圖卡比）
 export function alreadyPosted(post, recentMedia) {
   const key = normalizeCaption(post.caption)
-  return recentMedia.some((m) => normalizeCaption(m.caption) === key)
+  const isVideo = Boolean(post.video)
+  return recentMedia.some((m) => {
+    const mVideo = m.media_type === 'VIDEO' || m.media_product_type === 'REELS'
+    if (m.media_type && mVideo !== isVideo) return false
+    return normalizeCaption(m.caption) === key
+  })
 }
 
 // 該發的貼文：狀態 ready、時間已到、但沒有晚太久（避免一次補發一堆舊貼文）。

@@ -47,7 +47,9 @@ def reel_caption(ig_caption: str) -> str:
     """IG Reel 文案：去掉 hashtag 後的正文（含結尾問句）＋原本的 hashtag。"""
     lines = [l for l in ig_caption.splitlines() if not l.strip().startswith("#")]
     tags = re.findall(r"#[\w一-鿿]+", ig_caption)
-    return "\n".join(lines).strip() + "\n\n" + " ".join(tags)
+    body = "\n".join(lines).strip()
+    # 開頭加一句影片版引言，跟同日圖卡區隔（機器人用文案判斷有沒有發過）
+    return "今天的重點，30 秒看完 👇\n\n" + body + "\n\n圖卡版在上一篇。\n\n" + " ".join(tags)
 
 
 def write_reel_post(p: dict, post: dict, video_url: str) -> Path:
