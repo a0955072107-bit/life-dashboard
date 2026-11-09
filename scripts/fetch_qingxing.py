@@ -49,6 +49,7 @@ def save(obj: dict) -> None:
 
 GROWTH_DB = os.environ.get("NOTION_GROWTH_DB", "c6c1c75e84454b7f9e4fe7fa73fcdd5e")
 INCOME_DB = os.environ.get("NOTION_INCOME_DB", "68fe898d466e4538ac2686aa8b629dd9")
+POSTS_DB = os.environ.get("NOTION_POSTS_DB", "c14dd2984bc14ec488fc79c5645539b8")
 TOKEN = os.environ.get("NOTION_TOKEN", "")
 TPE = timezone(timedelta(hours=8))
 
@@ -115,6 +116,7 @@ def main() -> int:
         "growth": prev.get("growth", []),
         "income": prev.get("income", []),
         "monthly": prev.get("monthly", []),
+        "posts": prev.get("posts", []),
         "status": "ok",
     }
     if not TOKEN:
@@ -173,6 +175,26 @@ def main() -> int:
             {**v, "byProduct": dict(v["byProduct"])} for _, v in sorted(monthly.items())
         ]
         out["growth"], out["income"] = growth, income
+        # 每篇貼文（貼文成效）：讀不到不影響其他資料（例如資料庫還沒連接給 integration）
+        try:
+            posts = []
+            for pg in query_all(POSTS_DB):
+                p = pg["properties"]
+                d = prop(p, "日期")
+                if not d:
+                    continue
+                likes, comments, saves, shares = (n(prop(p, k)) for k in ("按讚", "留言", "收藏", "分享"))
+                posts.append({
+                    "date": d, "platform": prop(p, "平台") or "", "type": prop(p, "類型") or "",
+                    "title": prop(p, "貼文") or "", "day": prop(p, "Day"),
+                    "views": n(prop(p, "觀看數")), "likes": likes, "comments": comments, "saves": saves, "shares": shares,
+                    "heat": likes + comments * 3 + saves * 5 + shares * 5,
+                    "link": (p.get("連結") or {}).get("url"), "updated": prop(p, "更新時間") or "",
+                })
+            posts.sort(key=lambda r: (r["date"], r["platform"], r["type"]), reverse=True)
+            out["posts"] = posts
+        except Exception as e:  # noqa: BLE001
+            print(f"::warning::貼文成效讀不到（{e}），保留上次的資料。請在 Notion 把「貼文成效」資料庫連接給 integration。", file=sys.stderr)
     except requests.HTTPError as e:
         out["status"] = f"notion_error {e.response.status_code}"
         print("Notion 回應錯誤：", e.response.status_code, e.response.text[:300], file=sys.stderr)

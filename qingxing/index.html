@@ -305,7 +305,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
     <div class="card"><h2>粉絲數</h2><div class="sub">每日累計追蹤數</div><div id="chFollowers"></div></div>
     <div class="card"><h2>觀看數</h2><div class="sub">每日內容觀看／觸及</div><div id="chViews"></div></div>
     <div class="card wide"><h2>熱度</h2><div class="sub">讚 ＋ 留言×3 ＋ 收藏×5 ＋ 分享×5</div><div id="chHeat"></div></div>
-    <div class="card wide"><h2>熱度最高的貼文</h2><div class="sub">期間內前 10 篇</div><div class="tbl" id="tblTop"></div></div>
+    <div class="card wide"><h2>每篇貼文<span class="seg" id="postSort" role="group" aria-label="排序"><button aria-pressed="true" data-v="date">最新</button><button aria-pressed="false" data-v="heat">熱度</button><button aria-pressed="false" data-v="views">觀看</button></span></h2><div class="sub">IG 圖卡、Reel、Threads 每則一列；最近 7 天的貼文每晚 23:20 自動更新；點標題開原貼文</div><div class="tbl" id="tblTop"></div></div>
   </div>
 </section>
 
@@ -422,7 +422,7 @@ function wd(s){ return WD[new Date(s+"T00:00:00Z").getUTCDay()]; }
 
 try { const saved = localStorage.getItem("qx.filters"); if (saved) Object.assign(state, JSON.parse(saved)); } catch {}
 function persist(){ try{ localStorage.setItem("qx.filters", JSON.stringify({platform:state.platform, range:state.range})); }catch{} }
-document.querySelectorAll(".seg").forEach(seg => {
+document.querySelectorAll(".seg:not(#postSort)").forEach(seg => {
   const key = seg.id;
   seg.querySelectorAll("button").forEach(b => {
     b.setAttribute("aria-pressed", String(String(state[key]) === b.dataset.v));
@@ -434,6 +434,11 @@ document.querySelectorAll(".seg").forEach(seg => {
   });
 });
 
+document.querySelectorAll("#postSort button").forEach(b => b.onclick = () => {
+  state.postSort = b.dataset.v;
+  document.querySelectorAll("#postSort button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  render();
+});
 // ---- 分頁＋滑動藥丸 ----
 const tabs = $("#tabs"), pill = tabs.querySelector(".pill"), topLayer = pill.querySelector(".layer.top"), baseLayer = tabs.querySelector(".layer.base");
 const PAGES = ["overview","calendar","stats","income","record"];
@@ -740,9 +745,12 @@ function render(){
     if (state.platform === "all") multiLine($("#chFollowers"), growth); else lineChart($("#chFollowers"), days, "followers", "var(--c1)", "人");
     barChart($("#chViews"), days.map(x => ({k:x.date, v:x.views})), "var(--c1)", "次");
     barChart($("#chHeat"), days.map(x => ({k:x.date, v:x.heat})), "var(--c2)", "分");
-    const top = growth.filter(r => r.topic).sort((a,b) => b.heat - a.heat).slice(0,10);
-    $("#tblTop").innerHTML = top.length ? `<table><thead><tr><th>日期</th><th>平台</th><th>主題</th><th>格式</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">收藏</th><th class="num">分享</th><th class="num">熱度</th></tr></thead><tbody>${
-      top.map(r => `<tr><td>${r.date.slice(5)}</td><td>${r.platform}</td><td style="white-space:normal;min-width:180px">${esc(r.topic)}</td><td>${r.format}</td><td class="num">${fmt(r.views)}</td><td class="num">${fmt(r.likes)}</td><td class="num">${fmt(r.comments)}</td><td class="num">${fmt(r.saves)}</td><td class="num">${fmt(r.shares)}</td><td class="num"><b>${fmt(r.heat)}</b></td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有貼文資料，發文後在 Notion「成長數據」新增一筆即可。</div>`;
+    const PN = { Instagram:"IG", Threads:"Threads", "抖音":"TikTok" };
+    const sortKey = state.postSort || "date";
+    const list = (d.posts || []).filter(r => r.date >= from && (state.platform === "all" || r.platform === state.platform))
+      .sort((a,b) => sortKey === "date" ? (a.date < b.date ? 1 : a.date > b.date ? -1 : b.views - a.views) : b[sortKey] - a[sortKey]).slice(0, 60);
+    $("#tblTop").innerHTML = list.length ? `<table><thead><tr><th>日期</th><th>平台</th><th>貼文</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">收藏</th><th class="num">分享</th><th class="num">熱度</th></tr></thead><tbody>${
+      list.map(r => `<tr><td>${r.date.slice(5)}</td><td>${PN[r.platform] || r.platform}</td><td style="white-space:normal;min-width:200px">${r.link ? `<a href="${esc(r.link)}" target="_blank" rel="noopener">${esc(r.title)}</a>` : esc(r.title)}</td><td class="num">${fmt(r.views)}</td><td class="num">${fmt(r.likes)}</td><td class="num">${fmt(r.comments)}</td><td class="num">${fmt(r.saves)}</td><td class="num">${fmt(r.shares)}</td><td class="num"><b>${fmt(r.heat)}</b></td></tr>`).join("")}</tbody></table>` : `<div class="empty">還沒有每篇貼文的資料，今晚 23:20 會自動抓第一次。</div>`;
   }
   if (state.page === "income"){
     stackedMonthly($("#chMonthly"), d.monthly);
