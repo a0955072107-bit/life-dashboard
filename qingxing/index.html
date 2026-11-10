@@ -391,14 +391,15 @@ const MILESTONES = [
   ["2026-11-19","首發 30 名送 7 天回饋（到 11/26）"],
   ["2026-11-29","Day 20 草稿要補截圖與讀者回饋"],
   ["2026-12-01","團體方案開發開始"],
-  ["2026-12-03","電子書 V2 更新，漲到 690（組合 990）"],
+  ["2026-12-03","電子書 V2 更新，電子書 690、Notion 系統 690（組合 1,190）"],
   ["2026-12-09","30 天 IG 主題結束"],
   ["2026-12-10","讀者推薦計畫開始（分 30%）"],
-  ["2026-12-15","進階版上架 1,490"],
+  ["2026-12-15","進階版上架（首發 1,990）"],
   ["2026-12-17","電子書 V3 更新（價格不變）"],
   ["2026-12-26","新年 90 天檔期開始（到 1/10）"],
-  ["2026-12-31","電子書 V4 更新，調到 990（組合 1,290）"],
+  ["2026-12-31","電子書 V4 更新，調到 990（組合 1,490）"],
   ["2027-01-08","30 天文字陪跑開放（限 8 人）"],
+  ["2027-01-11","進階版首發價結束，調到 2,490"],
   ["2027-01-28","電子書每月更新"],["2027-02-28","電子書每月更新"],["2027-03-28","電子書每月更新"],["2027-04-28","電子書每月更新"],
 ];
 const WD = ["日","一","二","三","四","五","六"];
@@ -614,7 +615,7 @@ const formData = f => Object.fromEntries([...new FormData(f)].map(([k,v]) => [k,
 const today = () => tpeToday();
 $("#fGrowth").date.value = today(); $("#fIncome").date.value = today();
 $("#prodSel").innerHTML = PRODUCT_ORDER.map(p => `<option>${p}</option>`).join("");
-const PRICE_HINT = { "電子書《從迷惘到行動》":390, "Notion 清醒行動系統":490, "電子書+Notion系統組合":690, "進階版":1490, "陪跑服務":4800, "團體方案":4990 };
+const PRICE_HINT = { "電子書《從迷惘到行動》":390, "Notion 清醒行動系統":490, "電子書+Notion系統組合":690, "進階版":1990, "陪跑服務":4800, "團體方案":4990 };
 $("#prodSel").onchange = () => { const f = $("#fIncome"); if (PRICE_HINT[f.product.value]) { f.unit.value = PRICE_HINT[f.product.value]; f.amount.value = PRICE_HINT[f.product.value] * (Number(f.qty.value) || 1); } };
 $("#fIncome").qty.oninput = $("#fIncome").unit.oninput = () => { const f = $("#fIncome"); if (f.unit.value) f.amount.value = Number(f.unit.value) * (Number(f.qty.value) || 1); };
 function fillTopic(){ const f = $("#fGrowth"); const p = state.schedule.find(x => x.date === f.date.value); if (p && !f.topic.dataset.manual){ f.topic.value = `Day ${p.day} ${p.title}`; f.format.value = { carousel:"輪播", reel:"Reels", quote:"單圖" }[p.kind] || "輪播"; } }
