@@ -1,0 +1,64 @@
+{
+  "note": "Portaly 頁面 https://portaly.cc/qingxing.action 應有的設定（2026-11-10）。給 Claude in Chrome 讀：逐項檢查，缺的補上。不輸入任何銀行、身分證、密碼；遇到就停下回報。",
+  "images": {
+    "free_cover_square": "https://raw.githubusercontent.com/a0955072107-bit/life-dashboard/main/qingxing/portaly/cover-7day-square.png",
+    "free_cover_wide": "https://raw.githubusercontent.com/a0955072107-bit/life-dashboard/main/qingxing/portaly/cover-7day-wide.png",
+    "share_image": "https://raw.githubusercontent.com/a0955072107-bit/life-dashboard/main/qingxing/portaly/share-page.png"
+  },
+  "page": {
+    "display_name": "清醒行動派",
+    "bio": "先清醒，再行動\n給對未來迷惘、又容易拖延的你\n每天 20:00 一個能馬上用的做法",
+    "avatar": "已設定的 Logo，不要換",
+    "seo_title": "清醒行動派｜先清醒，再行動",
+    "seo_description": "給對未來迷惘、又容易拖延的你。免費領《7 天清醒行動表》：每天一題，5 分鐘，看清楚自己卡在哪裡。",
+    "share_image": "用 images.share_image",
+    "social_links": {
+      "Instagram": "https://www.instagram.com/qingxing.action/",
+      "Threads": "https://www.threads.com/@qingxing.action",
+      "TikTok": "https://www.tiktok.com/@qingxing.action",
+      "Email": "qingxing.action@gmail.com"
+    },
+    "theme": "背景米白 #F6F3EE、文字深灰 #2B2B2B、按鈕深藍 #1F3A5F；沒有這些選項就選最接近的淺色素雅主題；不要插圖",
+    "rules": "公開文字不寫年齡；不用「一定」「保證」「改變人生」"
+  },
+  "blocks_in_order": [
+    "頭像＋名稱＋簡介",
+    "社群連結（IG、Threads、TikTok、Email）",
+    "文字標題：免費資源",
+    "單商品區塊：7 天清醒行動表（已上架）",
+    "（11/19 才打開）文字標題：從迷惘到行動＋電子書／組合區塊——現在先建好、隱藏"
+  ],
+  "products": {
+    "free_7day": {
+      "project": "7 天清醒行動表（專案 ID s7Cl9WRTLrTgCD3D1E4U，已上架）",
+      "check": "封面換成 images.free_cover_square（比例不合就用 wide）；按鈕「免費領取」；價格免費；下載按鈕連到 PDF；聯絡電話關閉"
+    },
+    "drafts_keep_off": {
+      "note": "以下三個用新專案 (1)～(3) 建好，商品開關保持關閉、不放進公開頁的可見區塊；商品內容（檔案連結）先留空，Yang 之後給。封面用預設也可以，11/19 前會換。",
+      "ebook": {
+        "project": "新專案 (1) → 從迷惘到行動（電子書）",
+        "title": "從迷惘到行動",
+        "price": 390,
+        "description": "從看清楚自己卡在哪，到排出接下來 90 天要做的事。\n一套 6 章的操作手冊，每章都有可以直接填的工作頁，另外附手機精簡版。\n每兩週加一章並調價，早買的人之後的更新都免費。"
+      },
+      "system": {
+        "project": "新專案 (2) → Notion 清醒行動系統＋10 組 AI 提示詞",
+        "title": "Notion 清醒行動系統＋10 組 AI 提示詞",
+        "price": 490,
+        "description": "把電子書的做法放進 Notion：目標、每日行動、每週檢討都有現成的頁面，複製到自己的 Notion 就能用。\n附 10 組 AI 提示詞，幫你拆任務、做檢討。"
+      },
+      "bundle": {
+        "project": "新專案 (3) → 電子書＋系統組合",
+        "title": "從迷惘到行動｜電子書＋Notion 系統組合",
+        "price": 690,
+        "description": "電子書《從迷惘到行動》加上 Notion 清醒行動系統＋10 組 AI 提示詞。\n比分開買省 NT$190，之後電子書的更新一樣免費。"
+      }
+    }
+  },
+  "settings_to_check_only": [
+    "交易通知寄到 qingxing.action@gmail.com：開著",
+    "收款方式（信用卡、LINE Pay、街口、ATM）是否已開通；撥款帳戶是否已設定（只回報有沒有，不要填）",
+    "退款／購買須知欄位是否存在（只回報）",
+    "名單 Webhook：保持關閉"
+  ]
+}
