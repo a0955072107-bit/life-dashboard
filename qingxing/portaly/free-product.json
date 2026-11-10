@@ -1,0 +1,12 @@
+{
+  "note": "Portaly 免費商品《7 天清醒行動表》的上架資料，給 Claude in Chrome 讀。PDF 在 Releases（tag portaly-free-7day）。",
+  "portaly_page": "https://portaly.cc/qingxing.action",
+  "block_type": "免費商品（名單才會進 經營工具 → 名單蒐集）",
+  "project_to_use": "新專案（改名為 7 天清醒行動表）；新專案 (1)～(3) 不要動、不要刪，11/19 要做電子書與組合",
+  "title": "7 天清醒行動表",
+  "price": 0,
+  "description": "給對未來迷惘、又容易拖延的你。\n每天只回答一題，5 分鐘就好，7 天看清楚自己卡在哪裡、下一步做什麼。\n留下 Email，PDF 會直接寄給你。",
+  "form_fields": ["稱呼", "Email"],
+  "pdf_url": "https://github.com/a0955072107-bit/life-dashboard/releases/download/portaly-free-7day/qingxing-7day-action-sheet.pdf",
+  "remove_default_block": "公開頁上預設的「商品標題／NT. 1000」區塊刪掉或隱藏"
+}

@@ -1,0 +1,32 @@
+# 清醒行動派 Portaly 檔案：把 Canva 匯出的《7 天清醒行動表》PDF 放到 Releases（tag portaly-free-7day），
+# 讓 Claude in Chrome 用固定網址上傳到 Portaly。要換檔：改 qingxing/portaly/free-pdf-source.txt 的網址並推上來。
+name: 清醒行動派 Portaly 檔案
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - qingxing/portaly/free-pdf-source.txt
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - name: 下載 PDF 並放到 Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          url=$(head -n1 qingxing/portaly/free-pdf-source.txt)
+          curl -fsSL -o qingxing-7day-action-sheet.pdf "$url"
+          head -c 5 qingxing-7day-action-sheet.pdf | grep -q '%PDF' || { echo "下載到的不是 PDF（Canva 網址可能過期，重新匯出）"; exit 1; }
+          tag=portaly-free-7day
+          gh release delete "$tag" --yes --cleanup-tag 2>/dev/null || true
+          gh release create "$tag" qingxing-7day-action-sheet.pdf --title "Portaly 免費商品：7 天清醒行動表" --notes "上傳到 Portaly 免費商品用。設定見 qingxing/portaly/free-product.json"
+          echo "PDF：https://github.com/${GITHUB_REPOSITORY}/releases/download/$tag/qingxing-7day-action-sheet.pdf" >> "$GITHUB_STEP_SUMMARY"
