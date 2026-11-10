@@ -27,7 +27,7 @@ jobs:
     # 自動排程要等你在 Settings → Variables 設 QX_IG_BOT_ENABLED=true 才會跑；手動按 Run 隨時可以跑
     if: github.event_name == 'workflow_dispatch' || vars.QX_IG_BOT_ENABLED == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 50
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -40,3 +40,21 @@ jobs:
           IG_USER_ID: ${{ vars.QX_IG_USER_ID || '17841479844842573' }}  # @qingxing.action 的 IG 帳號 ID
           DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
           BOT_TASKS: ${{ inputs.tasks || 'post,comments,dms' }}
+
+      # GitHub 免費排程常延遲或跳過。下一篇在 40 分鐘內就在這裡等到時間再發（只發文，不重跑留言私訊）。
+      - name: 等下一篇（40 分鐘內）並發出
+        if: github.event_name == 'schedule'
+        run: |
+          wait=$(node --input-type=module -e "
+            import {loadPosts} from './qingxing/instagram/lib.mjs';
+            const now=Date.now();
+            const next=loadPosts('qingxing/instagram/posts').filter(p=>p.status==='ready').map(p=>p.publishAt?p.publishAt.getTime():0).filter(t=>t>now).sort((a,b)=>a-b)[0];
+            const s=next?Math.ceil((next-now)/1000)+30:-1; console.log(s>0&&s<=2400?s:-1)")
+          if [ "$wait" -lt 0 ]; then echo "40 分鐘內沒有要發的"; exit 0; fi
+          echo "等 $wait 秒後發下一篇"; sleep "$wait"
+          node qingxing/instagram/bot.mjs
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.QX_IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ vars.QX_IG_USER_ID || '17841479844842573' }}
+          DRY_RUN: 'false'
+          BOT_TASKS: post

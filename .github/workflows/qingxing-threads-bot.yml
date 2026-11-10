@@ -23,7 +23,7 @@ jobs:
     # 自動排程要等 Settings → Variables 設 QX_THREADS_BOT_ENABLED=true 才會跑；手動 Run 隨時可以
     if: github.event_name == 'workflow_dispatch' || vars.QX_THREADS_BOT_ENABLED == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -34,3 +34,19 @@ jobs:
         env:
           THREADS_ACCESS_TOKEN: ${{ secrets.QX_THREADS_ACCESS_TOKEN }}
           DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
+
+      # GitHub 免費排程常延遲或跳過（實際約一小時一次）。如果下一則在 60 分鐘內，就在這裡等到時間再發一次，
+      # 讓發文時間準一點。repo 是公開的，Actions 分鐘數不計費。
+      - name: 等下一則（60 分鐘內）並發出
+        if: github.event_name == 'schedule'
+        run: |
+          wait=$(node -e "
+            const ps=require('./qingxing/threads/posts.json'); const now=Date.now();
+            const next=ps.filter(p=>p.status==='ready').map(p=>new Date(p.publish_at).getTime()).filter(t=>t>now).sort((a,b)=>a-b)[0];
+            const s=next?Math.ceil((next-now)/1000)+20:-1; console.log(s>0&&s<=3600?s:-1)")
+          if [ "$wait" -lt 0 ]; then echo "60 分鐘內沒有要發的"; exit 0; fi
+          echo "等 $wait 秒後發下一則"; sleep "$wait"
+          node qingxing/threads/bot.mjs
+        env:
+          THREADS_ACCESS_TOKEN: ${{ secrets.QX_THREADS_ACCESS_TOKEN }}
+          DRY_RUN: 'false'
