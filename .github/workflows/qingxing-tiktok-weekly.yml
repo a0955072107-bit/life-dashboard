@@ -5,6 +5,11 @@ name: 清醒行動派 TikTok 每週影片
 on:
   schedule:
     - cron: '13 2 * * 6' # 每週六 10:13（台灣時間）
+  # 推 qingxing/tiktok/rebuild.json（{"start":"YYYY-MM-DD","days":"N"}）也會重做，給 Claude 在沒有 Actions 權限時用
+  push:
+    branches: [main]
+    paths:
+      - qingxing/tiktok/rebuild.json
   workflow_dispatch:
     inputs:
       start:
@@ -27,14 +32,23 @@ jobs:
       - uses: actions/checkout@v5
       - name: 安裝 ffmpeg
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: 決定起始日與天數
+        id: args
+        run: |
+          start="${{ inputs.start }}"; days="${{ inputs.days }}"
+          if [ "${{ github.event_name }}" = "push" ]; then
+            start=$(python3 -c "import json;print(json.load(open('qingxing/tiktok/rebuild.json')).get('start',''))")
+            days=$(python3 -c "import json;print(json.load(open('qingxing/tiktok/rebuild.json')).get('days',''))")
+          fi
+          echo "start=$start" >> "$GITHUB_OUTPUT"; echo "days=$days" >> "$GITHUB_OUTPUT"
       - name: 產生影片
-        run: python3 qingxing/scripts/build-tiktok.py "${{ inputs.start }}" out "${{ inputs.days }}"
+        run: python3 qingxing/scripts/build-tiktok.py "${{ steps.args.outputs.start }}" out "${{ steps.args.outputs.days }}"
       - name: 放到 Releases
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          start="${{ inputs.start }}"
+          start="${{ steps.args.outputs.start }}"
           [ -z "$start" ] && start=$(TZ=Asia/Taipei date -d tomorrow +%F)
           tag="tiktok-$start"
           gh release delete "$tag" --yes --cleanup-tag 2>/dev/null || true
