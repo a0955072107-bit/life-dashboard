@@ -40,7 +40,7 @@ def tiktok_caption(ig_caption: str) -> str:
     if "留言「清醒」" in text and "連結" not in text:
         text = text.replace("留言「清醒」", "留言「清醒」或點主頁連結", 1)
     extra = [t for t in ("#自我成長", "#fyp") if t not in tags]
-    return f"{text}\n\n完整圖文在 IG @qingxing.action\n\n#清醒行動派 {' '.join(tags + extra)}"
+    return f"{text}\n\n#清醒行動派 {' '.join(tags + extra)}"
 
 
 def reel_caption(ig_caption: str) -> str:
