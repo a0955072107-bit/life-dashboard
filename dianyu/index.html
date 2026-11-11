@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 副業｜30 天執行儀表板</title>
+<style>
+:root{--main:#164a63;--accent:#08766d;--soft:#e8f4f1}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","Microsoft JhengHei",sans-serif;background:#f5f6f4;color:#1d2a33;max-width:850px;margin:auto;padding:16px;line-height:1.65}
+header{background:var(--main);color:#fff;border-radius:14px;padding:22px}
+header h1{margin:0;font-size:24px}header p{margin:6px 0 0;opacity:.9}
+h2{color:var(--accent);margin:0 0 10px;font-size:19px}
+.box{background:#fff;border:1px solid #dde3e0;border-radius:12px;padding:18px;margin-top:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{padding:12px;background:var(--soft);text-align:center;border-radius:8px;font-size:14px}
+.num{font-size:24px;font-weight:700;color:var(--accent);display:block}
+.bar{height:10px;background:#e6ebe8;border-radius:5px;overflow:hidden;margin:12px 0 4px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+button{background:var(--accent);color:#fff;padding:9px 13px;border:0;border-radius:7px;font-size:15px;cursor:pointer;font-family:inherit}
+button.gray{background:#6b7b84}
+label.f{display:block;margin:10px 0 4px;font-weight:600;font-size:14px}
+input,textarea,select{font:inherit;padding:8px;border:1px solid #c3cfca;border-radius:6px;width:100%}
+textarea{height:95px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.days{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:6px}
+.day{background:#fff;color:var(--main);border:1px solid #c3cfca;padding:7px 4px;font-size:14px}
+.day.done{background:var(--soft);color:var(--accent);border-color:var(--accent)}
+.day.active{background:var(--main);color:#fff;border-color:var(--main)}
+.day.today{box-shadow:0 0 0 2px #f0b429}
+.week{font-size:13px;color:#6b7b84;margin:10px 0 4px}
+.task{display:flex;gap:12px;align-items:flex-start;padding:12px;background:var(--soft);border-radius:8px;cursor:pointer}
+.task input{width:22px;height:22px;flex:none;margin-top:3px}
+.task.isdone span{text-decoration:line-through;color:#71808a}
+.hint{font-size:14px;color:#56656e;margin:8px 0 0}
+small,.muted{color:#6b7b84;font-size:13px}
+.saved{color:var(--accent);font-size:13px;margin-left:8px;opacity:0;transition:opacity .3s}
+.saved.on{opacity:1}
+.tpl{white-space:pre-wrap;background:#f7f9f8;border-left:3px solid var(--accent);padding:10px 12px;border-radius:4px}
+.tpl mark{background:#ffe8a3;padding:0 2px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+footer{text-align:center;margin:22px 0 10px;font-size:13px;color:#6b7b84}
+footer a{color:var(--accent)}
+@media(max-width:520px){.stats{grid-template-columns:1fr 1fr 1fr}.num{font-size:19px}.stat{padding:10px 4px;font-size:12px}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><h1>AI 副業｜30 天執行儀表板</h1><p id="sub">每天 1–2 小時</p></header>
+
+<section class="box">
+  <div class="stats">
+    <div class="stat"><span class="num" id="sDone">0/30</span>完成天數</div>
+    <div class="stat"><span class="num" id="sA">0</span><span id="sAlabel">已收款</span></div>
+    <div class="stat"><span class="num" id="sB">0</span><span id="sBlabel">收入目標</span></div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="muted" id="barText"></div>
+  <div class="row" style="margin-top:12px">
+<div><label class="f" for="goal">收入目標（NT$）</label><input id="goal" type="number" min="0" inputmode="numeric"></div>
+<div><label class="f" for="income">已收款（NT$）</label><input id="income" type="number" min="0" inputmode="numeric"></div>
+</div><label class="f" for="start">開始日期（用來算出今天是第幾天）</label><input id="start" type="date">
+</section>
+
+<section class="box">
+  <h2>30 天任務</h2>
+  <div class="muted">黃框是依開始日期算出的「今天」。點任一天可以查看或補記。</div>
+  <div id="days"></div>
+</section>
+
+<section class="box">
+  <h2 id="dTitle"></h2>
+  <label class="task" id="taskWrap"><input type="checkbox" id="check"><span id="task"></span></label>
+  <p class="hint" id="taskHint"></p>
+  <label class="f" for="note">今日紀錄／卡關處</label>
+  <textarea id="note" placeholder="今天誰回覆？遇到什麼問題？"></textarea>
+  <div class="muted">打勾和筆記會自動儲存<span class="saved" id="saved">✓ 已儲存</span></div>
+</section>
+
+<section class="box">
+  <h2>首次私訊範本（通用行業版）</h2>
+  <div class="tpl" id="msg">你好，我看到你最近分享的<mark>［具體作品／服務］</mark>很有特色。帳號裡已經有不少成果展示，但第一次看到的人可能不容易立刻知道「第一次適合選什麼」或「怎麼預約」。我正在為小商家整理可直接使用的預約導向內容包；我可以先傳 2 個適合你的貼文選題參考，你想看嗎？</div>
+  <div class="btns"><button onclick="copyText('msg')">複製訊息</button></div>
+  <p class="muted">黃色部分複製後要換成對方帳號裡真的看到的作品或服務，訊息才不會像群發。</p>
+</section>
+
+<section class="box">
+  <h2>備份資料</h2>
+  <p class="muted" style="margin-top:0">資料只存在這台裝置的瀏覽器。換手機、換電腦或清除瀏覽器資料前，請先匯出備份。</p>
+  <div class="btns">
+    <button class="gray" onclick="exportData()">匯出備份</button>
+    <button class="gray" onclick="document.getElementById('imp').click()">匯入備份</button>
+    <button class="gray" onclick="resetAll()">全部重來</button>
+  </div>
+  <input type="file" id="imp" accept=".json,application/json" style="display:none" onchange="importData(this)">
+</section>
+
+
+
+<script>
+const CFG={
+key:'sidejob30',
+tasks:["選定第一個目標行業（例如：美業、健身、攝影、房仲、餐飲等）並確認 599、1,800、2,800 元三層方案", "建立客戶需求 Google 表單（服務、價格、客群、預約方式、語氣、禁語）", "完成一份標示為示範的 7 天內容包（可選任一行業）", "建立 Google Drive 交付資料夾與文件模板", "寫好一頁式服務介紹與修改規則", "找 15 個近期活躍的目標行業帳號並記錄觀察", "發送 5 則個人化首次私訊，更新名單", "找 5 位、發 5 則首次私訊、跟進舊訊息", "找 5 位、發 5 則首次私訊、回覆詢問", "找 5 位、發 5 則首次私訊、記下常見問題", "整理對話，完成 FAQ 與 599 元體驗包說明", "找 5 位、發 5 則私訊；有興趣者只給小範例", "找 5 位、發 5 則私訊；對未回覆者只跟進一次", "週復盤：統計私訊、回覆、對話與報價", "對有興趣者發送完整報價與付款／交付規則", "維持 3–5 則開發；成交後才發完整表單", "處理第 1 位客戶：依問卷做內容初稿", "完成貼文、短影音腳本、私訊回覆與品質檢查", "交付內容，索取回饋與匿名案例授權", "保存提示詞、問卷與交付格式，完成模板化", "檢查瓶頸：名單、開場、方案或跟進，只調整一項", "找 5 位、發 5 則私訊，必要時提及案例", "找 5 位、發 5 則私訊，處理對話與報價", "找 5 位、發 5 則私訊，完成已成交案件", "找 5 位、發 5 則私訊，累計完成 50 位精準名單", "處理交付與追單；不重複騷擾未回覆者", "列出「30 天貼文＋私訊模板」數位商品大綱", "製作模板包的 5 則樣本內容", "盤點收入、私訊、對話、報價、成交與總工時", "決定下月定價、開發目標與固定執行時段"],
+weeks:['第 1 週｜準備與第一批開發','第 2 週｜穩定開發、整理 FAQ','第 3 週｜報價、成交與交付','第 4 週｜模板化與擴大名單','收尾｜盤點與下月計畫'],
+renderStats(s,u){
+  let goal=Number(s.goal)||6000,inc=Number(s.income)||0,pct=Math.min(100,Math.round(inc/goal*100));
+  u.$('sA').textContent=u.money(inc);u.$('sB').textContent=u.money(goal);
+  u.$('bar').style.width=pct+'%';
+  u.$('barText').textContent='收入達成 '+pct+'%'+(inc<goal?'，還差 '+u.money(goal-inc):'，已達標 🎉')+'｜任務完成率 '+Math.round(u.done/30*100)+'%';
+  u.$('sub').textContent='每天 1–2 小時｜本期收入目標 '+u.money(goal);
+},
+afterImport(s){$('goal').value=s.goal||6000;$('income').value=s.income||0;$('start').value=s.start||''}
+};
+const KEY=CFG.key;
+let s={};
+try{s=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){s={}}
+const $=id=>document.getElementById(id);
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(s));let t=$('saved');t.classList.add('on');clearTimeout(persist.t);persist.t=setTimeout(()=>t.classList.remove('on'),1200)}catch(e){alert('這個瀏覽器無法儲存資料（可能是無痕模式），請改用一般模式開啟。')}}
+function todayStr(){let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function todayIndex(){if(!s.start)return 1;let a=new Date(s.start+'T00:00:00'),b=new Date(todayStr()+'T00:00:00');let n=Math.round((b-a)/864e5)+1;return Math.min(Math.max(n,1),30)}
+if(!s.start){s.start=todayStr();persist()}
+let d=s.day||todayIndex();
+function money(n){return 'NT$'+(Number(n)||0).toLocaleString('zh-TW')}
+function doneCount(){return CFG.tasks.filter((_,i)=>s['c'+(i+1)]).length}
+function streak(){let n=0;for(let i=todayIndex();i>=1;i--){if(s['c'+i])n++;else if(i!==todayIndex())break}return n}
+function render(){
+  let wrap=$('days');wrap.innerHTML='';let today=todayIndex();
+  for(let w=0;w<5;w++){let from=w*7,to=Math.min(from+7,30);if(from>=30)break;
+    let h=document.createElement('div');h.className='week';h.textContent=CFG.weeks[w]||('第 '+(w+1)+' 週');wrap.appendChild(h);
+    let g=document.createElement('div');g.className='days';
+    for(let i=from;i<to;i++){let n=i+1,b=document.createElement('button');
+      b.className='day'+(s['c'+n]?' done':'')+(d==n?' active':'')+(today==n?' today':'');
+      b.textContent='Day '+n+(s['c'+n]?' ✓':'');b.onclick=()=>{d=n;s.day=n;persist();render();$('dTitle').scrollIntoView({behavior:'smooth',block:'start'})};g.appendChild(b)}
+    wrap.appendChild(g)}
+  $('dTitle').textContent='Day '+d+(d==today?'（今天）':'');
+  $('task').textContent=CFG.tasks[d-1];
+  $('taskHint').textContent=(CFG.hints&&CFG.hints[d-1])||'';
+  $('check').checked=!!s['c'+d];$('taskWrap').classList.toggle('isdone',!!s['c'+d]);
+  $('note').value=s['n'+d]||'';
+  let done=doneCount();$('sDone').textContent=done+'/30';
+  CFG.renderStats(s,{done,streak:streak(),money,$});
+}
+$('check').onchange=()=>{s['c'+d]=$('check').checked;persist();render()};
+$('note').oninput=()=>{s['n'+d]=$('note').value;clearTimeout(render.t);render.t=setTimeout(persist,500)};
+function copyText(id){let el=$(id),t=el.innerText;
+  const ok=()=>alert('已複製'+(el.querySelector('mark')?'，記得把黃色的地方換成對方的資訊':''));
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(ok,()=>fallback(t,ok))}else fallback(t,ok)}
+function fallback(t,ok){let a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){prompt('請手動複製：',t)}a.remove()}
+function exportData(){let blob=new Blob([JSON.stringify(s,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=KEY+'-備份-'+todayStr()+'.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let o=JSON.parse(r.result);if(typeof o!=='object'||!o)throw 0;if(!confirm('匯入會覆蓋目前的資料，確定嗎？'))return;s=o;d=s.day||todayIndex();persist();render();CFG.afterImport&&CFG.afterImport(s);alert('匯入完成')}catch(e){alert('這不是有效的備份檔')}inp.value=''};r.readAsText(f)}
+function resetAll(){if(!confirm('會清除所有打勾、筆記和設定，確定要重來嗎？建議先匯出備份。'))return;s={start:todayStr()};d=1;persist();render();CFG.afterImport&&CFG.afterImport(s)}
+
+$('start').onchange=()=>{if($('start').value){s.start=$('start').value;persist();d=todayIndex();render()}};
+
+function saveMoney(){s.goal=Math.max(0,Number($('goal').value)||0)||6000;s.income=Math.max(0,Number($('income').value)||0);persist();render()}
+$('goal').onchange=saveMoney;$('income').onchange=saveMoney;
+
+CFG.afterImport&&CFG.afterImport(s);
+render();
+</script>
+</body>
+</html>
