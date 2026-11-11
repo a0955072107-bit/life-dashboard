@@ -1,10 +1,10 @@
-# 清醒行動派 TikTok：每週六把接下來 7 天（週日到週六）的圖卡做成直式影片，
+# 清醒行動派 TikTok：每週四把下週 7 天（週日到週六）的圖卡做成直式影片，
 # 連同文案放到 GitHub Releases（tiktok-YYYY-MM-DD），再到 TikTok Studio 排程。
 name: 清醒行動派 TikTok 每週影片
 
 on:
   schedule:
-    - cron: '13 2 * * 6' # 每週六 10:13（台灣時間）
+    - cron: '13 2 * * 4' # 每週四 10:13（台灣時間）；週五提醒 Yang 照 qingxing/tiktok/UPLOAD.md 請 Claude 排程
   # 推 qingxing/tiktok/rebuild.json（{"start":"YYYY-MM-DD","days":"N"}）也會重做，給 Claude 在沒有 Actions 權限時用
   push:
     branches: [main]
@@ -39,6 +39,10 @@ jobs:
           if [ "${{ github.event_name }}" = "push" ]; then
             start=$(python3 -c "import json;print(json.load(open('qingxing/tiktok/rebuild.json')).get('start',''))")
             days=$(python3 -c "import json;print(json.load(open('qingxing/tiktok/rebuild.json')).get('days',''))")
+          fi
+          # 排程（週四）跑的時候，從下一個週日開始
+          if [ -z "$start" ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            start=$(TZ=Asia/Taipei date -d "next sunday" +%F)
           fi
           echo "start=$start" >> "$GITHUB_OUTPUT"; echo "days=$days" >> "$GITHUB_OUTPUT"
       - name: 產生影片
