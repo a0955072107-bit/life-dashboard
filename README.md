@@ -24,6 +24,13 @@
 
 設定：到 notion.so/profile/integrations 建 Internal integration → 兩個 Notion 資料庫各自「連接」該 integration → repo Secrets 新增 `NOTION_TOKEN` 與 `QX_DASH_PASSWORD`（後台密碼）→ Actions 手動跑一次。
 
+## 📋 30 天執行儀表板
+
+兩個獨立的單頁工具，資料只存在使用者自己的瀏覽器（有匯出／匯入備份），不需要任何金鑰。
+
+- **店語接案版（`/dianyu/`）**：`https://a0955072107-bit.github.io/life-dashboard/dianyu/`。自己接店家案子用的 30 天開發任務、收入目標與已收款、首次私訊範本。
+- **清醒行動派商品版（`/qingxing/30days/`）**：`https://a0955072107-bit.github.io/life-dashboard/qingxing/30days/`。「30 天清醒行動儀表板」，通用的 30 天行動任務（每天附提示），給客人用。
+
 ## 設定步驟
 
 1. **開啟 GitHub Pages**：Settings → Pages → Source 選 `Deploy from a branch`，Branch 選 `main`、資料夾選 `/ (root)`。網址會是 `https://a0955072107-bit.github.io/life-dashboard/`。
