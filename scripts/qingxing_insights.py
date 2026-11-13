@@ -71,6 +71,22 @@ def threads_lookup() -> dict:
 
 
 TITLES = schedule_titles()
+
+
+def ig_caption_days() -> dict:
+    """IG 貼文檔的文案前 60 字 → (day, 排程日期)。用文案對，不用發出日期，GitHub 排程延遲到隔天發的貼文才不會被算成下一天。"""
+    import re
+    out = {}
+    for f in sorted((ROOT / "qingxing" / "instagram" / "posts").glob("*.md")):
+        m = re.search(r"day(\d+)", f.name)
+        parts = f.read_text(encoding="utf-8").split("---", 2)
+        if not m or len(parts) < 3:
+            continue
+        out[norm(parts[2])[:60]] = (int(m.group(1)), f.name[:10])
+    return out
+
+
+IG_CAPTIONS = ig_caption_days()
 TH_LOOKUP = threads_lookup()
 
 
@@ -108,7 +124,8 @@ def ig_collect():
                 break
             except RuntimeError:
                 continue
-        day = TITLES.get(d, (None, ""))
+        hit = IG_CAPTIONS.get(norm(row["text"])[:60])
+        day = TITLES.get(hit[1], (hit[0], "")) if hit else TITLES.get(d, (None, ""))
         row["day"], row["title"] = day[0], f"{'Reel' if reel else '圖卡'}｜Day {day[0]} {day[1]}" if day[0] is not None else norm(row["text"])[:30]
         posts.append(row)
     return {"followers": prof.get("followers_count", 0), "posts": posts}

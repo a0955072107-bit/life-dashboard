@@ -29,6 +29,7 @@ const IG_USER_ID = process.env.IG_USER_ID || ''
 const SITE = (process.env.SITE_URL || config.site).replace(/\/$/, '')
 const MAX_LATE_HOURS = Number(process.env.MAX_LATE_HOURS || 48)
 const MAX_ACTIONS = Number(process.env.MAX_ACTIONS || 20)
+const COMMENT_MEDIA_DAYS = Number(process.env.COMMENT_MEDIA_DAYS || 30) // 回留言只看最近幾天的貼文（晚間每 5 分鐘那輪設 3，少打 API）
 const now = new Date()
 let actions = 0
 let failures = 0
@@ -160,7 +161,7 @@ async function runPosts(me) {
 // ---------- 2. 回留言 ----------
 async function runComments(me) {
   const media = (await ig('GET', `/${me.userId}/media`, { fields: 'id,timestamp', limit: 10 })).data || []
-  const recentMedia = media.filter((m) => (now - new Date(m.timestamp)) / 86400_000 <= 30)
+  const recentMedia = media.filter((m) => (now - new Date(m.timestamp)) / 86400_000 <= COMMENT_MEDIA_DAYS)
   let replied = 0
   for (const m of recentMedia) {
     const comments = (await ig('GET', `/${m.id}/comments`, {

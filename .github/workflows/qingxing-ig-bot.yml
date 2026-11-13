@@ -3,7 +3,7 @@ name: 清醒行動派 IG 機器人
 
 on:
   schedule:
-    - cron: '2,32 * * * *' # 每小時第 2、32 分（UTC）；20:00 的貼文約 20:02–20:15 發出
+    - cron: '2,32 * * * *' # 白天：每小時第 2、32 分（UTC），GitHub 常延遲或跳過；晚上 20:00、21:30 的貼文由「IG 晚間值班」準時發
   workflow_dispatch:
     inputs:
       dry_run:

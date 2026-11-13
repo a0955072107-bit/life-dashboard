@@ -1,0 +1,59 @@
+# 清醒行動派 IG 晚間值班：GitHub 的 30 分鐘排程常常一天只跑幾次（11/12 Reel 拖到凌晨 4:14 才發），
+# 所以晚上改成「傍晚啟動一次，自己等時間」：到 23:30 前一直跑機器人——
+#   19:55–22:30 每 5 分鐘一輪（20:00 圖卡、21:30 Reel 會在時間到 30 秒內發出；留言／私訊 5 分鐘內回）
+#   其他時間每 15 分鐘一輪
+# 排了好幾個啟動時間，避免 GitHub 跳過；跟白天的 IG 機器人同一個 concurrency group，不會兩邊同時發。
+name: 清醒行動派 IG 晚間值班
+
+on:
+  schedule:
+    - cron: '7,37 10,11 * * *' # 台北 18:07、18:37、19:07、19:37（UTC 10–11 點）
+  workflow_dispatch:
+
+concurrency:
+  group: qingxing-ig-bot
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  evening:
+    if: github.event_name == 'workflow_dispatch' || vars.QX_IG_BOT_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: 值班到 23:30
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.QX_IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ vars.QX_IG_USER_ID || '17841479844842573' }}
+          DRY_RUN: 'false'
+          BOT_TASKS: post,comments,dms
+          COMMENT_MEDIA_DAYS: '3'
+        run: |
+          export TZ=Asia/Taipei
+          end=$(date -d 'today 23:30' +%s)
+          if [ "$(date +%s)" -ge "$end" ]; then echo "已過 23:30（前一輪值班已做完），不跑"; exit 0; fi
+          fails=0; rounds=0
+          while [ "$(date +%s)" -lt "$end" ]; do
+            git pull -q --ff-only origin main || true   # 白天改過的貼文也吃得到
+            rounds=$((rounds+1)); echo "== 第 $rounds 輪 $(date '+%H:%M:%S')"
+            node qingxing/instagram/bot.mjs || fails=$((fails+1))
+            now=$(date +%s); hm=$(date +%H%M)
+            if [ "$hm" -ge 1955 ] && [ "$hm" -lt 2230 ]; then gap=300; else gap=900; fi
+            # 下一篇貼文若比下一輪早，就等到它的時間（＋30 秒）
+            next=$(node --input-type=module -e "
+              import {loadPosts} from './qingxing/instagram/lib.mjs';
+              const n=Date.now(); const t=loadPosts('qingxing/instagram/posts').filter(p=>p.status==='ready'&&p.publishAt&&p.publishAt.getTime()>n).map(p=>p.publishAt.getTime()).sort((a,b)=>a-b)[0];
+              console.log(t?Math.ceil((t-n)/1000)+30:-1)")
+            if [ "$next" -gt 0 ] && [ "$next" -lt "$gap" ]; then gap=$next; fi
+            left=$((end-now)); [ "$left" -le 0 ] && break
+            [ "$gap" -gt "$left" ] && gap=$left
+            sleep "$gap"
+          done
+          echo "值班結束：$rounds 輪，失敗 $fails 輪"
+          [ "$fails" -eq 0 ] || exit 1
