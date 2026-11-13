@@ -31,6 +31,9 @@ def parse_post(path: Path) -> dict:
 
 
 OTHER_PLATFORM = re.compile(r"IG|Instagram|Threads|@qingxing\.action|私訊")
+# 2026-11-13：台灣 TikTok 個人帳號沒有可點的網站欄位（商業帳號要公司登記文件），
+# 簡介只能放網址純文字 → 文案說「網址在主頁簡介」。滿 1,000 粉、有可點連結後改回 "主頁連結"。
+LINK_PHRASE = "網址在主頁簡介"
 
 
 def tiktok_caption(ig_caption: str, hook: str | None = None) -> str:
@@ -53,6 +56,7 @@ def tiktok_caption(ig_caption: str, hook: str | None = None) -> str:
     text = re.sub(r"\n{3,}", "\n\n", "\n".join(out)).strip()
     text = re.sub(r"或點首頁 ?(Bio ?)?連結", "", text)
     text = text.replace("連結在首頁", "連結在主頁").replace("首頁 Bio 連結", "主頁連結")
+    text = re.sub(r"在?主頁連結", LINK_PHRASE, text)
     assert not OTHER_PLATFORM.search(text), f"TikTok 文案還有其他平台：{text}"
     extra = [t for t in ("#自我成長", "#fyp") if t not in tags]
     return f"{text}\n\n#清醒行動派 {' '.join(tags + extra)}"
