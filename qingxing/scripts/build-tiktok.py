@@ -4,7 +4,7 @@
   不給日期 → 從明天（台灣時間）開始的 7 天
 輸出：每天一支 MP4、一個同名 .txt（TikTok 文案）、schedule.txt（本週排程清單），
 以及 manifest.json（下載網址＋文案＋排程時間，給後台頁面和 Claude 自己讀）。
-圖卡用 qingxing/ig/ 裡已產生的 JPG（1080×1350），上下補米白色變成 9:16，每張停 2.5–3.5 秒、淡入淡出。
+圖卡用 qingxing/ig/ 裡已產生的 JPG（1080×1350），上下補米白色變成 9:16，每張停 2.5–3.5 秒；動畫：慢推近、滑動換卡、底部進度條。
 """
 import json
 import os
@@ -84,28 +84,42 @@ def write_reel_post(p: dict, post: dict, video_url: str) -> Path:
     return path
 
 
-def make_video(images: list[Path], out: Path) -> float:
+ACCENT = "0x1F3A5F"
+TRACK = "0xE4DED4"
+
+
+def make_video(images: list[Path], out: Path, hook_first: bool = False) -> float:
+    """2026-11-13 Yang：Reel 加動畫。每張慢慢推近 3.5%（開頭卡改成 0.8 秒從放大退回，像「打進來」），
+    卡片之間往左滑（像滑輪播，開頭卡→第一張往上滑），底部留白區一條深藍進度條隨時間長滿。"""
     n = len(images)
     durs = [6.0] if n == 1 else [2.5] + [3.0] * (n - 2) + [3.5]
     # 太短的影片（單圖金句、字卡少）TikTok 不太推：整體拉到至少 MIN_TOTAL 秒，每張等比例放慢
     if sum(durs) < MIN_TOTAL:
         k = MIN_TOTAL / sum(durs)
         durs = [d * k for d in durs]
+    total = sum(durs) + FADE - FADE * (n - 1) if n > 1 else durs[0]
     args = ["ffmpeg", "-y", "-loglevel", "error"]
     for img, d in zip(images, durs):
-        args += ["-loop", "1", "-t", f"{d + FADE:.2f}", "-i", str(img)]
+        args += ["-framerate", "30", "-loop", "1", "-t", f"{d + FADE:.2f}", "-i", str(img)]
     args += ["-f", "lavfi", "-t", "60", "-i", "anullsrc=r=44100:cl=stereo"]
-    parts = [
-        f"[{i}:v]scale=1080:1350,pad=1080:1920:0:285:color={BG},setsar=1,fps=30,format=yuv420p[v{i}]"
-        for i in range(n)
-    ]
+    parts = []
+    for i, d in enumerate(durs):
+        frames = int((d + FADE) * 30)
+        z = "1.10-0.10*min(on/24,1)" if (i == 0 and hook_first) else f"1+0.035*on/{frames}"
+        parts.append(
+            f"[{i}:v]scale=2160:2700,zoompan=z='{z}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1080x1350:fps=30,"
+            f"pad=1080:1920:0:285:color={BG},setsar=1,format=yuv420p[v{i}]")
     last, offset = "v0", 0.0
     for i in range(1, n):
         offset += durs[i - 1]
-        parts.append(f"[{last}][v{i}]xfade=transition=fade:duration={FADE}:offset={offset - FADE * (i - 1):.2f}[x{i}]")
+        tr = "slideup" if (i == 1 and hook_first) else "slideleft"
+        parts.append(f"[{last}][v{i}]xfade=transition={tr}:duration={FADE}:offset={offset - FADE * (i - 1):.2f}[x{i}]")
         last = f"x{i}"
-    total = sum(durs) + FADE - FADE * (n - 1) if n > 1 else durs[0]
-    args += ["-filter_complex", ";".join(parts), "-map", f"[{last}]", "-map", f"{n}:a",
+    parts.append(f"color=c={TRACK}:s=840x6:r=30:d={total:.2f}[trk]")
+    parts.append(f"color=c={ACCENT}:s=840x6:r=30:d={total:.2f}[bar]")
+    parts.append(f"[trk][bar]overlay=x='-840+840*t/{total:.2f}':y=0[prog]")
+    parts.append(f"[{last}][prog]overlay=x=120:y=1740:shortest=1[vout]")
+    args += ["-filter_complex", ";".join(parts), "-map", "[vout]", "-map", f"{n}:a",
              "-t", f"{total:.2f}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
              "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(out)]
     subprocess.run(args, check=True)
@@ -147,7 +161,8 @@ def main() -> int:
         tt_file = ROOT / "tiktok" / "cards" / f"{p['date']}.json"
         tt = json.loads(tt_file.read_text(encoding="utf-8")) if tt_file.exists() else {}
         imgs = tt.get("images") or ([tt["hook"]["image"]] if tt.get("hook") else []) + post["images"]
-        secs = make_video([ROOT.parent / img for img in imgs], out_dir / f"{name}.mp4")
+        secs = make_video([ROOT.parent / img for img in imgs], out_dir / f"{name}.mp4",
+                          hook_first=bool(tt.get("images") or tt.get("hook")))
         if tt.get("caption"):
             caption = tiktok_caption(tt["caption"] + "\n\n" + " ".join(re.findall(r"#[\w一-鿿]+", post["caption"])))
         else:
