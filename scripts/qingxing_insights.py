@@ -11,7 +11,8 @@
   THREADS_ACCESS_TOKEN  Threads 權杖（要有 threads_basic、threads_manage_insights）
   NOTION_TOKEN          Notion integration token（成長數據、貼文成效兩個資料庫都要連接給它）
   TARGET_DATE           每日那筆要記錄哪一天（台北，YYYY-MM-DD）。預設今天；凌晨 3 點前執行算前一天
-  LOOKBACK_DAYS         每篇貼文往回更新幾天，預設 7
+  LOOKBACK_DAYS         每篇貼文往回更新幾天；不設的話平日 14 天、週日 60 天（舊貼文還會繼續有觀看，
+                        但每晚全部重抓呼叫太多，Meta 之前標過異常活動，所以舊的一週補一次）
   DRY_RUN=true          只印出數字，不寫 Notion
 """
 import json
@@ -28,12 +29,13 @@ GROWTH_DB = "c6c1c75e84454b7f9e4fe7fa73fcdd5e"
 POSTS_DB = os.environ.get("NOTION_POSTS_DB", "c14dd2984bc14ec488fc79c5645539b8")
 NOTION = {"Authorization": f"Bearer {os.environ.get('NOTION_TOKEN','')}", "Notion-Version": "2022-06-28", "Content-Type": "application/json"}
 DRY = os.environ.get("DRY_RUN") == "true"
-LOOKBACK = int(os.environ.get("LOOKBACK_DAYS") or 7)
 ROOT = Path(__file__).resolve().parent.parent
 SCHEDULE = ROOT / "qingxing" / "schedule.json"
 IG_POSTS_DIR = ROOT / "qingxing" / "instagram" / "posts"
 THREADS_JSON = ROOT / "qingxing" / "threads" / "posts.json"
 NOW = datetime.now(TPE)
+_ref = NOW - timedelta(days=1) if NOW.hour < 3 else NOW  # 凌晨補跑算前一天
+LOOKBACK = int(os.environ.get("LOOKBACK_DAYS") or (60 if _ref.weekday() == 6 else 14))
 
 
 def norm(s: str) -> str:
@@ -44,6 +46,19 @@ def tpe_date(ts: str) -> str:
     ts = ts.replace("Z", "+00:00")
     ts = re.sub(r"([+-]\d{2})(\d{2})$", r"\1:\2", ts)
     return datetime.fromisoformat(ts).astimezone(TPE).strftime("%Y-%m-%d")
+
+
+def get_paged(url, since: str, **params) -> list:
+    """照 paging.next 一頁一頁抓，抓到比 since 還舊的就停（API 由新到舊排）。"""
+    out = []
+    while url:
+        j = get(url, **params)
+        data = j.get("data", [])
+        out += data
+        if not data or tpe_date(data[-1]["timestamp"]) < since:
+            break
+        url, params = (j.get("paging") or {}).get("next"), {}
+    return out
 
 
 def get(url, **params):
@@ -103,9 +118,9 @@ def ig_collect():
         base = "https://graph.instagram.com/v21.0"
         uid = get(f"{base}/me", fields="user_id,id", access_token=tok).get("user_id") or "me"
     prof = get(f"{base}/{uid}", fields="followers_count,username", access_token=tok)
-    media = get(f"{base}/{uid}/media", fields="id,timestamp,media_type,media_product_type,like_count,comments_count,caption,permalink",
-                limit=30, access_token=tok).get("data", [])
     since = (NOW - timedelta(days=LOOKBACK)).strftime("%Y-%m-%d")
+    media = get_paged(f"{base}/{uid}/media", since, fields="id,timestamp,media_type,media_product_type,like_count,comments_count,caption,permalink",
+                      limit=50, access_token=tok)
     posts = []
     for m in media:
         d = tpe_date(m["timestamp"])
@@ -143,8 +158,8 @@ def threads_collect():
             followers = (x.get("total_value") or {}).get("value") or (x.get("values") or [{}])[-1].get("value", 0) or 0
     except RuntimeError as e:
         print(f"::warning::Threads 粉絲數讀不到（{e}），填 0", file=sys.stderr)
-    items = get(f"{base}/me/threads", fields="id,timestamp,text,permalink,media_type,is_quote_post", limit=50, access_token=tok).get("data", [])
     since = (NOW - timedelta(days=LOOKBACK)).strftime("%Y-%m-%d")
+    items = get_paged(f"{base}/me/threads", since, fields="id,timestamp,text,permalink,media_type,is_quote_post", limit=50, access_token=tok)
     posts = []
     for t in items:
         d = tpe_date(t["timestamp"])

@@ -10,6 +10,10 @@ on:
         description: '要抓哪一天（YYYY-MM-DD，台北；空白＝今天）'
         type: string
         default: ''
+      lookback_days:
+        description: '每篇貼文往回更新幾天（空白＝平日 14、週日 60）'
+        type: string
+        default: ''
       dry_run:
         description: '試跑（只印數字，不寫 Notion）'
         type: boolean
@@ -26,7 +30,7 @@ jobs:
   insights:
     if: github.event_name == 'workflow_dispatch' || vars.QX_IG_BOT_ENABLED == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -42,6 +46,7 @@ jobs:
           THREADS_ACCESS_TOKEN: ${{ secrets.QX_THREADS_ACCESS_TOKEN }}
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           TARGET_DATE: ${{ inputs.date }}
+          LOOKBACK_DAYS: ${{ inputs.lookback_days }}
           DRY_RUN: ${{ inputs.dry_run == true && 'true' || 'false' }}
 
       - name: 重新同步後台
