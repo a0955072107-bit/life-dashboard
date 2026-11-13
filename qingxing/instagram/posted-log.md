@@ -2,3 +2,4 @@
 
 由 .github/workflows/qingxing-ig-evening.yml 自動寫入（台北時間）。
 
+- 2026-11-14 01:41 ✅ 已發 Reels 2026-11-13-reel-day04.md → media 18426599602152609
