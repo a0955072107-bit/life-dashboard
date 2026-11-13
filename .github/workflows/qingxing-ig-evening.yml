@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: read
+  contents: write   # 發出貼文時記一行到 qingxing/instagram/posted-log.md，20:53 的檢查靠它確認
 
 jobs:
   evening:
@@ -34,6 +34,7 @@ jobs:
           DRY_RUN: 'false'
           BOT_TASKS: post,comments,dms
           COMMENT_MEDIA_DAYS: '3'
+        shell: bash
         run: |
           export TZ=Asia/Taipei
           end=$(date -d 'today 23:30' +%s)
@@ -42,7 +43,12 @@ jobs:
           while [ "$(date +%s)" -lt "$end" ]; do
             git pull -q --ff-only origin main || true   # 白天改過的貼文也吃得到
             rounds=$((rounds+1)); echo "== 第 $rounds 輪 $(date '+%H:%M:%S')"
-            node qingxing/instagram/bot.mjs || fails=$((fails+1))
+            node qingxing/instagram/bot.mjs 2>&1 | tee /tmp/round.log; [ "${PIPESTATUS[0]}" -eq 0 ] || fails=$((fails+1))
+            if grep -q "✅ 已發" /tmp/round.log; then
+              grep "✅ 已發" /tmp/round.log | sed "s/^/- $(date '+%Y-%m-%d %H:%M') /" >> qingxing/instagram/posted-log.md
+              git config user.name "dashboard-bot"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+              git add qingxing/instagram/posted-log.md && git commit -qm "qingxing: IG 已發 $(date '+%m/%d %H:%M')" && (git pull -q --rebase origin main && git push -q || echo "記錄推送失敗（不影響發文）")
+            fi
             now=$(date +%s); hm=$(date +%H%M)
             if [ "$hm" -ge 1955 ] && [ "$hm" -lt 2230 ]; then gap=300; else gap=900; fi
             # 下一篇貼文若比下一輪早，就等到它的時間（＋30 秒）
