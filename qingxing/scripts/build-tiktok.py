@@ -30,17 +30,30 @@ def parse_post(path: Path) -> dict:
     return {"images": images, "status": status, "caption": body}
 
 
-def tiktok_caption(ig_caption: str) -> str:
-    # 正文保留；hashtag 換成 TikTok 常用的，結尾導到 IG／Bio
+OTHER_PLATFORM = re.compile(r"IG|Instagram|Threads|@qingxing\.action|私訊")
+
+
+def tiktok_caption(ig_caption: str, hook: str | None = None) -> str:
+    """TikTok 文案。2026-11-13 Yang 定：TikTok 文案和影片內不放 IG 或其他平台導流、不放價格之外的硬銷；
+    行動呼籲一律指「主頁連結」。hook＝開頭痛點句，取代原本第一行。"""
     lines = [l for l in ig_caption.splitlines() if not l.strip().startswith("#")]
     tags = re.findall(r"#[\w一-鿿]+", ig_caption)
-    tags = [t for t in tags if t not in ("#清醒行動派", "#先清醒再行動")][:3]
-    text = "\n".join(lines).strip()
-    # TikTok 要 1,000 粉才能放主頁連結（2026-11-11 Yang 同意）：免費表只寫「留言『清醒』」，
-    # 不提主頁連結；產品貼文的購買連結改指 IG 主頁（IG 簡介有 Portaly 連結）
+    tags = [t for t in tags if t not in ("#清醒行動派", "#先清醒再行動", "#20歲")][:3]
+    out = []
+    for l in lines:
+        if "留言「清醒」" in l:  # IG 的關鍵字私訊在 TikTok 沒有 → 改指主頁連結
+            l = "免費的 7 天清醒行動表，在主頁連結。"
+        elif OTHER_PLATFORM.search(l):
+            continue
+        out.append(l)
+    if hook:
+        first = next((i for i, l in enumerate(out) if l.strip()), None)
+        if first is not None:
+            out[first] = hook
+    text = re.sub(r"\n{3,}", "\n\n", "\n".join(out)).strip()
     text = re.sub(r"或點首頁 ?(Bio ?)?連結", "", text)
-    text = text.replace("連結在首頁", "購買連結在 IG @qingxing.action 主頁")
-    text = text.replace("首頁 Bio 連結", "IG @qingxing.action 主頁連結")
+    text = text.replace("連結在首頁", "連結在主頁").replace("首頁 Bio 連結", "主頁連結")
+    assert not OTHER_PLATFORM.search(text), f"TikTok 文案還有其他平台：{text}"
     extra = [t for t in ("#自我成長", "#fyp") if t not in tags]
     return f"{text}\n\n#清醒行動派 {' '.join(tags + extra)}"
 
@@ -127,8 +140,14 @@ def main() -> int:
         if post["status"] != "ready":
             listing.append(f"✏️ {label}　→ 草稿，先不要排")
             continue
-        secs = make_video([ROOT.parent / img for img in post["images"]], out_dir / f"{name}.mp4")
-        caption = tiktok_caption(post["caption"])
+        tt_file = ROOT / "tiktok" / "cards" / f"{p['date']}.json"
+        tt = json.loads(tt_file.read_text(encoding="utf-8")) if tt_file.exists() else {}
+        imgs = tt.get("images") or ([tt["hook"]["image"]] if tt.get("hook") else []) + post["images"]
+        secs = make_video([ROOT.parent / img for img in imgs], out_dir / f"{name}.mp4")
+        if tt.get("caption"):
+            caption = tiktok_caption(tt["caption"] + "\n\n" + " ".join(re.findall(r"#[\w一-鿿]+", post["caption"])))
+        else:
+            caption = tiktok_caption(post["caption"], (tt.get("hook") or {}).get("text"))
         (out_dir / f"{name}.txt").write_text(caption + "\n", encoding="utf-8")
         item.update({"file": f"{name}.mp4", "video_url": f"{base}/{name}.mp4",
                      "caption_url": f"{base}/{name}.txt", "seconds": round(secs), "caption": caption})

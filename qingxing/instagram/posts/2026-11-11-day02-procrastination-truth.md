@@ -9,7 +9,6 @@ images:
   - qingxing/ig/2026-11-11-day02-procrastination-truth-5.jpg
   - qingxing/ig/2026-11-11-day02-procrastination-truth-6.jpg
 status: draft
-# 2026-11-11 Meta 應用程式被擋、Yang 決定這天不發（避免恢復後補發）
 ---
 拖延不是個性，是任務沒拆好。
 

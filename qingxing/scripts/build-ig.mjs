@@ -15,6 +15,8 @@ const IG_DIR = join(here, '..', 'ig')
 const POST_DIR = join(here, '..', 'instagram', 'posts')
 mkdirSync(IG_DIR, { recursive: true })
 mkdirSync(POST_DIR, { recursive: true })
+const TT_DIR = join(here, '..', 'tiktok', 'cards') // TikTok／Reel 專用的開頭卡與專用版（posts-data 的 hook、tiktok）
+mkdirSync(TT_DIR, { recursive: true })
 
 const C = { bg: '#F6F3EE', ink: '#2B2B2B', muted: '#5F5B55', accent: '#1F3A5F', line: '#E3DDD3' }
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -83,6 +85,26 @@ for (const post of POSTS) {
     await page.screenshot({ path: join(IG_DIR, file), type: 'jpeg', quality: 90 })
     images.push(`qingxing/ig/${file}`)
   }
+  // TikTok／Reel 專用：hook＝影片最前面多一張開頭卡；tiktok＝整支影片換成專用版（例：上架日不放價格）
+  const tt = {}
+  if (post.tiktok) {
+    tt.images = []
+    for (let i = 0; i < post.tiktok.slides.length; i++) {
+      const file = `${post.date}-tt-${i + 1}.jpg`
+      await page.setContent(`<!doctype html><meta charset="utf-8">${slideHtml(post.tiktok.slides[i], i + 1, post.tiktok.slides.length, 'carousel')}`)
+      await page.evaluate(() => document.fonts.ready)
+      await page.screenshot({ path: join(TT_DIR, file), type: 'jpeg', quality: 90 })
+      tt.images.push(`qingxing/tiktok/cards/${file}`)
+    }
+    tt.caption = post.tiktok.caption
+  } else if (post.hook) {
+    const file = `${post.date}-hook.jpg`
+    await page.setContent(`<!doctype html><meta charset="utf-8">${slideHtml(post.hook, 1, 1, 'carousel')}`)
+    await page.evaluate(() => document.fonts.ready)
+    await page.screenshot({ path: join(TT_DIR, file), type: 'jpeg', quality: 90 })
+    tt.hook = { image: `qingxing/tiktok/cards/${file}`, text: post.hook.replace('｜', '') }
+  }
+  if (tt.images || tt.hook) writeFileSync(join(TT_DIR, `${post.date}.json`), JSON.stringify(tt, null, 1) + '\n')
   const note = post.kind === 'reel' ? '# 短影音日：自動發字幕卡輪播；你也可以另外錄口播 Reels／抖音\n' : ''
   const md = `---\n${note}publish_at: ${post.date}T20:00:00+08:00\nimages:\n${images.map((x) => `  - ${x}`).join('\n')}\nstatus: ${post.draft ? 'draft' : 'ready'}\n---\n${post.caption}\n\n${FIXED_TAGS} ${post.tags}\n`
   writeFileSync(join(POST_DIR, `${name}.md`), md)
