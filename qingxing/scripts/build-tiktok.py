@@ -126,6 +126,17 @@ def make_video(images: list[Path], out: Path, hook_first: bool = False) -> float
     return total
 
 
+def make_motion(day: str, out: Path) -> float | None:
+    """2026-11-13：預設用 build-motion.mjs 做全螢幕動態字卡（字逐字跳出、深藍開頭卡、分段進度條）。"""
+    try:
+        r = subprocess.run(["node", str(ROOT / "scripts" / "build-motion.mjs"), day, str(out)],
+                           check=True, capture_output=True, text=True, timeout=600)
+        return float(json.loads(r.stdout.strip().splitlines()[-1])["seconds"])
+    except Exception as e:  # noqa: BLE001
+        print(f"::warning::{day} 動態版失敗，改用圖卡版：{e}", file=sys.stderr)
+        return None
+
+
 def main() -> int:
     tz = timezone(timedelta(hours=8))
     start = date.fromisoformat(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1] else datetime.now(tz).date() + timedelta(days=1)
@@ -161,8 +172,10 @@ def main() -> int:
         tt_file = ROOT / "tiktok" / "cards" / f"{p['date']}.json"
         tt = json.loads(tt_file.read_text(encoding="utf-8")) if tt_file.exists() else {}
         imgs = tt.get("images") or ([tt["hook"]["image"]] if tt.get("hook") else []) + post["images"]
-        secs = make_video([ROOT.parent / img for img in imgs], out_dir / f"{name}.mp4",
-                          hook_first=bool(tt.get("images") or tt.get("hook")))
+        secs = make_motion(p["date"], out_dir / f"{name}.mp4")
+        if secs is None:  # 動態版做不出來（沒有 node／Playwright）→ 退回圖卡版
+            secs = make_video([ROOT.parent / img for img in imgs], out_dir / f"{name}.mp4",
+                              hook_first=bool(tt.get("images") or tt.get("hook")))
         if tt.get("caption"):
             caption = tiktok_caption(tt["caption"] + "\n\n" + " ".join(re.findall(r"#[\w一-鿿]+", post["caption"])))
         else:

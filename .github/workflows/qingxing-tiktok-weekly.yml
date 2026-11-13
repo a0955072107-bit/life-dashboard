@@ -27,11 +27,16 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v5
-      - name: 安裝 ffmpeg
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: 安裝 ffmpeg、中文字型
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-noto-cjk
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: 安裝 Playwright（動態字卡用）
+        run: npm i --no-save playwright@1.48.2 && npx playwright install --with-deps chromium
       - name: 決定起始日與天數
         id: args
         run: |
