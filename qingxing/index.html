@@ -346,7 +346,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
         <label>日期<input name="date" type="date" required></label>
         <label>平台<select name="platform"><option>Instagram</option><option value="抖音">TikTok（抖音）</option><option>Threads</option></select></label>
         <label>粉絲數（累計）<input name="followers" type="number" min="0" inputmode="numeric" placeholder="例 128"></label>
-        <label>觀看／觸及<input name="views" type="number" min="0" inputmode="numeric"></label>
+        <label>觀看（當天新增）<input name="views" type="number" min="0" inputmode="numeric"></label>
         <label>讚<input name="likes" type="number" min="0" inputmode="numeric"></label>
         <label>留言<input name="comments" type="number" min="0" inputmode="numeric"></label>
         <label>收藏<input name="saves" type="number" min="0" inputmode="numeric"></label>
@@ -624,7 +624,7 @@ async function submitForm(form, kind, hintEl, label){
   const v = formData(form), hint = $(hintEl);
   hint.className = "hint"; hint.textContent = "送出中…";
   try {
-    await dispatch({ kind, ...v });
+    await dispatch({ kind, data: v }); // GitHub 規定 client_payload 頂層最多 10 個欄位，所以欄位都包在 data 裡
     const list = pendingList();
     list.push({ kind, date: v.date, platform: v.platform, amount: Number(v.amount), label: label(v), status: "sent", sentAt: Date.now() });
     savePending(list); renderPending();

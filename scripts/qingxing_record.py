@@ -3,7 +3,8 @@
 由 .github/workflows/qingxing-record.yml 在 repository_dispatch（event_type=qx-record）時執行。
 環境變數：
   NOTION_TOKEN   Notion integration token
-  RECORD_JSON    client_payload 的 JSON 字串，例如
+  RECORD_JSON    client_payload 的 JSON 字串。新格式是 {"kind":"growth","data":{...其餘欄位}}
+                 （GitHub 規定 client_payload 頂層最多 10 個欄位）；舊的攤平格式也照收。攤平後例如
                  {"kind":"growth","date":"2026-11-10","platform":"Instagram","followers":12,"views":340,
                   "likes":20,"comments":3,"saves":5,"shares":1,"topic":"Day 1 迷惘不是你的問題","format":"輪播","note":""}
                  {"kind":"income","date":"2026-11-19","product":"電子書《從迷惘到行動》","qty":1,"unit":390,"amount":390,
@@ -44,13 +45,30 @@ def select(v, allowed, default=None):
 def date(s): return {"date": {"start": str(s)[:10]}}
 
 
+PLATFORM_ALIASES = {"TikTok": "抖音", "TikTok（抖音）": "抖音", "tiktok": "抖音", "IG": "Instagram", "instagram": "Instagram"}
+
+
+def flatten(rec: dict) -> dict:
+    """新格式 {kind, data:{...}} → 攤平成一層。"""
+    if isinstance(rec.get("data"), dict):
+        return {**rec["data"], "kind": rec.get("kind")}
+    return rec
+
+
 def build(rec: dict):
+    rec = flatten(rec)
+    if rec.get("platform") in PLATFORM_ALIASES:
+        rec["platform"] = PLATFORM_ALIASES[rec["platform"]]
+    if rec.get("source") in ("TikTok", "tiktok", "TikTok（抖音）"):
+        rec["source"] = "抖音"
     kind = rec.get("kind")
     d = rec.get("date")
     if not d or len(str(d)) < 10:
         raise ValueError("缺日期")
     if kind == "growth":
-        platform = rec.get("platform") if rec.get("platform") in GROWTH_PLATFORMS else "Instagram"
+        platform = rec.get("platform")
+        if platform not in GROWTH_PLATFORMS:
+            raise ValueError(f"不認得的平台：{platform}")  # 不要默默記成 Instagram
         short = {"Instagram": "IG", "抖音": "TikTok", "Threads": "Threads"}[platform]
         props = {
             "名稱": title(rec.get("name") or f"{d[5:].replace('-', '/')} {short}"),
@@ -111,7 +129,8 @@ def main() -> int:
         if resp.status_code >= 300:
             print(f"::error::Notion 回應 {resp.status_code}：{resp.text[:300]}", file=sys.stderr); return 1
         ok += 1
-        print(f"已寫入 {r.get('kind')} {r.get('date')}")
+        f = flatten(r)
+        print(f"已寫入 {f.get('kind')} {f.get('date')} {f.get('platform', '')}")
     print(f"完成 {ok}/{len(recs)} 筆")
     return 0 if ok else 1
 
