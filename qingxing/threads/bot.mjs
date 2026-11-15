@@ -44,7 +44,7 @@ async function th(method, path, params = {}) {
 
 export const norm = (s = '') => s.replace(/\s+/g, ' ').trim().slice(0, 120)
 // 初稿空格（【Yang 補】之類）還在，就代表沒定稿，不能發
-export const hasPlaceholder = (s = '') => /【[^】]*】/.test(s)
+export const hasPlaceholder = (s = '') => /【[^】]*(補|填|放|定稿)[^】]*】/.test(s) // 【舊習慣】這種內文用的括號不算
 
 export function loadAll(dir = here) {
   const posts = JSON.parse(readFileSync(join(dir, 'posts.json'), 'utf8'))
