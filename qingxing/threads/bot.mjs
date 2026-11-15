@@ -8,6 +8,7 @@
 //   THREADS_ACCESS_TOKEN  必填，Threads 權杖（GitHub Secrets：QX_THREADS_ACCESS_TOKEN）
 //   DRY_RUN=true          只印出會做什麼，不真的發
 //   MAX_LATE_HOURS        超過這麼久沒發的就不補發（預設 6 小時；一天四則，補太舊的沒意義）
+//   EARLY_MINUTES         排定時間前幾分鐘內的也先發（預設 0；workflow 的等待步驟用 2）
 import { readFileSync, appendFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -17,6 +18,7 @@ const TOKEN = process.env.THREADS_ACCESS_TOKEN
 const DRY = process.env.DRY_RUN === 'true'
 const API = process.env.THREADS_API_BASE || 'https://graph.threads.net/v1.0'
 const MAX_LATE_HOURS = Number(process.env.MAX_LATE_HOURS || 6)
+const EARLY_MS = Number(process.env.EARLY_MINUTES || 0) * 60_000 // 可以提早幾分鐘發（Yang 11/15：可以早不能晚）
 const now = new Date()
 const summary = []
 const log = (...a) => { const line = a.join(' '); console.log(line); summary.push(line) }
@@ -71,7 +73,7 @@ async function main() {
   log(`Threads 帳號：@${me.username}${DRY ? '（試跑模式，不會真的發）' : ''}`)
   const posts = loadAll()
   for (const p of posts) if (p.status === 'ready' && hasPlaceholder(p.text)) warn(`${p.id} 標成 ready 但還有【】空格沒填，不發`)
-  const due = duePosts(posts, now, MAX_LATE_HOURS)
+  const due = duePosts(posts, new Date(now.getTime() + EARLY_MS), MAX_LATE_HOURS)
   const upcoming = posts.filter((p) => p.status === 'ready' && new Date(p.publish_at) > now).length
   log(`Threads：共 ${posts.length} 則，排程中 ${upcoming} 則，現在該發 ${due.length} 則`)
   const recent = (await th('GET', '/me/threads', { fields: 'id,text,timestamp', limit: 50 })).data || []
