@@ -2,6 +2,7 @@
 // 用法：node qingxing/scripts/build-threads.mjs
 // 每天四則（台灣時間）：08:30 開場一句、12:30 做法、18:00 金句、21:30 問句（導回 IG）。
 // 草稿貼文（draft: true）拆出來的也是 draft，機器人不會發。重跑會整份覆蓋。
+// 2026-11-16 起 18:00 金句停發，改成「100 天清醒行動挑戰」（另存 qingxing/threads/challenge.json，Yang 確認真實內容後才發）。
 import { writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -11,6 +12,7 @@ const here = dirname(fileURLToPath(import.meta.url))
 const OUT_DIR = join(here, '..', 'threads')
 const TIMES = ['08:30', '12:30', '18:00', '21:30']
 const MAX = 480 // Threads 上限 500
+const NO_QUOTE_FROM = '2026-11-16' // 這天起不產金句（第 3 則），時段讓給挑戰系列
 // 文案結尾沒有問句的那幾篇，Threads 的問句手寫在這裡（key 是 Day）
 const QUESTIONS = {
   1: '你的迷惘比較像哪一種：選項太多、用別人的時間表量自己、還是想一次選對？留言 1、2 或 3。',
@@ -84,6 +86,7 @@ const items = []
 for (const p of POSTS) {
   const texts = split(p)
   texts.forEach((text, i) => {
+    if (i === 2 && p.date >= NO_QUOTE_FROM) return
     items.push({
       id: `d${String(p.day).padStart(2, '0')}-${i + 1}`,
       day: p.day, date: p.date, slot: ['開場', '做法', '金句', '問句'][i],

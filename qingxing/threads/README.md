@@ -1,10 +1,11 @@
 # 清醒行動派 Threads 機器人
 
-每天 4 則純文字（08:30 開場一句、12:30 做法、18:00 金句、21:30 問句導回 IG），內容是從 IG 貼文自動拆出來的，用 GitHub Actions 每 30 分鐘檢查一次、時間到就發。Threads 是現在台灣 18–35 歲最容易被推薦的平台，而且跟 IG 同一個帳號。
+每天 4 則純文字：08:30 開場一句、12:30 做法、21:30 問句導回 IG（從 IG 貼文自動拆出來），加上約 22:00 的「100 天清醒行動挑戰」（2026-11-16 起取代 18:00 金句，見下方），用 GitHub Actions 每 30 分鐘檢查一次、時間到就發。Threads 是現在台灣 18–35 歲最容易被推薦的平台，而且跟 IG 同一個帳號。
 
 | 檔案 | 用途 |
 |---|---|
 | `posts.json` | 全部 Threads 文字（由 `node qingxing/scripts/build-threads.mjs` 從 `posts-data.mjs` 產生，重跑會覆蓋） |
+| `challenge.json` | 100 天清醒行動挑戰（手動定稿，build-threads.mjs 不會覆蓋） |
 | `bot.mjs` | 機器人本體：發時間到的文字，用最近 50 則比對避免重發 |
 | `../../.github/workflows/qingxing-threads-bot.yml` | 每小時第 17、47 分（UTC）跑一次 |
 | `../../.github/workflows/qingxing-threads-token-refresh.yml` | 每週一自動續期權杖 |
@@ -46,3 +47,11 @@ Name：`QX_THREADS_BOT_ENABLED`，Value：`true`。要暫停改成 `false`。
 ## 限制
 - Threads API 一天最多 250 則，文字 500 字。
 - 機器人只發文，不會自動回覆或追蹤；Threads 的留言要自己回。
+
+## 100 天清醒行動挑戰（2026-11-16 起）
+- 每天一則，標題「100 天清醒行動挑戰｜Day N」，寫 Yang 當天**真的做過**的一件小行動：做了什麼、卡在哪、怎麼突破、學到的一句話，結尾邀請一起做＋《7 天清醒行動表》。電子書每週最多 1–2 篇提到（`mentions_ebook: true`），開賣後才提。
+- 流程：初稿先放 `challenge.json`（`status: draft`，空格寫【Yang 補】）→ 每晚 20:53 提醒問 Yang 三格 → Claude 定稿、改 `ready`、推上 main → 手動 Run 本機器人（不試跑）立刻發。排程的 22:00 只是備援。
+- 機器人看到【…】空格一律不發，就算標成 ready 也一樣。
+- 沒做到的那天：不發，或照實寫「今天沒做到」；隔天接下一個編號，不跳號、不補寫。
+- 不提 AI 創業、小店 IG、店語文案、年齡或大學生。
+- 數據：qingxing_insights.py 把開頭是「100 天清醒行動挑戰｜Day N」的貼文標成類型「Threads 挑戰」，不寫進 Day 欄（那欄是 30 天主線）。

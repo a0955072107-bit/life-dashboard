@@ -174,9 +174,13 @@ def threads_collect():
         except RuntimeError as e:
             print(f"::warning::Threads {t['id']} insights 讀不到：{e}", file=sys.stderr)
         day, slot = TH_LOOKUP.get(norm(row["text"])[:40], (None, None))
-        row["type"] = f"Threads {slot}" if slot else "Threads"
-        row["day"] = day
-        row["title"] = f"Threads {slot}｜Day {day}" if slot else (norm(row["text"])[:30] or "（沒有文字）")
+        cm = re.match(r"\s*100 天清醒行動挑戰｜Day (\d+)", row["text"])
+        if cm:  # 挑戰系列有自己的 Day 編號，不寫進 Day 欄（那欄是 30 天主線），免得對錯天
+            row["type"], row["day"], row["title"] = "Threads 挑戰", None, f"Threads 挑戰｜挑戰 Day {cm.group(1)}"
+        else:
+            row["type"] = f"Threads {slot}" if slot else "Threads"
+            row["day"] = day
+            row["title"] = f"Threads {slot}｜Day {day}" if slot else (norm(row["text"])[:30] or "（沒有文字）")
         posts.append(row)
     return {"followers": followers, "posts": posts}
 

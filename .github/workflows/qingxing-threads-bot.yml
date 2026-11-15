@@ -41,8 +41,8 @@ jobs:
         if: github.event_name == 'schedule'
         run: |
           wait=$(node -e "
-            const ps=require('./qingxing/threads/posts.json'); const now=Date.now();
-            const next=ps.filter(p=>p.status==='ready').map(p=>new Date(p.publish_at).getTime()).filter(t=>t>now).sort((a,b)=>a-b)[0];
+            const fs=require('fs'); const ps=require('./qingxing/threads/posts.json').concat(fs.existsSync('./qingxing/threads/challenge.json')?require('./qingxing/threads/challenge.json'):[]); const now=Date.now();
+            const next=ps.filter(p=>p.status==='ready'&&!/【[^】]*】/.test(p.text||'')).map(p=>new Date(p.publish_at).getTime()).filter(t=>t>now).sort((a,b)=>a-b)[0];
             const s=next?Math.ceil((next-now)/1000)+20:-1; console.log(s>0&&s<=3600?s:-1)")
           if [ "$wait" -lt 0 ]; then echo "60 分鐘內沒有要發的"; exit 0; fi
           echo "等 $wait 秒後發下一則"; sleep "$wait"

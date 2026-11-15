@@ -1,6 +1,8 @@
 // 清醒行動派 Threads 機器人：由 GitHub Actions 每 30 分鐘執行一次，
 // 把 qingxing/threads/posts.json 裡時間到了的純文字發到 Threads（一次最多一則，避免洗版）。
 // posts.json 由 node qingxing/scripts/build-threads.mjs 從 IG 貼文拆出來。
+// challenge.json 是「100 天清醒行動挑戰」（2026-11-16 起，取代 18:00 金句）：預設 draft，
+// Yang 確認當天真的做了什麼、Claude 定稿後才改 ready；還留著【…】的空格一律不發。
 //
 // 環境變數：
 //   THREADS_ACCESS_TOKEN  必填，Threads 權杖（GitHub Secrets：QX_THREADS_ACCESS_TOKEN）
@@ -41,11 +43,20 @@ async function th(method, path, params = {}) {
 }
 
 export const norm = (s = '') => s.replace(/\s+/g, ' ').trim().slice(0, 120)
+// 初稿空格（【Yang 補】之類）還在，就代表沒定稿，不能發
+export const hasPlaceholder = (s = '') => /【[^】]*】/.test(s)
+
+export function loadAll(dir = here) {
+  const posts = JSON.parse(readFileSync(join(dir, 'posts.json'), 'utf8'))
+  let challenge = []
+  try { challenge = JSON.parse(readFileSync(join(dir, 'challenge.json'), 'utf8')) } catch { /* 沒有就算了 */ }
+  return [...posts, ...challenge]
+}
 
 export function duePosts(posts, now, maxLateHours) {
   const earliest = now.getTime() - maxLateHours * 3600_000
   return posts
-    .filter((p) => p.status === 'ready' && p.text)
+    .filter((p) => p.status === 'ready' && p.text && !hasPlaceholder(p.text))
     .map((p) => ({ ...p, at: new Date(p.publish_at) }))
     .filter((p) => !Number.isNaN(p.at.getTime()) && p.at.getTime() <= now.getTime() && p.at.getTime() >= earliest)
     .sort((a, b) => a.at - b.at)
@@ -58,7 +69,8 @@ async function main() {
   }
   const me = await th('GET', '/me', { fields: 'id,username' })
   log(`Threads 帳號：@${me.username}${DRY ? '（試跑模式，不會真的發）' : ''}`)
-  const posts = JSON.parse(readFileSync(join(here, 'posts.json'), 'utf8'))
+  const posts = loadAll()
+  for (const p of posts) if (p.status === 'ready' && hasPlaceholder(p.text)) warn(`${p.id} 標成 ready 但還有【】空格沒填，不發`)
   const due = duePosts(posts, now, MAX_LATE_HOURS)
   const upcoming = posts.filter((p) => p.status === 'ready' && new Date(p.publish_at) > now).length
   log(`Threads：共 ${posts.length} 則，排程中 ${upcoming} 則，現在該發 ${due.length} 則`)
