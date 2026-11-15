@@ -1,7 +1,7 @@
 // 清醒行動派 Threads 機器人：由 GitHub Actions 每 30 分鐘執行一次，
 // 把 qingxing/threads/posts.json 裡時間到了的純文字發到 Threads（一次最多一則，避免洗版）。
 // posts.json 由 node qingxing/scripts/build-threads.mjs 從 IG 貼文拆出來。
-// challenge.json 是「100 天清醒行動挑戰」（2026-11-16 起，取代 18:00 金句）：預設 draft，
+// challenge.json 是「100 天清醒行動挑戰」（2026-11-15 起；11/16 起取代 18:00 金句）：預設 draft，
 // Yang 確認當天真的做了什麼、Claude 定稿後才改 ready；還留著【…】的空格一律不發。
 //
 // 環境變數：
