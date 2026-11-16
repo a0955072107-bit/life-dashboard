@@ -11,6 +11,10 @@
                   "channel":"Portaly","source":"IG","note":""}
 修改：data 裡帶 "id"（Notion 頁面 id，後台點一筆紀錄會帶上）→ 直接改那一頁，空白欄位會清空。
 沒帶 id 的成長數據：同日期＋同平台已經有一筆 → 只用有填的欄位更新那一筆（不會重複新增）；沒有才新增。
+刪除：{"kind":"delete","data":{"id":"<Notion 頁面 id>","target":"growth"|"income"}} → 把那一頁 archive（Notion 垃圾桶可還原，不會真的刪掉）；
+      只允許 archive 屬於「成長數據」或「收入記錄」的頁面。
+防重複：成長數據新增後再查一次同日期＋同平台；同時送出好幾筆造成兩頁以上時，保留最早建立的那頁、
+      把較新那頁有填的欄位併進去，再 archive 較新的頁面。
 寫完後由 workflow 接著跑 fetch_qingxing.py 重新同步。
 """
 import json
@@ -117,14 +121,73 @@ def find_growth(date: str, platform: str):
         {"property": "日期", "date": {"equals": date}},
         {"property": "平台", "select": {"equals": platform}},
     ]}, "page_size": 5}
-    r = requests.post(f"https://api.notion.com/v1/databases/{GROWTH_DB}/query", headers=HEADERS, json=body, timeout=30)
-    r.raise_for_status()
-    res = r.json().get("results", [])
+    res = query_same(date, platform)
     return res[0]["id"] if res else None
 
 
 EMPTY_KEYS = {"followers": "粉絲數", "views": "觀看數", "likes": "按讚", "comments": "留言", "saves": "收藏",
-              "shares": "分享", "topic": "發文主題", "note": "備註"}
+              "shares": "分享", "topic": "發文主題", "note": "備註", "format": "格式"}
+NUM_PROPS = ("粉絲數", "觀看數", "按讚", "留言", "收藏", "分享")
+TEXT_PROPS = ("發文主題", "備註")
+
+
+def norm_id(s: str) -> str:
+    return (s or "").replace("-", "").lower()
+
+
+def archive(page_id: str, target: str) -> None:
+    """只 archive 屬於成長數據／收入記錄的頁面。"""
+    r = requests.get(f"https://api.notion.com/v1/pages/{page_id}", headers=HEADERS, timeout=30)
+    r.raise_for_status()
+    parent = norm_id((r.json().get("parent") or {}).get("database_id"))
+    allowed = {"growth": GROWTH_DB, "income": INCOME_DB}.get(target)
+    if not allowed or parent != norm_id(allowed):
+        raise ValueError(f"這一頁不屬於{target}資料庫，不刪")
+    resp = requests.patch(f"https://api.notion.com/v1/pages/{page_id}", headers=HEADERS, json={"archived": True}, timeout=30)
+    resp.raise_for_status()
+
+
+def query_same(date: str, platform: str) -> list:
+    body = {"filter": {"and": [
+        {"property": "日期", "date": {"equals": date}},
+        {"property": "平台", "select": {"equals": platform}},
+    ]}, "sorts": [{"timestamp": "created_time", "direction": "ascending"}], "page_size": 20}
+    r = requests.post(f"https://api.notion.com/v1/databases/{GROWTH_DB}/query", headers=HEADERS, json=body, timeout=30)
+    r.raise_for_status()
+    return r.json().get("results", [])
+
+
+def dedupe(date: str, platform: str) -> int:
+    """同日同平台超過一頁：保留最早建立的，把較新頁面有填的欄位併進去，再 archive 較新的。回傳 archive 了幾頁。"""
+    pages = query_same(date, platform)
+    if len(pages) < 2:
+        return 0
+    keep, extras = pages[0], pages[1:]
+    merged = {}
+    for pg in extras:  # 照建立時間，較新的蓋較舊的
+        pr = pg.get("properties", {})
+        for name in NUM_PROPS:
+            v = (pr.get(name) or {}).get("number")
+            if v is not None:
+                merged[name] = {"number": v}
+        for name in TEXT_PROPS:
+            rt = (pr.get(name) or {}).get("rich_text") or []
+            t = "".join(x.get("plain_text", "") for x in rt)
+            if t:
+                merged[name] = text(t)
+        sel = ((pr.get("格式") or {}).get("select") or {}).get("name")
+        if sel:
+            merged["格式"] = {"select": {"name": sel}}
+    if merged:
+        requests.patch(f"https://api.notion.com/v1/pages/{keep['id']}", headers=HEADERS,
+                       json={"properties": merged}, timeout=30).raise_for_status()
+    n = 0
+    for pg in extras:
+        r = requests.patch(f"https://api.notion.com/v1/pages/{pg['id']}", headers=HEADERS, json={"archived": True}, timeout=30)
+        if r.status_code < 300 or r.status_code == 400:  # 400：可能已被另一個同時跑的 run archive 了
+            n += 1
+    print(f"同日同平台有 {len(pages)} 頁，已合併到最早那頁並 archive {n} 頁")
+    return n
 
 
 def main() -> int:
@@ -138,6 +201,18 @@ def main() -> int:
     recs = rec if isinstance(rec, list) else [rec]
     ok = 0
     for r in recs:
+        f0 = flatten(r)
+        if f0.get("kind") == "delete":
+            pid = (f0.get("id") or "").strip()
+            try:
+                if not pid:
+                    raise ValueError("刪除缺 id")
+                archive(pid, f0.get("target"))
+            except (ValueError, requests.RequestException) as e:
+                print(f"::error::刪除失敗：{e}", file=sys.stderr); return 1
+            ok += 1
+            print(f"已刪除（archive）{f0.get('target')} {f0.get('date', '')} {f0.get('platform', '')}")
+            continue
         try:
             db, props = build(r)
         except ValueError as e:
@@ -168,6 +243,11 @@ def main() -> int:
             print(f"::error::Notion 回應 {resp.status_code}：{resp.text[:300]}", file=sys.stderr); return 1
         ok += 1
         print(f"{action} {f.get('kind')} {f.get('date')} {f.get('platform', '')}")
+        if f.get("kind") == "growth" and not f.get("id"):
+            try:
+                dedupe(props["日期"]["date"]["start"], props["平台"]["select"]["name"])
+            except requests.RequestException as e:
+                print(f"::warning::檢查重複失敗：{e}", file=sys.stderr)
     print(f"完成 {ok}/{len(recs)} 筆")
     return 0 if ok else 1
 
