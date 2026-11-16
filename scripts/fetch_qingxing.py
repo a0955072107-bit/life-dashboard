@@ -134,6 +134,7 @@ def main() -> int:
                 continue
             likes, comments, saves, shares = (n(prop(p, k)) for k in ("按讚", "留言", "收藏", "分享"))
             growth.append({
+                "id": pg["id"],
                 "date": d,
                 "platform": prop(p, "平台") or "Instagram",
                 "followers": n(prop(p, "粉絲數")),
@@ -142,6 +143,10 @@ def main() -> int:
                 "heat": likes + comments * 3 + saves * 5 + shares * 5,
                 "topic": prop(p, "發文主題") or "",
                 "format": prop(p, "格式") or "",
+                "note": prop(p, "備註") or "",
+                # 後台「修改」用：原始值（沒填是 null，不要變成 0）
+                "raw": {k: prop(p, name) for k, name in (("followers", "粉絲數"), ("views", "觀看數"), ("likes", "按讚"),
+                                                          ("comments", "留言"), ("saves", "收藏"), ("shares", "分享"))},
             })
         growth.sort(key=lambda r: (r["date"], r["platform"]))
 
@@ -152,6 +157,7 @@ def main() -> int:
             if not d:
                 continue
             income.append({
+                "id": pg["id"],
                 "date": d,
                 "item": prop(p, "項目") or "",
                 "product": prop(p, "產品") or "其他",

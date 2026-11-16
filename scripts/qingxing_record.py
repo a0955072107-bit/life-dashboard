@@ -9,6 +9,8 @@
                   "likes":20,"comments":3,"saves":5,"shares":1,"topic":"Day 1 迷惘不是你的問題","format":"輪播","note":""}
                  {"kind":"income","date":"2026-11-19","product":"電子書《從迷惘到行動》","qty":1,"unit":390,"amount":390,
                   "channel":"Portaly","source":"IG","note":""}
+修改：data 裡帶 "id"（Notion 頁面 id，後台點一筆紀錄會帶上）→ 直接改那一頁，空白欄位會清空。
+沒帶 id 的成長數據：同日期＋同平台已經有一筆 → 只用有填的欄位更新那一筆（不會重複新增）；沒有才新增。
 寫完後由 workflow 接著跑 fetch_qingxing.py 重新同步。
 """
 import json
@@ -109,6 +111,22 @@ def build(rec: dict):
     raise ValueError(f"不認得的 kind：{kind}")
 
 
+def find_growth(date: str, platform: str):
+    """同日期同平台的成長數據頁面 id（沒有回 None）。"""
+    body = {"filter": {"and": [
+        {"property": "日期", "date": {"equals": date}},
+        {"property": "平台", "select": {"equals": platform}},
+    ]}, "page_size": 5}
+    r = requests.post(f"https://api.notion.com/v1/databases/{GROWTH_DB}/query", headers=HEADERS, json=body, timeout=30)
+    r.raise_for_status()
+    res = r.json().get("results", [])
+    return res[0]["id"] if res else None
+
+
+EMPTY_KEYS = {"followers": "粉絲數", "views": "觀看數", "likes": "按讚", "comments": "留言", "saves": "收藏",
+              "shares": "分享", "topic": "發文主題", "note": "備註"}
+
+
 def main() -> int:
     if not TOKEN:
         print("::error::沒有 NOTION_TOKEN", file=sys.stderr); return 1
@@ -124,13 +142,32 @@ def main() -> int:
             db, props = build(r)
         except ValueError as e:
             print(f"::warning::略過一筆：{e}", file=sys.stderr); continue
-        resp = requests.post("https://api.notion.com/v1/pages", headers=HEADERS,
-                             json={"parent": {"database_id": db}, "properties": props}, timeout=30)
+        f = flatten(r)
+        page_id = (f.get("id") or "").strip()
+        action = "已修改" if page_id else "已寫入"
+        if not page_id and f.get("kind") == "growth":
+            try:
+                page_id = find_growth(props["日期"]["date"]["start"], props["平台"]["select"]["name"])
+            except requests.RequestException as e:
+                print(f"::warning::查重複失敗（{e}），改成新增", file=sys.stderr)
+                page_id = None
+            if page_id:
+                action = "已更新同日同平台那一筆"
+                # 沒填的欄位不要蓋掉舊值
+                for k, name in EMPTY_KEYS.items():
+                    if str(f.get(k) or "").strip() == "":
+                        props.pop(name, None)
+                props.pop("名稱", None)
+        if page_id:
+            resp = requests.patch(f"https://api.notion.com/v1/pages/{page_id}", headers=HEADERS,
+                                  json={"properties": props}, timeout=30)
+        else:
+            resp = requests.post("https://api.notion.com/v1/pages", headers=HEADERS,
+                                 json={"parent": {"database_id": db}, "properties": props}, timeout=30)
         if resp.status_code >= 300:
             print(f"::error::Notion 回應 {resp.status_code}：{resp.text[:300]}", file=sys.stderr); return 1
         ok += 1
-        f = flatten(r)
-        print(f"已寫入 {f.get('kind')} {f.get('date')} {f.get('platform', '')}")
+        print(f"{action} {f.get('kind')} {f.get('date')} {f.get('platform', '')}")
     print(f"完成 {ok}/{len(recs)} 筆")
     return 0 if ok else 1
 
