@@ -8,26 +8,37 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: update-qingxing
-  cancel-in-progress: false
-
+# 寫 Notion 這一步不排隊：連續送出好幾筆時，GitHub 的 concurrency 只留最新一個等待中的 run，
+# 舊的會被取消（11/16 因此掉了兩筆）。所以只有「重新同步＋提交」排隊，被取消也沒關係（最後一次同步會包含全部）。
 jobs:
   record:
+    if: github.event.action == 'qx-record'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install requests cryptography
-
+      - run: pip install requests
       - name: 寫進 Notion
-        if: github.event.action == 'qx-record'
         run: python scripts/qingxing_record.py
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           RECORD_JSON: ${{ toJSON(github.event.client_payload) }}
+
+  sync:
+    needs: record
+    if: ${{ !cancelled() && (needs.record.result == 'success' || needs.record.result == 'skipped') }}
+    runs-on: ubuntu-latest
+    concurrency:
+      group: update-qingxing
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests cryptography
 
       - name: 重新同步
         run: python scripts/fetch_qingxing.py
