@@ -2,6 +2,8 @@
 // 跟靜態圖卡不同：直接用全螢幕 9:16 排版，字一個一個跳出來、重點句底下有深藍底線劃過、
 // 開頭卡用深藍底白字（跟後面米白底形成反差，前 2 秒抓住眼睛）、上方有限時動態式的分段進度條、
 // 背景有很淡的大號頁碼、最後一張有「收藏」書籤圖示跳動。
+// 2026-11-16 Yang：動畫再豐富——每張卡輪流用不同進場（上浮／右滑／放大）、換卡時深藍色條掃過、
+// 數字和「」裡的字會變色並彈一下、畫面緩慢推近、背景有幾個淡淡的圓慢慢飄、結尾卡加收藏光圈。
 // 每一格用 Playwright 截圖（時間軸由 render(t) 決定，結果固定、不會掉格），直接丟給 ffmpeg。
 //
 // 用法：node qingxing/scripts/build-motion.mjs <日期 YYYY-MM-DD> <輸出 mp4>
@@ -55,7 +57,7 @@ const FPS = 30
 const C = { bg: '#F6F3EE', ink: '#2B2B2B', muted: '#5F5B55', accent: '#1F3A5F', track: '#E4DED4' }
 const html = `<!doctype html><meta charset="utf-8"><style>
 *{box-sizing:border-box;margin:0}
-body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK TC','Noto Sans TC',sans-serif;background:${C.bg};color:${C.ink}}
+body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK TC','Noto Sans TC','WenQuanYi Zen Hei',sans-serif;background:${C.bg};color:${C.ink}}
 #bg{position:absolute;inset:0;background:${C.accent};transform-origin:50% 0}
 #bar{position:absolute;left:72px;right:72px;top:96px;display:flex;gap:10px;z-index:5}
 #bar i{flex:1;height:8px;border-radius:4px;background:${C.track};overflow:hidden;position:relative}
@@ -72,8 +74,15 @@ body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK TC','
 .hook .ul{background:#fff}
 .end .t{color:${C.accent}}
 .mark{width:120px;height:150px;margin-top:60px}
+.t span.em{color:${C.accent};position:relative}
+.hook .t span.em{color:#FFD27A}
+#wipe{position:absolute;top:0;bottom:0;left:0;width:1080px;background:${C.accent};z-index:4;transform:translateX(-1100px)}
+#dots i{position:absolute;border-radius:50%;background:${C.accent};opacity:.035}
+.ring{position:absolute;width:120px;height:150px;left:0;bottom:0;border-radius:50%;border:6px solid ${C.accent};opacity:0}
+.end .markwrap{position:relative;width:120px;margin-top:60px}
+.end .markwrap .mark{margin-top:0}
 </style>
-<div id="bg"></div><div id="bar"></div><div class="brand" id="brand">清醒行動派</div><div id="stage"></div>
+<div id="dots"><i></i><i></i><i></i></div><div id="bg"></div><div id="wipe"></div><div id="bar"></div><div class="brand" id="brand">清醒行動派</div><div id="stage"></div>
 <script>
 const SC = ${JSON.stringify(scenes)}, TOTAL = ${TOTAL};
 const lines = (s) => s.split(/(?<=[，。？！、])/).map((x) => x.trim()).filter(Boolean)
@@ -89,9 +98,10 @@ SC.forEach((s, k) => {
   const el = document.createElement('div'); el.className = 'scene ' + s.kind
   let html = ''
   if (s.kind === 'card') { n++; html += '<div class="ghost">' + String(n).padStart(2, '0') + '</div>' }
-  html += '<div class="t" style="font-size:' + size + 'px">' + tl.map((l) => [...l].map((c) => '<span>' + (c === ' ' ? '&nbsp;' : c) + '</span>').join('')).join('<br>') + '</div><div class="ul"></div>'
+  const emph = (l) => { let inQ = false; return [...l].map((c) => { if (c === '「') inQ = true; const em = (inQ && c !== '「' && c !== '」') || /[0-9０-９]/.test(c); if (c === '」') inQ = false; return '<span' + (em ? ' class="em"' : '') + '>' + (c === ' ' ? '&nbsp;' : c) + '</span>' }).join('') }
+  html += '<div class="t" style="font-size:' + size + 'px">' + tl.map(emph).join('<br>') + '</div><div class="ul"></div>'
   if (p) html += '<div class="p">' + lines(p).map((l) => '<div>' + l + '</div>').join('') + '</div>'
-  if (s.kind === 'end') html += '<svg class="mark" viewBox="0 0 24 30"><path d="M3 2h18v26l-9-6-9 6z" fill="${C.accent}"/></svg>'
+  if (s.kind === 'end') html += '<div class="markwrap"><div class="ring"></div><svg class="mark" viewBox="0 0 24 30"><path d="M3 2h18v26l-9-6-9 6z" fill="${C.accent}"/></svg></div>'
   el.innerHTML = html; stage.appendChild(el); s.el = el
 })
 const clamp = (x) => Math.max(0, Math.min(1, x))
@@ -108,7 +118,12 @@ window.render = (t) => {
     const outEnd = s.kind === 'hook' ? s.dur - 0.12 : s.dur
     const outP = clamp((lt - (outEnd - 0.3)) / 0.3)
     el.style.opacity = 1 - outP
-    el.style.transform = 'translateY(' + (-120 * outC(outP)) + 'px)'
+    // 進場輪流換：0 上浮、1 從右滑入、2 由小放大；整段緩慢推近
+    const inP = outC(lt / 0.45), mode = s.kind === 'card' ? k % 3 : 0
+    const enter = mode === 1 ? 'translateX(' + (160 * (1 - inP)) + 'px)' : mode === 2 ? 'scale(' + (0.9 + 0.1 * inP) + ')' : 'translateY(' + (60 * (1 - inP)) + 'px)'
+    const zoom = 1 + 0.035 * clamp(lt / s.dur)
+    el.style.transform = enter + ' translateY(' + (-120 * outC(outP)) + 'px) scale(' + zoom + ')'
+    el.style.transformOrigin = '0% 50%'
     // 字一個一個跳出來（開頭卡更快、帶彈性）
     const spans = el.querySelectorAll('.t span'), step = s.kind === 'hook' ? 0.035 : 0.03
     const delay = k > 0 && SC[k - 1].kind === 'hook' ? 0.25 : 0.1
@@ -119,6 +134,10 @@ window.render = (t) => {
       sp.style.transform = 'translateY(' + y + 'px)'
     })
     const textDone = delay + spans.length * step + 0.25
+    el.querySelectorAll('.t span.em').forEach((sp, i) => {
+      const q = lt - textDone - i * 0.04
+      if (q > 0 && q < 0.6) sp.style.transform = 'translateY(0) scale(' + (1 + 0.22 * Math.sin(Math.PI * q / 0.6)) + ')'
+    })
     el.querySelector('.ul').style.width = (outC((lt - textDone) / 0.45) * 260) + 'px'
     el.querySelectorAll('.p div').forEach((d, i) => {
       const p = outC((lt - textDone - 0.1 - i * 0.22) / 0.4)
@@ -127,12 +146,23 @@ window.render = (t) => {
     const g = el.querySelector('.ghost')
     if (g) g.style.transform = 'translateY(' + (60 - 120 * clamp(lt / s.dur)) + 'px)'
     const m = el.querySelector('.mark')
+    const ring = el.querySelector('.ring')
+    if (ring) { const q = (lt - textDone - 0.3) % 1.2; const on = lt - textDone - 0.3 > 0; ring.style.opacity = on ? 0.5 * (1 - q / 1.2) : 0; ring.style.transform = 'scale(' + (0.8 + 1.2 * q / 1.2) + ')' }
     if (m) { const q = lt - textDone - 0.3; m.style.transform = 'translateY(' + (q > 0 ? -Math.abs(Math.sin(q * 5)) * 30 * Math.exp(-q * 1.2) : 0) + 'px)'; m.style.opacity = clamp(q * 3) }
   })
   // 開頭卡：深藍底，結束時往上收起露出米白底
   const hook = SC[0].kind === 'hook' ? SC[0] : null
   const hp = hook ? clamp((t - (hook.dur - 0.18)) / 0.38) : 1
   bgEl.style.transform = 'scaleY(' + (1 - outC(hp)) + ')'
+  // 換卡時深藍色條從左掃到右（開頭卡收起那次不用）
+  const wipe = document.getElementById('wipe'); let wx = -1100
+  SC.forEach((s, k) => { if (k === 0 || SC[k - 1].kind === 'hook') return; const d = t - s.start; if (d > -0.18 && d < 0.18) wx = -1100 + 2200 * ((d + 0.18) / 0.36) })
+  wipe.style.transform = 'translateX(' + wx + 'px)'
+  // 背景淡淡的圓慢慢飄
+  document.querySelectorAll('#dots i').forEach((d, i) => {
+    const r = [520, 360, 260][i], x = [700, -120, 520][i] + 60 * Math.sin(t * 0.4 + i * 2), y = [1250, 300, 1650][i] + 80 * Math.cos(t * 0.3 + i)
+    d.style.width = d.style.height = r + 'px'; d.style.left = x + 'px'; d.style.top = y + 'px'
+  })
   brand.style.color = hp < 0.5 && hook ? '#fff' : '${C.ink}'
 }
 </script>`
