@@ -219,25 +219,26 @@ def upsert_post(p: dict):
         notion("POST", "https://api.notion.com/v1/pages", {"parent": {"database_id": POSTS_DB}, "properties": props})
 
 
-def upsert_daily(date: str, platform: str, followers: int, posts: list):
+def upsert_daily(date: str, platform: str, followers, posts: list):
     todays = [p for p in posts if p["date"] == date]
     agg = {k: sum(p[k] for p in todays) for k in ("views", "likes", "comments", "saves", "shares")}
     short = {"Instagram": "IG", "Threads": "Threads"}[platform]
     props = {
         "日期": {"date": {"start": date}},
         "平台": {"select": {"name": platform}},
-        "粉絲數": {"number": followers},
         "觀看數": {"number": agg["views"]}, "按讚": {"number": agg["likes"]}, "留言": {"number": agg["comments"]},
         "收藏": {"number": agg["saves"]}, "分享": {"number": agg["shares"]},
         "備註": {"rich_text": [{"text": {"content": f"自動抓取 {NOW:%m/%d %H:%M}，當天 {len(todays)} 篇"}}]},
     }
+    if followers is not None:  # 粉絲數只有「當下」的數字，舊日期不覆蓋
+        props["粉絲數"] = {"number": followers}
     if date in TITLES:
         props["發文主題"] = {"rich_text": [{"text": {"content": f"Day {TITLES[date][0]} {TITLES[date][1]}"}}]}
     fmt = {"Instagram": "輪播", "Threads": "單圖"}[platform]
     if any(p["type"] == "Reel" for p in todays) and not any(p["type"] == "圖卡" for p in todays):
         fmt = "Reels"
     props["格式"] = {"select": {"name": fmt}}
-    line = f"{platform} {date}：粉絲 {followers}、觀看 {agg['views']}、讚 {agg['likes']}、留言 {agg['comments']}、收藏 {agg['saves']}、分享 {agg['shares']}（{len(todays)} 篇）"
+    line = f"{platform} {date}：粉絲 {followers if followers is not None else '（不改）'}、觀看 {agg['views']}、讚 {agg['likes']}、留言 {agg['comments']}、收藏 {agg['saves']}、分享 {agg['shares']}（{len(todays)} 篇）"
     if DRY:
         print(f"[試跑] 每日 {line}")
         return
@@ -249,6 +250,9 @@ def upsert_daily(date: str, platform: str, followers: int, posts: list):
         props["名稱"] = {"title": [{"text": {"content": f"{date[5:].replace('-', '/')} {short}"}}]}
         notion("POST", "https://api.notion.com/v1/pages", {"parent": {"database_id": GROWTH_DB}, "properties": props})
     print(("更新" if found else "新增") + " " + line)
+
+
+DAILY_REFRESH_DAYS = int(os.environ.get("DAILY_REFRESH_DAYS") or 7)
 
 
 def main() -> int:
@@ -272,7 +276,11 @@ def main() -> int:
                 except RuntimeError as e:
                     print(f"::warning::{platform} 貼文 {p['id']} 寫入失敗：{e}", file=sys.stderr)
             print(f"{platform}：每篇貼文更新 {ok}/{len(res['posts'])} 篇（最近 {LOOKBACK} 天）")
-            upsert_daily(date, platform, res["followers"], res["posts"])
+            # 11/16 修：每篇的觀看數發文後幾天還會一直漲，所以每晚把最近 DAILY_REFRESH_DAYS 天的每日加總都重算一次；
+            # 粉絲數只寫在今天那一列。（原本只寫「當天」一列，GitHub 排程常拖到凌晨 3 點後才跑，前一天整天的數字就漏掉）
+            for i in range(DAILY_REFRESH_DAYS):
+                d = (datetime.strptime(date, "%Y-%m-%d") - timedelta(days=i)).strftime("%Y-%m-%d")
+                upsert_daily(d, platform, res["followers"] if i == 0 else None, res["posts"])
         except Exception as e:  # noqa: BLE001
             failures += 1
             print(f"::warning::{platform} 失敗：{e}", file=sys.stderr)
