@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main   # 排隊後也拿最新版，避免推送衝突
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -33,8 +35,15 @@ jobs:
         run: |
           git config user.name "dashboard-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add qingxing/data.enc.json
-          if git diff --cached --quiet; then echo "沒有變更"; exit 0; fi
-          git commit -m "qingxing: 同步 Notion $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
-          git pull --rebase origin main
-          git push
+          # data.enc.json 整份從 Notion 重新產生，以這次的為準；推送被擋就拿最新 main 再覆蓋一次（最多 3 次）
+          cp qingxing/data.enc.json "$RUNNER_TEMP/data.enc.json"
+          for i in 1 2 3; do
+            git fetch -q origin main && git reset -q --hard origin/main
+            cp "$RUNNER_TEMP/data.enc.json" qingxing/data.enc.json
+            git add qingxing/data.enc.json
+            if git diff --cached --quiet; then echo "沒有變更"; exit 0; fi
+            git commit -qm "qingxing: 同步 Notion $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+            if git push -q origin HEAD:main; then echo "已推送"; exit 0; fi
+            echo "推送被擋，第 $i 次重試"; sleep $((i*5))
+          done
+          exit 1
