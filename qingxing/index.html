@@ -202,7 +202,7 @@ tr.pick.on td{background:var(--tint);font-weight:500}
 .form .hint{font-size:12.5px;color:var(--ink2)}
 .form .hint.ok{color:var(--good)} .form .hint.bad{color:var(--bad)}
 .list .st{font-size:11.5px;padding:0 7px;border-radius:99px;background:var(--tint);color:var(--accent);flex:none}
-.list .st.ok{background:#E6F2EC;color:#2E7D5B}.list .st.bad{background:#FBE9E5;color:#B5533C}
+.list .st.ok{background:#E6F2EC;color:#2E7D5B}.list .st.bad,.list .st.unk{background:#FBE9E5;color:#B5533C}
 footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
 </style>
 </head>
@@ -369,7 +369,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
         <label>收藏<input name="saves" type="number" min="0" inputmode="numeric"></label>
         <label>分享<input name="shares" type="number" min="0" inputmode="numeric"></label>
         <label class="full">發文主題<input name="topic" type="text" placeholder="自動帶入當天排程"></label>
-        <label>格式<select name="format"><option>輪播</option><option>Reels</option><option>單圖</option><option>限動</option></select></label>
+        <label>格式<select name="format"><option value="">（不填）</option><option>輪播</option><option>Reels</option><option>單圖</option><option>限動</option></select></label>
         <label>備註<input name="note" type="text"></label>
         <div class="full row"><button class="btn" type="submit">送出</button><span class="hint" id="gHint"></span></div>
       </form>
@@ -384,8 +384,8 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
         <label>數量<input name="qty" type="number" min="1" value="1" inputmode="numeric"></label>
         <label>單價 NT$<input name="unit" type="number" min="0" inputmode="numeric"></label>
         <label>實收金額 NT$<input name="amount" type="number" min="0" inputmode="numeric" required></label>
-        <label>收款平台<select name="channel"><option>Portaly</option><option>Gumroad</option><option>轉帳</option><option>其他</option></select></label>
-        <label>來源<select name="source"><option>IG</option><option value="抖音">TikTok</option><option>Email</option><option>推薦</option><option>其他</option></select></label>
+        <label>收款平台<select name="channel"><option value="">（不填）</option><option>Portaly</option><option>Gumroad</option><option>轉帳</option><option>其他</option></select></label>
+        <label>來源<select name="source"><option value="">（不填）</option><option>IG</option><option value="抖音">TikTok</option><option>Email</option><option>推薦</option><option>其他</option></select></label>
         <label>備註<input name="note" type="text" placeholder="例：首發 7 天"></label>
         <div class="full row"><button class="btn" type="submit">送出</button><span class="hint" id="iHint"></span></div>
       </form>
@@ -619,7 +619,7 @@ function pendingList(){ try { return JSON.parse(localStorage.getItem(PEND_KEY) |
 function savePending(list){ try { localStorage.setItem(PEND_KEY, JSON.stringify(list.slice(-20))); } catch {} }
 function renderPending(){
   const list = pendingList().slice().reverse();
-  $("#pending").innerHTML = list.length ? list.map(p => `<li><span class="d">${mmdd(p.date)}</span><span class="t">${p.op === "edit" ? '<span class="tag">修改</span>' : p.op === "delete" ? '<span class="tag del">刪除</span>' : ""}${esc(p.label)}</span><span class="st ${p.status}">${{ sent:"已送出，等同步", ok:"已同步", bad:"失敗" }[p.status] || p.status}</span></li>`).join("") : `<li class="empty">目前沒有</li>`;
+  $("#pending").innerHTML = list.length ? list.map(p => `<li><span class="d">${mmdd(p.date)}</span><span class="t">${p.op === "edit" ? '<span class="tag">修改</span>' : p.op === "delete" ? '<span class="tag del">刪除</span>' : ""}${esc(p.label)}</span><span class="st ${p.status}">${{ sent:"已送出，等同步", ok:"已同步", bad:"失敗", unk:"10 分鐘還沒對上，請檢查" }[p.status] || p.status}</span></li>`).join("") : `<li class="empty">目前沒有</li>`;
 }
 function markSynced(){
   // 同步回來後，看資料裡有沒有這筆（同日期同平台／同日期同金額）
@@ -627,31 +627,50 @@ function markSynced(){
   const list = pendingList(); let changed = false;
   for (const p of list){
     if (p.status !== "sent") continue;
-    const fresh = p.sentAt < Date.parse(d.generatedAt);
-    const hit = p.op === "delete" ? (fresh && !(p.kind === "growth" ? d.growth : d.income).some(r => r.id === p.id))
-      : p.op === "edit" ? (fresh && (p.kind === "growth" ? d.growth : d.income).some(r => r.id === p.id && r.date === p.date))
-      : p.kind === "growth" ? d.growth.some(r => r.date === p.date && r.platform === p.platform && (p.sentAt < Date.parse(d.generatedAt)))
-      : d.income.some(r => r.date === p.date && Math.abs(r.amount - p.amount) < 0.5 && (p.sentAt < Date.parse(d.generatedAt)));
+    // 同步的時間要比送出晚 20 秒以上（機器人寫 Notion 需要時間），而且要比對送出的數字，不是只看有沒有那一列
+    const fresh = Date.parse(d.generatedAt) - p.sentAt > 20000;
+    const same = (a, b) => b === "" || b == null || (a != null && Math.abs(Number(a) - Number(b)) < 0.5);
+    const growthOk = r => r.date === p.date && r.platform === p.platform && (!p.vals || (same((r.raw || r).followers, p.vals.followers) && same((r.raw || r).views, p.vals.views)));
+    const incomeOk = r => r.date === p.date && Math.abs(r.amount - p.amount) < 0.5 && (!p.qty || Math.abs(r.qty - p.qty) < 0.5);
+    const hit = fresh && (p.op === "delete" ? !(p.kind === "growth" ? d.growth : d.income).some(r => r.id === p.id)
+      : p.kind === "growth" ? d.growth.some(r => (p.op !== "edit" || r.id === p.id) && growthOk(r))
+      : d.income.some(r => (p.op !== "edit" || r.id === p.id) && incomeOk(r)));
     if (hit){ p.status = "ok"; changed = true; }
+    else if (Date.now() - p.sentAt > 10 * 60000){ p.status = "unk"; changed = true; }
   }
   if (changed){ savePending(list); renderPending(); }
 }
 const formData = f => Object.fromEntries([...new FormData(f)].map(([k,v]) => [k, v.trim()]));
 const today = () => tpeToday();
 $("#fGrowth").date.value = today(); $("#fIncome").date.value = today();
+$("#fIncome").channel.value = "Portaly"; $("#fIncome").source.value = "IG";
 $("#prodSel").innerHTML = PRODUCT_ORDER.map(p => `<option>${p}</option>`).join("");
+function setProduct(f, prod){
+  f.querySelectorAll("option[data-keep]").forEach(o => o.remove());
+  if (PRODUCT_ORDER.includes(prod)) { f.product.value = prod; return; }
+  const o = document.createElement("option"); o.value = ""; o.dataset.keep = "1"; o.textContent = `${prod || "（空白）"}（不改）`;
+  f.product.prepend(o); f.product.value = "";
+}
 const PRICE_HINT = { "電子書《從迷惘到行動》":390, "Notion 清醒行動系統":490, "電子書+Notion系統組合":690, "進階版":1990, "陪跑服務":4800, "團體方案":4990 };
 $("#prodSel").onchange = () => { const f = $("#fIncome"); if (PRICE_HINT[f.product.value]) { f.unit.value = PRICE_HINT[f.product.value]; f.amount.value = PRICE_HINT[f.product.value] * (Number(f.qty.value) || 1); } };
 $("#fIncome").qty.oninput = $("#fIncome").unit.oninput = () => { const f = $("#fIncome"); if (f.unit.value) f.amount.value = Number(f.unit.value) * (Number(f.qty.value) || 1); };
 function fillTopic(){ const f = $("#fGrowth"); const p = state.schedule.find(x => x.date === f.date.value); if (p && !f.topic.dataset.manual){ f.topic.value = `Day ${p.day} ${p.title}`; f.format.value = { carousel:"輪播", reel:"Reels", quote:"單圖" }[p.kind] || "輪播"; } }
 $("#fGrowth").date.onchange = fillTopic; $("#fGrowth").topic.oninput = e => { e.target.dataset.manual = "1"; };
 async function submitForm(form, kind, hintEl, label){
-  const v = formData(form), hint = $(hintEl);
+  const v = formData(form), hint = $(hintEl), btn = form.querySelector('button[type="submit"]');
+  if (btn.disabled) return;
+  if (kind === "growth"){
+    if (!["followers","views","likes","comments","saves","shares"].some(k => v[k] !== "")){ hint.className = "hint bad"; hint.textContent = "至少要填一個數字"; return; }
+    const clash = state.data?.growth.find(r => r.date === v.date && r.platform === v.platform && r.id !== v.id);
+    if (v.id && clash){ hint.className = "hint bad"; hint.textContent = `${mmdd(v.date)} ${PN2[v.platform] || v.platform} 已經有另一筆，請改那一筆，或先刪掉其中一筆`; return; }
+  }
+  btn.disabled = true;
   hint.className = "hint"; hint.textContent = "送出中…";
   try {
     await dispatch({ kind, data: v }); // GitHub 規定 client_payload 頂層最多 10 個欄位，所以欄位都包在 data 裡
     const list = pendingList();
-    list.push({ kind, op: v.id ? "edit" : "new", id: v.id || "", date: v.date, platform: v.platform, amount: Number(v.amount), label: label(v), status: "sent", sentAt: Date.now() });
+    list.push({ kind, op: v.id ? "edit" : "new", id: v.id || "", date: v.date, platform: v.platform, amount: Number(v.amount), qty: Number(v.qty || 1),
+      vals: kind === "growth" ? { followers: v.followers, views: v.views } : null, label: label(v), status: "sent", sentAt: Date.now() });
     savePending(list); renderPending();
     hint.className = "hint ok"; hint.textContent = v.id ? "修改已送出，1–2 分鐘後會同步回來" : "已送出，1–2 分鐘後會同步回來";
     endEdit(kind === "growth" ? "g" : "i");
@@ -659,6 +678,7 @@ async function submitForm(form, kind, hintEl, label){
     else { form.note.value = ""; }
     pollSync();
   } catch (err){ hint.className = "hint bad"; hint.textContent = err.message; }
+  finally { setTimeout(() => { btn.disabled = false; }, 1500); }
 }
 // ---- 點紀錄修改 ----
 function daysAgo(d){ return Math.round((Date.parse(today() + "T00:00:00Z") - Date.parse(d + "T00:00:00Z")) / 86400000); }
@@ -669,6 +689,7 @@ async function deleteRecord(kind){
   const what = kind === "growth" ? `${mmdd(r.date)} ${PN2[r.platform] || r.platform}（觀看 ${(r.raw||r).views ?? "—"}）` : `${mmdd(r.date)} ${r.product} NT$ ${r.amount}`;
   if (!confirm(`確定要刪除 ${what} 這一筆嗎？`)) return;
   if (!confirm(`再確認一次：刪除後後台不會再顯示這筆（Notion 垃圾桶 30 天內可以還原）。確定刪除？`)) return;
+  const delBtn = $(kind === "growth" ? "#gDel" : "#iDel"); if (delBtn.disabled) return; delBtn.disabled = true;
   hint.className = "hint"; hint.textContent = "送出刪除中…";
   try {
     await dispatch({ kind: "delete", data: { id, target: kind, date: r.date, platform: r.platform || "" } });
@@ -678,6 +699,7 @@ async function deleteRecord(kind){
     hint.className = "hint ok"; hint.textContent = "刪除已送出，1–2 分鐘後會同步";
     (kind === "growth" ? $("#gEditCancel") : $("#iEditCancel")).onclick(); pollSync();
   } catch (err){ hint.className = "hint bad"; hint.textContent = err.message; }
+  finally { setTimeout(() => { delBtn.disabled = false; }, 1500); }
 }
 $("#gDel").onclick = () => deleteRecord("growth");
 $("#iDel").onclick = () => deleteRecord("income");
@@ -697,21 +719,21 @@ function startEdit(kind, id){
     f.id.value = r.id; f.date.value = r.date; f.platform.value = r.platform;
     for (const k of ["followers","views","likes","comments","saves","shares"]) f[k].value = raw[k] ?? "";
     f.topic.value = r.topic || ""; f.topic.dataset.manual = "1";
-    if (r.format) f.format.value = r.format;
+    f.format.value = r.format || "";
     f.note.value = r.note || "";
     $("#gEditTxt").textContent = `正在修改 ${mmdd(r.date)} ${PN2[r.platform] || r.platform} 這一筆`;
     const auto = (r.platform === "Instagram" || r.platform === "Threads") && daysAgo(r.date) < 7;
     $("#gWarn").hidden = !auto;
-    if (auto) $("#gWarn").textContent = `⚠️ ${PN2[r.platform]} 最近 7 天的觀看、讚、留言、收藏、分享，每晚 23:20 會被自動抓取的數字蓋掉；改了也會被蓋回去。要記的事寫在備註比較保險。`;
+    if (auto) $("#gWarn").textContent = `⚠️ ${PN2[r.platform]} 最近 7 天的紀錄每晚 23:20 會被自動抓取整列重寫（觀看、讚、留言、收藏、分享、格式、備註都會被蓋掉，今天那列連粉絲數也是），改了也會被蓋回去。要記的事請記在 TikTok 或 7 天前的紀錄。`;
     $("#gEdit").hidden = false; f.querySelector('button[type="submit"]').textContent = "儲存修改";
     state.editing = id; renderRecords(); f.scrollIntoView({ behavior: "smooth", block: "start" });
   } else {
     const r = d.income.find(x => x.id === id); if (!r) return;
     const f = $("#fIncome");
     f.id.value = r.id; f.date.value = r.date;
-    if (PRODUCT_ORDER.includes(r.product)) f.product.value = r.product;
+    setProduct(f, r.product);
     f.qty.value = r.qty ?? 1; f.unit.value = r.unit ?? ""; f.amount.value = r.amount ?? "";
-    if (r.channel) f.channel.value = r.channel; if (r.source) f.source.value = r.source;
+    f.channel.value = r.channel || ""; f.source.value = r.source || "";
     f.note.value = r.note || "";
     $("#iEditTxt").textContent = `正在修改 ${mmdd(r.date)} ${r.product} 這一筆`;
     $("#iEdit").hidden = false; f.querySelector('button[type="submit"]').textContent = "儲存修改";
@@ -720,23 +742,29 @@ function startEdit(kind, id){
 }
 function renderRecords(){
   const d = state.data, el = $("#tblRecords"); if (!d || !el) return;
+  if (state.editing && !d.growth.some(r => r.id === state.editing) && !d.income.some(r => r.id === state.editing)){
+    const g = $("#fGrowth").id.value === state.editing;
+    (g ? $("#gEditCancel") : $("#iEditCancel")).onclick();
+    const h = $(g ? "#gHint" : "#iHint"); h.className = "hint bad"; h.textContent = "剛剛在改的那筆已經不存在（可能被刪掉了），已取消修改";
+    return;
+  }
   const flt = state.recFilter, v = x => x == null ? "—" : fmt(x);
   if (flt === "income"){
     const rows = [...d.income].filter(r => r.id).sort((a,b) => a.date < b.date ? 1 : -1);
     el.innerHTML = rows.length ? `<table><thead><tr><th>日期</th><th>產品</th><th class="num">數量</th><th class="num">金額</th><th>平台</th><th>備註</th></tr></thead><tbody>${
-      rows.map(r => `<tr class="pick${state.editing === r.id ? " on" : ""}" data-kind="income" data-id="${esc(r.id)}"><td>${r.date}</td><td>${esc(r.product)}</td><td class="num">${r.qty}</td><td class="num">${money(r.amount)}</td><td>${esc(r.channel)}</td><td style="white-space:normal">${esc(r.note)}</td></tr>`).join("")}</tbody></table>`
+      rows.map(r => `<tr class="pick${state.editing === r.id ? " on" : ""}" data-kind="income" data-id="${esc(r.id)}"><td>${esc(r.date)}</td><td>${esc(r.product)}</td><td class="num">${esc(r.qty)}</td><td class="num">${money(r.amount)}</td><td>${esc(r.channel)}</td><td style="white-space:normal">${esc(r.note)}</td></tr>`).join("")}</tbody></table>`
       : `<div class="empty">還沒有收入記錄</div>`;
   } else {
     const rows = d.growth.filter(r => r.id && (flt === "all" || r.platform === flt)).sort((a,b) => a.date < b.date ? 1 : a.date > b.date ? -1 : (a.platform < b.platform ? -1 : 1)).slice(0, 120);
     el.innerHTML = rows.length ? `<table><thead><tr><th>日期</th><th>平台</th><th class="num">粉絲</th><th class="num">觀看</th><th class="num">讚</th><th class="num">留言</th><th class="num">收藏</th><th class="num">分享</th><th>備註</th></tr></thead><tbody>${
-      rows.map(r => { const x = r.raw || r; return `<tr class="pick${state.editing === r.id ? " on" : ""}" data-kind="growth" data-id="${esc(r.id)}"><td>${r.date.slice(5)}</td><td>${PN2[r.platform] || r.platform}</td><td class="num">${v(x.followers)}</td><td class="num">${v(x.views)}</td><td class="num">${v(x.likes)}</td><td class="num">${v(x.comments)}</td><td class="num">${v(x.saves)}</td><td class="num">${v(x.shares)}</td><td style="white-space:normal;min-width:140px">${esc(r.note || "")}</td></tr>`; }).join("")}</tbody></table>`
+      rows.map(r => { const x = r.raw || r; return `<tr class="pick${state.editing === r.id ? " on" : ""}" data-kind="growth" data-id="${esc(r.id)}"><td>${esc(r.date.slice(5))}</td><td>${esc(PN2[r.platform] || r.platform)}</td><td class="num">${v(x.followers)}</td><td class="num">${v(x.views)}</td><td class="num">${v(x.likes)}</td><td class="num">${v(x.comments)}</td><td class="num">${v(x.saves)}</td><td class="num">${v(x.shares)}</td><td style="white-space:normal;min-width:140px">${esc(r.note || "")}</td></tr>`; }).join("")}</tbody></table>`
       : `<div class="empty">${d.growth.length && !d.growth.some(r => r.id) ? "下一次同步後就能點來修改（約 1–2 分鐘，或按「立刻重新同步」）" : "這個平台還沒有紀錄"}</div>`;
   }
 }
 $("#tblRecords").onclick = e => { const tr = e.target.closest("tr.pick"); if (tr) startEdit(tr.dataset.kind, tr.dataset.id); };
 $("#recFilter").onclick = e => { const b = e.target.closest("button"); if (!b) return; state.recFilter = b.dataset.v; $("#recFilter").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); renderRecords(); };
 $("#gEditCancel").onclick = () => { endEdit("g"); const f = $("#fGrowth"); ["followers","views","likes","comments","saves","shares","note"].forEach(k => f[k].value = ""); f.date.value = today(); f.topic.dataset.manual = ""; fillTopic(); };
-$("#iEditCancel").onclick = () => { endEdit("i"); const f = $("#fIncome"); f.note.value = ""; f.date.value = today(); f.qty.value = 1; f.unit.value = ""; f.amount.value = ""; };
+$("#iEditCancel").onclick = () => { endEdit("i"); const f = $("#fIncome"); f.note.value = ""; f.date.value = today(); f.qty.value = 1; f.unit.value = ""; f.amount.value = ""; setProduct(f, PRODUCT_ORDER[0]); f.channel.value = "Portaly"; f.source.value = "IG"; };
 $("#fGrowth").onsubmit = e => { e.preventDefault(); submitForm(e.target, "growth", "#gHint", v => `${v.platform === "抖音" ? "TikTok" : v.platform} 粉絲 ${v.followers || "—"}、觀看 ${v.views || "—"}`); };
 $("#fIncome").onsubmit = e => { e.preventDefault(); submitForm(e.target, "income", "#iHint", v => `${v.product} ×${v.qty || 1}　NT$ ${v.amount}`); };
 let pollTimer;

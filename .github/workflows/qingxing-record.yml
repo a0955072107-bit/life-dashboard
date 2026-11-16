@@ -30,8 +30,10 @@ jobs:
     needs: record
     if: ${{ !cancelled() && (needs.record.result == 'success' || needs.record.result == 'skipped') }}
     runs-on: ubuntu-latest
+    # 自己一個 group：跟每晚抓數據（update-qingxing）共用的話，後台一送出就可能把排隊中的每晚抓取整個取消。
+    # 同 group 只留最新一個等待中的 sync，被取消沒關係（最後一次會讀到全部）；推送衝突靠下面的重試迴圈。
     concurrency:
-      group: update-qingxing
+      group: qingxing-sync
       cancel-in-progress: false
     steps:
       # 一定要拿 main 最新版（repository_dispatch 預設拿送出當下的版本，排隊後會過時、推送時衝突）

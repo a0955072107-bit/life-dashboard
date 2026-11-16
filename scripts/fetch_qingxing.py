@@ -162,7 +162,7 @@ def main() -> int:
                 "item": prop(p, "項目") or "",
                 "product": prop(p, "產品") or "其他",
                 "qty": n(prop(p, "數量")) or 1,
-                "unit": n(prop(p, "單價")),
+                "unit": prop(p, "單價"),  # 沒填保留 null，修改時才不會變成 0
                 "amount": n(prop(p, "金額")),
                 "channel": prop(p, "收款平台") or "",
                 "source": prop(p, "來源") or "",
