@@ -34,8 +34,8 @@ OTHER_PLATFORM = re.compile(r"IG|Instagram|Threads|@qingxing\.action|私訊")
 # 2026-11-13：台灣 TikTok 個人帳號沒有可點的網站欄位（商業帳號要公司登記文件），
 # 簡介只能放網址純文字 → 文案說「網址在主頁簡介」。滿 1,000 粉、有可點連結後改回 "主頁連結"。
 LINK_PHRASE = "網址在主頁簡介"
-# 2026-11-17 Yang：說明文字最後固定加這句（和影片結尾卡同一句；TikTok 主頁目前不能放可點連結）
-END_CTA = "免費《7 天清醒行動表》👉 IG／脆搜尋 @qingxing.action"
+# 2026-11-17 Yang：說明文字最後固定加這句（和影片結尾卡同一句；不寫其他平台）
+END_CTA = f"免費《7 天清醒行動表》👉 {LINK_PHRASE}"
 
 
 def tiktok_caption(ig_caption: str, hook: str | None = None) -> str:

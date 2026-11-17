@@ -24,8 +24,9 @@ if (!post || !out) {
 export const LINK_PHRASE = '網址在主頁簡介' // 滿 1,000 粉、有可點連結後改回「主頁連結」（build-tiktok.py 同步改）
 const CTA = `免費 7 天清醒行動表｜${LINK_PHRASE}`
 const OTHER = /IG|Instagram|Threads|私訊|@qingxing|留言「清醒」|Bio/
-// 2026-11-17 Yang：結尾卡固定加一行導到免費行動表（TikTok 主頁目前不能放可點連結，所以寫 IG／脆搜尋）
-export const END_CTA = ['免費《7 天清醒行動表》', '👉 IG／脆搜尋 @qingxing.action']
+// 2026-11-17 Yang：結尾卡加一行導到免費行動表（不寫其他平台，照 11/13 規則指主頁簡介）。
+// 結尾卡本來就在講行動表的那天不加，避免同一句講兩次。
+export const END_CTA = ['免費《7 天清醒行動表》', '👉 ' + LINK_PHRASE]
 const clean = (s) => (OTHER.test(s) ? CTA : s.replace(/在?主頁連結/g, LINK_PHRASE))
 
 // ---------- 場景 ----------
@@ -104,7 +105,7 @@ SC.forEach((s, k) => {
   const emph = (l) => { let inQ = false; return [...l].map((c) => { if (c === '「') inQ = true; const em = (inQ && c !== '「' && c !== '」') || /[0-9０-９]/.test(c); if (c === '」') inQ = false; return '<span' + (em ? ' class="em"' : '') + '>' + (c === ' ' ? '&nbsp;' : c) + '</span>' }).join('') }
   html += '<div class="t" style="font-size:' + size + 'px">' + tl.map(emph).join('<br>') + '</div><div class="ul"></div>'
   if (p) html += '<div class="p">' + lines(p).map((l) => '<div>' + l + '</div>').join('') + '</div>'
-  if (s.kind === 'end') html += '<div class="markwrap"><div class="ring"></div><svg class="mark" viewBox="0 0 24 30"><path d="M3 2h18v26l-9-6-9 6z" fill="${C.accent}"/></svg></div><div class="cta">' + ${JSON.stringify(END_CTA)}.map((l) => '<div>' + l + '</div>').join('') + '</div>'
+  if (s.kind === 'end') html += '<div class="markwrap"><div class="ring"></div><svg class="mark" viewBox="0 0 24 30"><path d="M3 2h18v26l-9-6-9 6z" fill="${C.accent}"/></svg></div>' + (s.text.includes('行動表') ? '' : '<div class="cta">' + ${JSON.stringify(END_CTA)}.map((l) => '<div>' + l + '</div>').join('') + '</div>')
   el.innerHTML = html; stage.appendChild(el); s.el = el
 })
 const clamp = (x) => Math.max(0, Math.min(1, x))
