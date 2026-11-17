@@ -34,6 +34,8 @@ OTHER_PLATFORM = re.compile(r"IG|Instagram|Threads|@qingxing\.action|私訊")
 # 2026-11-13：台灣 TikTok 個人帳號沒有可點的網站欄位（商業帳號要公司登記文件），
 # 簡介只能放網址純文字 → 文案說「網址在主頁簡介」。滿 1,000 粉、有可點連結後改回 "主頁連結"。
 LINK_PHRASE = "網址在主頁簡介"
+# 2026-11-17 Yang：說明文字最後固定加這句（和影片結尾卡同一句；TikTok 主頁目前不能放可點連結）
+END_CTA = "免費《7 天清醒行動表》👉 IG／脆搜尋 @qingxing.action"
 
 
 def tiktok_caption(ig_caption: str, hook: str | None = None) -> str:
@@ -58,8 +60,11 @@ def tiktok_caption(ig_caption: str, hook: str | None = None) -> str:
     text = text.replace("連結在首頁", "連結在主頁").replace("首頁 Bio 連結", "主頁連結")
     text = re.sub(r"在?主頁連結", LINK_PHRASE, text)
     assert not OTHER_PLATFORM.search(text), f"TikTok 文案還有其他平台：{text}"
+    # 原本改寫出來的「行動表＋主頁簡介」那行拿掉，改用最後固定那句，避免重複
+    text = "\n".join(l for l in text.splitlines() if not ("行動表" in l and LINK_PHRASE in l))
+    text = re.sub(r"\n{3,}", "\n\n", text).strip()
     extra = [t for t in ("#自我成長", "#fyp") if t not in tags]
-    return f"{text}\n\n#清醒行動派 {' '.join(tags + extra)}"
+    return f"{text}\n\n{END_CTA}\n\n#清醒行動派 {' '.join(tags + extra)}"
 
 
 def reel_caption(ig_caption: str) -> str:

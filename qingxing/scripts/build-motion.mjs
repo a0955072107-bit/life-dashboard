@@ -24,6 +24,8 @@ if (!post || !out) {
 export const LINK_PHRASE = '網址在主頁簡介' // 滿 1,000 粉、有可點連結後改回「主頁連結」（build-tiktok.py 同步改）
 const CTA = `免費 7 天清醒行動表｜${LINK_PHRASE}`
 const OTHER = /IG|Instagram|Threads|私訊|@qingxing|留言「清醒」|Bio/
+// 2026-11-17 Yang：結尾卡固定加一行導到免費行動表（TikTok 主頁目前不能放可點連結，所以寫 IG／脆搜尋）
+export const END_CTA = ['免費《7 天清醒行動表》', '👉 IG／脆搜尋 @qingxing.action']
 const clean = (s) => (OTHER.test(s) ? CTA : s.replace(/在?主頁連結/g, LINK_PHRASE))
 
 // ---------- 場景 ----------
@@ -81,6 +83,7 @@ body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK TC','
 .ring{position:absolute;width:120px;height:150px;left:0;bottom:0;border-radius:50%;border:6px solid ${C.accent};opacity:0}
 .end .markwrap{position:relative;width:120px;margin-top:60px}
 .end .markwrap .mark{margin-top:0}
+.cta{margin-top:56px;align-self:flex-start;background:${C.accent};color:#fff;border-radius:28px;padding:26px 40px;font-size:46px;line-height:1.45;font-weight:700;opacity:0}
 </style>
 <div id="dots"><i></i><i></i><i></i></div><div id="bg"></div><div id="wipe"></div><div id="bar"></div><div class="brand" id="brand">清醒行動派</div><div id="stage"></div>
 <script>
@@ -101,7 +104,7 @@ SC.forEach((s, k) => {
   const emph = (l) => { let inQ = false; return [...l].map((c) => { if (c === '「') inQ = true; const em = (inQ && c !== '「' && c !== '」') || /[0-9０-９]/.test(c); if (c === '」') inQ = false; return '<span' + (em ? ' class="em"' : '') + '>' + (c === ' ' ? '&nbsp;' : c) + '</span>' }).join('') }
   html += '<div class="t" style="font-size:' + size + 'px">' + tl.map(emph).join('<br>') + '</div><div class="ul"></div>'
   if (p) html += '<div class="p">' + lines(p).map((l) => '<div>' + l + '</div>').join('') + '</div>'
-  if (s.kind === 'end') html += '<div class="markwrap"><div class="ring"></div><svg class="mark" viewBox="0 0 24 30"><path d="M3 2h18v26l-9-6-9 6z" fill="${C.accent}"/></svg></div>'
+  if (s.kind === 'end') html += '<div class="markwrap"><div class="ring"></div><svg class="mark" viewBox="0 0 24 30"><path d="M3 2h18v26l-9-6-9 6z" fill="${C.accent}"/></svg></div><div class="cta">' + ${JSON.stringify(END_CTA)}.map((l) => '<div>' + l + '</div>').join('') + '</div>'
   el.innerHTML = html; stage.appendChild(el); s.el = el
 })
 const clamp = (x) => Math.max(0, Math.min(1, x))
@@ -148,6 +151,8 @@ window.render = (t) => {
     const m = el.querySelector('.mark')
     const ring = el.querySelector('.ring')
     if (ring) { const q = (lt - textDone - 0.3) % 1.2; const on = lt - textDone - 0.3 > 0; ring.style.opacity = on ? 0.5 * (1 - q / 1.2) : 0; ring.style.transform = 'scale(' + (0.8 + 1.2 * q / 1.2) + ')' }
+    const cta = el.querySelector('.cta')
+    if (cta) { const p = outC((lt - textDone - 0.5) / 0.4); cta.style.opacity = p; cta.style.transform = 'translateY(' + (30 * (1 - p)) + 'px)' }
     if (m) { const q = lt - textDone - 0.3; m.style.transform = 'translateY(' + (q > 0 ? -Math.abs(Math.sin(q * 5)) * 30 * Math.exp(-q * 1.2) : 0) + 'px)'; m.style.opacity = clamp(q * 3) }
   })
   // 開頭卡：深藍底，結束時往上收起露出米白底
