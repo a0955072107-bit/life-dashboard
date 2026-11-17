@@ -37,6 +37,8 @@ jobs:
         shell: bash
         run: |
           export TZ=Asia/Taipei
+          # 11/17：GitHub 排程常延遲到隔天凌晨才啟動，會一路空跑到 timeout、卡住白天 IG 機器人 → 台北 17:00 前啟動就直接結束
+          if [ "$(date +%H)" -lt 17 ]; then echo "台北時間 $(date '+%H:%M') 早於 17:00（排程延遲啟動），不值班"; exit 0; fi
           end=$(date -d 'today 23:30' +%s)
           if [ "$(date +%s)" -ge "$end" ]; then echo "已過 23:30（前一輪值班已做完），不跑"; exit 0; fi
           fails=0; rounds=0
