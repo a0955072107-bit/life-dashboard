@@ -1,6 +1,6 @@
 // 把 IG 貼文（posts-data.mjs）拆成 Threads 純文字，每篇 4 則，寫到 qingxing/threads/posts.json。
 // 用法：node qingxing/scripts/build-threads.mjs
-// 每天四則（台灣時間）：08:30 開場一句、12:30 做法、18:00 金句、21:30 問句（導回 IG）。
+// 每天四則（台灣時間）：08:30 開場一句、12:30 做法、18:00 金句、21:30 問句（導去個人檔案的免費表）。
 // 草稿貼文（draft: true）拆出來的也是 draft，機器人不會發。重跑會整份覆蓋。
 // 2026-11-16 起 18:00 金句停發，改成「100 天清醒行動挑戰」（另存 qingxing/threads/challenge.json，Yang 確認真實內容後才發）。
 import { writeFileSync, mkdirSync } from 'node:fs'
@@ -38,11 +38,16 @@ const QUESTIONS = {
 const isCta = (s) => /留言|首頁|Bio|NT\$|收藏|分享給|連結|私訊|《|第 ?\d+ ?章|組合|電子書|現在買|上架/.test(s)
 const clean = (s) => s.replace(/｜/g, '\n').replace(/\n+/g, '\n').trim()
 // 「標題｜內文」接成一句：標題有標點就直接接，短標題用「：」，其他用「，」
+// 這些前半句是一句話被切成兩張字卡，接回去不加標點（2026-11-21 修「一季只選：一個主目標」這類）
+const JOIN_DIRECT = new Set(['一季只選', '把新習慣', '你的時間', '疲憊會把小問題', '把這三件', '它的第一步', '第一步', '只要不連續', '先列出', '劃掉', '想一下', '他會羨慕', '大部分人都忘了'])
 const oneLine = (s) => {
   const [a = '', ...rest] = s.split('｜').map((x) => x.trim())
   const b = rest.join('，')
   if (!b) return a.replace(/，$/, '')
   if (/[，。：；、！？]$/.test(a)) return a + b
+  if (b.startsWith('→')) return `${a} ${b}`
+  if (b.startsWith('「') || JOIN_DIRECT.has(a)) return a + b
+  if (/公式$|只訂三件$/.test(a)) return `${a}：${b}`
   return [...a].length <= 4 ? `${a}：${b}` : `${a}，${b}`
 }
 const isIgOnly = (s) => /留言|私訊|首頁|連結|Bio|收藏起來|分享給/.test(s)
@@ -72,12 +77,11 @@ function split(post) {
   let quote = beforeCta ? oneLine(beforeCta) : ''
   if (post.kind === 'quote') quote = oneLine(slides[0])
   else if (!quote || hook.includes(quote.slice(0, 6))) quote = ps.length >= 3 ? ps[ps.length - 2] : oneLine(slides[0])
-  // 4. 問句：找文案裡真正的問句（不是「留言清醒私訊你」那種 IG 專用的）＋導回 IG
+  // 4. 問句：找文案裡真正的問句（不是「留言清醒私訊你」那種 IG 專用的）＋導去個人檔案的免費表
   const asked = [...ps].reverse().find((x) => /[？?]/.test(x) && !/私訊|首頁|連結|Bio/.test(x))
   const q = QUESTIONS[post.day] || asked || `${oneLine(slides[0])}\n\n你最近有過這種時候嗎？留言跟我說。`
-  const tail = /留言「清醒」/.test(post.caption)
-    ? '想要免費的 7 天清醒行動表：到 IG @qingxing.action 留言「清醒」'
-    : '完整圖文在 IG @qingxing.action'
+  // 2026-11-21 Yang 定（建議 A）：Threads 不再導回 IG，改導個人檔案的 Portaly 連結
+  const tail = '個人檔案連結有免費的《7 天清醒行動表》，需要的可以拿。'
   const question = `${q}\n\n${tail}`
   return [hook, how, quote, question].map(cut)
 }

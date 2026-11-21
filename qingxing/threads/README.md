@@ -1,6 +1,6 @@
 # 清醒行動派 Threads 機器人
 
-每天 4 則純文字：08:30 開場一句、12:30 做法、21:30 問句導回 IG（從 IG 貼文自動拆出來），加上約 22:00 的「100 天清醒行動挑戰」（2026-11-16 起取代 18:00 金句，見下方），用 GitHub Actions 每 30 分鐘檢查一次、時間到就發。Threads 是現在台灣 18–35 歲最容易被推薦的平台，而且跟 IG 同一個帳號。
+每天 4 則純文字：08:30 開場一句、12:30 做法、21:30 問句導去個人檔案的免費《7 天清醒行動表》（從 IG 貼文自動拆出來；2026-11-21 起不再導回 IG），加上約 22:00 的「100 天清醒行動挑戰」（2026-11-16 起取代 18:00 金句，見下方），用 GitHub Actions 每 30 分鐘檢查一次、時間到就發。Threads 是現在台灣 18–35 歲最容易被推薦的平台，而且跟 IG 同一個帳號。
 
 | 檔案 | 用途 |
 |---|---|
@@ -40,6 +40,8 @@ Name：`QX_THREADS_BOT_ENABLED`，Value：`true`。要暫停改成 `false`。
 
 ## 平常怎麼用
 - 改文字：改 `qingxing/scripts/posts-data.mjs`（IG 文案）後重跑 `node qingxing/scripts/build-threads.mjs`；文案結尾沒問句的那幾天，Threads 用的問句寫在 build-threads.mjs 的 `QUESTIONS`。
+- 重跑 build-threads.mjs 會蓋掉 posts.json 裡手動改過的 publish_at（例如補發改的時間），重跑後要記得還原。
+- 推送改過文字的 posts.json 時，避開「已經發出、還在 6 小時內」的貼文時段，不然機器人比對不到舊文字會再發一次。
 - 想單獨加一則：直接在 `posts.json` 加一筆（`id`、`publish_at` 要帶 `+08:00`、`status: ready`、`text`）。
 - 草稿貼文（IG 那篇 `draft: true`）拆出來的也是 draft，不會發。
 - 超過 6 小時沒發出的不補發（一天四則，補舊的沒意義）。
