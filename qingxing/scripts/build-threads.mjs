@@ -83,8 +83,12 @@ function split(post) {
   // 2026-11-21 Yang 定（建議 A）：Threads 不再導回 IG，改導個人檔案的 Portaly 連結
   const tail = '個人檔案連結有免費的《7 天清醒行動表》，需要的可以拿。'
   const question = `${q}\n\n${tail}`
-  return [hook, how, quote, question].map(cut)
+  // IG 的「連結在首頁」在 Threads 改成個人檔案
+  return [hook, how, quote, question].map((t) => cut(t.replace(/連結在首頁/g, '連結在個人檔案')))
 }
+
+// 手動改過時間的貼文（11/19 權杖失效後補發），重跑時保留
+const TIME_OVERRIDE = { 'd10-2': '2026-11-20T15:00:00+08:00', 'd10-4': '2026-11-20T22:30:00+08:00' }
 
 const items = []
 for (const p of POSTS) {
@@ -94,7 +98,7 @@ for (const p of POSTS) {
     items.push({
       id: `d${String(p.day).padStart(2, '0')}-${i + 1}`,
       day: p.day, date: p.date, slot: ['開場', '做法', '金句', '問句'][i],
-      publish_at: `${p.date}T${TIMES[i]}:00+08:00`,
+      publish_at: TIME_OVERRIDE[`d${String(p.day).padStart(2, '0')}-${i + 1}`] || `${p.date}T${TIMES[i]}:00+08:00`,
       status: p.draft ? 'draft' : 'ready',
       text,
     })

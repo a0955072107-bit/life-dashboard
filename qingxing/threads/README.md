@@ -40,7 +40,7 @@ Name：`QX_THREADS_BOT_ENABLED`，Value：`true`。要暫停改成 `false`。
 
 ## 平常怎麼用
 - 改文字：改 `qingxing/scripts/posts-data.mjs`（IG 文案）後重跑 `node qingxing/scripts/build-threads.mjs`；文案結尾沒問句的那幾天，Threads 用的問句寫在 build-threads.mjs 的 `QUESTIONS`。
-- 重跑 build-threads.mjs 會蓋掉 posts.json 裡手動改過的 publish_at（例如補發改的時間），重跑後要記得還原。
+- 重跑 build-threads.mjs 會蓋掉 posts.json 裡手動改過的 publish_at；要保留的時間寫在 build-threads.mjs 的 `TIME_OVERRIDE`。
 - 推送改過文字的 posts.json 時，避開「已經發出、還在 6 小時內」的貼文時段，不然機器人比對不到舊文字會再發一次。
 - 想單獨加一則：直接在 `posts.json` 加一筆（`id`、`publish_at` 要帶 `+08:00`、`status: ready`、`text`）。
 - 草稿貼文（IG 那篇 `draft: true`）拆出來的也是 draft，不會發。
