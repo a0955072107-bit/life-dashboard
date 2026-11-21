@@ -1,17 +1,17 @@
 {
-  "updated": "2026-11-20T21:00:07+00:00",
+  "updated": "2026-11-21T02:06:19+00:00",
   "quotes": [
     {
       "symbol": "^GSPC",
       "name": "S&P 500",
       "group": "指數",
-      "price": 6901.38,
+      "price": 6910.39,
       "prevClose": 7175.8301,
-      "change": -274.4501,
-      "changePct": -3.825,
-      "monthPct": -11.032,
+      "change": -265.4401,
+      "changePct": -3.699,
+      "monthPct": -10.916,
       "currency": "USD",
-      "marketTime": 1795208329,
+      "marketTime": 1795210554,
       "history": [
         7757.1699,
         7663.4302,
@@ -35,20 +35,20 @@
         7340.5298,
         7323.6299,
         7175.8301,
-        6901.3799
+        6910.3901
       ]
     },
     {
       "symbol": "^IXIC",
       "name": "那斯達克",
       "group": "指數",
-      "price": 22597.797,
+      "price": 22617.732,
       "prevClose": 23879.1992,
-      "change": -1281.4022,
-      "changePct": -5.366,
-      "monthPct": -15.373,
+      "change": -1261.4672,
+      "changePct": -5.283,
+      "monthPct": -15.298,
       "currency": "USD",
-      "marketTime": 1795208327,
+      "marketTime": 1795212959,
       "history": [
         26702.8594,
         26008.8594,
@@ -72,20 +72,20 @@
         24328.3809,
         24429.8809,
         23879.1992,
-        22597.7969
+        22617.7324
       ]
     },
     {
       "symbol": "^DJI",
       "name": "道瓊工業",
       "group": "指數",
-      "price": 48100.52,
+      "price": 48147.33,
       "prevClose": 49097.0586,
-      "change": -996.5386,
-      "changePct": -2.03,
-      "monthPct": -8.997,
+      "change": -949.7286,
+      "changePct": -1.934,
+      "monthPct": -8.909,
       "currency": "USD",
-      "marketTime": 1795208329,
+      "marketTime": 1795210559,
       "history": [
         52856.0898,
         52867.9805,
@@ -109,20 +109,20 @@
         50759.4219,
         50198.1719,
         49097.0586,
-        48100.5195
+        48147.3281
       ]
     },
     {
       "symbol": "^SOX",
       "name": "費城半導體",
       "group": "指數",
-      "price": 8390.194,
+      "price": 8408.591,
       "prevClose": 9419.7197,
-      "change": -1029.5257,
-      "changePct": -10.929,
-      "monthPct": -27.077,
+      "change": -1011.1287,
+      "changePct": -10.734,
+      "monthPct": -26.917,
       "currency": "USD",
-      "marketTime": 1795208329,
+      "marketTime": 1795212959,
       "history": [
         11505.5596,
         10731.9805,
@@ -146,7 +146,7 @@
         9642.8799,
         9652.7998,
         9419.7197,
-        8390.1943
+        8408.5908
       ]
     },
     {
@@ -188,13 +188,13 @@
       "symbol": "^VIX",
       "name": "VIX 恐慌指數",
       "group": "指數",
-      "price": 38.1,
+      "price": 35.89,
       "prevClose": 28.44,
-      "change": 9.66,
-      "changePct": 33.966,
-      "monthPct": 120.104,
+      "change": 7.45,
+      "changePct": 26.195,
+      "monthPct": 107.337,
       "currency": "USD",
-      "marketTime": 1795207426,
+      "marketTime": 1795209301,
       "history": [
         17.31,
         16.68,
@@ -219,20 +219,20 @@
         25.46,
         24.56,
         28.44,
-        38.1
+        35.89
       ]
     },
     {
       "symbol": "GC=F",
       "name": "黃金期貨",
       "group": "黃金",
-      "price": 3523.1,
+      "price": 3539.0,
       "prevClose": 3685.5,
-      "change": -162.4,
-      "changePct": -4.406,
-      "monthPct": -14.954,
+      "change": -146.5,
+      "changePct": -3.975,
+      "monthPct": -14.571,
       "currency": "USD",
-      "marketTime": 1795207729,
+      "marketTime": 1795211997,
       "history": [
         4142.6001,
         4150.0,
@@ -257,20 +257,20 @@
         3864.2,
         3741.8999,
         3685.5,
-        3523.1001
+        3539.0
       ]
     },
     {
       "symbol": "SI=F",
       "name": "白銀期貨",
       "group": "黃金",
-      "price": 40.895,
+      "price": 41.08,
       "prevClose": 44.318,
-      "change": -3.423,
-      "changePct": -7.724,
-      "monthPct": -29.132,
+      "change": -3.238,
+      "changePct": -7.306,
+      "monthPct": -28.812,
       "currency": "USD",
-      "marketTime": 1795207728,
+      "marketTime": 1795211998,
       "history": [
         57.706,
         57.422,
@@ -295,20 +295,20 @@
         47.288,
         44.999,
         44.318,
-        40.895
+        41.08
       ]
     },
     {
       "symbol": "GLD",
       "name": "SPDR 黃金 ETF",
       "group": "黃金",
-      "price": 322.31,
-      "prevClose": 335.18,
-      "change": -12.87,
-      "changePct": -3.84,
-      "monthPct": -14.947,
+      "price": 322.87,
+      "prevClose": 341.19,
+      "change": -18.32,
+      "changePct": -5.369,
+      "monthPct": -14.799,
       "currency": "USD",
-      "marketTime": 1795208265,
+      "marketTime": 1795208403,
       "history": [
         378.95,
         369.0,
@@ -331,21 +331,20 @@
         352.93,
         352.48,
         341.19,
-        335.18,
-        322.31
+        335.18
       ]
     },
     {
       "symbol": "AAPL",
       "name": "Apple",
       "group": "美股",
-      "price": 342.37,
-      "prevClose": 349.21,
-      "change": -6.84,
-      "changePct": -1.959,
-      "monthPct": -0.471,
+      "price": 342.56,
+      "prevClose": 352.45,
+      "change": -9.89,
+      "changePct": -2.806,
+      "monthPct": -0.416,
       "currency": "USD",
-      "marketTime": 1795208320,
+      "marketTime": 1795208402,
       "history": [
         343.99,
         348.22,
@@ -368,21 +367,20 @@
         352.78,
         351.91,
         352.45,
-        349.21,
-        342.37
+        349.21
       ]
     },
     {
       "symbol": "MSFT",
       "name": "Microsoft",
       "group": "美股",
-      "price": 483.42,
-      "prevClose": 498.3,
-      "change": -14.88,
-      "changePct": -2.986,
-      "monthPct": -9.294,
+      "price": 484.52,
+      "prevClose": 508.29,
+      "change": -23.77,
+      "changePct": -4.676,
+      "monthPct": -9.087,
       "currency": "USD",
-      "marketTime": 1795208319,
+      "marketTime": 1795208400,
       "history": [
         532.95,
         521.08,
@@ -405,21 +403,20 @@
         517.99,
         506.24,
         508.29,
-        498.3,
-        483.42
+        498.3
       ]
     },
     {
       "symbol": "NVDA",
       "name": "NVIDIA",
       "group": "美股",
-      "price": 126.12,
-      "prevClose": 145.98,
-      "change": -19.86,
-      "changePct": -13.605,
-      "monthPct": -43.182,
+      "price": 125.53,
+      "prevClose": 150.96,
+      "change": -25.43,
+      "changePct": -16.846,
+      "monthPct": -43.447,
       "currency": "USD",
-      "marketTime": 1795208320,
+      "marketTime": 1795208401,
       "history": [
         221.97,
         212.21,
@@ -442,21 +439,20 @@
         156.14,
         155.46,
         150.96,
-        145.98,
-        126.12
+        145.98
       ]
     },
     {
       "symbol": "GOOGL",
       "name": "Alphabet",
       "group": "美股",
-      "price": 265.215,
-      "prevClose": 272.66,
-      "change": -7.445,
-      "changePct": -2.731,
-      "monthPct": -20.775,
+      "price": 265.29,
+      "prevClose": 282.44,
+      "change": -17.15,
+      "changePct": -6.072,
+      "monthPct": -20.752,
       "currency": "USD",
-      "marketTime": 1795208320,
+      "marketTime": 1795208401,
       "history": [
         334.76,
         324.22,
@@ -479,21 +475,20 @@
         283.72,
         280.2,
         282.44,
-        272.66,
-        265.215
+        272.66
       ]
     },
     {
       "symbol": "AMZN",
       "name": "Amazon",
       "group": "美股",
-      "price": 246.58,
-      "prevClose": 257.37,
-      "change": -10.79,
-      "changePct": -4.192,
-      "monthPct": -6.018,
+      "price": 246.82,
+      "prevClose": 267.74,
+      "change": -20.92,
+      "changePct": -7.814,
+      "monthPct": -5.927,
       "currency": "USD",
-      "marketTime": 1795208316,
+      "marketTime": 1795208400,
       "history": [
         262.37,
         250.38,
@@ -516,21 +511,20 @@
         257.75,
         257.89,
         267.74,
-        257.37,
-        246.58
+        257.37
       ]
     },
     {
       "symbol": "META",
       "name": "Meta",
       "group": "美股",
-      "price": 560.95,
-      "prevClose": 596.22,
-      "change": -35.27,
-      "changePct": -5.916,
-      "monthPct": -19.579,
+      "price": 560.84,
+      "prevClose": 616.38,
+      "change": -55.54,
+      "changePct": -9.011,
+      "monthPct": -19.595,
       "currency": "USD",
-      "marketTime": 1795208320,
+      "marketTime": 1795208400,
       "history": [
         697.52,
         648.85,
@@ -553,23 +547,21 @@
         626.41,
         618.87,
         616.38,
-        596.22,
-        560.95
+        596.22
       ]
     },
     {
       "symbol": "TSLA",
       "name": "Tesla",
       "group": "美股",
-      "price": 345.555,
-      "prevClose": 374.41,
-      "change": -28.855,
-      "changePct": -7.707,
-      "monthPct": -7.534,
+      "price": 345.82,
+      "prevClose": 383.72,
+      "change": -37.9,
+      "changePct": -9.877,
+      "monthPct": -10.518,
       "currency": "USD",
-      "marketTime": 1795208313,
+      "marketTime": 1795208401,
       "history": [
-        373.71,
         386.47,
         374.58,
         372.22,
@@ -591,21 +583,20 @@
         379.74,
         380.11,
         383.72,
-        374.41,
-        345.555
+        374.41
       ]
     },
     {
       "symbol": "TSM",
       "name": "台積電 ADR",
       "group": "美股",
-      "price": 319.705,
-      "prevClose": 352.09,
-      "change": -32.385,
-      "changePct": -9.198,
-      "monthPct": -25.975,
+      "price": 318.71,
+      "prevClose": 362.62,
+      "change": -43.91,
+      "changePct": -12.109,
+      "monthPct": -26.206,
       "currency": "USD",
-      "marketTime": 1795208266,
+      "marketTime": 1795208403,
       "history": [
         431.89,
         412.35,
@@ -628,23 +619,21 @@
         373.45,
         359.69,
         362.62,
-        352.09,
-        319.705
+        352.09
       ]
     },
     {
       "symbol": "TWD=X",
       "name": "美元/台幣",
       "group": "匯率",
-      "price": 32.988,
+      "price": 32.958,
       "prevClose": 32.9299,
-      "change": 0.0581,
-      "changePct": 0.176,
-      "monthPct": 1.563,
+      "change": 0.0281,
+      "changePct": 0.085,
+      "monthPct": 1.168,
       "currency": "TWD",
-      "marketTime": 1795208329,
+      "marketTime": 1795214189,
       "history": [
-        32.4802,
         32.5776,
         32.3659,
         32.597,
@@ -667,22 +656,21 @@
         32.9629,
         32.9108,
         32.9299,
-        32.988
+        33.0263
       ]
     },
     {
       "symbol": "JPYTWD=X",
       "name": "日圓/台幣",
       "group": "匯率",
-      "price": 0.206,
+      "price": 0.2057,
       "prevClose": 0.2066,
-      "change": -0.0006,
-      "changePct": -0.293,
-      "monthPct": 0.546,
+      "change": -0.0009,
+      "changePct": -0.438,
+      "monthPct": -0.059,
       "currency": "TWD",
-      "marketTime": 1795208205,
+      "marketTime": 1795213606,
       "history": [
-        0.2049,
         0.2058,
         0.2047,
         0.2083,
@@ -705,7 +693,7 @@
         0.2066,
         0.2063,
         0.2066,
-        0.206
+        0.2067
       ]
     },
     {
@@ -716,11 +704,10 @@
       "prevClose": 0.0247,
       "change": -0.0002,
       "changePct": -0.942,
-      "monthPct": 0.369,
+      "monthPct": -0.256,
       "currency": "TWD",
-      "marketTime": 1795208205,
+      "marketTime": 1795215707,
       "history": [
-        0.0244,
         0.0246,
         0.0244,
         0.0246,
@@ -743,7 +730,7 @@
         0.0247,
         0.0247,
         0.0247,
-        0.0245
+        0.0247
       ]
     }
   ],
