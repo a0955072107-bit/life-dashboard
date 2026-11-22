@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22T02:09:26+00:00",
+  "updated": "2026-11-22T17:50:02+00:00",
   "quotes": [
     {
       "symbol": "^GSPC",
@@ -231,11 +231,10 @@
       "prevClose": 3685.5,
       "change": -170.1,
       "changePct": -4.615,
-      "monthPct": -15.292,
+      "monthPct": -13.422,
       "currency": "USD",
       "marketTime": 1795211997,
       "history": [
-        4150.0,
         4060.3999,
         4007.8999,
         4038.3999,
@@ -268,11 +267,10 @@
       "prevClose": 44.318,
       "change": -3.248,
       "changePct": -7.329,
-      "monthPct": -28.477,
+      "monthPct": -25.005,
       "currency": "USD",
       "marketTime": 1795211998,
       "history": [
-        57.422,
         54.764,
         53.711,
         54.108,
@@ -294,7 +292,7 @@
         47.288,
         44.999,
         44.318,
-        41.035
+        41.07
       ]
     },
     {
@@ -634,13 +632,13 @@
       "symbol": "TWD=X",
       "name": "美元/台幣",
       "group": "匯率",
-      "price": 32.958,
-      "prevClose": 32.9299,
-      "change": 0.0281,
-      "changePct": 0.085,
-      "monthPct": 1.168,
+      "price": 32.964,
+      "prevClose": 33.0263,
+      "change": -0.0623,
+      "changePct": -0.189,
+      "monthPct": 1.186,
       "currency": "TWD",
-      "marketTime": 1795214189,
+      "marketTime": 1795368024,
       "history": [
         32.5776,
         32.3659,
@@ -664,7 +662,8 @@
         32.9629,
         32.9108,
         32.9299,
-        33.0263
+        33.0263,
+        32.964
       ]
     },
     {
@@ -711,10 +710,10 @@
       "price": 0.0245,
       "prevClose": 0.0247,
       "change": -0.0002,
-      "changePct": -0.942,
+      "changePct": -0.958,
       "monthPct": -0.256,
       "currency": "TWD",
-      "marketTime": 1795215707,
+      "marketTime": 1795369603,
       "history": [
         0.0246,
         0.0244,
@@ -738,7 +737,8 @@
         0.0247,
         0.0247,
         0.0247,
-        0.0247
+        0.0247,
+        0.0245
       ]
     }
   ],
