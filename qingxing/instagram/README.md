@@ -53,7 +53,7 @@ Name：`QX_IG_BOT_ENABLED`，Value：`true`。要暫停改成 `false`。
 ## 平常怎麼用
 
 - **貼文內容**在 `qingxing/scripts/posts-data.mjs`，改完執行 `node qingxing/scripts/build-ig.mjs` 重新產生圖片（`qingxing/ig/`）和貼文檔（`qingxing/instagram/posts/`）。跟 Claude 說「幫我改 Day 8 的文案」也可以。
-- **草稿**：`status: draft` 不會發。Day 10（親身故事）、Day 20（內頁截圖、讀者回饋）、Day 30（數據）先設成草稿，補好再改成 `ready`。
+- **草稿**：`status: draft` 不會發。Day 10（親身故事）、Day 30（數據）先設成草稿，補好再改成 `ready`。
 - **短影音日**（Day 2、5、9…）：自動發字幕卡輪播。想發口播 Reels，自己錄好上傳就好，記得把那天的貼文改成 `draft` 避免重複。
 - 時間到後約 30 分鐘內發出；超過 48 小時沒發的不會補發。
 - **改自動回覆**：改 `qingxing/instagram/replies.json`（規則寫法同店語文案的 `instagram/README.md`）。
