@@ -265,6 +265,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
       <a class="btn ghost" href="https://portaly.cc/qingxing.action" target="_blank" rel="noopener">Portaly</a>
       <a class="btn ghost" href="https://www.instagram.com/qingxing.action/" target="_blank" rel="noopener">IG</a>
       <a class="btn ghost" href="tiktok/" target="_blank" rel="noopener">TikTok 本週</a>
+      <a class="btn ghost" href="https://studio.youtube.com/" target="_blank" rel="noopener">YouTube</a>
     </div>
   </div>
   <section class="kpis" id="kpisOverview"></section>
@@ -306,6 +307,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
         <button aria-pressed="false" data-v="Instagram">Instagram</button>
         <button aria-pressed="false" data-v="抖音">TikTok</button>
         <button aria-pressed="false" data-v="Threads">Threads</button>
+        <button aria-pressed="false" data-v="YouTube">YouTube</button>
       </div>
       <div class="seg" id="range" role="group" aria-label="期間">
         <button aria-pressed="false" data-v="7">7 天</button>
@@ -361,7 +363,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
         <div class="editbar" id="gEdit" hidden><span id="gEditTxt"></span><button class="btn ghost sm danger" type="button" id="gDel">刪除這筆</button><button class="btn ghost sm" type="button" id="gEditCancel">取消修改</button><div class="editwarn" id="gWarn" hidden></div></div>
         <input type="hidden" name="id">
         <label>日期<input name="date" type="date" required></label>
-        <label>平台<select name="platform"><option>Instagram</option><option value="抖音">TikTok（抖音）</option><option>Threads</option></select></label>
+        <label>平台<select name="platform"><option>Instagram</option><option value="抖音">TikTok（抖音）</option><option>Threads</option><option>YouTube</option></select></label>
         <label>粉絲數（累計）<input name="followers" type="number" min="0" inputmode="numeric" placeholder="例 128"></label>
         <label>觀看（當天新增）<input name="views" type="number" min="0" inputmode="numeric"></label>
         <label>讚<input name="likes" type="number" min="0" inputmode="numeric"></label>
@@ -369,7 +371,7 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
         <label>收藏<input name="saves" type="number" min="0" inputmode="numeric"></label>
         <label>分享<input name="shares" type="number" min="0" inputmode="numeric"></label>
         <label class="full">發文主題<input name="topic" type="text" placeholder="自動帶入當天排程"></label>
-        <label>格式<select name="format"><option value="">（不填）</option><option>輪播</option><option>Reels</option><option>單圖</option><option>限動</option></select></label>
+        <label>格式<select name="format"><option value="">（不填）</option><option>輪播</option><option>Reels</option><option>單圖</option><option>限動</option><option>Shorts</option></select></label>
         <label>備註<input name="note" type="text"></label>
         <div class="full row"><button class="btn" type="submit">送出</button><span class="hint" id="gHint"></span></div>
       </form>
@@ -385,13 +387,13 @@ footer{margin-top:28px;font-size:12px;color:var(--ink3);text-align:center}
         <label>單價 NT$<input name="unit" type="number" min="0" inputmode="numeric"></label>
         <label>實收金額 NT$<input name="amount" type="number" min="0" inputmode="numeric" required></label>
         <label>收款平台<select name="channel"><option value="">（不填）</option><option>Portaly</option><option>Gumroad</option><option>轉帳</option><option>其他</option></select></label>
-        <label>來源<select name="source"><option value="">（不填）</option><option>IG</option><option value="抖音">TikTok</option><option>Email</option><option>推薦</option><option>其他</option></select></label>
+        <label>來源<select name="source"><option value="">（不填）</option><option>IG</option><option value="抖音">TikTok</option><option>YouTube</option><option>Email</option><option>推薦</option><option>其他</option></select></label>
         <label>備註<input name="note" type="text" placeholder="例：首發 7 天"></label>
         <div class="full row"><button class="btn" type="submit">送出</button><span class="hint" id="iHint"></span></div>
       </form>
     </div>
-    <div class="card wide"><h2>所有紀錄</h2><div class="sub">點一列就會帶進上面的表單，改完按「儲存修改」。IG、Threads 最近 7 天的數字每晚 23:20 會被自動抓取蓋掉，要改的話改 TikTok 或 7 天前的</div>
-      <div class="recfilter" id="recFilter" role="group" aria-label="篩選"><button aria-pressed="true" data-v="all">全部平台</button><button aria-pressed="false" data-v="抖音">TikTok</button><button aria-pressed="false" data-v="Instagram">IG</button><button aria-pressed="false" data-v="Threads">Threads</button><button aria-pressed="false" data-v="income">收入</button></div>
+    <div class="card wide"><h2>所有紀錄</h2><div class="sub">點一列就會帶進上面的表單，改完按「儲存修改」。IG、Threads 最近 7 天的數字每晚 23:20 會被自動抓取蓋掉，要改的話改 TikTok、YouTube 或 7 天前的</div>
+      <div class="recfilter" id="recFilter" role="group" aria-label="篩選"><button aria-pressed="true" data-v="all">全部平台</button><button aria-pressed="false" data-v="抖音">TikTok</button><button aria-pressed="false" data-v="Instagram">IG</button><button aria-pressed="false" data-v="Threads">Threads</button><button aria-pressed="false" data-v="YouTube">YouTube</button><button aria-pressed="false" data-v="income">收入</button></div>
       <div class="tbl" id="tblRecords"></div></div>
     <div class="card wide"><h2>剛送出的</h2><div class="sub">送出後要等 GitHub 機器人寫進 Notion 再同步回來，通常 1–2 分鐘；這裡先記著</div><ul class="list" id="pending"><li class="empty">目前沒有</li></ul></div>
   </div>
@@ -703,7 +705,7 @@ async function deleteRecord(kind){
 }
 $("#gDel").onclick = () => deleteRecord("growth");
 $("#iDel").onclick = () => deleteRecord("income");
-const PN2 = { Instagram:"IG", Threads:"Threads", "抖音":"TikTok" };
+const PN2 = { Instagram:"IG", Threads:"Threads", "抖音":"TikTok", YouTube:"YouTube" };
 state.recFilter = state.recFilter || "all";
 function endEdit(p){
   const f = p === "g" ? $("#fGrowth") : $("#fIncome");
@@ -859,7 +861,7 @@ function render(){
   if (state.platform === "all"){
     const byP = {};
     for (const r of growth) if (!byP[r.platform] || r.date > byP[r.platform].date) byP[r.platform] = r;
-    const parts = ["Instagram","Threads","抖音"].filter(p => byP[p]).map(p => `${{Instagram:"IG",Threads:"Threads","抖音":"TikTok"}[p]} ${fmt(byP[p].followers)}`);
+    const parts = ["Instagram","Threads","抖音","YouTube"].filter(p => byP[p]).map(p => `${{Instagram:"IG",Threads:"Threads","抖音":"TikTok",YouTube:"YouTube"}[p]} ${fmt(byP[p].followers)}`);
     kFollow = `<div class="kpi"><div class="l">目前粉絲數（各平台）</div><div class="v" style="font-size:19px;line-height:1.5">${parts.join("<br>") || "0"}</div><div class="d">${parts.length ? "最新一筆" : "尚無資料"}</div></div>`;
   } else {
     kFollow = kpi("目前粉絲數", fmt(followersNow), followersDelta ? (followersDelta>0?"+":"") + fmt(followersDelta) + " 期間內" : "期間內無變化", followersDelta>0?"up":followersDelta<0?"down":"");
@@ -877,7 +879,7 @@ function render(){
     if (state.platform === "all") multiLine($("#chFollowers"), growth); else lineChart($("#chFollowers"), days, "followers", "var(--c1)", "人");
     barChart($("#chViews"), days.map(x => ({k:x.date, v:x.views})), "var(--c1)", "次");
     barChart($("#chHeat"), days.map(x => ({k:x.date, v:x.heat})), "var(--c2)", "分");
-    const PN = { Instagram:"IG", Threads:"Threads", "抖音":"TikTok" };
+    const PN = { Instagram:"IG", Threads:"Threads", "抖音":"TikTok", YouTube:"YouTube" };
     const sortKey = state.postSort || "date";
     const list = (d.posts || []).filter(r => r.date >= from && (state.platform === "all" || r.platform === state.platform))
       .sort((a,b) => sortKey === "date" ? (a.date < b.date ? 1 : a.date > b.date ? -1 : b.views - a.views) : b[sortKey] - a[sortKey]).slice(0, 60);
@@ -921,9 +923,9 @@ function lineChart(el, rows, key, color, unit){ setW(el);
     <line class="axis" x1="${PL}" x2="${W-PR}" y1="${H-PB}" y2="${H-PB}"/>${xLabels(rows.map(r => r.date))}</svg>`;
   hover(el, i => `${rows[i].date}<br><b>${fmt(rows[i][key])}</b> ${unit}`);
 }
-const P_COLOR = { Instagram:"var(--c1)", Threads:"var(--c4)", "抖音":"var(--c2)" }, P_NAME = { Instagram:"IG", Threads:"Threads", "抖音":"TikTok" };
+const P_COLOR = { Instagram:"var(--c1)", Threads:"var(--c4)", "抖音":"var(--c2)", YouTube:"var(--c3)" }, P_NAME = { Instagram:"IG", Threads:"Threads", "抖音":"TikTok", YouTube:"YouTube" };
 function multiLine(el, rows){ setW(el);
-  const plats = ["Instagram","Threads","抖音"].filter(p => rows.some(r => r.platform === p));
+  const plats = ["Instagram","Threads","抖音","YouTube"].filter(p => rows.some(r => r.platform === p));
   if (!plats.length) return el.innerHTML = `<div class="empty">尚無資料</div>`;
   const dates = [...new Set(rows.map(r => r.date))].sort();
   const series = plats.map(p => { const m = {}; for (const r of rows) if (r.platform === p) m[r.date] = r.followers; return { p, pts: dates.map((d,i) => m[d] == null ? null : [xPos(i, dates.length), m[d]]) }; });

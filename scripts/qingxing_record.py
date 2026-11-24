@@ -52,11 +52,11 @@ def _retry(fn):
 GET, POST, PATCH = _retry(requests.get), _retry(requests.post), _retry(requests.patch)
 ID_RE = re.compile(r"[0-9a-fA-F-]{32,36}")
 
-GROWTH_PLATFORMS = {"Instagram", "抖音", "Threads"}
-GROWTH_FORMATS = {"輪播", "Reels", "單圖", "限動"}
+GROWTH_PLATFORMS = {"Instagram", "抖音", "Threads", "YouTube"}
+GROWTH_FORMATS = {"輪播", "Reels", "單圖", "限動", "Shorts"}
 PRODUCTS = {"電子書《從迷惘到行動》", "Notion 清醒行動系統", "電子書+Notion系統組合", "進階版", "陪跑服務", "團體方案", "其他"}
 CHANNELS = {"Gumroad", "Portaly", "轉帳", "其他"}
-SOURCES = {"IG", "抖音", "Email", "推薦", "其他"}
+SOURCES = {"IG", "抖音", "YouTube", "Email", "推薦", "其他"}
 
 
 def num(v):
@@ -75,7 +75,7 @@ def select(v, allowed, default=None):
 def date(s): return {"date": {"start": str(s)[:10]}}
 
 
-PLATFORM_ALIASES = {"TikTok": "抖音", "TikTok（抖音）": "抖音", "tiktok": "抖音", "IG": "Instagram", "instagram": "Instagram"}
+PLATFORM_ALIASES = {"TikTok": "抖音", "TikTok（抖音）": "抖音", "tiktok": "抖音", "IG": "Instagram", "instagram": "Instagram", "youtube": "YouTube", "YT": "YouTube"}
 
 
 def flatten(rec: dict) -> dict:
@@ -99,7 +99,7 @@ def build(rec: dict):
         platform = rec.get("platform")
         if platform not in GROWTH_PLATFORMS:
             raise ValueError(f"不認得的平台：{platform}")  # 不要默默記成 Instagram
-        short = {"Instagram": "IG", "抖音": "TikTok", "Threads": "Threads"}[platform]
+        short = {"Instagram": "IG", "抖音": "TikTok", "Threads": "Threads", "YouTube": "YouTube"}[platform]
         props = {
             "名稱": title(rec.get("name") or f"{d[5:].replace('-', '/')} {short}"),
             "日期": date(d),
