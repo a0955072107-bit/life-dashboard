@@ -74,7 +74,7 @@ body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK TC','
 .p{margin-top:48px;font-size:58px;line-height:1.55;color:${C.muted};font-weight:500}
 .p div{opacity:0}
 .hook .t{color:#fff}
-.scene.hook{right:80px;top:385px;align-items:center;text-align:center} /* 11/24：開頭卡置中，第 0 秒就看得到完整標題 */
+.scene.hook{left:120px;right:120px;top:385px;align-items:center;text-align:center} /* 11/24：開頭卡置中，第 0 秒就看得到完整標題 */
 .hook .ul{background:#fff}
 .end .t{color:${C.accent}}
 .mark{width:120px;height:150px;margin-top:60px}
@@ -100,7 +100,7 @@ SC.forEach((s, k) => {
   if (/，$/.test(h) && p && s.kind !== 'card') { h = h + p; p = '' }
   const tl = s.kind === 'hook' && p ? lines(h).concat(lines(p)) : lines(h) // 開頭卡：兩句都當大標題，第 0 秒一起出現
   if (s.kind === 'hook') p = ''
-  const size = s.kind === 'hook' ? fit(tl, 150, 920) : fit(tl, 116)
+  const size = s.kind === 'hook' ? fit(tl, 150, 840) : fit(tl, 116)
   const el = document.createElement('div'); el.className = 'scene ' + s.kind
   let html = ''
   if (s.kind === 'card') { n++; html += '<div class="ghost">' + String(n).padStart(2, '0') + '</div>' }
