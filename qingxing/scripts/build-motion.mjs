@@ -74,6 +74,7 @@ body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK TC','
 .p{margin-top:48px;font-size:58px;line-height:1.55;color:${C.muted};font-weight:500}
 .p div{opacity:0}
 .hook .t{color:#fff}
+.scene.hook{right:80px;top:385px;align-items:center;text-align:center} /* 11/24：開頭卡置中，第 0 秒就看得到完整標題 */
 .hook .ul{background:#fff}
 .end .t{color:${C.accent}}
 .mark{width:120px;height:150px;margin-top:60px}
@@ -90,15 +91,16 @@ body{width:1080px;height:1920px;overflow:hidden;font-family:'Noto Sans CJK TC','
 <script>
 const SC = ${JSON.stringify(scenes)}, TOTAL = ${TOTAL};
 const lines = (s) => s.split(/(?<=[，。？！、])/).map((x) => x.trim()).filter(Boolean)
-const W = 820
-const fit = (ls, max) => Math.max(64, Math.min(max, Math.floor(W / (Math.max(...ls.map((l) => [...l].length)) + 0.3))))
+const fit = (ls, max, w = 820) => Math.max(64, Math.min(max, Math.floor(w / (Math.max(...ls.map((l) => [...l].length)) + 0.3))))
 const bar = document.getElementById('bar'), stage = document.getElementById('stage')
 SC.forEach(() => { const i = document.createElement('i'); i.appendChild(document.createElement('b')); bar.appendChild(i) })
 let n = 0
 SC.forEach((s, k) => {
   let [h, p] = s.text.includes('｜') ? s.text.split('｜') : [s.text, '']
   if (/，$/.test(h) && p && s.kind !== 'card') { h = h + p; p = '' }
-  const tl = lines(h), size = fit(tl, s.kind === 'hook' ? 132 : 116)
+  const tl = s.kind === 'hook' && p ? lines(h).concat(lines(p)) : lines(h) // 開頭卡：兩句都當大標題，第 0 秒一起出現
+  if (s.kind === 'hook') p = ''
+  const size = s.kind === 'hook' ? fit(tl, 150, 920) : fit(tl, 116)
   const el = document.createElement('div'); el.className = 'scene ' + s.kind
   let html = ''
   if (s.kind === 'card') { n++; html += '<div class="ghost">' + String(n).padStart(2, '0') + '</div>' }
@@ -123,26 +125,27 @@ window.render = (t) => {
     const outP = clamp((lt - (outEnd - 0.3)) / 0.3)
     el.style.opacity = 1 - outP
     // 進場輪流換：0 上浮、1 從右滑入、2 由小放大；整段緩慢推近
-    const inP = outC(lt / 0.45), mode = s.kind === 'card' ? k % 3 : 0
+    const isHook = s.kind === 'hook' // 開頭卡不做進場動畫：第 0 秒就是完整大標題（11/24，TikTok 觀眾 0:01 就滑走）
+    const inP = isHook ? 1 : outC(lt / 0.45), mode = s.kind === 'card' ? k % 3 : 0
     const enter = mode === 1 ? 'translateX(' + (160 * (1 - inP)) + 'px)' : mode === 2 ? 'scale(' + (0.9 + 0.1 * inP) + ')' : 'translateY(' + (60 * (1 - inP)) + 'px)'
     const zoom = 1 + 0.035 * clamp(lt / s.dur)
     el.style.transform = enter + ' translateY(' + (-120 * outC(outP)) + 'px) scale(' + zoom + ')'
-    el.style.transformOrigin = '0% 50%'
+    el.style.transformOrigin = isHook ? '50% 50%' : '0% 50%'
     // 字一個一個跳出來（開頭卡更快、帶彈性）
     const spans = el.querySelectorAll('.t span'), step = s.kind === 'hook' ? 0.035 : 0.03
     const delay = k > 0 && SC[k - 1].kind === 'hook' ? 0.25 : 0.1
     spans.forEach((sp, i) => {
-      const p = (lt - delay - i * step) / 0.35
+      const p = isHook ? 1 : (lt - delay - i * step) / 0.35
       const y = 70 * (1 - (s.kind === 'hook' ? back(p) : outC(p)))
       sp.style.opacity = clamp(p * 1.6)
       sp.style.transform = 'translateY(' + y + 'px)'
     })
-    const textDone = delay + spans.length * step + 0.25
+    const textDone = isHook ? 0 : delay + spans.length * step + 0.25
     el.querySelectorAll('.t span.em').forEach((sp, i) => {
       const q = lt - textDone - i * 0.04
       if (q > 0 && q < 0.6) sp.style.transform = 'translateY(0) scale(' + (1 + 0.22 * Math.sin(Math.PI * q / 0.6)) + ')'
     })
-    el.querySelector('.ul').style.width = (outC((lt - textDone) / 0.45) * 260) + 'px'
+    el.querySelector('.ul').style.width = (isHook ? 260 : outC((lt - textDone) / 0.45) * 260) + 'px'
     el.querySelectorAll('.p div').forEach((d, i) => {
       const p = outC((lt - textDone - 0.1 - i * 0.22) / 0.4)
       d.style.opacity = p; d.style.transform = 'translateX(' + (-40 * (1 - p)) + 'px)'
